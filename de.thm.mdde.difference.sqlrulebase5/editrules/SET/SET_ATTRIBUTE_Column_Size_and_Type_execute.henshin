@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-uefIK5rEey8yPVUTnPUDg" name="SET_ATTRIBUTE_Column_Size_and_Type" description="Sets Column Size and Type">
+  <annotations xmi:id="_kzJEwM-4EeyPHf3H9gKnKQ" key="priority" value="2"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-uefIa5rEey8yPVUTnPUDg" name="setColumnSizeAndType" description="Sets the EAttribute size and type">
+    <parameters xmi:id="_-uefIq5rEey8yPVUTnPUDg" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-uefI65rEey8yPVUTnPUDg" name="Size" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.thm.de/mdde#//ColumnSize"/>
+    </parameters>
+    <parameters xmi:id="_rAe7ALsjEeyL57ZLwa2KmQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <lhs xmi:id="_-uefJK5rEey8yPVUTnPUDg" name="Lhs">
+      <nodes xmi:id="_-uefJa5rEey8yPVUTnPUDg" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-uefJq5rEey8yPVUTnPUDg" name="Rhs">
+      <nodes xmi:id="_-uefJ65rEey8yPVUTnPUDg" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_NEo10M-9EeyPHf3H9gKnKQ" value="Size">
+          <type href="http://www.thm.de/mdde#//Column/size"/>
+        </attributes>
+        <attributes xmi:id="_bmTvgM-9EeyPHf3H9gKnKQ" value="Type">
+          <type href="http://www.thm.de/mdde#//Column/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_-uefKa5rEey8yPVUTnPUDg" origin="_-uefJa5rEey8yPVUTnPUDg" image="_-uefJ65rEey8yPVUTnPUDg"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-uefKq5rEey8yPVUTnPUDg" name="mainUnit" subUnits="_-uefIa5rEey8yPVUTnPUDg">
+    <parameters xmi:id="_-uefK65rEey8yPVUTnPUDg" name="selectedEObject" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-uefLK5rEey8yPVUTnPUDg" name="Size" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.thm.de/mdde#//ColumnSize"/>
+    </parameters>
+    <parameters xmi:id="_0ffMELsjEeyL57ZLwa2KmQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <parameterMappings xmi:id="_-uefLa5rEey8yPVUTnPUDg" source="_-uefK65rEey8yPVUTnPUDg" target="_-uefIq5rEey8yPVUTnPUDg"/>
+    <parameterMappings xmi:id="_-uefLq5rEey8yPVUTnPUDg" source="_-uefLK5rEey8yPVUTnPUDg" target="_-uefI65rEey8yPVUTnPUDg"/>
+    <parameterMappings xmi:id="_1SjnwLsjEeyL57ZLwa2KmQ" source="_0ffMELsjEeyL57ZLwa2KmQ" target="_rAe7ALsjEeyL57ZLwa2KmQ"/>
+  </units>
+</henshin:Module>

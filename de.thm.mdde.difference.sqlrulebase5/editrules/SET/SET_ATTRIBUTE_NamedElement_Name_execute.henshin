@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BF9_INCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_NamedElement_Name" description="Sets NamedElement Name">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BF9_IdCTEey44dDbbdtz9Q" name="setNamedElementName" description="Sets the EAttribute name">
+    <parameters xmi:id="_BF9_ItCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <parameters xmi:id="_BF9_I9CTEey44dDbbdtz9Q" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BF9_JNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BF9_JdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//NamedElement"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BF9_JtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BF9_J9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//NamedElement"/>
+        <attributes xmi:id="_BF9_KNCTEey44dDbbdtz9Q" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BF9_KdCTEey44dDbbdtz9Q" origin="_BF9_JdCTEey44dDbbdtz9Q" image="_BF9_J9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BF9_KtCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BF9_IdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BF9_K9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <parameters xmi:id="_BF9_LNCTEey44dDbbdtz9Q" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BF9_LdCTEey44dDbbdtz9Q" source="_BF9_K9CTEey44dDbbdtz9Q" target="_BF9_ItCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BF9_LtCTEey44dDbbdtz9Q" source="_BF9_LNCTEey44dDbbdtz9Q" target="_BF9_I9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

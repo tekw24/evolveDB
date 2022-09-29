@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BFmywNCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_Column_NotNull" description="Sets Column NotNull">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BFmywdCTEey44dDbbdtz9Q" name="setColumnNotNull" description="Sets the EAttribute notNull">
+    <parameters xmi:id="_BFmywtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BFmyw9CTEey44dDbbdtz9Q" name="NotNull" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    </parameters>
+    <lhs xmi:id="_BFmyxNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BFmyxdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BFmyxtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BFmyx9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_BFmyyNCTEey44dDbbdtz9Q" value="NotNull">
+          <type href="http://www.thm.de/mdde#//Column/notNull"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BFmyydCTEey44dDbbdtz9Q" origin="_BFmyxdCTEey44dDbbdtz9Q" image="_BFmyx9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BFmyytCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BFmywdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BFmyy9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BFmyzNCTEey44dDbbdtz9Q" name="NotNull">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    </parameters>
+    <parameterMappings xmi:id="_BFmyzdCTEey44dDbbdtz9Q" source="_BFmyy9CTEey44dDbbdtz9Q" target="_BFmywtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BFmyztCTEey44dDbbdtz9Q" source="_BFmyzNCTEey44dDbbdtz9Q" target="_BFmyw9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

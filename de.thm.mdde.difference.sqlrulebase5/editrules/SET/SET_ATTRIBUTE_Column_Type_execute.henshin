@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGBpgNCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_Column_Type" description="Sets Column Type">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGBpgdCTEey44dDbbdtz9Q" name="setColumnType" description="Sets the EAttribute type">
+    <parameters xmi:id="_BGBpgtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGBpg9CTEey44dDbbdtz9Q" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <lhs xmi:id="_BGBphNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGBphdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGBphtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGBph9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_BGBpiNCTEey44dDbbdtz9Q" value="Type">
+          <type href="http://www.thm.de/mdde#//Column/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGBpidCTEey44dDbbdtz9Q" origin="_BGBphdCTEey44dDbbdtz9Q" image="_BGBph9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGBpitCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGBpgdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGBpi9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGBpjNCTEey44dDbbdtz9Q" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGBpjdCTEey44dDbbdtz9Q" source="_BGBpi9CTEey44dDbbdtz9Q" target="_BGBpgtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGBpjtCTEey44dDbbdtz9Q" source="_BGBpjNCTEey44dDbbdtz9Q" target="_BGBpg9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

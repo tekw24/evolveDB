@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGrJwNCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_Column_DefaultValue" description="Sets Column DefaultValue">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGrJwdCTEey44dDbbdtz9Q" name="setColumnDefaultValue" description="Sets the EAttribute defaultValue">
+    <parameters xmi:id="_BGrJwtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGrJw9CTEey44dDbbdtz9Q" name="DefaultValue" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BGrJxNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGrJxdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGrJxtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGrJx9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_BGrJyNCTEey44dDbbdtz9Q" value="DefaultValue">
+          <type href="http://www.thm.de/mdde#//Column/defaultValue"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGrJydCTEey44dDbbdtz9Q" origin="_BGrJxdCTEey44dDbbdtz9Q" image="_BGrJx9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGrJytCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGrJwdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGrJy9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGrJzNCTEey44dDbbdtz9Q" name="DefaultValue">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGrJzdCTEey44dDbbdtz9Q" source="_BGrJy9CTEey44dDbbdtz9Q" target="_BGrJwtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGrJztCTEey44dDbbdtz9Q" source="_BGrJzNCTEey44dDbbdtz9Q" target="_BGrJw9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

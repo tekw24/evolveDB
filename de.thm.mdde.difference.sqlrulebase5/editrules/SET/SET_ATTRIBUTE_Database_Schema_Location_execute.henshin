@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BF-mMNCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_Database_Schema_Location" description="Sets Database_Schema Location">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BF-mMdCTEey44dDbbdtz9Q" name="setDatabase_SchemaLocation" description="Sets the EAttribute location">
+    <parameters xmi:id="_BF-mMtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_BF-mM9CTEey44dDbbdtz9Q" name="Location" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BF-mNNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BF-mNdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BF-mNtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BF-mN9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+        <attributes xmi:id="_BF-mONCTEey44dDbbdtz9Q" value="Location">
+          <type href="http://www.thm.de/mdde#//Database_Schema/location"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BF-mOdCTEey44dDbbdtz9Q" origin="_BF-mNdCTEey44dDbbdtz9Q" image="_BF-mN9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BF-mOtCTEey44dDbbdtz9Q" name="mainUnit" activated="false" subUnits="_BF-mMdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BF-mO9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_BF-mPNCTEey44dDbbdtz9Q" name="Location">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BF-mPdCTEey44dDbbdtz9Q" source="_BF-mO9CTEey44dDbbdtz9Q" target="_BF-mMtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BF-mPtCTEey44dDbbdtz9Q" source="_BF-mPNCTEey44dDbbdtz9Q" target="_BF-mM9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

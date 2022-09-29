@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mdde" nsURI="http://www.thm.de/mdde" nsPrefix="mdde">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="TableRequiresAtLeastOneColumn TableRequiresAKeyColumn OnlyOneAutoIncrementColumn NonKeyAutoIncrementColumn"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="TableRequiresAtLeastOneColumn" value="Tuple {&#xA;&#x9;message : String = 'The Table ' + Table.name + ' requires at least one column!',&#xA;&#x9;status : Boolean = self.columns->notEmpty()&#xA;}.status"/>
+      <details key="TableRequiresAKeyColumn" value="Tuple {&#xA;&#x9;message : String = 'The Table ' + Table.name + ' requires a primary key or a set of primary foreign keys!',&#xA;&#x9;status : Boolean = self.columns-> notEmpty() and&#xA;&#x9;&#x9;(columns->exists(oclIsTypeOf(PrimaryKey)) or columns -> exists(c1 | (c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)))&#xA;}.status"/>
+      <details key="OnlyOneAutoIncrementColumn" value="Tuple {&#xA;&#x9;message : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',&#xA;&#x9;status : Boolean = self.columns-> notEmpty() and&#xA;&#x9;&#x9;((columns->one(c1 | c1.autoIncrement)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)))&#xA;}.status"/>
+      <details key="NonKeyAutoIncrementColumn" value="Tuple {&#xA;&#x9;message : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',&#xA;&#x9;status : Boolean = self.columns-> notEmpty() and&#xA;&#x9;&#x9;((columns->one(c1 | c1.oclIsTypeOf(PrimaryKey) and c1.autoIncrement)) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()))&#xA;}.status"/>
+    </eAnnotations>
+    <eOperations name="getPrimaryKeys" upperBound="-1" eType="#//PrimaryKey"/>
+    <eOperations name="getPrimaryKeyByName" eType="#//PrimaryKey">
+      <eParameters name="primaryKeyName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getForeignKeys" upperBound="-1" eType="#//ForeignKey"/>
+    <eOperations name="getMainPrimaryKey" eType="#//PrimaryKey"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="#//Database_Schema"
+        eOpposite="#//Database_Schema/entites"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//Column" containment="true" eOpposite="#//Column/table"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimaryKey" eSuperTypes="#//Column">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="primaryKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedBy" upperBound="-1"
+        eType="#//ForeignKey" eOpposite="#//ForeignKey/referencedKeyColumn"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ForeignKey" eSuperTypes="#//Column">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="ForeignKeyHasToReferenceAKeyColumn"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="ForeignKeyHasToReferenceAKeyColumn" value="Tuple {&#xA;&#x9;message : String = 'The referenced column should not be empty!',&#xA;&#x9;status : Boolean = self.referencedTable-> notEmpty()&#xA;}.status"/>
+    </eAnnotations>
+    <eOperations name="validateConstraintName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedTable" lowerBound="1"
+        eType="#//Table"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="primaryForeignKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OnUpdate" lowerBound="1"
+        eType="#//Referential_Action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OnDelete" lowerBound="1"
+        eType="#//Referential_Action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedKeyColumn" lowerBound="1"
+        eType="#//PrimaryKey" eOpposite="#//PrimaryKey/referencedBy"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NameNotNull"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NameNotNull" value="Tuple {&#xA;&#x9;message : String = 'Name should not be empty!',&#xA;&#x9;status : Boolean = self.name->size() > 0&#xA;}.status"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Database_Schema" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entites" upperBound="-1"
+        eType="#//Table" containment="true" eOpposite="#//Table/schema"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="#//NamedElement">
+    <eOperations name="validateDefaultValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateSizeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
+        eOpposite="#//Table/columns"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unique" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="autoIncrement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="#//ColumnSize"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uniqueConstraintName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataType">
+    <eLiterals name="CHAR"/>
+    <eLiterals name="VARCHAR" value="1"/>
+    <eLiterals name="BINARY" value="2"/>
+    <eLiterals name="VARBINARY" value="3"/>
+    <eLiterals name="TINYBLOB" value="4"/>
+    <eLiterals name="TINYTEXT" value="5"/>
+    <eLiterals name="TEXT" value="6"/>
+    <eLiterals name="BLOB" value="7"/>
+    <eLiterals name="MEDIUMTEXT" value="8"/>
+    <eLiterals name="MEDIUMBLOB" value="9"/>
+    <eLiterals name="LONGTEXT" value="10"/>
+    <eLiterals name="LONGBLOB" value="11"/>
+    <eLiterals name="ENUM" value="12"/>
+    <eLiterals name="SET" value="13"/>
+    <eLiterals name="BIT" value="14"/>
+    <eLiterals name="TINYINT" value="15"/>
+    <eLiterals name="BOOL" value="16"/>
+    <eLiterals name="BOOLEAN" value="17"/>
+    <eLiterals name="SMALLINT" value="18"/>
+    <eLiterals name="MEDIUMINT" value="19"/>
+    <eLiterals name="INT" value="20"/>
+    <eLiterals name="INTEGER" value="21"/>
+    <eLiterals name="BIGINT" value="22"/>
+    <eLiterals name="FLOAT" value="23"/>
+    <eLiterals name="DOUBLE" value="24"/>
+    <eLiterals name="DECIMAL" value="25"/>
+    <eLiterals name="DEC" value="26"/>
+    <eLiterals name="DATE" value="27"/>
+    <eLiterals name="DATETIME" value="28"/>
+    <eLiterals name="TIMESTAMP" value="29"/>
+    <eLiterals name="TIME" value="30"/>
+    <eLiterals name="YEAR" value="31"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Referential_Action">
+    <eLiterals name="RESTRICT" value="1"/>
+    <eLiterals name="CASCADE"/>
+    <eLiterals name="SET_NULL" value="2" literal="SET NULL"/>
+    <eLiterals name="NO_ACTION" value="3" literal="NO ACTION"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ColumnSize" instanceClassName="java.lang.String"/>
+</ecore:EPackage>

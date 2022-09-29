@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BFv8sNCTEey44dDbbdtz9Q" name="CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL" description="Changes the attribute value of OnDelete_FROM_CASCADE_TO_SET_NULL">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BFv8sdCTEey44dDbbdtz9Q" name="changeForeignKeyOnDelete_FROM_CASCADE_TO_SET_NULL" description="Changes the attribute value of OnDelete_FROM_CASCADE_TO_SET_NULL">
+    <parameters xmi:id="_BFv8stCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BFv8s9CTEey44dDbbdtz9Q" name="&quot;CASCADE&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BFv8tNCTEey44dDbbdtz9Q" name="&quot;SET_NULL&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <lhs xmi:id="_BFv8tdCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BFv8ttCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BFv8t9CTEey44dDbbdtz9Q" value="&quot;CASCADE&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnDelete"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BFv8uNCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BFv8udCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BFv8utCTEey44dDbbdtz9Q" value="&quot;SET_NULL&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnDelete"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BFv8u9CTEey44dDbbdtz9Q" origin="_BFv8ttCTEey44dDbbdtz9Q" image="_BFv8udCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BFv8vNCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BFv8sdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BFv8vdCTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BFv8vtCTEey44dDbbdtz9Q" name="&quot;CASCADE&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameterMappings xmi:id="_BFv8v9CTEey44dDbbdtz9Q" source="_BFv8vdCTEey44dDbbdtz9Q" target="_BFv8stCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BFv8wNCTEey44dDbbdtz9Q" source="_BFv8vtCTEey44dDbbdtz9Q" target="_BFv8s9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

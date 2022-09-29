@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGbSINCTEey44dDbbdtz9Q" name="CREATE_ForeignKey_IN_Table_(columns)" description="Creates one ForeignKey in Table">
+  <annotations xmi:id="_BGbSIdCTEey44dDbbdtz9Q" key="INVERSE" value="DELETE_ForeignKey_IN_Table_(columns)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGbSItCTEey44dDbbdtz9Q" name="createForeignKey_IN_Table" description="creates one ForeignKey in the context: Table">
+    <parameters xmi:id="_BGbSI9CTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGbSJNCTEey44dDbbdtz9Q" name="Existing" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGbSJdCTEey44dDbbdtz9Q" name="Existing1" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_BGbSJtCTEey44dDbbdtz9Q" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGbSJ9CTEey44dDbbdtz9Q" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameters xmi:id="_BGbSKNCTEey44dDbbdtz9Q" name="OnUpdate" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGbSKdCTEey44dDbbdtz9Q" name="OnDelete" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGbSKtCTEey44dDbbdtz9Q" name="ConstraintName" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BGbSK9CTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGbSLNCTEey44dDbbdtz9Q" name="Selected">
+        <annotations xmi:id="_BGbSLdCTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGbSLtCTEey44dDbbdtz9Q" name="Existing">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGbSL9CTEey44dDbbdtz9Q" name="Existing1">
+        <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGbSMNCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGbSMdCTEey44dDbbdtz9Q" name="Selected" incoming="_BGbSPNCTEey44dDbbdtz9Q" outgoing="_BGbSO9CTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGbSMtCTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGbSM9CTEey44dDbbdtz9Q" name="New" incoming="_BGbSO9CTEey44dDbbdtz9Q _BGbSP9CTEey44dDbbdtz9Q" outgoing="_BGbSPNCTEey44dDbbdtz9Q _BGbSPdCTEey44dDbbdtz9Q _BGbSPtCTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGbSNNCTEey44dDbbdtz9Q" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGbSNdCTEey44dDbbdtz9Q" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+        <attributes xmi:id="_BGbSNtCTEey44dDbbdtz9Q" value="OnUpdate">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnUpdate"/>
+        </attributes>
+        <attributes xmi:id="_BGbSN9CTEey44dDbbdtz9Q" value="OnDelete">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnDelete"/>
+        </attributes>
+        <attributes xmi:id="_BGbSONCTEey44dDbbdtz9Q" value="ConstraintName">
+          <type href="http://www.thm.de/mdde#//ForeignKey/constraintName"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_BGbSOdCTEey44dDbbdtz9Q" name="Existing" incoming="_BGbSPdCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGbSOtCTEey44dDbbdtz9Q" name="Existing1" incoming="_BGbSPtCTEey44dDbbdtz9Q" outgoing="_BGbSP9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+      </nodes>
+      <edges xmi:id="_BGbSO9CTEey44dDbbdtz9Q" source="_BGbSMdCTEey44dDbbdtz9Q" target="_BGbSM9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_BGbSPNCTEey44dDbbdtz9Q" source="_BGbSM9CTEey44dDbbdtz9Q" target="_BGbSMdCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+      <edges xmi:id="_BGbSPdCTEey44dDbbdtz9Q" source="_BGbSM9CTEey44dDbbdtz9Q" target="_BGbSOdCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//ForeignKey/referencedTable"/>
+      </edges>
+      <edges xmi:id="_BGbSPtCTEey44dDbbdtz9Q" source="_BGbSM9CTEey44dDbbdtz9Q" target="_BGbSOtCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+      </edges>
+      <edges xmi:id="_BGbSP9CTEey44dDbbdtz9Q" source="_BGbSOtCTEey44dDbbdtz9Q" target="_BGbSM9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_BGbSQNCTEey44dDbbdtz9Q" origin="_BGbSLNCTEey44dDbbdtz9Q" image="_BGbSMdCTEey44dDbbdtz9Q"/>
+    <mappings xmi:id="_BGbSQdCTEey44dDbbdtz9Q" origin="_BGbSLtCTEey44dDbbdtz9Q" image="_BGbSOdCTEey44dDbbdtz9Q"/>
+    <mappings xmi:id="_BGbSQtCTEey44dDbbdtz9Q" origin="_BGbSL9CTEey44dDbbdtz9Q" image="_BGbSOtCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGbSQ9CTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGbSItCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGbSRNCTEey44dDbbdtz9Q" name="selectedEObject">
+      <annotations xmi:id="_BGbSRdCTEey44dDbbdtz9Q" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGbSRtCTEey44dDbbdtz9Q" name="Existing">
+      <annotations xmi:id="_BGbSR9CTEey44dDbbdtz9Q" key="INVERSE" value="Existing"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGbSSNCTEey44dDbbdtz9Q" name="Existing1">
+      <annotations xmi:id="_BGbSSdCTEey44dDbbdtz9Q" key="INVERSE" value="Existing1"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_BGbSStCTEey44dDbbdtz9Q" name="New">
+      <annotations xmi:id="_BGbSS9CTEey44dDbbdtz9Q" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGbSTNCTEey44dDbbdtz9Q" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameters xmi:id="_BGbSTdCTEey44dDbbdtz9Q" name="OnUpdate">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGbSTtCTEey44dDbbdtz9Q" name="OnDelete">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGbST9CTEey44dDbbdtz9Q" name="ConstraintName">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGbSUNCTEey44dDbbdtz9Q" source="_BGbSRNCTEey44dDbbdtz9Q" target="_BGbSI9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSUdCTEey44dDbbdtz9Q" source="_BGbSRtCTEey44dDbbdtz9Q" target="_BGbSJNCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSUtCTEey44dDbbdtz9Q" source="_BGbSSNCTEey44dDbbdtz9Q" target="_BGbSJdCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSU9CTEey44dDbbdtz9Q" source="_BGbSJtCTEey44dDbbdtz9Q" target="_BGbSStCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSVNCTEey44dDbbdtz9Q" source="_BGbSTNCTEey44dDbbdtz9Q" target="_BGbSJ9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSVdCTEey44dDbbdtz9Q" source="_BGbSTdCTEey44dDbbdtz9Q" target="_BGbSKNCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSVtCTEey44dDbbdtz9Q" source="_BGbSTtCTEey44dDbbdtz9Q" target="_BGbSKdCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGbSV9CTEey44dDbbdtz9Q" source="_BGbST9CTEey44dDbbdtz9Q" target="_BGbSKtCTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

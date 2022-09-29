@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGN2wNCTEey44dDbbdtz9Q" name="ADD_PrimaryKey_(referencedBy)_TGT_ForeignKey" description="Adds to PrimaryKey's reference referencedBy the target ForeignKey">
+  <annotations xmi:id="_BGN2wdCTEey44dDbbdtz9Q" key="INVERSE" value="REMOVE_PrimaryKey_(referencedBy)_TGT_ForeignKey"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGN2wtCTEey44dDbbdtz9Q" name="addToPrimaryKey_referencedBy_ForeignKey" description="Adds to PrimaryKey's reference referencedBy the target ForeignKey">
+    <parameters xmi:id="_BGN2w9CTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_BGN2xNCTEey44dDbbdtz9Q" name="NewTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <lhs xmi:id="_BGN2xdCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGN2xtCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+      </nodes>
+      <nodes xmi:id="_BGN2x9CTEey44dDbbdtz9Q" name="NewTarget">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGN2yNCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGN2ydCTEey44dDbbdtz9Q" name="Selected" incoming="_BGN2zNCTEey44dDbbdtz9Q" outgoing="_BGN2y9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+      </nodes>
+      <nodes xmi:id="_BGN2ytCTEey44dDbbdtz9Q" name="NewTarget" incoming="_BGN2y9CTEey44dDbbdtz9Q" outgoing="_BGN2zNCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+      <edges xmi:id="_BGN2y9CTEey44dDbbdtz9Q" source="_BGN2ydCTEey44dDbbdtz9Q" target="_BGN2ytCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+      </edges>
+      <edges xmi:id="_BGN2zNCTEey44dDbbdtz9Q" source="_BGN2ytCTEey44dDbbdtz9Q" target="_BGN2ydCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_BGN2zdCTEey44dDbbdtz9Q" origin="_BGN2xtCTEey44dDbbdtz9Q" image="_BGN2ydCTEey44dDbbdtz9Q"/>
+    <mappings xmi:id="_BGN2ztCTEey44dDbbdtz9Q" origin="_BGN2x9CTEey44dDbbdtz9Q" image="_BGN2ytCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGN2z9CTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGN2wtCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGN20NCTEey44dDbbdtz9Q" name="selectedEObject">
+      <annotations xmi:id="_BGN20dCTEey44dDbbdtz9Q" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_BGN20tCTEey44dDbbdtz9Q" name="NewTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGN209CTEey44dDbbdtz9Q" source="_BGN20NCTEey44dDbbdtz9Q" target="_BGN2w9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGN21NCTEey44dDbbdtz9Q" source="_BGN20tCTEey44dDbbdtz9Q" target="_BGN2xNCTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

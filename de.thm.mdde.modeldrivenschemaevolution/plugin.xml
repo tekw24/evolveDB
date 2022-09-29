@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <menu
+               label="MDSE">
+            <command
+                  commandId="org.eclipse.ui.newWizard"
+                  label="Create MDSE Model"
+                  style="push">
+               <parameter
+                     name="newWizardId"
+                     value="MddeDatabseConnectionWizard">
+               </parameter>
+            </command>
+            <command
+                  commandId="ModelDrivenSchemaEvolution.command9"
+                  label="Transform MDSE Model"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator3"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.createTechnicalDifference"
+                  label="Create Technical Difference (SiLift)"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.createLiftedDifference"
+                  label="Create Lifted Difference (SiLift)"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.createMigrationModel"
+                  label="Create Migration Model"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.createSQLMigrations"
+                  label="Generate SQL Migrations"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="ModelDrivenSchemaEvolution.command1"
+            name="Open Create MDSE Model Wizard">
+      </command>
+      <command
+            description="Create a technical difference and lift it with Silift"
+            id="de.thm.mdde.createLiftedDifference"
+            name="CreateLiftedDifference">
+      </command>
+      <command
+            description="Create a technical difference with Silift"
+            id="de.thm.mdde.createTechnicalDifference"
+            name="CreateTechnicalDifference">
+      </command>
+      <command
+            description="Generate SQL Migrations"
+            id="de.thm.mdde.createSQLMigrations"
+            name="Generate SQL Migrations">
+      </command>
+      <command
+            description="Create Migration Model"
+            id="de.thm.mdde.createMigrationModel"
+            name="Create Migration Model">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.thm.commands.OpenMDSEWizardCommand"
+            commandId="ModelDrivenSchemaEvolution.command1">
+      </handler>
+      <handler
+            class="de.thm.mdde.handler.LiftedDifferenceBuilderHandler"
+            commandId="de.thm.mdde.createLiftedDifference">
+         <activeWhen>
+            <reference
+                  definitionId="de.thm.difference.lifting.ui.definition.modelFiles">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="de.thm.mdde.handler.DifferenceBuilderHandler"
+            commandId="de.thm.mdde.createTechnicalDifference">
+         <activeWhen>
+            <reference
+                  definitionId="de.thm.difference.lifting.ui.definition.modelFiles">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.GenerateSQLMigrations"
+            commandId="de.thm.mdde.createSQLMigrations">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="migration">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CreateMigrationModelHandler"
+            commandId="de.thm.mdde.createMigrationModel">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="de.thm.mdde.wizard.MddeDatabaseConnectionModelWizard"
+            id="MddeDatabseConnectionWizard"
+            name="Create MDSE Model">
+      </wizard>
+      <wizard
+            class="de.thm.mdde.differenceBuilderWizard.MddeDifferenceBuilderWizard"
+            id="MddeDifferenceBuilderWizard"
+            name="MddeDifferenceBuilderWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.thm.difference.lifting.ui.definition.modelFiles">
+         <with
+               variable="selection">
+            <count
+                  value="2">
+            </count>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.eclipse.core.resources.IFile">
+               </instanceof>
+               <test
+                     forcePluginActivation="true"
+                     property="de.thm.mdde.difference.lifting.ui.properties.modelFile">
+               </test>
+            </iterate>
+         </with>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.thm.mdde.handler.MddePropertyTester"
+            id="de.thm.mdde.difference.lifting.ui.PropertyTester"
+            namespace="de.thm.mdde.difference.lifting.ui.properties"
+            properties="modelFile"
+            type="org.eclipse.core.resources.IFile">
+      </propertyTester>
+   </extension>
+   <extension
+         id="customide"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="Custom IDE">
+         <property
+               name="appName"
+               value="Custom IDE">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="mddeIDE"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="MDDE IDE">
+         <property
+               name="appName"
+               value="MDDE IDE">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

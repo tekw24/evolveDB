@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGY14NCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_ForeignKey_ConstraintName" description="Sets ForeignKey ConstraintName">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGY14dCTEey44dDbbdtz9Q" name="setForeignKeyConstraintName" description="Sets the EAttribute constraintName">
+    <parameters xmi:id="_BGY14tCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGY149CTEey44dDbbdtz9Q" name="ConstraintName" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BGY15NCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGY15dCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGY15tCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGY159CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGY16NCTEey44dDbbdtz9Q" value="ConstraintName">
+          <type href="http://www.thm.de/mdde#//ForeignKey/constraintName"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGY16dCTEey44dDbbdtz9Q" origin="_BGY15dCTEey44dDbbdtz9Q" image="_BGY159CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGY16tCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGY14dCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGY169CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGY17NCTEey44dDbbdtz9Q" name="ConstraintName">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGY17dCTEey44dDbbdtz9Q" source="_BGY169CTEey44dDbbdtz9Q" target="_BGY14tCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGY17tCTEey44dDbbdtz9Q" source="_BGY17NCTEey44dDbbdtz9Q" target="_BGY149CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

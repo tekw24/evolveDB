@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated mdde -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="de.thm.evolvedb.mdde.presentation.MddeModelWizardID"
+            name="%_UI_MddeModelWizard_label"
+            class="de.thm.evolvedb.mdde.presentation.MddeModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/MddeModelFile.gif">
+         <description>%_UI_MddeModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated mdde -->
+      <editor
+            id="de.thm.evolvedb.mdde.presentation.MddeEditorID"
+            name="%_UI_MddeEditor_label"
+            icon="icons/full/obj16/MddeModelFile.gif"
+            extensions="mdde"
+            class="de.thm.evolvedb.mdde.presentation.MddeEditor"
+            contributorClass="de.thm.evolvedb.mdde.presentation.MddeActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

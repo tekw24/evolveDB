@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.thm.mdde.extensionpoint.SQLGenerator" name="SQLGenerator" schema="schema/de.thm.mdde.extensionpoint.SQLGenerator.exsd"/>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="MDDECodeGenerationWizard"
+            name="Sample Wizards">
+      </category>
+      <wizard
+            category="MDDECodeGenerationWizard"
+            class="de.thm.mdde.ui.SampleNewWizard"
+            icon="icons/sample.png"
+            id="de.thm.mdde.ui.SampleNewWizard"
+            name="Code Generation">
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="CodeGeneration.command1"
+            name="Open CodeGenerationWizard">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.thm.mdde.commands.CommandHandler"
+            commandId="CodeGeneration.command1">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+
+</plugin>

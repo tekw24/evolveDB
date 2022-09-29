@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.thm.evolvedb.mdde/src-gen" editDirectory="/de.thm.evolvedb.mdde.edit/src-gen"
+    editorDirectory="/de.thm.evolvedb.mdde.editor/src-gen" modelPluginID="de.thm.evolvedb.mdde"
+    modelName="Mdde" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="/de.thm.evolvedb.mdde.tests/src-gen" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>mdde.ecore</foreignModel>
+  <genPackages prefix="Mdde" basePackage="de.thm.evolvedb" disposableProviderFactory="true"
+      ecorePackage="mdde.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="mdde.ecore#//DataType">
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/CHAR"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/VARCHAR"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BINARY"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/VARBINARY"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TINYBLOB"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TINYTEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BLOB"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/MEDIUMTEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/MEDIUMBLOB"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/LONGTEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/LONGBLOB"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/ENUM"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/SET"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BIT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TINYINT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/SMALLINT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/MEDIUMINT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/INTEGER"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/BIGINT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/DECIMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/DEC"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/DATE"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/DATETIME"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TIMESTAMP"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//DataType/YEAR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="mdde.ecore#//Referential_Action">
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//Referential_Action/RESTRICT"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//Referential_Action/CASCADE"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//Referential_Action/SET_NULL"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//Referential_Action/NO_ACTION"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="mdde.ecore#//ColumnSize"/>
+    <genClasses ecoreClass="mdde.ecore#//Table">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference mdde.ecore#//Table/schema"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mdde.ecore#//Table/columns"/>
+      <genOperations ecoreOperation="mdde.ecore#//Table/getPrimaryKeys"/>
+      <genOperations ecoreOperation="mdde.ecore#//Table/getPrimaryKeyByName">
+        <genParameters ecoreParameter="mdde.ecore#//Table/getPrimaryKeyByName/primaryKeyName"/>
+      </genOperations>
+      <genOperations ecoreOperation="mdde.ecore#//Table/getForeignKeys"/>
+      <genOperations ecoreOperation="mdde.ecore#//Table/getMainPrimaryKey"/>
+    </genClasses>
+    <genClasses ecoreClass="mdde.ecore#//PrimaryKey">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//PrimaryKey/primaryKey"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mdde.ecore#//PrimaryKey/referencedBy"/>
+    </genClasses>
+    <genClasses ecoreClass="mdde.ecore#//ForeignKey">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mdde.ecore#//ForeignKey/referencedTable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//ForeignKey/primaryForeignKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//ForeignKey/OnUpdate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//ForeignKey/OnDelete"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//ForeignKey/constraintName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mdde.ecore#//ForeignKey/referencedKeyColumn"/>
+      <genOperations ecoreOperation="mdde.ecore#//ForeignKey/validateConstraintName">
+        <genParameters ecoreParameter="mdde.ecore#//ForeignKey/validateConstraintName/diagnostics"/>
+        <genParameters ecoreParameter="mdde.ecore#//ForeignKey/validateConstraintName/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mdde.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="mdde.ecore#//Database_Schema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Database_Schema/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Database_Schema/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mdde.ecore#//Database_Schema/entites"/>
+    </genClasses>
+    <genClasses ecoreClass="mdde.ecore#//Column">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference mdde.ecore#//Column/table"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/notNull"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/unique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/autoIncrement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Column/uniqueConstraintName"/>
+      <genOperations ecoreOperation="mdde.ecore#//Column/validateDefaultValue">
+        <genParameters ecoreParameter="mdde.ecore#//Column/validateDefaultValue/diagnostics"/>
+        <genParameters ecoreParameter="mdde.ecore#//Column/validateDefaultValue/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="mdde.ecore#//Column/validateSizeValue">
+        <genParameters ecoreParameter="mdde.ecore#//Column/validateSizeValue/diagnostics"/>
+        <genParameters ecoreParameter="mdde.ecore#//Column/validateSizeValue/context"/>
+      </genOperations>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGUkcNCTEey44dDbbdtz9Q" name="CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_CASCADE" description="Changes the attribute value of OnUpdate_FROM_RESTRICT_TO_CASCADE">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGUkcdCTEey44dDbbdtz9Q" name="changeForeignKeyOnUpdate_FROM_RESTRICT_TO_CASCADE" description="Changes the attribute value of OnUpdate_FROM_RESTRICT_TO_CASCADE">
+    <parameters xmi:id="_BGUkctCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGUkc9CTEey44dDbbdtz9Q" name="&quot;RESTRICT&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGUkdNCTEey44dDbbdtz9Q" name="&quot;CASCADE&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <lhs xmi:id="_BGUkddCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGUkdtCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGUkd9CTEey44dDbbdtz9Q" value="&quot;RESTRICT&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnUpdate"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGUkeNCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGUkedCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGUketCTEey44dDbbdtz9Q" value="&quot;CASCADE&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnUpdate"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGUke9CTEey44dDbbdtz9Q" origin="_BGUkdtCTEey44dDbbdtz9Q" image="_BGUkedCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGUkfNCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGUkcdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGUkfdCTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGUkftCTEey44dDbbdtz9Q" name="&quot;RESTRICT&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGUkf9CTEey44dDbbdtz9Q" source="_BGUkfdCTEey44dDbbdtz9Q" target="_BGUkctCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGUkgNCTEey44dDbbdtz9Q" source="_BGUkftCTEey44dDbbdtz9Q" target="_BGUkc9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

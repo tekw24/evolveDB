@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGkcENCTEey44dDbbdtz9Q" name="CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_RESTRICT" description="Changes the attribute value of OnDelete_FROM_SET_NULL_TO_RESTRICT">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGkcEdCTEey44dDbbdtz9Q" name="changeForeignKeyOnDelete_FROM_SET_NULL_TO_RESTRICT" description="Changes the attribute value of OnDelete_FROM_SET_NULL_TO_RESTRICT">
+    <parameters xmi:id="_BGkcEtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGkcE9CTEey44dDbbdtz9Q" name="&quot;SET_NULL&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameters xmi:id="_BGkcFNCTEey44dDbbdtz9Q" name="&quot;RESTRICT&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <lhs xmi:id="_BGkcFdCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGkcFtCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGkcF9CTEey44dDbbdtz9Q" value="&quot;SET_NULL&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnDelete"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGkcGNCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGkcGdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_BGkcGtCTEey44dDbbdtz9Q" value="&quot;RESTRICT&quot;">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnDelete"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGkcG9CTEey44dDbbdtz9Q" origin="_BGkcFtCTEey44dDbbdtz9Q" image="_BGkcGdCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGkcHNCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGkcEdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGkcHdCTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_BGkcHtCTEey44dDbbdtz9Q" name="&quot;SET_NULL&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGkcH9CTEey44dDbbdtz9Q" source="_BGkcHdCTEey44dDbbdtz9Q" target="_BGkcEtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGkcINCTEey44dDbbdtz9Q" source="_BGkcHtCTEey44dDbbdtz9Q" target="_BGkcE9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

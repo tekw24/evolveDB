@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="basic_mdsd" version="12.0.0.2017041100">
+  <ownedViewpoints name="mdsd">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="mdde diagram" domainClass="mdde::Database_Schema">
+      <metamodel href="http://www.thm.de/mdde#/"/>
+      <defaultLayer name="Default">
+        <edgeMappings name="ForeignKeys" sourceMapping="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']" targetMapping="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']" targetFinderExpression="aql:self.columns->select(s|s.oclIsTypeOf(mdde::ForeignKey)).referencedTable">
+          <style sourceArrow="OutputArrow" targetArrow="InputClosedArrow" sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="TableContainer" label="Table" domainClass="mdde::Table" childrenPresentation="List">
+          <subNodeMappings name="PrimaryKey" label="PrimaryKey" semanticCandidatesExpression="feature:eAllContents" domainClass="mdde::PrimaryKey">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="aql:self.name +' : '+ self.type +'(' +self.size+')'" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-schlüssel-16.png" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_purple']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="ForeignKeys" label="ForeignKeys" semanticCandidatesExpression="feature:eAllContents" domainClass="mdde::ForeignKey">
+            <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql:self.name +' : '+ self.type +'(' +self.size+')'" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-schlüssel-16_blue.png" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_red']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="Columns" label="Columns" semanticCandidatesExpression="aql:self.columns->select(s|s.oclIsTypeOf(mdde::Column))" domainClass="mdde::Column">
+            <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql:self.name +' : '+ self.type +'(' +self.size+')'" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+          </style>
+        </containerMappings>
+        <toolSections>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="createTable" label="Create Table" containerMappings="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-tabelle-einfügen-30.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="mdde::Table" referenceName="entites">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'newTable'"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createColumn" label="Create Column" nodeMappings="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']/@subNodeMappings[name='Columns']" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-spalte-hinzufügen-30.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="mdde::Column" referenceName="columns" variableName="newColumn"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createPrimaryKey" label="Create PrimaryKey" nodeMappings="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']/@subNodeMappings[name='PrimaryKey']" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-schlüssel-30_black.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="mdde::PrimaryKey" referenceName="columns" variableName="newColumn">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'newPrimaryKey'"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createForeignKey" label="Create ForeignKey" nodeMappings="//@ownedViewpoints[name='mdsd']/@ownedRepresentations[name='mdde%20diagram']/@defaultLayer/@containerMappings[name='TableContainer']/@subNodeMappings[name='ForeignKeys']" iconPath="/basic_mdsd.design/src_resources/basic_mdsd/design/icons8-schlüssel-30.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="ForeignKey" referenceName="columns">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'newForeignKey'"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="basic_mdsd.design.Services"/>
+  </ownedViewpoints>
+</description:Group>

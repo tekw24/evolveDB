@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGXnwNCTEey44dDbbdtz9Q" name="SET_ATTRIBUTE_Column_Size" description="Sets Column Size">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGXnwdCTEey44dDbbdtz9Q" name="setColumnSize" description="Sets the EAttribute size">
+    <parameters xmi:id="_BGXnwtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGXnw9CTEey44dDbbdtz9Q" name="Size" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.thm.de/mdde#//ColumnSize"/>
+    </parameters>
+    <lhs xmi:id="_BGXnxNCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGXnxdCTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGXnxtCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGXnx9CTEey44dDbbdtz9Q" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_BGXnyNCTEey44dDbbdtz9Q" value="Size">
+          <type href="http://www.thm.de/mdde#//Column/size"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGXnydCTEey44dDbbdtz9Q" origin="_BGXnxdCTEey44dDbbdtz9Q" image="_BGXnx9CTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGXnytCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGXnwdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGXny9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGXnzNCTEey44dDbbdtz9Q" name="Size">
+      <type xsi:type="ecore:EDataType" href="http://www.thm.de/mdde#//ColumnSize"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGXnzdCTEey44dDbbdtz9Q" source="_BGXny9CTEey44dDbbdtz9Q" target="_BGXnwtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGXnztCTEey44dDbbdtz9Q" source="_BGXnzNCTEey44dDbbdtz9Q" target="_BGXnw9CTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

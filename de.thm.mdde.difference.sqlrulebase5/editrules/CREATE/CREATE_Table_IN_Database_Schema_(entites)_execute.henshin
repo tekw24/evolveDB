@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGnfYNCTEey44dDbbdtz9Q" name="CREATE_Table_IN_Database_Schema_(entites)" description="Creates one Table in Database_Schema">
+  <annotations xmi:id="_BGnfYdCTEey44dDbbdtz9Q" key="INVERSE" value="DELETE_Table_IN_Database_Schema_(entites)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGnfYtCTEey44dDbbdtz9Q" name="createTable_IN_Database_Schema" description="creates one Table in the context: Database_Schema">
+    <parameters xmi:id="_BGnfY9CTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_BGnfZNCTEey44dDbbdtz9Q" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGnfZdCTEey44dDbbdtz9Q" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_BGnfZtCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGnfZ9CTEey44dDbbdtz9Q" name="Selected">
+        <annotations xmi:id="_BGnfaNCTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_BGnfadCTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGnfatCTEey44dDbbdtz9Q" name="Selected" incoming="_BGnfcNCTEey44dDbbdtz9Q" outgoing="_BGnfb9CTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGnfa9CTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+      </nodes>
+      <nodes xmi:id="_BGnfbNCTEey44dDbbdtz9Q" name="New" incoming="_BGnfb9CTEey44dDbbdtz9Q" outgoing="_BGnfcNCTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGnfbdCTEey44dDbbdtz9Q" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+        <attributes xmi:id="_BGnfbtCTEey44dDbbdtz9Q" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_BGnfb9CTEey44dDbbdtz9Q" source="_BGnfatCTEey44dDbbdtz9Q" target="_BGnfbNCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Database_Schema/entites"/>
+      </edges>
+      <edges xmi:id="_BGnfcNCTEey44dDbbdtz9Q" source="_BGnfbNCTEey44dDbbdtz9Q" target="_BGnfatCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table/schema"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_BGnfcdCTEey44dDbbdtz9Q" origin="_BGnfZ9CTEey44dDbbdtz9Q" image="_BGnfatCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGnfctCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGnfYtCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGnfc9CTEey44dDbbdtz9Q" name="selectedEObject">
+      <annotations xmi:id="_BGnfdNCTEey44dDbbdtz9Q" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_BGnfddCTEey44dDbbdtz9Q" name="New">
+      <annotations xmi:id="_BGnfdtCTEey44dDbbdtz9Q" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGnfd9CTEey44dDbbdtz9Q" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGnfeNCTEey44dDbbdtz9Q" source="_BGnfc9CTEey44dDbbdtz9Q" target="_BGnfY9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGnfedCTEey44dDbbdtz9Q" source="_BGnfZNCTEey44dDbbdtz9Q" target="_BGnfddCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGnfetCTEey44dDbbdtz9Q" source="_BGnfd9CTEey44dDbbdtz9Q" target="_BGnfZdCTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

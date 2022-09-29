@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGQTANCTEey44dDbbdtz9Q" name="DELETE_Column_IN_Table_(columns)" description="Deletes one Column in Table">
+  <annotations xmi:id="_BGQTAdCTEey44dDbbdtz9Q" key="INVERSE" value="CREATE_Column_IN_Table_(columns)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGQTAtCTEey44dDbbdtz9Q" name="deleteColumn_IN_Table" description="deletes one Column in the context: Table">
+    <parameters xmi:id="_BGQTA9CTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGQTBNCTEey44dDbbdtz9Q" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <lhs xmi:id="_BGQTBdCTEey44dDbbdtz9Q" name="LHS">
+      <nodes xmi:id="_BGQTBtCTEey44dDbbdtz9Q" name="Selected" incoming="_BGQTC9CTEey44dDbbdtz9Q" outgoing="_BGQTCtCTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGQTB9CTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGQTCNCTEey44dDbbdtz9Q" name="ToBeDeleted" incoming="_BGQTCtCTEey44dDbbdtz9Q" outgoing="_BGQTC9CTEey44dDbbdtz9Q">
+        <annotations xmi:id="_BGQTCdCTEey44dDbbdtz9Q" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <edges xmi:id="_BGQTCtCTEey44dDbbdtz9Q" source="_BGQTBtCTEey44dDbbdtz9Q" target="_BGQTCNCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_BGQTC9CTEey44dDbbdtz9Q" source="_BGQTCNCTEey44dDbbdtz9Q" target="_BGQTBtCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_BGQTDNCTEey44dDbbdtz9Q" name="RHS">
+      <nodes xmi:id="_BGQTDdCTEey44dDbbdtz9Q" name="Selected">
+        <annotations xmi:id="_BGQTDtCTEey44dDbbdtz9Q" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_BGQTD9CTEey44dDbbdtz9Q" origin="_BGQTBtCTEey44dDbbdtz9Q" image="_BGQTDdCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGQTENCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGQTAtCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGQTEdCTEey44dDbbdtz9Q" name="selectedEObject">
+      <annotations xmi:id="_BGQTEtCTEey44dDbbdtz9Q" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGQTE9CTEey44dDbbdtz9Q" name="ToBeDeleted">
+      <annotations xmi:id="_BGQTFNCTEey44dDbbdtz9Q" key="INVERSE" value="New"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGQTFdCTEey44dDbbdtz9Q" source="_BGQTEdCTEey44dDbbdtz9Q" target="_BGQTA9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGQTFtCTEey44dDbbdtz9Q" source="_BGQTE9CTEey44dDbbdtz9Q" target="_BGQTBNCTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

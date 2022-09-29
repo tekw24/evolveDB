@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BGj1ANCTEey44dDbbdtz9Q" name="MOVE_REF_COMBI_Column_FROM_Table_(columns)_TO_Table_(columns)" description="MOVEs Column from Table(Reference:columns) to Table(Reference:columns">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_BGj1AdCTEey44dDbbdtz9Q" name="moveColumn_FROM_Table_columns_TO_Table_Table" description="Moves Column from Table(Reference:columns) toTable(Reference:Table)">
+    <parameters xmi:id="_BGj1AtCTEey44dDbbdtz9Q" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGj1A9CTEey44dDbbdtz9Q" name="OldSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGj1BNCTEey44dDbbdtz9Q" name="NewSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <lhs xmi:id="_BGj1BdCTEey44dDbbdtz9Q" name="Lhs">
+      <nodes xmi:id="_BGj1BtCTEey44dDbbdtz9Q" name="Selected" incoming="_BGj1CdCTEey44dDbbdtz9Q" outgoing="_BGj1CtCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_BGj1B9CTEey44dDbbdtz9Q" name="OldSource" incoming="_BGj1CtCTEey44dDbbdtz9Q" outgoing="_BGj1CdCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGj1CNCTEey44dDbbdtz9Q" name="NewSource">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <edges xmi:id="_BGj1CdCTEey44dDbbdtz9Q" source="_BGj1B9CTEey44dDbbdtz9Q" target="_BGj1BtCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_BGj1CtCTEey44dDbbdtz9Q" source="_BGj1BtCTEey44dDbbdtz9Q" target="_BGj1B9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_BGj1C9CTEey44dDbbdtz9Q" name="Rhs">
+      <nodes xmi:id="_BGj1DNCTEey44dDbbdtz9Q" name="Selected" incoming="_BGj1D9CTEey44dDbbdtz9Q" outgoing="_BGj1ENCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_BGj1DdCTEey44dDbbdtz9Q" name="OldSource">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_BGj1DtCTEey44dDbbdtz9Q" name="NewSource" incoming="_BGj1ENCTEey44dDbbdtz9Q" outgoing="_BGj1D9CTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <edges xmi:id="_BGj1D9CTEey44dDbbdtz9Q" source="_BGj1DtCTEey44dDbbdtz9Q" target="_BGj1DNCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_BGj1ENCTEey44dDbbdtz9Q" source="_BGj1DNCTEey44dDbbdtz9Q" target="_BGj1DtCTEey44dDbbdtz9Q">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_BGj1EdCTEey44dDbbdtz9Q" origin="_BGj1BtCTEey44dDbbdtz9Q" image="_BGj1DNCTEey44dDbbdtz9Q"/>
+    <mappings xmi:id="_BGj1EtCTEey44dDbbdtz9Q" origin="_BGj1B9CTEey44dDbbdtz9Q" image="_BGj1DdCTEey44dDbbdtz9Q"/>
+    <mappings xmi:id="_BGj1E9CTEey44dDbbdtz9Q" origin="_BGj1CNCTEey44dDbbdtz9Q" image="_BGj1DtCTEey44dDbbdtz9Q"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_BGj1FNCTEey44dDbbdtz9Q" name="mainUnit" subUnits="_BGj1AdCTEey44dDbbdtz9Q">
+    <parameters xmi:id="_BGj1FdCTEey44dDbbdtz9Q" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_BGj1FtCTEey44dDbbdtz9Q" name="OldSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_BGj1F9CTEey44dDbbdtz9Q" name="NewSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameterMappings xmi:id="_BGj1GNCTEey44dDbbdtz9Q" source="_BGj1FdCTEey44dDbbdtz9Q" target="_BGj1AtCTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGj1GdCTEey44dDbbdtz9Q" source="_BGj1FtCTEey44dDbbdtz9Q" target="_BGj1A9CTEey44dDbbdtz9Q"/>
+    <parameterMappings xmi:id="_BGj1GtCTEey44dDbbdtz9Q" source="_BGj1F9CTEey44dDbbdtz9Q" target="_BGj1BNCTEey44dDbbdtz9Q"/>
+  </units>
+</henshin:Module>

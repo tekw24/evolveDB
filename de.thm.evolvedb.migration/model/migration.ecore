@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="migration" nsURI="http://www.thm.de/migration" nsPrefix="de.thm.mdde">
+  <eClassifiers xsi:type="ecore:EClass" name="SchemaModificationOperator" abstract="true">
+    <eOperations name="validateSMO" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="semanticChangeSets" upperBound="-1"
+        eType="ecore:EClass ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processStatus" lowerBound="1"
+        eType="#//ProcessStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="migration" eType="#//Migration"
+        eOpposite="#//Migration/schemaModificationOperators"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Migration">
+    <eOperations name="getResolvableSMO" upperBound="-1" eType="#//ResolvableOperator"/>
+    <eOperations name="getPartiallyResovableSMO" upperBound="-1" eType="#//PartiallyResolvable"/>
+    <eOperations name="getNotAutimaticallyResolvable" upperBound="-1" eType="#//NotAutomaticallyResolvable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SymmetricDifference" eType="ecore:EClass ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schemaModificationOperators"
+        upperBound="-1" eType="#//SchemaModificationOperator" containment="true" eOpposite="#//SchemaModificationOperator/migration"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="symetricDifferenceModel"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
+        transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriSymetricDifferenceModel"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessStatus">
+    <eLiterals name="RESOLVED" literal="RESOLVED"/>
+    <eLiterals name="IGNORE" value="1"/>
+    <eLiterals name="UNRESOLVED" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResolvableOperator" eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//ResolvableOperatorType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PartiallyResolvable" eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//PartiallyResolvableOperatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolveOptions" eType="#//ColumnOptions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotAutomaticallyResolvable" eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//NotAutomaticallyResolvableOperatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolveOptions" eType="#//ComplexResolveOptions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ResolvableOperatorType">
+    <eLiterals name="CREATE_TABLE"/>
+    <eLiterals name="RENAME_TABLE" value="1"/>
+    <eLiterals name="CREATE_COLUMN" value="2"/>
+    <eLiterals name="CREATE_PRIMARY_KEY" value="3"/>
+    <eLiterals name="CREATE_FOREIGN_KEY" value="4"/>
+    <eLiterals name="SET_COLUMN_DEFAULT_VALUE" value="5"/>
+    <eLiterals name="SET_COLUMN_AUTO_INCREMENT" value="6"/>
+    <eLiterals name="RENAME_COLUMN" value="7" literal="RENAME_COLUMN"/>
+    <eLiterals name="CHANGE_REFERENTIAL_ACTION" value="8" literal="CHANGE_REFERENTIAL_ACTION"/>
+    <eLiterals name="SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME" value="9"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PartiallyResolvableOperatorType">
+    <eLiterals name="DELETE_COLUMN"/>
+    <eLiterals name="DELETE_FOREIGN_KEY" value="1"/>
+    <eLiterals name="DELETE_PRIMARY_KEY" value="2"/>
+    <eLiterals name="DELETE_TABLE" value="3"/>
+    <eLiterals name="SET_COLUMN_NOT_NULL" value="4"/>
+    <eLiterals name="SET_COLUMN_SIZE" value="5"/>
+    <eLiterals name="SET_FOREIGNKEYS_TARGET_TABLE" value="6"/>
+    <eLiterals name="SET_COLUMN_UNIQUE" value="7" literal="SET_COLUMN_UNIQUE"/>
+    <eLiterals name="SET_COLUMN_TYPE" value="8" literal="SET_COLUMN_TYPE"/>
+    <eLiterals name="CHANGE_1N_INTO_NM" value="9" literal="CHANGE_1N_INTO_NM"/>
+    <eLiterals name="CHANGE_1N_INTO_NM_PRESERVE" value="10" literal="CHANGE_1N_INTO_NM_PRESERVE"/>
+    <eLiterals name="CHANGE_NM_INTO_1N" value="11" literal="CHANGE_NM_INTO_1N"/>
+    <eLiterals name="CHANGE_NM_INTO_1N_PRESERVE" value="12" literal="CHANGE_NM_INTO_1N_PRESERVE"/>
+    <eLiterals name="SET_COLUMN_TYPE_AND_SIZE" value="13" literal="SET_COLUMN_TYPE_AND_SIZE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="NotAutomaticallyResolvableOperatorType">
+    <eLiterals name="MOVE_PRIMARY_KEY"/>
+    <eLiterals name="MOVE_FOREIGN_KEY" value="1"/>
+    <eLiterals name="MOVE_COLUMN" value="2"/>
+    <eLiterals name="JOIN_TABLE" value="3" literal="JOIN_TABLE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ColumnOptions">
+    <eLiterals name="IGNORE" literal="No violating data"/>
+    <eLiterals name="UPDATE_ROW_SET_TO_NULL" value="1" literal="Set violating rows to null"/>
+    <eLiterals name="UPDATE_ROW_SET_TO_DEFAULT" value="2" literal="Set violating rows to the default value"/>
+    <eLiterals name="DELETE_ROW" value="3" literal="Delete violating rows"/>
+    <eLiterals name="UPDATE_COLUMN_SET_TO_NULL" value="5" literal="Set column to null"/>
+    <eLiterals name="UPDATE_COLUMN_SET_TO_DEFAULT" value="6" literal="Set column to default value"/>
+    <eLiterals name="MIGRATE_DATA" value="7" literal="Migrate data"/>
+    <eLiterals name="DELETE_DUBLICATES" value="8" literal="Remove dublicates"/>
+    <eLiterals name="IGNORE_DUBLICATES" value="9"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ComplexResolveOptions">
+    <eLiterals name="IGNORE" literal="No violating data"/>
+    <eLiterals name="RESOLVE_BY_DB_ID" value="1" literal="Match rows by primary key."/>
+    <eLiterals name="CARTESIAN_PRODUCT" value="2" literal="Create a cartesian product of all associated tables."/>
+  </eClassifiers>
+</ecore:EPackage>
