@@ -4,9 +4,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.Parameterization;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -17,15 +30,22 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ISetSelectionTarget;
+import org.eclipse.ui.services.IServiceLocator;
+import org.osgi.framework.Constants;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.input.InputModels;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
 import de.thm.commonui.util.UIUtil;
+import de.thm.mdde.commonui.exception.handler.ErrorHandler;
 import de.thm.mdde.language.Language;
+import de.thm.mdde.migration.api.MigrationApi;
 import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
 
 public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
@@ -105,10 +125,34 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 					} finally {
 						progressMonitor.done();
 					}
+
 				}
 			};
 
 			getContainer().run(false, false, operation);
+
+			boolean createMigrationFile = builderNewFilePage.isCreateModelSelected();
+			if (createMigrationFile) {
+				WorkspaceModifyOperation operation2 = new WorkspaceModifyOperation() {
+					@Override
+					protected void execute(IProgressMonitor progressMonitor) {
+						try {
+							URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+							MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
+									builderNewFilePage.getFileName(), builderNewFilePage.getMigrationFileName());
+
+						} catch (Exception e) {
+							ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
+									"An error occured while creating the model!", getShell(), "Error", e);
+							e.printStackTrace();
+							MddeEditorPlugin.INSTANCE.log(e);
+						} finally {
+							progressMonitor.done();
+						}
+					}
+				};
+				getContainer().run(false, false, operation2);
+			}
 
 			// Select the new file resource in the current view.
 			//
@@ -116,14 +160,28 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 			IWorkbenchPage page = workbenchWindow.getActivePage();
 			final IWorkbenchPart activePart = page.getActivePart();
 			if (activePart instanceof ISetSelectionTarget) {
-				final ISelection targetSelection = new StructuredSelection(modelFile);
-				getShell().getDisplay().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						((ISetSelectionTarget) activePart).selectReveal(targetSelection);
-					}
-				});
+				//Duplicate code because variable has to be final
+				if (builderNewFilePage.isCreateModelSelected()) {
+					final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getMigreationModelFile());
+					getShell().getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+						}
+					});
+				} else {
+					final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getModelFile());
+					getShell().getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+						}
+					});
+				}
 			}
+
+			// Refresh the project
+			modelFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 
 			return true;
 		} catch (Exception exception) {

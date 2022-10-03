@@ -60,7 +60,7 @@ public class CreateMigrationModelHandler extends AbstractHandler{
 				
 				ResourceFilter a = new ResourceFilter();
 				uri = a.filterForSymmetricDifference(resModelFile);
-				System.out.println("URI: " + uri);
+				
 				
 			} catch (IOException e) {
 				Shell activeShell = HandlerUtil.getActiveShell(event);
