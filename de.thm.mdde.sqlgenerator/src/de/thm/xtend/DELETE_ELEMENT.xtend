@@ -10,7 +10,7 @@ import de.thm.evolvedb.migration.PartiallyResolvable
 import de.thm.evolvedb.migration.ProcessStatus
 
 class DELETE_ELEMENT {
-	
+
 	/**
 	 * Delete a primaryKey 
 	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
@@ -23,14 +23,14 @@ class DELETE_ELEMENT {
 		}
 		return ""
 	}
-	
+
 	def static String _DELETE_Table_IN_Database_Schema_entites2(SemanticChangeSet set) {
 		var RemoveObject a = set.changes.findFirst[it instanceof RemoveObject] as RemoveObject
 		return _DELETE_Table_IN_Database_Schema_entites2(a)
 	}
 
 	def static String _DELETE_Table_IN_Database_Schema_entites2(RemoveObject a) {
-		
+
 		var content = ""
 		var Table table;
 
@@ -38,8 +38,8 @@ class DELETE_ELEMENT {
 			table = a.obj as Table;
 
 			content += '''
-				-- Drop table �table.name.toLowerCase�			
-				DROP TABLE `�table.name.toLowerCase�`;
+				-- Drop table «table.name»			
+				DROP TABLE `«table.name»`;
 				
 			'''
 
@@ -72,9 +72,9 @@ class DELETE_ELEMENT {
 			var parent = key.table
 
 			content += '''
-				-- Drop primary key in �parent.name.toLowerCase�			
-				ALTER TABLE `�parent.name.toLowerCase�` 
-				DROP COLUMN `�key.name�`,
+				-- Drop primary key in «parent.name»			
+				ALTER TABLE `«parent.name»` 
+				DROP COLUMN `«key.name»`,
 				DROP PRIMARY KEY;
 				
 			'''
@@ -113,15 +113,34 @@ class DELETE_ELEMENT {
 			var parent = foreignKey.table
 
 			content += '''
-				-- Drop foreign key in �parent.name.toLowerCase�
-				ALTER TABLE `�parent.name.toLowerCase�`
-				DROP FOREIGN KEY `�foreignKey.constraintName�`;
-				ALTER TABLE `�parent.name.toLowerCase�`
-				DROP COLUMN `�foreignKey.name�`;
+				-- Drop foreign key in «parent.name.toLowerCase»
+				ALTER TABLE `«parent.name.toLowerCase»`
+				DROP FOREIGN KEY `«foreignKey.constraintName»`;
+				ALTER TABLE `«parent.name.toLowerCase»`
+				DROP COLUMN `«foreignKey.name»`;
 				
 			'''
 
 		}
+
+		return content;
+
+	}
+
+	def static String _DELETE_ForeignKey_IN_Table_columns2(ForeignKey foreignKey) {
+
+		var content = ""
+
+		var parent = foreignKey.table
+
+		content += '''
+			-- Drop foreign key in «parent.name.toLowerCase»
+			ALTER TABLE `«parent.name.toLowerCase»`
+			DROP FOREIGN KEY `«foreignKey.constraintName»`;
+			ALTER TABLE `«parent.name.toLowerCase»`
+			DROP COLUMN `«foreignKey.name»`;
+			
+		'''
 
 		return content;
 
@@ -151,9 +170,9 @@ class DELETE_ELEMENT {
 			var parent = column.table
 
 			content += '''
-				-- Drop column in �parent.name.toLowerCase�			
-				ALTER TABLE `�parent.name.toLowerCase�` 
-				DROP COLUMN `�column.name�`;
+				-- Drop column in «parent.name»			
+				ALTER TABLE `«parent.name»` 
+				DROP COLUMN `«column.name»`;
 			'''
 
 		}

@@ -1,7 +1,6 @@
 package de.thm.xtend
 
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.ecore.EClass
 import java.util.List
@@ -22,11 +21,6 @@ import org.sidiff.difference.symmetric.RemoveReference
 import org.sidiff.difference.symmetric.SymmetricDifference
 import org.sidiff.difference.symmetric.SemanticChangeSet
 import de.thm.evolvedb.mdde.Database_Schema
-import de.thm.evolvedb.mdde.ForeignKey
-import de.thm.evolvedb.mdde.Column
-import de.thm.evolvedb.mdde.Table
-import de.thm.evolvedb.mdde.PrimaryKey
-import java.util.DuplicateFormatFlagsException
 import de.thm.evolvedb.migration.Migration
 import de.thm.evolvedb.migration.ResolvableOperator
 import de.thm.evolvedb.migration.ProcessStatus
@@ -35,7 +29,6 @@ import java.util.Arrays
 import de.thm.evolvedb.mdde.DataType
 import de.thm.evolvedb.migration.PartiallyResolvable
 import de.thm.evolvedb.migration.PartiallyResolvableOperatorType
-import de.thm.evolvedb.migration.impl.NotAutomaticallyResolvableImpl
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable
 import de.thm.evolvedb.migration.NotAutomaticallyResolvableOperatorType
 
@@ -188,11 +181,11 @@ class SQLGenerator {
 			findFirst[it instanceof Database_Schema] as Database_Schema
 
 		var String content = '''
-			USE �databaseSchemaB.name�;
+			USE «databaseSchemaB.name»;
 			START TRANSACTION;
 			
 			-- Creates an history table for deleted and updated values
-			�ColumnUtil.createDataCleansingTable(HISTORY_TABLE_NAME, databaseSchemaB)�
+			«ColumnUtil.createDataCleansingTable(HISTORY_TABLE_NAME, databaseSchemaB)»
 			
 		''';
 
@@ -324,6 +317,10 @@ class SQLGenerator {
 				return ComplexChanges._CHANGE_1N_INTO_NM(partiallyResolvable);
 
 			}
+			case PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_MOVE: {
+				return ComplexChanges._CHANGE_1N_INTO_NM_MOVE(partiallyResolvable);
+
+			}
 			case PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_PRESERVE: {
 				return ComplexChanges._CHANGE_1N_INTO_NM_PRESERVE(partiallyResolvable);
 
@@ -345,7 +342,7 @@ class SQLGenerator {
 
 			}
 			default: {
-				println("Operator does not exists")
+				"-- Operator does not exists"
 			}
 		}
 
@@ -406,97 +403,6 @@ class SQLGenerator {
 	}
 
 	def dispatch String processChangeOperation(AddObject object) {
-//		if (added instanceof AddedClass) {
-//				// If the new class has no supertype except for idetifiable.
-//				if (added.supertypes.isEmpty) {
-//					content += '''
-//						-- Create Table �added.name�
-//						CREATE TABLE IF NOT EXISTS �added.name�  (
-//							DB_ID bigint(20) NOT NULL AUTO_INCREMENT,
-//							   DATECREATED datetime,
-//							   DATEUPDATED datetime,
-//							   LASTUPDATEDBY varchar(255),
-//							   READONLY tinyint(1),
-//							   DELETED tinyint(1),
-//							   
-//							   �FOR a : added.structuralFeatures�
-//							   	�IF a instanceof Attribute�
-//							   		�a.name� �a.type.name�,
-//							   	�ENDIF�
-//							   �ENDFOR�
-//							   PRIMARY KEY (DB_ID)
-//							   );
-//							   
-//					''';
-//				} else {
-//					// If the new class has a supertype
-//					var Class superType = findSuperType(added.supertypes);
-//					content += '''
-//						-- Create Table �superType.name�
-//						CREATE TABLE IF NOT EXISTS �superType.name�  (
-//						DB_ID bigint(20) NOT NULL AUTO_INCREMENT,
-//						DATECREATED datetime,
-//						DATEUPDATED datetime,
-//						LASTUPDATEDBY varchar(255),
-//						READONLY tinyint(1),
-//						DELETED tinyint(1),
-//						PRIMARY KEY (DB_ID)
-//						);
-//						
-//						SET @dbname = DATABASE();
-//						SET @tablename = "�superType.name�";
-//						SET @columnname = "DTYPE";
-//						SET @preparedStatement = (SELECT IF(
-//						  (
-//						    SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
-//						    WHERE
-//						      (table_name = @tablename)
-//						      AND (table_schema = @dbname)
-//						      AND (column_name = @columnname)
-//						  ) > 0,
-//						  "SELECT null",
-//						  CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " varchar(31);")
-//						));
-//						PREPARE alterIfNotExists FROM @preparedStatement;
-//						EXECUTE alterIfNotExists;
-//						DEALLOCATE PREPARE alterIfNotExists;
-//						
-//					'''
-//				}
-//			} else // Add a new attribute
-//			if (added instanceof AddedAttribute) {
-//				var Class owner = added.owner;
-//				if (owner.supertypes.size > 0) {
-//					owner = findSuperType(owner.supertypes)
-//
-//				}
-//				content += '''
-//					-- Add the new column �added.name.toUpperCase� in Table �owner.name.toLowerCase�
-//					SET @dbname = DATABASE();
-//					SET @tablename = "�owner.name.toLowerCase�";
-//					SET @columnname = "�added.name.toUpperCase�";
-//					SET @preparedStatement = 
-//						(SELECT IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE
-//						(table_name = @tablename)
-//						AND (table_schema = @dbname)
-//						AND (column_name = @columnname)) > 0,
-//						"SELECT null", 
-//						CONCAT("ALTER TABLE �owner.name.toLowerCase� ADD �added.name.toUpperCase� �javaToSQLType(added.type.name)�
-//						�IF added.defaultValue !== null� DEFAULT �IF added.type.name.equals("java.lang.String")�'�added.defaultValue.value�'�ELSE��added.defaultValue.value��ENDIF��ENDIF�; ")
-//						));
-//					PREPARE alterIfNotExists FROM @preparedStatement;
-//					EXECUTE alterIfNotExists;
-//					DEALLOCATE PREPARE alterIfNotExists;	
-//					
-//					�IF added.initialValue.size > 0�
-//						-- Set initial values
-//					�ENDIF�
-//					�FOR initialValue : added.initialValue�
-//						UPDATE �owner.name.toLowerCase� SET �added.name.toUpperCase� = �IF added.type.name.equals("java.lang.String")�'�initialValue.value�'�ELSE��initialValue.value��ENDIF� where �initialValue.whereCondition� and DB_ID > 0;
-//					�ENDFOR�
-//					
-//				'''
-//			}
 	}
 
 	def dispatch String processChangeOperation(AddReference object) {
@@ -512,7 +418,7 @@ class SQLGenerator {
 	}
 
 	/**
-	 * Verarbeitet eine Transaktion und gibt den Code f�r die SQL Datei als String zur�ck.
+	 * Verarbeitet eine Transaktion und gibt den Code für die SQL Datei als String zurueck.
 	 */
 	def String processChange(SemanticChangeSet semanticChangeSet) {
 		if (processed.contains(semanticChangeSet))
@@ -528,176 +434,11 @@ class SQLGenerator {
 			content += change.processChangeOperation
 		}
 
-		/** 
-		 * 
-		 * for (added : transaction.modelElement.filter(Added)) {
-		 * 	// Add a new table (class)
-		 * 	 else if (added instanceof AddedReference) {
-		 * 		// ADD References
-		 * 		var Class owner = added.owner;
-		 * 		var Class type = added.type as Class;
-		 * 		if (owner.supertypes.size > 0) {
-		 * 			owner = findSuperType(owner.supertypes)
-		 * 		}
-		 * 		if (type.supertypes.size > 0) {
-		 * 			type = findSuperType(type.supertypes)
-		 * 		}
-		 * 		// Simple 1:n reference.
-		 * 		if (added.upper == 1) {
-		 * 			content += '''
-		 * 				SET @dbname = DATABASE();
-		 * 				SET @tablename = "�owner.name.toLowerCase�";
-		 * 				SET @columnname = "�type.name.toUpperCase�_DB_ID";
-		 * 				SET @preparedStatement = (SELECT IF(
-		 * 				(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE
-		 * 					(table_name = @tablename)
-		 * 					AND (table_schema = @dbname)
-		 * 					AND (column_name = @columnname)
-		 * 					) > 0,
-		 * 					"SELECT null",
-		 * 					CONCAT(
-		 * 					"ALTER TABLE ", @tablename, " ADD ", @columnname, " BIGINT(20); ")
-		 * 				));
-		 * 				PREPARE alterIfNotExists FROM @preparedStatement;
-		 * 				EXECUTE alterIfNotExists;
-		 * 				DEALLOCATE PREPARE alterIfNotExists;					
-		 * 				ALTER TABLE �owner.name.toLowerCase� ADD FOREIGN KEY (�type.name.toUpperCase�_DB_ID) REFERENCES �type.name�(DB_ID);
-		 * 				
-		 * 			'''
-		 * 		} else if (added.upper == -1) {
-		 * 			var String tableName = "";
-		 * 			if (owner.name.compareTo(type.name) == 1) {
-		 * 				tableName = owner.name + "_" + type.name;
-		 * 			} else {
-		 * 				tableName = type.name + "_" + owner.name;
-		 * 			}
-
-		 * 			content += '''
-		 * 				-- Create Table �tableName.toLowerCase�
-		 * 				CREATE TABLE IF NOT EXISTS �tableName.toLowerCase�  (
-		 * 				�owner.name.toUpperCase�_DB_ID BIGINT(20) NOT NULL,
-		 * 				�type.name.toUpperCase()�_DB_ID BIGINT(20) NOT NULL,
-		 * 				FOREIGN KEY (�owner.name.toUpperCase�_DB_ID) REFERENCES �owner.name�(DB_ID),
-		 * 				FOREIGN KEY (�type.name.toUpperCase�_DB_ID) REFERENCES �type.name�(DB_ID)
-		 * 				);
-		 * 			'''
-		 * 		}
-
-		 * 	}
-		 * }
-		 * // Filter changed Elements
-		 * for (changed : transaction.modelElement.filter(Changed)) {
-
-		 * 	// Changed Attributes
-		 * 	if (changed instanceof ChangedAttribute) {
-		 * 		var Class owner = changed.owner;
-		 * 		if (owner.supertypes.size > 0) {
-		 * 			owner = findSuperType(owner.supertypes)
-
-		 * 		}
-		 * 		if (changed.updatedElement.equals(EcorePackage.Literals.ENAMED_ELEMENT__NAME.name)) {
-
-		 * 			content +=
-		 * 				'''ALTER TABLE �owner.name.toLowerCase� CHANGE �changed.name.toUpperCase� �(changed.newValue as String).toUpperCase� �javaToSQLType(changed.type.name)�;
-		 * 						
-		 * 						'''
-		 * 		}
-		 * 		if (changed.updatedElement.equals(ecore.EcorePackage.Literals.TYPED_ELEMENT__ETYPE.name)) {
-		 * 			content += '''
-		 * 				DELIMITER $$
-		 * 				
-		 * 				DROP procedure IF EXISTS `changeColumnType`$$
-		 * 				CREATE PROCEDURE `changeColumnType`()
-		 * 				BEGIN
-		 * 				    DECLARE `_rollback` BOOL DEFAULT 0;
-		 * 				    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
-		 * 				    START TRANSACTION;
-		 * 						ALTER TABLE �owner.name.toLowerCase� MODIFY COLUMN �changed.name.toUpperCase� �javaToSQLType(changed.newValue as String)�;
-		 * 						  IF `_rollback` THEN
-		 * 						     ROLLBACK;
-		 * 						  ELSE
-		 * 						      COMMIT;
-		 * 						  END IF;
-		 * 				END$$
-		 * 				
-		 * 				DELIMITER ;
-		 * 				
-		 * 				CALL `changeColumnType`;
-		 * 				DROP procedure IF EXISTS `changeColumnType`;
-		 * 			'''
-		 * 		
-		 */
-		/*''ALTER TABLE �owner.name.toLowerCase� MODIFY COLUMN �changed.name.toUpperCase� �javaToSQLType(changed.newValue as String)�;
-		 * 
-		 '''*/
-		/** 
-		 * 
-		 * 				}
-
-		 * 			} else if (changed instanceof ChangedReference) {
-		 * 				// changed references
-		 * 				var Class owner = changed.owner;
-		 * 				if (owner.supertypes.size > 0) {
-		 * 					owner = findSuperType(owner.supertypes)
-
-		 * 				}
-		 * 				var Class type = changed.type as Class;
-		 * 				if (type.supertypes.size > 0) {
-		 * 					type = findSuperType(type.supertypes)
-
-		 * 				}
-		 * 				// Changed Reference from 1:n to n:m
-		 * 				if (changed.updatedElement.equals(ecore.EcorePackage.Literals.TYPED_ELEMENT__UPPER_BOUND.name) &&
-		 * 					changed.upper == 1) {
-		 * 					var String tableName;
-		 * 					if (owner.name.compareTo(type.name) == 1) {
-		 * 						tableName = owner.name + "_" + type.name;
-		 * 					} else {
-		 * 						tableName = type.name + "_" + owner.name;
-		 * 					}
-
-		 * 					content += '''
-		 * 						-- create table �tableName.toLowerCase�
-		 * 						CREATE TABLE IF NOT EXISTS �tableName.toLowerCase�  (
-		 * 						�owner.name.toUpperCase�_DB_ID BIGINT(20) NOT NULL,
-		 * 						�type.name.toUpperCase()�_DB_ID BIGINT(20) NOT NULL,
-		 * 						FOREIGN KEY (�owner.name.toUpperCase�_DB_ID) REFERENCES �owner.name�(DB_ID),
-		 * 						FOREIGN KEY (�type.name.toUpperCase�_DB_ID) REFERENCES �type.name�(DB_ID)
-		 * 						);
-		 * 						
-		 * 						-- insert already existing values into table �tableName.toLowerCase�
-		 * 						INSERT INTO �tableName.toLowerCase� (�owner.name.toUpperCase�_DB_ID,�type.name.toUpperCase()�_DB_ID)
-		 * 						SELECT DB_ID, �type.name.toUpperCase�_DB_ID
-		 * 						FROM �owner.name.toLowerCase�
-		 * 						WHERE �type.name.toUpperCase�_DB_ID IS NOT NULL;
-		 * 						
-		 * 					'''
-		 * 				// TODO Delete k�nnte an dieser Stelle erfolgen
-		 * 				}
-
-		 * 			}
-
-		 * 		}
-
-		 */
 		processed.add(semanticChangeSet);
 		return content;
 
 	}
 
-//	def Class findSuperType(List<Class> superTypes) {
-//		if (superTypes.size == 1) {
-//			var Class supertype = superTypes.get(0);
-//			if (supertype.isIsAbstract || supertype.supertypes.size == 0) {
-//				return supertype;
-//			} else
-//				return findSuperType(supertype.supertypes)
-//
-//		} else {
-//			// Theoretical possible but no valid argument.
-//			throw new IllegalArgumentException("Class has more than one supertype.")
-//		}
-//	}
 	def String javaToSQLType(String type) {
 		switch (type) {
 			case "java.lang.String": {

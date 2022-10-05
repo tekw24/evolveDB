@@ -156,7 +156,15 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SET_COLUMN_TYPE_AND_SIZE(13, "SET_COLUMN_TYPE_AND_SIZE", "SET_COLUMN_TYPE_AND_SIZE");
+	SET_COLUMN_TYPE_AND_SIZE(13, "SET_COLUMN_TYPE_AND_SIZE", "SET_COLUMN_TYPE_AND_SIZE"), /**
+	 * The '<em><b>CHANGE 1N INTO NM MOVE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_1N_INTO_NM_MOVE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CHANGE_1N_INTO_NM_MOVE(14, "CHANGE_1N_INTO_NM_MOVE", "CHANGE_1N_INTO_NM_MOVE");
 
 	/**
 	 * The '<em><b>DELETE COLUMN</b></em>' literal value.
@@ -313,6 +321,17 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	public static final int SET_COLUMN_TYPE_AND_SIZE_VALUE = 13;
 
 	/**
+	 * The '<em><b>CHANGE 1N INTO NM MOVE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_1N_INTO_NM_MOVE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CHANGE_1N_INTO_NM_MOVE_VALUE = 14;
+
+	/**
 	 * An array of all the '<em><b>Partially Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -334,6 +353,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			CHANGE_NM_INTO_1N,
 			CHANGE_NM_INTO_1N_PRESERVE,
 			SET_COLUMN_TYPE_AND_SIZE,
+			CHANGE_1N_INTO_NM_MOVE,
 		};
 
 	/**
@@ -404,6 +424,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			case CHANGE_NM_INTO_1N_VALUE: return CHANGE_NM_INTO_1N;
 			case CHANGE_NM_INTO_1N_PRESERVE_VALUE: return CHANGE_NM_INTO_1N_PRESERVE;
 			case SET_COLUMN_TYPE_AND_SIZE_VALUE: return SET_COLUMN_TYPE_AND_SIZE;
+			case CHANGE_1N_INTO_NM_MOVE_VALUE: return CHANGE_1N_INTO_NM_MOVE;
 		}
 		return null;
 	}

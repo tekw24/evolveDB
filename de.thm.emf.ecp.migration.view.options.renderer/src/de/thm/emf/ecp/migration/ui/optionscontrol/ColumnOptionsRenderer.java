@@ -375,21 +375,19 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 
 			}
 
+			//$FALL-THROUGH$
 			case CHANGE_1N_INTO_NM:
-			case CHANGE_1N_INTO_NM_PRESERVE: {
+			case CHANGE_1N_INTO_NM_PRESERVE:
+			case CHANGE_1N_INTO_NM_MOVE: {
 
 				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
-					final SemanticChangeSet set = partiallyResolvable.getSemanticChangeSets().get(0);
 
-					for (final Change change : set.getChanges()) {
-						final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
-							ColumnOptions.MIGRATE_DATA);
+					final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
+						ColumnOptions.MIGRATE_DATA);
 
-						createComboBoxComponent(composite, compatibility,
-							Messages.ColumnOptionsRenderer_DATA_MIGRATE);
-						return composite;
-
-					}
+					createComboBoxComponent(composite, compatibility,
+						Messages.ColumnOptionsRenderer_DATA_MIGRATE);
+					return composite;
 
 				}
 
@@ -400,18 +398,14 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 			case CHANGE_NM_INTO_1N: {
 
 				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
-					final SemanticChangeSet set = partiallyResolvable.getSemanticChangeSets().get(0);
 
-					for (final Change change : set.getChanges()) {
-						final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
-							ColumnOptions.MIGRATE_DATA, ColumnOptions.DELETE_DUBLICATES,
-							ColumnOptions.IGNORE_DUBLICATES);
+					final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
+						ColumnOptions.MIGRATE_DATA, ColumnOptions.DELETE_DUBLICATES,
+						ColumnOptions.IGNORE_DUBLICATES);
 
-						createComboBoxComponent(composite, compatibility,
-							Messages.ColumnOptionsRenderer_DATA_MIGRATE);
-						return composite;
-
-					}
+					createComboBoxComponent(composite, compatibility,
+						Messages.ColumnOptionsRenderer_DATA_MIGRATE);
+					return composite;
 
 				}
 
@@ -422,17 +416,13 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 			case CHANGE_NM_INTO_1N_PRESERVE: {
 
 				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
-					final SemanticChangeSet set = partiallyResolvable.getSemanticChangeSets().get(0);
 
-					for (final Change change : set.getChanges()) {
-						final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
-							ColumnOptions.MIGRATE_DATA, ColumnOptions.IGNORE_DUBLICATES);
+					final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
+						ColumnOptions.MIGRATE_DATA, ColumnOptions.IGNORE_DUBLICATES);
 
-						createComboBoxComponent(composite, compatibility,
-							Messages.ColumnOptionsRenderer_DATA_MIGRATE);
-						return composite;
-
-					}
+					createComboBoxComponent(composite, compatibility,
+						Messages.ColumnOptionsRenderer_DATA_MIGRATE);
+					return composite;
 
 				}
 

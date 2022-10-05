@@ -50,21 +50,21 @@ class CREATE_ELEMENT {
 			if (primaryKey != null) {
 
 				content+='''
-					-- Create Table �entity.name�
-					CREATE TABLE IF NOT EXISTS �entity.name�  (
-					�IF primaryKey !== null� 
-						�primaryKey.name.toUpperCase� �primaryKey.type.getName()��ColumnUtil.getSizeString(primaryKey)� �primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""� �primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""�, PRIMARY KEY (�primaryKey.name�));
-					�ENDIF�
-					�FOR ForeignKey e : foreignKeys SEPARATOR ','�
-						�e.name.toUpperCase� �e.type��ColumnUtil.getSizeString(e)� �e.notNull !== null && e.notNull ? "NOT NULL" : ""�,
-						FOREIGN KEY (�e.name.toUpperCase�) REFERENCES �e.referencedTable.name�(DB_ID)
-						ON DELETE �e.onDelete.name()�
-						ON UPDATE �e.onUpdate.name()�
-					�ENDFOR�
-					�FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER extraKomma(primaryForeignKeys.size)�
-						�e.name� �e.type� �ColumnUtil.getSizeString(e)� �e.notNull !== null && e.notNull ? "NOT NULL" : ""� �e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""� 
-						�ColumnUtil.getDefaultValueString(e)�
-					�ENDFOR�
+					-- Create Table «entity.name»
+					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					«IF primaryKey !== null» 
+						«primaryKey.name.toUpperCase» «primaryKey.type.getName()»«ColumnUtil.getSizeString(primaryKey)» «primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""» «primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""», PRIMARY KEY («primaryKey.name»));
+					«ENDIF»
+					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
+						«e.name.toUpperCase» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
+						FOREIGN KEY («e.name.toUpperCase») REFERENCES «e.referencedTable.name»(DB_ID)
+						ON DELETE «e.onDelete.name()»
+						ON UPDATE «e.onUpdate.name()»
+					«ENDFOR»
+					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER extraKomma(primaryForeignKeys.size)»
+						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+						«ColumnUtil.getDefaultValueString(e)»
+					«ENDFOR»
 					
 					);
 				'''
@@ -72,25 +72,25 @@ class CREATE_ELEMENT {
 			} else if (primaryForeignKeys.size > 0) {
 
 				content+='''
-					-- Create Table �entity.name�
-					CREATE TABLE IF NOT EXISTS �entity.name�  (
-					�FOR ForeignKey e : foreignKeys SEPARATOR ',' AFTER ',' �
-						`�e.name�` �e.type��ColumnUtil.getSizeString(e)� �e.notNull !== null && e.notNull ? "NOT NULL" : ""�
-					�ENDFOR�
-					�FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER ','�
-						`�e.name�` �e.type� �ColumnUtil.getSizeString(e)� �e.notNull !== null && e.notNull ? "NOT NULL" : ""� �e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""� 
-						�ColumnUtil.getDefaultValueString(e)�
-					�ENDFOR�
-					�IF primaryForeignKeys.size > 0�
-					PRIMARY KEY(�FOR ForeignKey e : primaryForeignKeys SEPARATOR ','�`�e.name�` �ENDFOR�),
-					�ENDIF�
-					�FOR ForeignKey e : foreignKeys SEPARATOR ','�
-						CONSTRAINT `�e.constraintName�`
-						FOREIGN KEY (`�e.name.toUpperCase�`) 
-						REFERENCES `�e.referencedTable.name�`(`�e.referencedKeyColumn.name�`)
-						ON DELETE �e.onDelete.name()�
-						ON UPDATE �e.onUpdate.name()�
-					�ENDFOR�
+					-- Create Table «entity.name»
+					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					«FOR ForeignKey e : foreignKeys SEPARATOR ',' AFTER ',' »
+						`«e.name»` «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»
+					«ENDFOR»
+					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER ','»
+						`«e.name»` «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+						«ColumnUtil.getDefaultValueString(e)»
+					«ENDFOR»
+					«IF primaryForeignKeys.size > 0»
+					PRIMARY KEY(«FOR ForeignKey e : primaryForeignKeys SEPARATOR ','»`«e.name»` «ENDFOR»),
+					«ENDIF»
+					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
+						CONSTRAINT `«e.constraintName»`
+						FOREIGN KEY (`«e.name.toUpperCase»`) 
+						REFERENCES `«e.referencedTable.name»`(`«e.referencedKeyColumn.name»`)
+						ON DELETE «e.onDelete.name()»
+						ON UPDATE «e.onUpdate.name()»
+					«ENDFOR»
 					);
 				'''
 
@@ -140,11 +140,11 @@ class CREATE_ELEMENT {
 			var primaryKeys = parent.primaryKeys
 
 			content += '''
-				-- Create primary key in �parent.name.toLowerCase� 
-				ALTER TABLE `�parent.name.toLowerCase�` 
-				ADD COLUMN `�key.name�` �key.type��ColumnUtil.getSizeString(key)� �key.notNull !== null && key.notNull ? "NOT NULL" : ""� �key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""� �key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""�,
+				-- Create primary key in «parent.name.toLowerCase» 
+				ALTER TABLE `«parent.name.toLowerCase»` 
+				ADD COLUMN `«key.name»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»,
 				DROP PRIMARY KEY,
-				ADD PRIMARY KEY (�FOR p : primaryKeys SEPARATOR ', '�`�p.name�`�ENDFOR�);
+				ADD PRIMARY KEY («FOR p : primaryKeys SEPARATOR ', '»`«p.name»`«ENDFOR»);
 			'''
 
 		}
@@ -185,16 +185,16 @@ class CREATE_ELEMENT {
 
 			content += '''
 				-- add new column for foreign key
-				ALTER TABLE `�parent.name.toLowerCase�` 
-				ADD COLUMN `�key.name.toUpperCase�` �key.type��ColumnUtil.getSizeString(key)� �key.notNull !== null && key.notNull ? "NOT NULL" : ""� �key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""� �key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""�;
+				ALTER TABLE `«parent.name.toLowerCase»` 
+				ADD COLUMN `«key.name.toUpperCase»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»;
 								
-				-- Create foreign key in �parent.name.toLowerCase� 
-				ALTER TABLE `�parent.name.toLowerCase�` 
-				ADD CONSTRAINT `�key.constraintName�`
-				  FOREIGN KEY (`�key.name.toUpperCase�`)
-				  REFERENCES `�key.referencedTable.name.toLowerCase�`(`�key.referencedKeyColumn.name.toUpperCase�`)
-				  ON DELETE �key.onDelete.name()�
-				  ON UPDATE �key.onUpdate.name()�;
+				-- Create foreign key in «parent.name.toLowerCase»
+				ALTER TABLE `«parent.name.toLowerCase»` 
+				ADD CONSTRAINT `«key.constraintName»`
+				  FOREIGN KEY (`«key.name.toUpperCase»`)
+				  REFERENCES `«key.referencedTable.name.toLowerCase»`(`«key.referencedKeyColumn.name.toUpperCase»`)
+				  ON DELETE «key.onDelete.name()»
+				  ON UPDATE «key.onUpdate.name()»;
 			'''
 		}
 
@@ -232,40 +232,13 @@ class CREATE_ELEMENT {
 
 			var Table owner = attribute.table
 			var content = '''
-				-- Add the new column �attribute.name.toUpperCase� in Table �attribute.table.name.toLowerCase�
-				ALTER TABLE `�attribute.table.name.toLowerCase�` 
-				ADD COLUMN `�attribute.name.toUpperCase�` �attribute.type��ColumnUtil.getSizeString(attribute)� �attribute.notNull !== null && attribute.notNull ? "NOT NULL" : ""� �attribute.autoIncrement !== null && attribute.autoIncrement ? "AUTO_INCREMENT" : ""� 
-				�ColumnUtil.getDefaultValueString(attribute)� ;
+				-- Add the new column «attribute.name.toUpperCase» in Table «attribute.table.name.toLowerCase»
+				ALTER TABLE `«attribute.table.name.toLowerCase»` 
+				ADD COLUMN `«attribute.name.toUpperCase»` «attribute.type»«ColumnUtil.getSizeString(attribute)» «attribute.notNull !== null && attribute.notNull ? "NOT NULL" : ""» «attribute.autoIncrement !== null && attribute.autoIncrement ? "AUTO_INCREMENT" : ""» 
+				«ColumnUtil.getDefaultValueString(attribute)» ;
 			'''
 			return content;
 
-//			'''
-//				-- Add the new column �attribute.name.toUpperCase� in Table �attribute.table.name.toLowerCase�
-//					SET @dbname = DATABASE();
-//					SET @tablename = "�owner.name.toLowerCase�";
-//					SET @columnname = "�attribute.name.toUpperCase�";
-//					SET @preparedStatement = 
-//						(SELECT IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE
-//						(table_name = @tablename)
-//					AND (table_schema = @dbname)
-//						AND (column_name = @columnname)) > 0,
-//						"SELECT null", 
-//						CONCAT("ALTER TABLE �owner.name.toLowerCase� ADD �attribute.name.toUpperCase� �attribute.type�
-//					�IF attribute.defaultValue !== null� DEFAULT �IF attribute.type.equals("java.lang.String")�'�attribute.defaultValue�'�ELSE��attribute.defaultValue��ENDIF��ENDIF�; ")
-//					));
-//					PREPARE alterIfNotExists FROM @preparedStatement;
-//					EXECUTE alterIfNotExists;
-//					DEALLOCATE PREPARE alterIfNotExists;	
-//					
-//			'''
-//					�IF attribute.initialValue.size > 0�
-//						-- Set initial values
-//					�ENDIF�
-//					�FOR initialValue : added.initialValue�
-//						UPDATE �owner.name.toLowerCase� SET �added.name.toUpperCase� = �IF added.type.name.equals("java.lang.String")�'�initialValue.value�'�ELSE��initialValue.value��ENDIF� where �initialValue.whereCondition� and DB_ID > 0;
-//					�ENDFOR�
-//					
-//				'''
 		}
 
 	}

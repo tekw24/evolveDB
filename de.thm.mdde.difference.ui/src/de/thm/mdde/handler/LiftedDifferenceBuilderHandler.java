@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -53,12 +54,14 @@ public class LiftedDifferenceBuilderHandler extends AbstractHandler {
 							"An error occured while loading the resource!", activeShell, "Error", e);
 				}
 
-				result = ModelValidation.validateModel(resModelFile, "de.thm.mdde.difference.ui", fileEcore);
+				result = (result && ModelValidation.validateModel(resModelFile, "de.thm.mdde.difference.ui", fileEcore, false));
 
 			}
 		}
 
 		if (result) {
+			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validation",
+					"Validation successfull!");
 			Display.getDefault().asyncExec(() -> {
 				InputModels inputModels = InputModels.builder().addModels(selection).assertNumModels(2)
 						.assertSameDocumentType(true).build();

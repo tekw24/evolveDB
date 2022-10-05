@@ -74,12 +74,12 @@ class ColumnUtil {
 
 			if (displayWitdhTypes.contains(type) || textTypes.contains(type) || dateTypesWithFraction.contains(type) ||
 				decimalTypes.contains(type)) {
-				return '''(�size�)'''
+				return '''(«size»)'''
 
 			}
 		} else if (column.size.matches("[0-9]+\\.[0-9]+") && decimalTypes.contains(type)) {
 			var size = column.size.replace('.', ',');
-			return '''(�size�)'''
+			return '''(«size»)'''
 		}
 
 		return '';
@@ -116,7 +116,7 @@ class ColumnUtil {
 			return '';
 		} else {
 
-			var content = '''�IF SQLGenerator.textTypes.contains(column.type)�DEFAULT '�column.defaultValue�'�ELSE�DEFAULT �column.defaultValue��ENDIF�'''
+			var content = '''«IF SQLGenerator.textTypes.contains(column.type)»DEFAULT «column.defaultValue»'«ELSE»DEFAULT «column.defaultValue»«ENDIF»'''
 			return content;
 		}
 
@@ -128,7 +128,7 @@ class ColumnUtil {
 			return '';
 		} else {
 
-			var content = '''�IF SQLGenerator.textTypes.contains(column.type)�'�column.defaultValue�'�ELSE��column.defaultValue��ENDIF�'''
+			var content = '''«IF SQLGenerator.textTypes.contains(column.type)»'«column.defaultValue»'«ELSE»«column.defaultValue»«ENDIF»'''
 			return content;
 		}
 
@@ -151,55 +151,55 @@ class ColumnUtil {
 				if (objB.type === DataType.TIME)
 					dateString = 'TIME';
 
-				return '''�key.name� in (SELECT �key.name� FROM �objB.table.name� �substring�1 where STR_TO_DATE(�substring�1.�objB.name�, GET_FORMAT(�dateString�,'ISO')) is null) and �objB.name� is not null ; '''
+				return '''«key.name» in (SELECT «key.name» FROM «objB.table.name» «substring»1 where STR_TO_DATE(«substring»1.«objB.name», GET_FORMAT(«dateString»,'ISO')) is null) and «objB.name» is not null ; '''
 
-			// return ''' (SELECT DATE(�objB.name�) FROM �objB.table.name� �substring�1 where �substring�.DB_ID = �substring�1.DB_ID ) is not null ;'''
+			// return ''' (SELECT DATE(«objB.name») FROM «objB.table.name» «substring»1 where «substring».DB_ID = «substring»1.DB_ID ) is not null ;'''
 			} else if (textTypes.contains(objB.type) || binaryTypes.contains(objB.type)) {
 
 				if (objB.type === DataType.VARCHAR || objB.type === DataType.CHAR || objB.type === DataType.VARBINARY ||
 					objB.type === DataType.BIT)
-					return '''LENGTH(`�objB.name�`) > �getSizeValue(objB.size)�;'''
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+					return '''LENGTH(`«objB.name»`) > «getSizeValue(objB.size)»;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 
 			}
 
 		} else if (dateTypesWithFraction.contains(objA.type) || dateTypes.contains(objA.type)) {
 
 			if (textTypes.contains(objB.type) || binaryTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �getSizeValue(objB.size)�;'''
+				return '''LENGTH(`«objB.name»`) > «getSizeValue(objB.size)»;'''
 			} else if (decimalTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (displayWitdhTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (dateTypesWithFraction.contains(objB.type) || dateTypes.contains(objB.type)) {
 				if (objA.type === DataType.YEAR || objB.type === DataType.YEAR)
-					return '''�objB.name� != null'''
+					return '''«objB.name» != null'''
 			}
 
 		} else if (decimalTypes.contains(objA.type)) {
 
 			if (textTypes.contains(objB.type) || binaryTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (decimalTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (displayWitdhTypes.contains(objB.type)) {
-				return '''�objB.name� > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''«objB.name» > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (dateTypesWithFraction.contains(objB.type) || dateTypes.contains(objB.type)) {
 				//Possible but currently unchecked
-				'''�objB.name� is not null;'''
+				'''«objB.name» is not null;'''
 			}
 
 		} else if (displayWitdhTypes.contains(objA.type)) {
 			if (textTypes.contains(objB.type) || binaryTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �getSizeValue(objB.size)�;'''
+				return '''LENGTH(`«objB.name»`) > «getSizeValue(objB.size)»;'''
 			} else if (decimalTypes.contains(objB.type)) {
 				if (objB.type === DataType.DEC || objB.type === DataType.DECIMAL)
-					return '''LENGTH(`�objB.name�`) > �getDecimalSizeValue(objB.size)�;'''
+					return '''LENGTH(`«objB.name»`) > «getDecimalSizeValue(objB.size)»;'''
 			} else if (displayWitdhTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 			} else if (dateTypesWithFraction.contains(objB.type) || dateTypes.contains(objB.type)) {
 				//Possible but currently unchecked
-				'''�objB.name� is not null;'''
+				'''«objB.name» is not null;'''
 			}
 
 		} else if (binaryTypes.contains(objA.type)) {
@@ -207,18 +207,18 @@ class ColumnUtil {
 
 				if (objB.type === DataType.VARCHAR || objB.type === DataType.CHAR || objB.type === DataType.VARBINARY ||
 					objB.type === DataType.BIT)
-					return '''LENGTH(`�objB.name�`) > �getSizeValue(objB.size)�;'''
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)�;'''
+					return '''LENGTH(`«objB.name»`) > «getSizeValue(objB.size)»;'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)»;'''
 
 			} else if (decimalTypes.contains(objB.type)) {
 				if (objB.type === DataType.DEC || objB.type === DataType.DECIMAL)
-					return '''LENGTH(`�objB.name�`) > �getDecimalSizeValue(objB.size)� and not REGEXP ^-?[0-9]+\.[0-9]+$;'''
+					return '''LENGTH(`«objB.name»`) > «getDecimalSizeValue(objB.size)» and not REGEXP ^-?[0-9]+\.[0-9]+$;'''
 				return '''not REGEXP ^-?[0-9]+\.[0-9]+$;'''
 			} else if (displayWitdhTypes.contains(objB.type)) {
-				return '''LENGTH(`�objB.name�`) > �dataTypeMaxSize.get(objB.type)� and not REGEXP '^-?[0-9]+$';'''
+				return '''LENGTH(`«objB.name»`) > «dataTypeMaxSize.get(objB.type)» and not REGEXP '^-?[0-9]+$';'''
 			} else if (dateTypesWithFraction.contains(objB.type) || dateTypes.contains(objB.type)) {
 				var substring = objB.table.name.substring(0, 1);
-				return '''�objB.name� in (SELECT �key.name� FROM �objB.table.name� �substring�1 where STR_TO_DATE(�substring�1.�objB.name�, GET_FORMAT(DATE,'ISO')) is null) and �objB.name� is not null ; '''
+				return '''«objB.name» in (SELECT «key.name» FROM «objB.table.name» «substring»1 where STR_TO_DATE(«substring»1.«objB.name», GET_FORMAT(DATE,'ISO')) is null) and «objB.name» is not null ; '''
 			}
 
 		}
@@ -231,7 +231,7 @@ class ColumnUtil {
 	def static String createDataCleansingTable(String tableName, Database_Schema databaseSchema) {
 
 		'''
-		CREATE TABLE IF NOT EXISTS `�databaseSchema.name�`.`�tableName�` (
+		CREATE TABLE IF NOT EXISTS `«databaseSchema.name»`.`«tableName»` (
 		  `DB_ID` BIGINT NOT NULL AUTO_INCREMENT,
 		  `TABLENAME` VARCHAR(255) NOT NULL,
 		  `COLUMN_DB_ID` BIGINT NOT NULL,
@@ -250,13 +250,13 @@ class ColumnUtil {
 		var substring = obj.table.name.substring(0, 1);
 		// The where clause adds the missing semicolon
 		'''
-			INSERT INTO `�databaseSchema.name�`.`�tableName�`
+			INSERT INTO `«databaseSchema.name»`.`«tableName»`
 			(`TABLENAME`,
 			`COLUMN_DB_ID`,
 			`COLUMN_NAME`,
 			`VALUE`,
 			`CHANGEDATE`)
-			SELECT '�obj.table.name�', �primaryKey.name�, '�obj.name�', �obj.name�, now() from �obj.table.name� �substring� where �whereClause�
+			SELECT '«obj.table.name»', «primaryKey.name», '«obj.name»', «obj.name», now() from «obj.table.name» «substring» where «whereClause»
 		'''
 
 	}
@@ -268,13 +268,13 @@ class ColumnUtil {
 		Column obj, PrimaryKey primaryKey, String temp_table_name) {
 
 		'''
-			INSERT INTO `�databaseSchema.name�`.`�tableName�`
+			INSERT INTO `«databaseSchema.name»`.`«tableName»`
 			(`TABLENAME`,
 			`COLUMN_DB_ID`,
 			`COLUMN_NAME`,
 			`VALUE`,
 			`CHANGEDATE`)
-			SELECT '�obj.table.name�', �primaryKey.name�, '�obj.name�', �obj.name�, now() from �obj.table.name� where �primaryKey.name� in (Select �primaryKey.name� from �temp_table_name�);
+			SELECT '«obj.table.name»', «primaryKey.name», '«obj.name»', «obj.name», now() from «obj.table.name» where «primaryKey.name» in (Select «primaryKey.name» from «temp_table_name»);
 		'''
 
 	}
@@ -284,9 +284,9 @@ class ColumnUtil {
 		var content = '''
 			SET @sql_mode = @@SESSION.sql_mode;
 			set @@SESSION.sql_mode = '';
-			DROP TEMPORARY TABLE IF EXISTS �temp_table_name�;
-			CREATE TEMPORARY TABLE �temp_table_name�
-			   SELECT �key.name� from �table.name� v where �whereClause�  
+			DROP TEMPORARY TABLE IF EXISTS «temp_table_name»;
+			CREATE TEMPORARY TABLE «temp_table_name»
+			   SELECT «key.name» from «table.name» v where «whereClause»  
 			set @@SESSION.sql_mode = @sql_mode;
 		''';
 		return content;
@@ -294,7 +294,7 @@ class ColumnUtil {
 
 	def static String deleteTemporaryTable(String temp_table_name) {
 		'''
-			DROP TEMPORARY TABLE IF EXISTS �temp_table_name�;
+			DROP TEMPORARY TABLE IF EXISTS «temp_table_name»;
 		'''
 	}
 
@@ -409,7 +409,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden size ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -439,7 +439,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden size gesetzt
 						return true;
 					}
 					case TINYTEXT: {
@@ -525,7 +525,7 @@ class ColumnUtil {
 						return false;
 					}
 					case TEXT: {
-						// Die Daten k�nnten zu lang sein. Eventuell gegen die Size �berpr�fen. TODO
+						// Die Daten koennten zu lang sein. Eventuell gegen die Size ueberpruefen. TODO
 						return false;
 					}
 					case TINYTEXT: {
@@ -813,7 +813,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden Gr»«e ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -844,7 +844,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden Gr»«e ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -875,7 +875,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden Gr»«e ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -906,7 +906,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden Gr»«e ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -937,7 +937,7 @@ class ColumnUtil {
 							return false;
 					}
 					case TEXT: {
-						// TEXT wird in den Datentyp mit der entsprechenden Gr��e �berf�hrt
+						// TEXT wird in den Datentyp mit der entsprechenden Gr»«e ueberfuehrt
 						return true;
 					}
 					case TINYTEXT: {
@@ -1823,7 +1823,7 @@ class ColumnUtil {
 				switch objB.type {
 					case DEC,
 					case DECIMAL: {
-						// Geht zwar wenn der Decimal die richtige Gr��e hat aber geht einher mit Datenverlust
+						// Geht zwar wenn der Decimal die richtige Gr»«e hat aber geht einher mit Datenverlust
 						return false;
 					}
 					case FLOAT: {
@@ -2051,7 +2051,7 @@ class ColumnUtil {
 	}
 
 	def static boolean checkBinaryToDate(Column objA, Column objB) {
-		// Format �berpr�fen und Gr��e
+		// Format ueberpruefen und Gr»«e
 		switch objA.type {
 			case BLOB: {
 				return false;
@@ -2080,7 +2080,7 @@ class ColumnUtil {
 
 	def static boolean checkBinaryToNumeric(Column objA, Column objB) {
 
-		// Format �berpr�fen und Gr��e
+		// check format and size
 		switch objA.type {
 			case BLOB: {
 				return false;
@@ -2117,7 +2117,7 @@ class ColumnUtil {
 			case BINARY,
 			case VARBINARY,
 			case BIT: {
-				// Format �berpr�fen
+				// check format
 				return false;
 			}
 		}

@@ -614,6 +614,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_NM_INTO_1N);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_NM_INTO_1N_PRESERVE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_TYPE_AND_SIZE);
+		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_MOVE);
 
 		initEEnum(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.class, "NotAutomaticallyResolvableOperatorType");
 		addEEnumLiteral(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.MOVE_PRIMARY_KEY);

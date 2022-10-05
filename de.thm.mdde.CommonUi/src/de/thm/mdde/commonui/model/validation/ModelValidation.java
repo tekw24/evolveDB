@@ -27,12 +27,16 @@ public class ModelValidation {
 			IFile file = ResourceUtil.getFile(r);
 			return validateModel(r, pluginID, file);
 		}
-		
+
 		return false;
 
 	}
 
 	public static boolean validateModel(Resource resource, String pluginID, IFile file) {
+		return validateModel(resource, pluginID, file, true);
+	}
+
+	public static boolean validateModel(Resource resource, String pluginID, IFile file, boolean showResult) {
 		EObject root = resource.getContents().get(0);
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(root);
 		if (file != null) {
@@ -83,12 +87,12 @@ public class ModelValidation {
 					// The data should be an EObject
 					if (d.getData() != null && d.getData().size() > 0) {
 						Object object = d.getData().get(0);
-						
+
 						String path = EcoreUtil.getURI((EObject) object).toString();
 						String path2 = EcoreUtil.getURI((EObject) object).toFileString();
 						String path3 = EcoreUtil.getURI((EObject) object).toPlatformString(false);
 						String path4 = EcoreUtil.getURI((EObject) object).toPlatformString(true);
-						
+
 						if (object instanceof EObject) {
 							marker.setAttribute(EValidator.URI_ATTRIBUTE,
 									EcoreUtil.getURI((EObject) object).toString());
@@ -108,24 +112,28 @@ public class ModelValidation {
 				boolean result = true;
 				switch (diagnostic.getSeverity()) {
 				case Diagnostic.ERROR:
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
-							"The validation finished with errors!");
+					if (showResult)
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"The validation finished with errors!");
 					result = false;
 					break;
 				case Diagnostic.INFO:
-					MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Info",
-							diagnostic.getMessage());
+					if (showResult)
+						MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Info",
+								diagnostic.getMessage());
 					result = true;
 					break;
 
 				case Diagnostic.WARNING:
-					MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Warning",
-							"The validation finished with warnings!");
+					if (showResult)
+						MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Warning",
+								"The validation finished with warnings!");
 					result = true;
 					break;
 				case Diagnostic.OK:
-					MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validation",
-							"Validation successfull!");
+					if (showResult)
+						MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validation",
+								"Validation successfull!");
 					result = true;
 					break;
 

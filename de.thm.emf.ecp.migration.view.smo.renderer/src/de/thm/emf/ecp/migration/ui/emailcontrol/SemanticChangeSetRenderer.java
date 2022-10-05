@@ -539,6 +539,70 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 								}
 							}
 
+						} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_MOVE")) { //$NON-NLS-1$
+
+							final List<RemoveReference> removeReference = set.getChanges().stream()
+								.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
+								.collect(Collectors.toList());
+							final List<AddObject> addReference = set.getChanges().stream()
+								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+								.collect(Collectors.toList());
+
+							if (removeReference.size() > 0 && addReference.size() > 0) {
+
+								final Optional<AddObject> addTable = addReference.stream()
+									.filter(n -> n.getObj() instanceof Table).findFirst();
+								final Optional<RemoveReference> moveForeignKey = removeReference.stream()
+									.filter(n -> n.getSrc() instanceof Column).findFirst();
+
+								if (addTable.isPresent() && moveForeignKey.isPresent()) {
+
+									final Table tableAdd = (Table) addTable.get().getObj();
+									final ForeignKey columnRemove = (ForeignKey) moveForeignKey.get().getSrc();
+
+									createCompositeForColumn(composite, columnRemove, null, null,
+										Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									final Label label = new Label(area, SWT.NONE);
+									label.setText(Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
+									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+									// setStyle method returns a new font descriptor for the given style
+									descriptor = descriptor.setStyle(SWT.BOLD);
+									label.setFont(descriptor.createFont(label.getDisplay()));
+
+									createHyperlink(area, tableAdd,
+										Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
+										Messages.SemanticChangeSetRenderer_newOBJ);
+
+									final Grid grid = createGrid(area, 3, 1);
+
+									for (final Column column : tableAdd.getColumns()) {
+										final GridItem item = new GridItem(grid, SWT.NONE);
+										item.setText(column.getName());
+										item.setText(1, column.eClass().getName());
+										item.setText(2, column.getType().getName());
+										item.setText(3, column.getSize() != null ? column.getSize()
+											: Messages.SemanticChangeSetRenderer_null);
+										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+											: Messages.SemanticChangeSetRenderer_null);
+										item.setChecked(5, column.getUnique() != null ? column.getUnique()
+											: false);
+										item.setChecked(6, column.getAutoIncrement() != null ? column.getAutoIncrement()
+											: false);
+
+									}
+
+								}
+							}
+
 						} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_PRESERVE")) { //$NON-NLS-1$
 
 							final List<AddObject> addReference = set.getChanges().stream()

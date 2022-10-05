@@ -146,6 +146,7 @@ helper def: partiallyResolvableRules : Sequence(String) =
 			'SET_ATTRIBUTE_Column_Type',
 			'CHANGE_1N_INTO_NM',
 			'CHANGE_1N_INTO_NM_PRESERVE',
+			'CHANGE_1N_INTO_NM_MOVE',
 			'CHANGE_NM_INTO_1N',
 			'CHANGE_NM_INTO_1N_PRESERVE',
 			'SET_ATTRIBUTE_Column_Size_and_Type'
@@ -165,6 +166,7 @@ helper def: partiallyResolvableEnumType : Map(String, Migration!PartiallyResolva
 		
 		('SET_REFERENCE_ForeignKey_(referencedTable)_TGT_Table', #SET_FOREIGNKEYS_TARGET_TABLE),
 		('CHANGE_1N_INTO_NM', #CHANGE_1N_INTO_NM),
+		('CHANGE_1N_INTO_NM_MOVE', #CHANGE_1N_INTO_NM_MOVE),
 		('CHANGE_1N_INTO_NM_PRESERVE', #CHANGE_1N_INTO_NM_PRESERVE),
 		('CHANGE_NM_INTO_1N', #CHANGE_NM_INTO_1N),
 		('CHANGE_NM_INTO_1N_PRESERVE', #CHANGE_NM_INTO_1N_PRESERVE)

@@ -1,19 +1,15 @@
 package de.thm.mdde.migration.view.editor;
 
-import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.common.command.CommandStackListener;
-import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
-import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 
+import de.thm.mdde.migration.view.editor.toolbar.GenerateAction;
 import de.thm.mdde.migration.view.editor.toolbar.ValidateModelAction;
 
 public class MigrationCustomEditor extends GenericEditor {
@@ -44,9 +40,8 @@ public class MigrationCustomEditor extends GenericEditor {
 	 */
 	@Override
 	protected List<Action> getToolbarActions() {
-
 		List<Action> result = new LinkedList<Action>();
-
+		result.add(new GenerateAction(super.getResourceSet()));
 		result.add(new ValidateModelAction(super.getResourceSet()));
 		return result;
 

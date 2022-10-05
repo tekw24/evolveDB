@@ -2,13 +2,11 @@ package de.thm.mdde.migration.view.editor.toolbar;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.FrameworkUtil;
 
-import de.thm.mdde.commonui.exception.handler.ErrorHandler;
 import de.thm.mdde.commonui.model.validation.ModelValidation;
 
 public class ValidateModelAction extends Action {

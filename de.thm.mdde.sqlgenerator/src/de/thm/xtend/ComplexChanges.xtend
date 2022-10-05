@@ -14,12 +14,9 @@ import org.sidiff.difference.symmetric.RemoveObject
 import de.thm.evolvedb.mdde.PrimaryKey
 import java.util.ArrayList
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable
-import java.util.stream.Collectors
-import java.util.Optional
 import de.thm.evolvedb.migration.ComplexResolveOptions
 import org.sidiff.difference.symmetric.AddReference
 import org.sidiff.difference.symmetric.RemoveReference
-import java.util.Map
 
 class ComplexChanges {
 
@@ -49,7 +46,6 @@ class ComplexChanges {
 		}
 
 		var RemoveObject removeForeign;
-		// Es kann nur ein add Table enthalten sein.
 		for (Change change : removeObject) {
 			var RemoveObject temp = change as RemoveObject
 			if (temp.obj instanceof ForeignKey) {
@@ -92,18 +88,104 @@ class ComplexChanges {
 					SET SQL_SAFE_UPDATES = 0;
 					
 					-- Migrate data to the new table
-					INSERT INTO `�entity.name�` (�sourceForeign.name� , �targetForeign.name�)
-					SELECT �sourceKey.name�, �removeForeignKey.name� FROM �removeForeignKey.table.name� WHERE �removeForeignKey.name� IS NOT NULL;
+					INSERT INTO `«entity.name»` («sourceForeign.name» , «targetForeign.name»)
+					SELECT «sourceKey.name», «removeForeignKey.name» FROM «removeForeignKey.table.name» WHERE «removeForeignKey.name» IS NOT NULL;
 					
 					SET SQL_SAFE_UPDATES = @safe_mode;
 					COMMIT;
 					-- If executing the script fails, we suggest a rollback.
 					
 				'''
-			// �FOR ForeignKey f : primaryForeignKeys BEFORE '(' SEPARATOR ', ' AFTER ')'��f.name��ENDFOR�
+
 			}
 
 			content += DELETE_ELEMENT._DELETE_ForeignKey_IN_Table_columns2(removeForeign);
+
+		}
+
+		return content;
+
+	}
+
+	def static String _CHANGE_1N_INTO_NM_MOVE(PartiallyResolvable set) {
+		if (set.processStatus === ProcessStatus.RESOLVED) {
+			var SemanticChangeSet change = set.semanticChangeSets.findFirst [
+				editRName.equals('CHANGE_1N_INTO_NM_MOVE')
+			]
+			return _CHANGE_1N_INTO_NM_MOVE(change, set.resolveOptions);
+		}
+
+		return ""
+	}
+
+	def static String _CHANGE_1N_INTO_NM_MOVE(SemanticChangeSet set, ColumnOptions options) {
+		var List<Change> addObjects = set.changes.filter[it instanceof AddObject].toList
+		var List<Change> removeReference = set.changes.filter[it instanceof RemoveReference].toList
+
+		var AddObject addObject;
+		// Es kann nur ein add Table enthalten sein.
+		for (Change change : addObjects) {
+			var AddObject temp = change as AddObject
+			if (temp.obj instanceof Table) {
+				addObject = temp;
+			}
+
+		}
+
+		var RemoveReference removeForeign;
+		for (Change change : removeReference) {
+			var RemoveReference temp = change as RemoveReference
+			if (temp.src instanceof ForeignKey) {
+				removeForeign = temp;
+			}
+
+		}
+
+		var content = '''''';
+
+		if (addObject === null || removeForeign === null)
+			return content;
+
+		content += CREATE_ELEMENT._CREATE_Table_IN_Database_Schema_entites2(addObject);
+
+		if (addObject.obj instanceof Table) {
+			var entity = addObject.obj as Table
+			var List<ForeignKey> foreignKeys = entity.columns.filter[it instanceof ForeignKey].map[it as ForeignKey].
+				toList
+			var List<ForeignKey> primaryForeignKeys = foreignKeys.filter[it.primaryForeignKey].toList
+			var removeForeignKey = removeForeign.src as ForeignKey;
+			var PrimaryKey sourceKey;
+			var ForeignKey sourceForeign;
+			var ForeignKey targetForeign;
+
+			for (ForeignKey foreignKey : primaryForeignKeys) {
+				if (foreignKey.referencedTable.name.equals(removeForeignKey.table.name)) {
+					sourceKey = foreignKey.referencedKeyColumn
+					sourceForeign = foreignKey
+				} else {
+					targetForeign = foreignKey
+				}
+			}
+
+			if (options.equals(ColumnOptions.MIGRATE_DATA)) {
+				content += '''
+					BEGIN;
+					SET @safe_mode = @@SQL_SAFE_UPDATES;
+					SET SQL_SAFE_UPDATES = 0;
+					
+					-- Migrate data to the new table
+					INSERT INTO `«entity.name»` («sourceForeign.name» , «targetForeign.name»)
+					SELECT «sourceKey.name», «removeForeignKey.name» FROM «removeForeignKey.table.name» WHERE «removeForeignKey.name» IS NOT NULL;
+					
+					SET SQL_SAFE_UPDATES = @safe_mode;
+					COMMIT;
+					-- If executing the script fails, we suggest a rollback.
+					
+				'''
+
+			}
+
+			content += DELETE_ELEMENT._DELETE_ForeignKey_IN_Table_columns2(removeForeignKey);
 
 		}
 
@@ -177,15 +259,15 @@ class ComplexChanges {
 						SET SQL_SAFE_UPDATES = 0;
 						
 						-- Migrate data to the new table
-						INSERT INTO `�entity.name�` (�sourceForeign.name� , �targetForeign.name�)
-						SELECT �sourceKey.name�, �oldForeign.name� FROM �oldForeign.table.name� WHERE �oldForeign.name� IS NOT NULL;
+						INSERT INTO `«entity.name» («sourceForeign.name» , «targetForeign.name»)
+						SELECT «sourceKey.name», «oldForeign.name» FROM «oldForeign.table.name» WHERE «oldForeign.name» IS NOT NULL;
 						
 						SET SQL_SAFE_UPDATES = @safe_mode;
 						COMMIT;
 						-- If executing the script fails, we suggest a rollback.
 						
 					'''
-				// �FOR ForeignKey f : primaryForeignKeys BEFORE '(' SEPARATOR ', ' AFTER ')'��f.name��ENDFOR�
+				// «FOR ForeignKey f : primaryForeignKeys BEFORE '(' SEPARATOR ', ' AFTER ')'»»f.name»»ENDFOR»
 				}
 
 			}
@@ -265,8 +347,8 @@ class ComplexChanges {
 						SET SQL_SAFE_UPDATES = 0;
 						
 						-- Migrate data from the old table
-						UPDATE `�newForeignKey.table.name�` t SET �newForeignKey.name� = 
-						(SELECT �targetForeign.name� FROM �targetForeign.table.name� n WHERE n.�sourceForeign.name� = t.�sourceForeign.referencedKeyColumn.name� );
+						UPDATE «newForeignKey.table.name» t SET«newForeignKey.name» = 
+						(SELECT«targetForeign.name» FROM«targetForeign.table.name» n WHERE n.»sourceForeign.name» = t.»sourceForeign.referencedKeyColumn.name» );
 						
 						SET SQL_SAFE_UPDATES = @safe_mode;
 						COMMIT;
@@ -331,7 +413,7 @@ class ComplexChanges {
 				toList
 
 			var map = removeColumns.groupBy[table]
-			
+
 			if (addTable !== null && removeTables.size() == 2) {
 
 				var Table newTable = addTable.obj as Table;
@@ -339,12 +421,12 @@ class ComplexChanges {
 				switch (option) {
 					case CARTESIAN_PRODUCT: {
 						content += '''
-							-- Join tables �removeTable.get(0).name� and �removeTable.get(0).name�
-							CREATE TABLE �newTable.name� 
-							(SELECT �FOR Column c : map.get(removeTable.get(0)) SEPARATOR ',' AFTER ','� a.�c.name��ENDFOR� 
-							�FOR Column c : map.get(removeTable.get(1)) SEPARATOR ',' AFTER ' ' � b.�c.name��ENDFOR�
-							FROM �removeTable.get(0).name� a 
-							CROSS JOIN �removeTable.get(1).name� b )
+							-- Join tables«removeTable.get(0).name» and«removeTable.get(0).name»
+							CREATE TABLE«newTable.name» 
+							(SELECT«FOR Column c : map.get(removeTable.get(0)) SEPARATOR ',' AFTER ','» a.«c.name»«ENDFOR» 
+							«FOR Column c : map.get(removeTable.get(1)) SEPARATOR ',' AFTER ' '» b.«c.name»«ENDFOR»
+							FROM«removeTable.get(0).name» a 
+							CROSS JOIN«removeTable.get(1).name» b )
 						'''
 
 					}
@@ -353,18 +435,16 @@ class ComplexChanges {
 
 					}
 					case RESOLVE_BY_DB_ID: {
-						
-						
+
 						content += '''
-							-- Join tables �removeTable.get(0).name� and �removeTable.get(0).name�
-							CREATE TABLE �newTable.name� 
-							(SELECT �FOR Column c : map.get(removeTable.get(0)) SEPARATOR ',' AFTER ','� a.�c.name��ENDFOR� 
-							�FOR Column c : map.get(removeTable.get(1)) SEPARATOR ',' AFTER ' ' � b.�c.name��ENDFOR�
-							FROM �removeTable.get(0).name� a 
-							JOIN �removeTable.get(1).name� b where a.�removeTable.get(0).mainPrimaryKey.name� = b.�removeTable.get(1).mainPrimaryKey.name�)
+							-- Join tables«removeTable.get(0).name» and«removeTable.get(0).name»
+							CREATE TABLE«newTable.name» 
+							(SELECT«FOR Column c : map.get(removeTable.get(0)) SEPARATOR ',' AFTER ','» a.«c.name»«ENDFOR» 
+							«FOR Column c : map.get(removeTable.get(1)) SEPARATOR ',' AFTER ' '» b.«c.name»«ENDFOR»
+							FROM«removeTable.get(0).name» a 
+							JOIN«removeTable.get(1).name» b where a.«removeTable.get(0).mainPrimaryKey.name» = b.«removeTable.get(1).mainPrimaryKey.name»)
 						'''
-						
-						
+
 					}
 				}
 

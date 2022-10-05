@@ -49,19 +49,19 @@ class MOVE_ELEMENT {
 				var primaryKeys = parent.primaryKeys
 
 				var content = '''
-					-- Create primary key in �parent.name.toLowerCase� 
-					ALTER TABLE `�parent.name.toLowerCase�` 
-					ADD COLUMN `�primaryKeyAdd.name�` �primaryKeyAdd.type��ColumnUtil.getSizeString(primaryKeyAdd)� �primaryKeyAdd.notNull !== null && primaryKeyAdd.notNull ? "NOT NULL" : ""� �primaryKeyAdd.autoIncrement !== null && primaryKeyAdd.autoIncrement ? "AUTO_INCREMENT" : ""� �ColumnUtil.getDefaultValueString(primaryKeyAdd)�,
+					-- Create primary key in «parent.name.toLowerCase» 
+					ALTER TABLE `«parent.name.toLowerCase»` 
+					ADD COLUMN `«primaryKeyAdd.name»` «primaryKeyAdd.type»«ColumnUtil.getSizeString(primaryKeyAdd)» «primaryKeyAdd.notNull !== null && primaryKeyAdd.notNull ? "NOT NULL" : ""» «primaryKeyAdd.autoIncrement !== null && primaryKeyAdd.autoIncrement ? "AUTO_INCREMENT" : ""» «ColumnUtil.getDefaultValueString(primaryKeyAdd)»,
 					DROP PRIMARY KEY,
-					ADD PRIMARY KEY (�FOR p : primaryKeys SEPARATOR ', '�`�p.name�`�ENDFOR�);
+					ADD PRIMARY KEY («FOR p : primaryKeys SEPARATOR ', '»`«p.name»`«ENDFOR»);
 				'''
 
 				content += '''
-					-- Drop primary key in �primaryKeyRemove.table.name.toLowerCase�			
-					ALTER TABLE `�primaryKeyRemove.table.name.toLowerCase�` 
-					DROP COLUMN `�primaryKeyRemove.name�`,
+					-- Drop primary key in «primaryKeyRemove.table.name.toLowerCase»			
+					ALTER TABLE `«primaryKeyRemove.table.name.toLowerCase»` 
+					DROP COLUMN `«primaryKeyRemove.name»`,
 					DROP PRIMARY KEY;
-					ADD PRIMARY KEY (�FOR p : primaryKeyRemove.table.primaryKeys SEPARATOR ', '�`�p.name�`�ENDFOR�);
+					ADD PRIMARY KEY («FOR p : primaryKeyRemove.table.primaryKeys SEPARATOR ', '»`«p.name»`«ENDFOR»);
 				'''
 
 				return content;
@@ -104,25 +104,25 @@ class MOVE_ELEMENT {
 
 				var content = '''
 					-- add new column for foreign key
-					ALTER TABLE `�foreignKeyAdd.table.name.toLowerCase�` 
-					ADD COLUMN `�foreignKeyAdd.name.toUpperCase�` �foreignKeyAdd.type��ColumnUtil.getSizeString(foreignKeyAdd)� �foreignKeyAdd.notNull !== null && foreignKeyAdd.notNull ? "NOT NULL" : ""� �foreignKeyAdd.autoIncrement !== null && foreignKeyAdd.autoIncrement ? "AUTO_INCREMENT" : ""� �ColumnUtil.getDefaultValueString(foreignKeyAdd)�;
+					ALTER TABLE `«foreignKeyAdd.table.name.toLowerCase»` 
+					ADD COLUMN `«foreignKeyAdd.name.toUpperCase»` «foreignKeyAdd.type»«ColumnUtil.getSizeString(foreignKeyAdd)» «foreignKeyAdd.notNull !== null && foreignKeyAdd.notNull ? "NOT NULL" : ""» «foreignKeyAdd.autoIncrement !== null && foreignKeyAdd.autoIncrement ? "AUTO_INCREMENT" : ""» «ColumnUtil.getDefaultValueString(foreignKeyAdd)»;
 									
-					-- Create foreign key in �foreignKeyAdd.table.name.toLowerCase� 
-					ALTER TABLE `�foreignKeyAdd.table.name.toLowerCase�` 
-					ADD CONSTRAINT `�foreignKeyAdd.constraintName�`
-					  FOREIGN KEY (`�foreignKeyAdd.name.toUpperCase�`)
-					  REFERENCES `�foreignKeyAdd.referencedTable.name.toLowerCase�`(`�foreignKeyAdd.referencedKeyColumn.name.toUpperCase�`)
-					  ON DELETE �foreignKeyAdd.onDelete.name()�
-					  ON UPDATE �foreignKeyAdd.onUpdate.name()�;
+					-- Create foreign key in «foreignKeyAdd.table.name.toLowerCase» 
+					ALTER TABLE `«foreignKeyAdd.table.name.toLowerCase»` 
+					ADD CONSTRAINT `«foreignKeyAdd.constraintName»`
+					  FOREIGN KEY (`«foreignKeyAdd.name.toUpperCase»`)
+					  REFERENCES `«foreignKeyAdd.referencedTable.name.toLowerCase»`(`«foreignKeyAdd.referencedKeyColumn.name.toUpperCase»`)
+					  ON DELETE «foreignKeyAdd.onDelete.name()»
+					  ON UPDATE «foreignKeyAdd.onUpdate.name()»;
 				'''
 
 				// TODO Daten?
 				content += '''
-					-- Drop foreign key in �foreignKeyRemove.table.name.toLowerCase�
-					ALTER TABLE `�foreignKeyRemove.table.name.toLowerCase�`
-					DROP FOREIGN KEY `�foreignKeyRemove.constraintName�`;
-					ALTER TABLE `�foreignKeyRemove.table.name.toLowerCase�`
-					DROP COLUMN `�foreignKeyRemove.name�`;
+					-- Drop foreign key in «foreignKeyRemove.table.name.toLowerCase»
+					ALTER TABLE `«foreignKeyRemove.table.name.toLowerCase»`
+					DROP FOREIGN KEY `«foreignKeyRemove.constraintName»`;
+					ALTER TABLE `«foreignKeyRemove.table.name.toLowerCase»`
+					DROP COLUMN `«foreignKeyRemove.name»`;
 					
 				'''
 				return content;
@@ -166,17 +166,17 @@ class MOVE_ELEMENT {
 				var Column columnRemove = removeReferenceOptional.src as Column;
 
 				var content = '''
-					-- Add the new column �columnAdd.name.toUpperCase� in Table �columnAdd.table.name.toLowerCase�
-					ALTER TABLE `�columnAdd.table.name.toLowerCase�` 
-					ADD COLUMN `�columnAdd.name.toUpperCase�` �columnAdd.type��ColumnUtil.getSizeString(columnAdd)� �columnAdd.notNull !== null && columnAdd.notNull ? "NOT NULL" : ""� �columnAdd.autoIncrement !== null && columnAdd.autoIncrement ? "AUTO_INCREMENT" : ""� 
-					�ColumnUtil.getDefaultValueString(columnAdd)� ;
+					-- Add the new column «columnAdd.name.toUpperCase» in Table «columnAdd.table.name.toLowerCase»
+					ALTER TABLE `«columnAdd.table.name.toLowerCase»` 
+					ADD COLUMN `«columnAdd.name.toUpperCase»` «columnAdd.type»«ColumnUtil.getSizeString(columnAdd)» «columnAdd.notNull !== null && columnAdd.notNull ? "NOT NULL" : ""» «columnAdd.autoIncrement !== null && columnAdd.autoIncrement ? "AUTO_INCREMENT" : ""» 
+					«ColumnUtil.getDefaultValueString(columnAdd)» ;
 				'''
 
 				// If possible load the existing data into the new Column
 				content += '''
-					-- Drop column in �columnRemove.table.name.toLowerCase�
-					ALTER TABLE `�columnRemove.table.name.toLowerCase�` 
-					DROP COLUMN `�columnRemove.name�`;
+					-- Drop column in «columnRemove.table.name.toLowerCase»
+					ALTER TABLE `«columnRemove.table.name.toLowerCase»` 
+					DROP COLUMN `«columnRemove.name»`;
 				'''
 
 				return content;

@@ -32,20 +32,27 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedTable <em>Referenced Table</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getPrimaryForeignKey <em>Primary Foreign Key</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnUpdate <em>On Update</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnDelete <em>On Delete</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getConstraintName <em>Constraint Name</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedKeyColumn <em>Referenced Key Column</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedTable
+ * <em>Referenced Table</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getPrimaryForeignKey
+ * <em>Primary Foreign Key</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnUpdate <em>On
+ * Update</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnDelete <em>On
+ * Delete</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getConstraintName
+ * <em>Constraint Name</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedKeyColumn
+ * <em>Referenced Key Column</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	/**
-	 * The cached value of the '{@link #getReferencedTable() <em>Referenced Table</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReferencedTable() <em>Referenced
+	 * Table</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReferencedTable()
 	 * @generated
 	 * @ordered
@@ -53,8 +60,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Table referencedTable;
 
 	/**
-	 * The default value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign Key</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign
+	 * Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPrimaryForeignKey()
 	 * @generated
 	 * @ordered
@@ -62,8 +70,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Boolean PRIMARY_FOREIGN_KEY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign Key</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign
+	 * Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPrimaryForeignKey()
 	 * @generated
 	 * @ordered
@@ -71,8 +80,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Boolean primaryForeignKey = PRIMARY_FOREIGN_KEY_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getOnUpdate() <em>On Update</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getOnUpdate() <em>On Update</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getOnUpdate()
 	 * @generated
 	 * @ordered
@@ -80,8 +90,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Referential_Action ON_UPDATE_EDEFAULT = Referential_Action.RESTRICT;
 
 	/**
-	 * The cached value of the '{@link #getOnUpdate() <em>On Update</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getOnUpdate() <em>On Update</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getOnUpdate()
 	 * @generated
 	 * @ordered
@@ -89,8 +100,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Referential_Action onUpdate = ON_UPDATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getOnDelete() <em>On Delete</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getOnDelete() <em>On Delete</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getOnDelete()
 	 * @generated
 	 * @ordered
@@ -98,8 +110,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Referential_Action ON_DELETE_EDEFAULT = Referential_Action.RESTRICT;
 
 	/**
-	 * The cached value of the '{@link #getOnDelete() <em>On Delete</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getOnDelete() <em>On Delete</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getOnDelete()
 	 * @generated
 	 * @ordered
@@ -107,8 +120,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Referential_Action onDelete = ON_DELETE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getConstraintName() <em>Constraint Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getConstraintName() <em>Constraint
+	 * Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getConstraintName()
 	 * @generated
 	 * @ordered
@@ -116,8 +130,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final String CONSTRAINT_NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getConstraintName() <em>Constraint Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getConstraintName() <em>Constraint
+	 * Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getConstraintName()
 	 * @generated
 	 * @ordered
@@ -125,8 +140,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected String constraintName = CONSTRAINT_NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReferencedKeyColumn() <em>Referenced Key Column</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getReferencedKeyColumn() <em>Referenced Key
+	 * Column</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getReferencedKeyColumn()
 	 * @generated
 	 * @ordered
@@ -135,6 +151,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ForeignKeyImpl() {
@@ -143,6 +160,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -152,6 +170,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -170,6 +189,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Table basicGetReferencedTable() {
@@ -178,6 +198,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -191,6 +212,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -200,6 +222,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -213,6 +236,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -222,6 +246,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -235,6 +260,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -244,6 +270,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -257,6 +284,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -266,6 +294,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -279,6 +308,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -298,6 +328,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public PrimaryKey basicGetReferencedKeyColumn() {
@@ -306,10 +337,14 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	public NotificationChain basicSetReferencedKeyColumn(PrimaryKey newReferencedKeyColumn, NotificationChain msgs) {
 		PrimaryKey oldReferencedKeyColumn = referencedKeyColumn;
+		if(newReferencedKeyColumn != null && newReferencedKeyColumn.getType() != getType()) {
+			setType(newReferencedKeyColumn.getType());
+		}
 		referencedKeyColumn = newReferencedKeyColumn;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
@@ -324,7 +359,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
 	public void setReferencedKeyColumn(PrimaryKey newReferencedKeyColumn) {
@@ -336,7 +372,9 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 			if (newReferencedKeyColumn != null)
 				msgs = ((InternalEObject) newReferencedKeyColumn).eInverseAdd(this,
 						MddePackage.PRIMARY_KEY__REFERENCED_BY, PrimaryKey.class, msgs);
+
 			msgs = basicSetReferencedKeyColumn(newReferencedKeyColumn, msgs);
+
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
@@ -371,6 +409,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -387,6 +426,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -400,6 +440,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -427,6 +468,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -456,6 +498,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -485,6 +528,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -510,6 +554,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -524,6 +569,7 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
