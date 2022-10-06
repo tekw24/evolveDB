@@ -117,6 +117,7 @@ public class MddeDifferenceBuilderNewFilePage extends WizardNewFileCreationPage 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				text.setEnabled(createMigrationButton.getSelection());
+				validatePage();
 			}
 		});
 

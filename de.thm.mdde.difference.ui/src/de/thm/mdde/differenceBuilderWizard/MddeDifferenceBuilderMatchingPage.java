@@ -8,20 +8,27 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.matching.model.Correspondence;
@@ -30,7 +37,6 @@ import org.sidiff.matching.model.Matching;
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.Table;
-import de.thm.mdde.commonui.widgets.ModelDirectionWidget;
 
 public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
@@ -45,6 +51,12 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 	private Button addCorrespondenceColumns;
 
 	private Matching matching;
+	private Text txtFilter;
+	private ModifyListener listener;
+	private Text txtFilterColumn;
+	private ModifyListener listenerFilter;
+	private org.eclipse.swt.widgets.Table tableUnmatched;
+	private org.eclipse.swt.widgets.Table tableUnmatchedColumns;
 
 	protected MddeDifferenceBuilderMatchingPage(String pageName, MddeDifferenceBuilderController controller) {
 		super(pageName);
@@ -57,7 +69,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		{
 			GridLayout layout = new GridLayout();
-			layout.numColumns = 2;
+			layout.numColumns = 3;
 			layout.verticalSpacing = 12;
 			composite.setLayout(layout);
 
@@ -71,13 +83,121 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		// Header Label
 		Label headerTable = new Label(composite, SWT.NONE);
 		headerTable.setText("Table correspondences");
+		headerTable.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+
+		txtFilter = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
+		txtFilter.setTextLimit(200);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gridData.minimumWidth = 150; // make enough space for both symbols within the field
+		txtFilter.setLayoutData(gridData);
+
+		listener = new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+
+				Display display = PlatformUI.getWorkbench().getDisplay();
+				Color blue = display.getSystemColor(SWT.COLOR_BLUE);
+				table.removeAll();
+
+				String match = txtFilter.getText().toLowerCase();
+
+				EList<Correspondence> elist = matching.getCorrespondences();
+				List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
+						.collect(Collectors.toList());
+
+				for (Correspondence correspondence : tableCorrespondence) {
+
+					EObject objectA = correspondence.getMatchedA();
+					EObject objectB = correspondence.getMatchedB();
+					String nameA = objectA.toString();
+					String nameB = objectB.toString();
+
+					if (objectA instanceof Table) {
+						nameA = ((Table) objectA).getName();
+						nameB = ((Table) objectB).getName();
+					} else if (objectA instanceof Database_Schema) {
+						continue;
+					}
+
+					String d_text = nameA + nameB;
+
+					if (d_text.toLowerCase().matches(".*" + match + ".*")) {
+						TableItem item = new TableItem(table, SWT.BORDER);
+						item.setText(new String[] { nameA, nameB });
+
+						if (!nameA.equals(nameB))
+							item.setForeground(blue);
+
+						item.setData(item.getText(), correspondence);
+
+					}
+				}
+
+			}
+		};
+		txtFilter.addModifyListener(listener);
+
+		// Buttons
+
+		// Optionally set layout fields.
+		addCorrespondence = createAddCorrespondenceButton(composite);
+		addCorrespondence.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		addCorrespondence.setText("Add Correspondence");
+		addCorrespondence.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Table)
+						.collect(Collectors.toList());
+				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Table)
+						.collect(Collectors.toList());
+
+				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
+						matchingB);
+				dialog.create();
+				if (dialog.open() == Window.OK) {
+					EObject eObjectA = dialog.geteObjectA();
+					EObject eObjectB = dialog.geteObjectB();
+
+					if (eObjectA != null && eObjectB != null)
+						controller.addCorrespondence(eObjectA, eObjectB);
+
+					fillCorrespondence();
+				}
+
+			}
+		});
+		delCorrespondence = createdelCorrespondenceButton(composite);
+		delCorrespondence.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (table.getSelectionCount() == 1) {
+
+					TableItem selection = table.getSelection()[0];
+
+					Correspondence correspondence = (Correspondence) selection.getData(selection.getText());
+					controller.removeCorrespondence(correspondence);
+					fillCorrespondence();
+					delCorrespondence.setEnabled(false);
+				}
+
+			}
+
+		});
+
+		delCorrespondence.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+
+		// SashForm
+		SashForm sashFormA = new SashForm(composite, SWT.HORIZONTAL);
+		sashFormA.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		// Table
-		table = new org.eclipse.swt.widgets.Table(composite, SWT.BORDER | SWT.SINGLE);
+		table = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
 		table.setToolTipText("Eine Tabelle");
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -117,25 +237,104 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			}
 		});
 
+		// Table unmatched
+		tableUnmatched = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
+		tableUnmatched.setToolTipText("Eine Tabelle");
+		tableUnmatched.setLinesVisible(true);
+		tableUnmatched.setHeaderVisible(true);
+		tableUnmatched.setLayoutData(new GridData(SWT.LEFT, GridData.FILL, false, true, 1, 1));
+		tableUnmatched.addControlListener(new ControlListener() {
+
+			@Override
+			public void controlResized(ControlEvent arg0) {
+				resizeColumns(tableUnmatched);
+			}
+
+			@Override
+			public void controlMoved(ControlEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		TableColumn tcUnmatched = new TableColumn(tableUnmatched, SWT.BORDER);
+		tcUnmatched.setText("Unmatched Tables");
+		tcUnmatched.pack();
+		tcUnmatched.setMoveable(true);
+
+		// Header Label
+		Label headerColumn = new Label(composite, SWT.NONE);
+		headerColumn.setText("Column correspondences");
+		headerColumn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+
+		// Filter
+		txtFilterColumn = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
+		txtFilterColumn.setTextLimit(200);
+		txtFilterColumn.setLayoutData(gridData);
+
+		listenerFilter = new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				tableColumns.removeAll();
+				String match = txtFilterColumn.getText().toLowerCase();
+
+				Display display = PlatformUI.getWorkbench().getDisplay();
+				Color blue = display.getSystemColor(SWT.COLOR_BLUE);
+
+				EList<Correspondence> elist = matching.getCorrespondences();
+				List<Correspondence> columnCorrespondence = elist.stream()
+						.filter(e -> e.getMatchedA() instanceof Column).collect(Collectors.toList());
+
+				for (Correspondence correspondence : columnCorrespondence) {
+
+					EObject objectA = correspondence.getMatchedA();
+					EObject objectB = correspondence.getMatchedB();
+					String nameA = objectA.toString();
+					String nameB = objectB.toString();
+
+					if (objectA instanceof Column) {
+						Column columnA = (Column) objectA;
+						Column columnB = (Column) objectB;
+
+						nameA = columnA.getName() + " (" + columnA.getTable().getName() + ")";
+						nameB = columnB.getName() + " (" + columnB.getTable().getName() + ")";
+
+						String d_text = nameA + nameB;
+
+						if (d_text.toLowerCase().matches(".*" + match + ".*")) {
+							TableItem item = new TableItem(tableColumns, SWT.BORDER);
+							item.setText(new String[] { nameA, nameB });
+
+							if (!nameA.equals(nameB))
+								item.setForeground(blue);
+
+							item.setData(item.getText(), correspondence);
+
+						}
+
+					} else if (objectA instanceof Database_Schema) {
+						continue;
+					}
+
+				}
+
+			}
+		};
+		txtFilterColumn.addModifyListener(listenerFilter);
+
 		// Buttons
-		Composite buttonBar = new Composite(composite, SWT.NONE);
-		RowLayout layout = new RowLayout();
 
-		// Optionally set layout fields.
-		layout.wrap = false;
-		buttonBar.setLayout(layout);
-		buttonBar.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
-
-		addCorrespondence = createAddCorrespondenceButton(buttonBar, Table.class);
-		addCorrespondence.setText("Add Correspondence");
-		addCorrespondence.addSelectionListener(new SelectionAdapter() {
+		addCorrespondenceColumns = createAddCorrespondenceButton(composite);
+		addCorrespondenceColumns.setText("Add Correspondence");
+		addCorrespondenceColumns.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		addCorrespondenceColumns.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
 
-				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Table )
+				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Column)
 						.collect(Collectors.toList());
-				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Table)
+				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Column)
 						.collect(Collectors.toList());
 
 				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
@@ -153,14 +352,32 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			}
 		});
-		delCorrespondence = createdelCorrespondenceButton(buttonBar, table);
+		delCorrespondenceColumns = createdelCorrespondenceButton(composite);
+		delCorrespondenceColumns.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (tableColumns.getSelectionCount() == 1) {
 
-		// Header Label
-		Label headerColumn = new Label(composite, SWT.NONE);
-		headerColumn.setText("Column correspondences");
+					TableItem selection = tableColumns.getSelection()[0];
+
+					Correspondence correspondence = (Correspondence) selection.getData(selection.getText());
+					controller.removeCorrespondence(correspondence);
+					fillCorrespondence();
+					delCorrespondence.setEnabled(false);
+				}
+
+			}
+
+		});
+
+		delCorrespondenceColumns.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+
+		// SashForm
+		SashForm sashForm = new SashForm(composite, SWT.HORIZONTAL);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		// Table
-		tableColumns = new org.eclipse.swt.widgets.Table(composite, SWT.BORDER | SWT.SINGLE);
+		tableColumns = new org.eclipse.swt.widgets.Table(sashForm, SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION);
 		tableColumns.setToolTipText("Eine Tabelle");
 		tableColumns.setLinesVisible(true);
 		tableColumns.setHeaderVisible(true);
@@ -203,45 +420,31 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			}
 		});
-		
 
-		// Buttons
-		Composite buttonBar2 = new Composite(composite, SWT.NONE);
-		RowLayout layout2 = new RowLayout();
+		// Table unmatched
+		tableUnmatchedColumns = new org.eclipse.swt.widgets.Table(sashForm, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION );
+		tableUnmatchedColumns.setToolTipText("Eine Tabelle");
+		tableUnmatchedColumns.setLinesVisible(true);
+		tableUnmatchedColumns.setHeaderVisible(true);
+		tableUnmatchedColumns.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		tableUnmatchedColumns.addControlListener(new ControlListener() {
 
-		// Optionally set layout fields.
-		layout2.wrap = false;
-		buttonBar2.setLayout(layout2);
-		buttonBar2.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
-
-		addCorrespondenceColumns = createAddCorrespondenceButton(buttonBar2, Column.class);
-		addCorrespondenceColumns.setText("Add Correspondence");
-		addCorrespondenceColumns.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
+			public void controlResized(ControlEvent arg0) {
+				resizeColumns(tableUnmatchedColumns);
+			}
 
-				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Column )
-						.collect(Collectors.toList());
-				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Column)
-						.collect(Collectors.toList());
-
-				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
-						matchingB);
-				dialog.create();
-				if (dialog.open() == Window.OK) {
-					EObject eObjectA = dialog.geteObjectA();
-					EObject eObjectB = dialog.geteObjectB();
-
-					if (eObjectA != null && eObjectB != null)
-						controller.addCorrespondence(eObjectA, eObjectB);
-
-					fillCorrespondence();
-				}
+			@Override
+			public void controlMoved(ControlEvent arg0) {
+				// TODO Auto-generated method stub
 
 			}
 		});
-		delCorrespondenceColumns = createdelCorrespondenceButton(buttonBar2, tableColumns);
+
+		TableColumn tcUnmatchedColumns = new TableColumn(tableUnmatchedColumns, SWT.BORDER);
+		tcUnmatchedColumns.setText("Unmatched Columns");
+		tcUnmatchedColumns.pack();
+		tcUnmatchedColumns.setMoveable(true);
 
 		setControl(composite);
 
@@ -250,6 +453,11 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 	protected void fillCorrespondence() {
 		table.removeAll();
 		tableColumns.removeAll();
+		tableUnmatched.removeAll();
+		tableUnmatchedColumns.removeAll();
+
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		Color blue = display.getSystemColor(SWT.COLOR_BLUE);
 
 		try {
 			matching = controller.createMatching();
@@ -270,16 +478,19 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 				if (objectA instanceof Table) {
 					nameA = ((Table) objectA).getName();
 					nameB = ((Table) objectB).getName();
-				}else if (objectA instanceof Database_Schema) {
+				} else if (objectA instanceof Database_Schema) {
 					continue;
 				}
 
 				TableItem item = new TableItem(table, SWT.BORDER);
 				item.setText(new String[] { nameA, nameB });
 
+				if (!nameA.equals(nameB))
+					item.setForeground(blue);
+
 				item.setData(item.getText(), correspondence);
 			}
-			
+
 			for (Correspondence correspondence : columnCorrespondence) {
 
 				EObject objectA = correspondence.getMatchedA();
@@ -290,23 +501,31 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 				if (objectA instanceof Column) {
 					Column columnA = (Column) objectA;
 					Column columnB = (Column) objectB;
-					
-					
-					nameA = columnA.getName() + " ("+columnA.getTable().getName()+")";
-					nameB = columnB.getName() + " ("+columnB.getTable().getName()+")";
+
+					nameA = columnA.getName() + " (" + columnA.getTable().getName() + ")";
+					nameB = columnB.getName() + " (" + columnB.getTable().getName() + ")";
+
+					TableItem item = new TableItem(tableColumns, SWT.BORDER);
+					item.setText(new String[] { nameA, nameB });
+
+					if (!nameA.equals(nameB))
+						item.setForeground(blue);
+
+					item.setData(item.getText(), correspondence);
 
 				} else if (objectA instanceof Database_Schema) {
 					continue;
 				}
 
-				TableItem item = new TableItem(tableColumns, SWT.BORDER);
-				item.setText(new String[] { nameA, nameB });
-
-				item.setData(item.getText(), correspondence);
 			}
+
+			addUnmatchedElements(matching.getUnmatchedA());
+			addUnmatchedElements(matching.getUnmatchedB());
 
 			resizeColumns(table);
 			resizeColumns(tableColumns);
+			resizeColumns(tableUnmatched);
+			resizeColumns(tableUnmatchedColumns);
 
 		} catch (NoCorrespondencesException e) {
 			// TODO Auto-generated catch block
@@ -318,38 +537,56 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 	}
 
-	private Button createAddCorrespondenceButton(Composite parent, Class classArgument) {
+	private void addUnmatchedElements(EList<EObject> elistUnmatched) {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		Color red = display.getSystemColor(SWT.COLOR_RED);
+		Color green = display.getSystemColor(SWT.COLOR_DARK_GREEN);
+		for (EObject e : elistUnmatched) {
+			String name = e.toString();
+			if (e instanceof de.thm.evolvedb.mdde.Table) {
+				name = ((de.thm.evolvedb.mdde.Table) e).getName();
+
+				TableItem item = new TableItem(tableUnmatched, SWT.BORDER);
+				item.setText(new String[] { name });
+				item.setData(item.getText(), e);
+
+				if (matching.getUnmatchedA().contains(e))
+					item.setForeground(red);
+				else
+					item.setForeground(green);
+
+			} else if (e instanceof Column) {
+
+				Column column = (Column) e;
+				name = column.getName() + " (" + column.getTable().getName() + ")";
+				TableItem item = new TableItem(tableUnmatchedColumns, SWT.BORDER);
+				item.setText(new String[] { name });
+				item.setData(item.getText(), e);
+
+				if (matching.getUnmatchedA().contains(e))
+					item.setForeground(red);
+				else
+					item.setForeground(green);
+
+			}
+
+		}
+	}
+
+	private Button createAddCorrespondenceButton(Composite parent) {
 
 		Button addCorrespondence = new Button(parent, SWT.PUSH);
 		addCorrespondence.setText("Add Correspondence");
-		
 
 		return addCorrespondence;
 
 	}
 
-	private Button createdelCorrespondenceButton(Composite parent, org.eclipse.swt.widgets.Table table) {
+	private Button createdelCorrespondenceButton(Composite parent) {
 
 		Button delCorrespondence = new Button(parent, SWT.PUSH | SWT.CANCEL);
 		delCorrespondence.setText("Delete Correspondence");
 		delCorrespondence.setEnabled(false);
-		delCorrespondence.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (table.getSelectionCount() == 1) {
-
-					TableItem selection = table.getSelection()[0];
-
-					Correspondence correspondence = (Correspondence) selection.getData(selection.getText());
-					controller.removeCorrespondence(correspondence);
-					fillCorrespondence();
-					delCorrespondence.setEnabled(false);
-				}
-
-			}
-
-		});
-
 		return delCorrespondence;
 	}
 
