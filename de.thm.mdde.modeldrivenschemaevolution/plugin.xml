@@ -7,20 +7,63 @@
             allPopups="false"
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <menu
-               label="MDSE">
+               label="EvolveDB">
             <command
                   commandId="org.eclipse.ui.newWizard"
-                  label="Create MDSE Model"
+                  label="Create MDDE Model"
                   style="push">
                <parameter
                      name="newWizardId"
                      value="MddeDatabseConnectionWizard">
                </parameter>
             </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator3"
+                  visible="true">
+            </separator>
             <command
-                  commandId="ModelDrivenSchemaEvolution.command9"
-                  label="Transform MDSE Model"
+                  commandId="de.thm.mdde.createTechnicalDifference"
+                  label="Create Technical Difference (SiLift)"
                   style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.createLiftedDifference"
+                  label="Create Lifted Difference (SiLift)"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.createMigrationModel"
+                  label="Create Migration Model"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.createSQLMigrations"
+                  label="Generate SQL Migrations"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
+         <menu
+               label="EvolveDB">
+            <command
+                  commandId="org.eclipse.ui.newWizard"
+                  label="Create MDDE Model"
+                  style="push">
+               <parameter
+                     name="newWizardId"
+                     value="MddeDatabseConnectionWizard">
+               </parameter>
             </command>
             <separator
                   name="ModelDrivenSchemaEvolution.separator3"
