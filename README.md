@@ -6,5 +6,5 @@ We also provide an end-user tutorial ([End_User_Tutorial.pdf](https://github.com
 
 
 
-The development of EvolveDB were supported by [StudiumPlus](https://www.studiumplus.de/sp/). StudiumPlus is part of the Technische Hochschule Mittelhessen (THM) and offers dual study programs. 
+The development of EvolveDB was supported by [StudiumPlus](https://www.studiumplus.de/sp/). StudiumPlus is part of the Technische Hochschule Mittelhessen (THM) and offers dual study programs. 
 
