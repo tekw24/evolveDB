@@ -93,7 +93,8 @@ helper def: resolvableRules : Sequence(String) =
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION',
-			'SET_ATTRIBUTE_Column_UniqueConstraintName'
+			'SET_ATTRIBUTE_Column_UniqueConstraintName',
+			'SET_ATTRIBUTE_ForeignKey_ConstraintName'
 			
 			};
 
@@ -129,7 +130,11 @@ helper def: resolvableEnumType : Map(String, Migration!ResolvableOperatorType) =
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('SET_ATTRIBUTE_Column_UniqueConstraintName', #SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME)
+		('SET_ATTRIBUTE_Column_UniqueConstraintName', #SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME),
+		('SET_ATTRIBUTE_ForeignKey_ConstraintName', #SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME)
+		
+		
+		
 			
 	};
 	

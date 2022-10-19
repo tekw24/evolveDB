@@ -277,6 +277,15 @@ class SQLGenerator {
 			case ResolvableOperatorType.SET_COLUMN_DEFAULT_VALUE: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_DefaultValue(resolvableOperator);
 			}
+			case ResolvableOperatorType.SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME: {
+				return SET_ATTRIBUTE._CHANGE_ForeignKey_constraint_name(resolvableOperator);
+			}
+			case ResolvableOperatorType.SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME: {
+				return SET_ATTRIBUTE._SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(resolvableOperator);
+			}
+			case ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT: {
+				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
+			}
 			default: {
 				println("Operator does not exists")
 			}
@@ -386,9 +395,7 @@ class SQLGenerator {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_ForeignKey_PrimaryForeignKey(set);
 
 			}
-			case 'SET_ATTRIBUTE_Column_AutoIncrement': {
-				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(set);
-			}
+			
 		// MOVE 
 		}
 
@@ -396,48 +403,6 @@ class SQLGenerator {
 
 	}
 
-	/** 
-	 * SMO change table name
-	 * */
-	def String change_NamedElement_Name(SemanticChangeSet set) {
-	}
-
-	def dispatch String processChangeOperation(AddObject object) {
-	}
-
-	def dispatch String processChangeOperation(AddReference object) {
-	}
-
-	def dispatch String processChangeOperation(AttributeValueChange object) {
-	}
-
-	def dispatch String processChangeOperation(RemoveObject object) {
-	}
-
-	def dispatch String processChangeOperation(RemoveReference object) {
-	}
-
-	/**
-	 * Verarbeitet eine Transaktion und gibt den Code für die SQL Datei als String zurueck.
-	 */
-	def String processChange(SemanticChangeSet semanticChangeSet) {
-		if (processed.contains(semanticChangeSet))
-			return "";
-		var String content = "";
-//		for (t : change.required) {
-//			content += processTransaction(t);
-//
-//		}
-		println("SymmetricDifference" + semanticChangeSet.description)
-
-		for (Change change : semanticChangeSet.changes) {
-			content += change.processChangeOperation
-		}
-
-		processed.add(semanticChangeSet);
-		return content;
-
-	}
 
 	def String javaToSQLType(String type) {
 		switch (type) {

@@ -17,180 +17,180 @@ import de.thm.mdde.migration.util.ColumnMigrationUtil
 
 class SET_ATTRIBUTE {
 
-def static String _SET_ATTRIBUTE_PrimaryKey_PrimaryKey(SemanticChangeSet set) {
-}
-
-def static String _SET_ATTRIBUTE_NamedElement_Name(ResolvableOperator resolvableOperator) {
-	if (resolvableOperator.processStatus === ProcessStatus.RESOLVED &&
-		resolvableOperator.semanticChangeSets.size == 1) {
-		var SemanticChangeSet rename = resolvableOperator.semanticChangeSets.get(0)
-		return _SET_ATTRIBUTE_NamedElement_Name2(rename);
+	def static String _SET_ATTRIBUTE_PrimaryKey_PrimaryKey(SemanticChangeSet set) {
 	}
-	return ""
-}
 
-/**
- * SMO Change Name
- */
-def static String _SET_ATTRIBUTE_NamedElement_Name2(SemanticChangeSet set) {
+	def static String _SET_ATTRIBUTE_NamedElement_Name(ResolvableOperator resolvableOperator) {
+		if (resolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+			resolvableOperator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet rename = resolvableOperator.semanticChangeSets.get(0)
+			return _SET_ATTRIBUTE_NamedElement_Name2(rename);
+		}
+		return ""
+	}
 
-	var AttributeValueChange ad = set.changes.findFirst[it instanceof AttributeValueChange] as AttributeValueChange;
-	if (ad === null)
-		return "";
+	/**
+	 * SMO Change Name
+	 */
+	def static String _SET_ATTRIBUTE_NamedElement_Name2(SemanticChangeSet set) {
 
-	var content = "";
+		var AttributeValueChange ad = set.changes.findFirst[it instanceof AttributeValueChange] as AttributeValueChange;
+		if (ad === null)
+			return "";
 
-	if (ad.objB instanceof Column) {
+		var content = "";
 
-		if (ad.objA instanceof ForeignKey && ad.objB instanceof ForeignKey) {
+		if (ad.objB instanceof Column) {
 
-			var objA = ad.objA as ForeignKey
-			var objB = ad.objB as ForeignKey
+			if (ad.objA instanceof ForeignKey && ad.objB instanceof ForeignKey) {
 
-			content += '''
-				-- Change name of foriegn key «objA.name.toLowerCase» 
-				ALTER TABLE `«objA.table.name.toLowerCase»` 
-				DROP FOREIGN KEY `«objA.constraintName»`;
-				ALTER TABLE `«objA.table.name.toLowerCase»` 
-				CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
-				ALTER TABLE `«objA.table.name.toLowerCase»` 
-				ADD CONSTRAINT `«objA.constraintName»`
-				FOREIGN KEY (`«objB.name.toUpperCase»`)
-				REFERENCES `«objB.referencedTable.name.toLowerCase»` (`«objB.referencedKeyColumn.name»`);
-			'''
-
-		} else if (ad.objA instanceof PrimaryKey && ad.objB instanceof PrimaryKey) {
-
-			var objA = ad.objA as PrimaryKey
-			var objB = ad.objB as PrimaryKey
-
-			if (objA.referencedBy.size == 0) {
+				var objA = ad.objA as ForeignKey
+				var objB = ad.objB as ForeignKey
 
 				content += '''
-					-- Change name of primaryKey «objA.name.toLowerCase» 				
-					ALTER TABLE «objB.table.name.toLowerCase» 
+					-- Change name of foriegn key «objA.name.toLowerCase» 
+					ALTER TABLE `«objA.table.name.toLowerCase»` 
+					DROP FOREIGN KEY `«objA.constraintName»`;
+					ALTER TABLE `«objA.table.name.toLowerCase»` 
 					CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+					ALTER TABLE `«objA.table.name.toLowerCase»` 
+					ADD CONSTRAINT `«objA.constraintName»`
+					FOREIGN KEY (`«objB.name.toUpperCase»`)
+					REFERENCES `«objB.referencedTable.name.toLowerCase»` (`«objB.referencedKeyColumn.name»`);
 				'''
 
-			} else {
-				// If the primaryKey is referenced by foreign keys, we have to delete and recreate the foreign key constraints
+			} else if (ad.objA instanceof PrimaryKey && ad.objB instanceof PrimaryKey) {
+
+				var objA = ad.objA as PrimaryKey
+				var objB = ad.objB as PrimaryKey
+
+				if (objA.referencedBy.size == 0) {
+
+					content += '''
+						-- Change name of primaryKey «objA.name.toLowerCase» 				
+						ALTER TABLE «objB.table.name.toLowerCase» 
+						CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+					'''
+
+				} else {
+					// If the primaryKey is referenced by foreign keys, we have to delete and recreate the foreign key constraints
+					content += '''
+						-- Change name of primaryKey «objA.name.toLowerCase»
+						-- Delete existing foreign key constraints
+						«FOR ForeignKey foreignKey : objA.referencedBy»
+							ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
+							DROP FOREIGN KEY `«foreignKey.constraintName»`;
+						«ENDFOR»
+						ALTER TABLE «objB.table.name.toLowerCase» 
+						CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+						-- Recreate foreign key constraints
+						«FOR ForeignKey foreignKey : objA.referencedBy»
+							ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
+							ADD CONSTRAINT `«foreignKey.constraintName»`
+							FOREIGN KEY (`«foreignKey.name.toUpperCase»`)
+							REFERENCES `«objB.table.name.toLowerCase»` (`«objB.name.toUpperCase»`);
+						«ENDFOR»
+					'''
+				}
+
+			} else if (ad.objA instanceof Column && ad.objB instanceof Column) {
+
+				var objA = ad.objA as Column
+				var objB = ad.objB as Column
+
 				content += '''
-					-- Change name of primaryKey «objA.name.toLowerCase»
-					-- Delete existing foreign key constraints
-					«FOR ForeignKey foreignKey : objA.referencedBy»
-						ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
-						DROP FOREIGN KEY `«foreignKey.constraintName»`;
-					«ENDFOR»
-					ALTER TABLE «objB.table.name.toLowerCase» 
-					CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
-					-- Recreate foreign key constraints
-					«FOR ForeignKey foreignKey : objA.referencedBy»
-						ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
-						ADD CONSTRAINT `«foreignKey.constraintName»`
-						FOREIGN KEY (`«foreignKey.name.toUpperCase»`)
-						REFERENCES `«objB.table.name.toLowerCase»` (`«objB.name.toUpperCase»`);
-					«ENDFOR»
+					-- Change name of «objA.name.toLowerCase» 
+					ALTER TABLE `«objA.table.name.toLowerCase»` 
+					CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» 
+					«objA.notNull !== null && objA.notNull ? "NULL" : "NOT NULL"» «objA.autoIncrement !== null && objA.autoIncrement ? "AUTO_INCREMENT" : ""»
+					«ColumnUtil.getDefaultValueString(objA)» ;
 				'''
+
 			}
 
-		} else if (ad.objA instanceof Column && ad.objB instanceof Column) {
+		} else if (ad.objB instanceof Table) {
 
-			var objA = ad.objA as Column
-			var objB = ad.objB as Column
+			if (ad.objA instanceof Table && ad.objB instanceof Table) {
 
-			content += '''
-				-- Change name of «objA.name.toLowerCase» 
-				ALTER TABLE `«objA.table.name.toLowerCase»` 
-				CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» 
-				«objA.notNull !== null && objA.notNull ? "NULL" : "NOT NULL"» «objA.autoIncrement !== null && objA.autoIncrement ? "AUTO_INCREMENT" : ""»
-				«ColumnUtil.getDefaultValueString(objA)» ;
-			'''
-
-		}
-
-	} else if (ad.objB instanceof Table) {
-
-		if (ad.objA instanceof Table && ad.objB instanceof Table) {
-
-			var objA = ad.objA as Table
-			var objB = ad.objB as Table
-
-			content += '''
-				-- Change name of «objA.name.toLowerCase» 
-				ALTER TABLE «objA.name.toLowerCase» RENAME TO «objB.name.toLowerCase»;
-			'''
-
-		}
-
-	}
-	return content;
-
-}
-
-def static String _SET_ATTRIBUTE_ForeignKey_PrimaryForeignKey(SemanticChangeSet set) {
-
-	var List<AttributeValueChange> makeColumnUniqe = set.changes.filter(AttributeValueChange).toList
-	var content = ""
-
-	for (AttributeValueChange a : makeColumnUniqe) {
-		if (a.objA instanceof ForeignKey && a.objB instanceof ForeignKey) {
-
-			var objA = a.objA as ForeignKey
-			var objB = a.objB as ForeignKey
-
-			if (objB.primaryForeignKey) {
+				var objA = ad.objA as Table
+				var objB = ad.objB as Table
 
 				content += '''
-					-- Change primary foreign key attribute of «objB.name.toLowerCase» 
-					ALTER TABLE «objB.table.name.toLowerCase» ADD PRIMARY KEY (`«objB.name»`) ;
-					
+					-- Change name of «objA.name.toLowerCase» 
+					ALTER TABLE «objA.name.toLowerCase» RENAME TO «objB.name.toLowerCase»;
 				'''
 
-			} else {
-				// Remove primary foreign key
-				var parent = objB.table
-				var List<Column> columns = parent.columns.filter[it instanceof ForeignKey].toList;
-				var ArrayList<ForeignKey> foreignKeys = new ArrayList();
-				for (element : columns) {
-					var foreignKey = element as ForeignKey;
-					if (foreignKey.primaryForeignKey)
-						foreignKeys.add(foreignKey);
+			}
+
+		}
+		return content;
+
+	}
+
+	def static String _SET_ATTRIBUTE_ForeignKey_PrimaryForeignKey(SemanticChangeSet set) {
+
+		var List<AttributeValueChange> makeColumnUniqe = set.changes.filter(AttributeValueChange).toList
+		var content = ""
+
+		for (AttributeValueChange a : makeColumnUniqe) {
+			if (a.objA instanceof ForeignKey && a.objB instanceof ForeignKey) {
+
+				var objA = a.objA as ForeignKey
+				var objB = a.objB as ForeignKey
+
+				if (objB.primaryForeignKey) {
+
+					content += '''
+						-- Change primary foreign key attribute of «objB.name.toLowerCase» 
+						ALTER TABLE «objB.table.name.toLowerCase» ADD PRIMARY KEY (`«objB.name»`) ;
+						
+					'''
+
+				} else {
+					// Remove primary foreign key
+					var parent = objB.table
+					var List<Column> columns = parent.columns.filter[it instanceof ForeignKey].toList;
+					var ArrayList<ForeignKey> foreignKeys = new ArrayList();
+					for (element : columns) {
+						var foreignKey = element as ForeignKey;
+						if (foreignKey.primaryForeignKey)
+							foreignKeys.add(foreignKey);
+
+					}
+
+					content += '''
+						-- Change primary foreign key attribute of «objB.name.toLowerCase» 
+						ALTER TABLE «objA.table.name.toLowerCase» DROP PRIMARY KEY «IF foreignKeys.size > 0»,
+												ADD PRIMARY KEY (`«FOR e : foreignKeys SEPARATOR "`,`"»« e.name»«ENDFOR»`
+						«ELSE»;
+						«ENDIF»
+					'''
 
 				}
 
-				content += '''
-					-- Change primary foreign key attribute of «objB.name.toLowerCase» 
-					ALTER TABLE «objA.table.name.toLowerCase» DROP PRIMARY KEY «IF foreignKeys.size > 0»,
-						ADD PRIMARY KEY (`«FOR e : foreignKeys SEPARATOR "`,`"»« e.name»«ENDFOR»`
-					«ELSE»;
-					«ENDIF»
-				'''
-
+			} else {
+// TODO database or attribute name value change
 			}
 
-		} else {
-// TODO database or attribute name value change
 		}
+		return content;
 
 	}
-	return content;
 
-}
-
-/**
- * Change the column size for text data types. If the data type is not a text type, the columns display value is changed. 
- * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
- */
-def static String _SET_ATTRIBUTE_Column_Unique(PartiallyResolvable partiallyResolvableOperator) {
-	if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
-		partiallyResolvableOperator.semanticChangeSets.size == 1) {
-		var SemanticChangeSet setColumnSize = partiallyResolvableOperator.semanticChangeSets.get(0)
-		return _SET_ATTRIBUTE_Column_Unique2(setColumnSize, partiallyResolvableOperator.resolveOptions);
+	/**
+	 * Change the column size for text data types. If the data type is not a text type, the columns display value is changed. 
+	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
+	 */
+	def static String _SET_ATTRIBUTE_Column_Unique(PartiallyResolvable partiallyResolvableOperator) {
+		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+			partiallyResolvableOperator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet setColumnSize = partiallyResolvableOperator.semanticChangeSets.get(0)
+			return _SET_ATTRIBUTE_Column_Unique2(setColumnSize, partiallyResolvableOperator.resolveOptions);
+		}
+		return ""
 	}
-	return ""
-}
 
-def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOptions columnOptions) {
+	def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOptions columnOptions) {
 		var List<AttributeValueChange> makeColumnUniqe = set.changes.filter(AttributeValueChange).toList
 		var content = ""
 
@@ -204,6 +204,10 @@ def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOpt
 
 					switch columnOptions {
 						case ColumnOptions.IGNORE: {
+						}
+						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+							content +=
+								'''-- TODO change all values of column «objB.name» that violate the new unique constraint'''
 						}
 						case ColumnOptions.DELETE_ROW: {
 
@@ -259,7 +263,7 @@ def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOpt
 
 						}
 						case ColumnOptions.UPDATE_ROW_SET_TO_NULL: {
-							
+
 							var key = objB.table.mainPrimaryKey;
 							var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
 								objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
@@ -320,9 +324,7 @@ def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOpt
 	 * Change the column type. 
 	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
 	 */
-	def
-
-static String _SET_ATTRIBUTE_Column_Type(PartiallyResolvable partiallyResolvableOperator) {
+	def static String _SET_ATTRIBUTE_Column_Type(PartiallyResolvable partiallyResolvableOperator) {
 		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
 			partiallyResolvableOperator.semanticChangeSets.size == 1) {
 			var SemanticChangeSet setColumnType = partiallyResolvableOperator.semanticChangeSets.get(0)
@@ -331,9 +333,7 @@ static String _SET_ATTRIBUTE_Column_Type(PartiallyResolvable partiallyResolvable
 		return ""
 	}
 
-	def
-
-static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions resolveOption) {
+	def static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions resolveOption) {
 
 		var List<AttributeValueChange> changeColumnType = set.changes.filter(AttributeValueChange).toList
 		var content = ""
@@ -347,6 +347,12 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 				switch resolveOption {
 					case IGNORE: {
 					}
+					case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+						content +=
+							'''
+							-- TODO change all values of column «objB.name» that are incompatible with the new type «objB.type.getName»
+							'''
+					}
 					case DELETE_ROW: {
 
 						var key = objB.table.mainPrimaryKey;
@@ -358,7 +364,6 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 							ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
 								objB.table, objB.table.mainPrimaryKey, whereClause);
 
-			
 						content += '''
 							-- Set «objB.name.toLowerCase» values to null
 							BEGIN; 
@@ -374,16 +379,15 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 
 					}
 					case UPDATE_ROW_SET_TO_DEFAULT: {
-						
-						var key = objB.table.mainPrimaryKey;
-							var whereClause = ColumnUtil.getRegexStringForWhereClause(objA, objB, key);
-							var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
-								SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, objB.table.mainPrimaryKey,
-								whereClause)
 
-							content +=
-								ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
-									objB.table, objB.table.mainPrimaryKey, whereClause);
+						var key = objB.table.mainPrimaryKey;
+						var whereClause = ColumnUtil.getRegexStringForWhereClause(objA, objB, key);
+						var historyInsert = ColumnUtil.createInsertColumnHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+							objB.table.schema, objB, objB.table.mainPrimaryKey, whereClause)
+
+						content +=
+							ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
+								objB.table, objB.table.mainPrimaryKey, whereClause);
 
 						// Aktuell nur von string zu number
 						content += '''
@@ -401,16 +405,15 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 
 					}
 					case UPDATE_ROW_SET_TO_NULL: {
-						
-						var key = objB.table.mainPrimaryKey;
-							var whereClause = ColumnUtil.getRegexStringForWhereClause(objA, objB, key);
-							var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
-								SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, objB.table.mainPrimaryKey,
-								whereClause)
 
-							content +=
-								ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
-									objB.table, objB.table.mainPrimaryKey, whereClause);
+						var key = objB.table.mainPrimaryKey;
+						var whereClause = ColumnUtil.getRegexStringForWhereClause(objA, objB, key);
+						var historyInsert = ColumnUtil.createInsertColumnHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+							objB.table.schema, objB, objB.table.mainPrimaryKey, whereClause)
+
+						content +=
+							ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
+								objB.table, objB.table.mainPrimaryKey, whereClause);
 
 						// Aktuell nur von string zu number
 						content += '''
@@ -465,7 +468,7 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 					}
 				}
 
-				//This operator is executed first. Therefore, not null depends on objA
+				// This operator is executed first. Therefore, not null depends on objA
 				content += '''
 					-- Change column type of «objB.name.toLowerCase» 
 					ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objA.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
@@ -505,14 +508,12 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 				var sizeA = 0;
 				var sizeB = 0;
 				if (objA.size !== null)
-					sizeA = ColumnUtil.decimalTypes.contains(objA.type)
-						? ColumnUtil.getDecimalSizeValue(objA.size)
-						: ColumnUtil.getSizeValue(objA.size);
+					sizeA = ColumnUtil.decimalTypes.contains(objA.type) ? ColumnUtil.
+						getDecimalSizeValue(objA.size) : ColumnUtil.getSizeValue(objA.size);
 
 				if (objB.size !== null)
-					sizeB = ColumnUtil.decimalTypes.contains(objB.type)
-						? ColumnUtil.getDecimalSizeValue(objB.size)
-						: ColumnUtil.getSizeValue(objB.size);
+					sizeB = ColumnUtil.decimalTypes.contains(objB.type) ? ColumnUtil.
+						getDecimalSizeValue(objB.size) : ColumnUtil.getSizeValue(objB.size);
 
 				// if (sizeA > sizeB) {
 				if (compatibility) {
@@ -523,6 +524,12 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 						switch columnOptions {
 							case IGNORE: {
 								// IGNORE existing data.
+							}
+							case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+								content +=
+									'''
+									-- TODO change all values of column «objB.name» that are incompatible with the new size 
+									'''
 							}
 							case DELETE_ROW: {
 
@@ -714,6 +721,9 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 					switch columnOptions {
 						case IGNORE: {
 						}
+						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+							content += '''-- TODO remove or change all null values of column «objB.name» '''
+						}
 						case ColumnOptions.DELETE_ROW: {
 
 							var key = objB.table.mainPrimaryKey;
@@ -837,6 +847,53 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 	}
 
 	/**
+	 * Change the onDelete and onUpdate Literal for a foreignKey constraint
+	 * @param resolvableOperator The resolvable operator containing the necessary information.
+	 */
+	def static String _CHANGE_ForeignKey_constraint_name(ResolvableOperator resolvableOperator) {
+		if (resolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+			resolvableOperator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet rename = resolvableOperator.semanticChangeSets.get(0)
+			return _CHANGE_ForeignKey_constraint_name2(rename);
+		}
+		return ""
+	}
+
+	/**
+	 * Change the onDelete and onUpdate Literal for a foreignKey constraint
+	 * @param resolvableOperator The resolvable operator containing the necessary information.
+	 */
+	def static String _CHANGE_ForeignKey_constraint_name2(SemanticChangeSet set) {
+
+		var List<AttributeValueChange> changeLiteral = set.changes.filter(AttributeValueChange).toList
+		var content = ""
+
+		for (AttributeValueChange a : changeLiteral) {
+			if (a.objA instanceof ForeignKey && a.objB instanceof ForeignKey) {
+
+				var objA = a.objA as ForeignKey
+				var objB = a.objB as ForeignKey
+
+				content += '''
+					-- change foreign key constraint «objB.name.toLowerCase»
+					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					DROP FOREIGN KEY `«objA.constraintName»`;
+									
+					-- Create foreign key in «objB.table.name.toLowerCase» 
+					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					ADD CONSTRAINT `«objB.constraintName»`
+					  FOREIGN KEY (`«objB.name.toUpperCase»`)
+					  REFERENCES `«objB.referencedTable.name.toLowerCase»`(`«objB.referencedKeyColumn.name.toUpperCase»`)
+					  ON DELETE «objB.onDelete.name()»
+					  ON UPDATE «objB.onUpdate.name()»;
+				'''
+				return content;
+			}
+		}
+
+	}
+
+	/**
 	 * Change the column default value. The operator is resolvable because the model is validated before executing 
 	 * the operation.
 	 * @param resolvableOperator The resolvable operator containing the necessary information.
@@ -876,8 +933,58 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 
 	}
 
+	/**
+	 * Change the unique constraint name. 
+	 * @param resolvableOperator The resolvable operator containing the necessary information.
+	 */
+	def static String _SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(ResolvableOperator resolvableOperator) {
+		if (resolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+			resolvableOperator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet defaultValue = resolvableOperator.semanticChangeSets.get(0)
+			return _SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME2(defaultValue);
+		}
+		return ""
+	}
+
+	/**
+	 * Change the unique constraint name.
+	 * @param resolvableOperator The resolvable operator containing the necessary information.
+	 */
+	def static String _SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME2(SemanticChangeSet set) {
+
+		var List<AttributeValueChange> changeColumnType = set.changes.filter(AttributeValueChange).toList
+		var content = ""
+
+		for (AttributeValueChange a : changeColumnType) {
+			if (a.objA instanceof Column && a.objB instanceof Column) {
+
+				var objA = a.objA as Column
+				var objB = a.objB as Column
+
+				content += '''
+					-- Change uniqe constraint name of «objA.name.toLowerCase» 
+					ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.uniqueConstraintName»`;
+					ALTER TABLE «objB.table.name.toLowerCase» ADD UNIQUE INDEX `«objB.uniqueConstraintName»` (`«objB.name»` ASC) VISIBLE;
+					
+				'''
+
+				return content;
+			}
+		}
+
+	}
+
+	def static String _SET_ATTRIBUTE_Column_AutoIncrement(ResolvableOperator resolvableOperator) {
+		if (resolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+			resolvableOperator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet defaultValue = resolvableOperator.semanticChangeSets.get(0)
+			return _SET_ATTRIBUTE_Column_AutoIncrement2(defaultValue);
+		}
+		return ""
+	}
+
 	// maybe only one column can have the auto increment flag
-	def static String _SET_ATTRIBUTE_Column_AutoIncrement(SemanticChangeSet set) {
+	def static String _SET_ATTRIBUTE_Column_AutoIncrement2(SemanticChangeSet set) {
 		// TODO
 	}
 
@@ -917,6 +1024,12 @@ static String _SET_ATTRIBUTE_Column_Type_2(SemanticChangeSet set, ColumnOptions 
 
 					switch resolveOption {
 						case IGNORE: {
+						}
+						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+							content +=
+								'''
+								-- TODO change all values of column «objB.name» that are incompatible with the new type «objB.type.getName» or size
+								'''
 						}
 						case DELETE_ROW: {
 

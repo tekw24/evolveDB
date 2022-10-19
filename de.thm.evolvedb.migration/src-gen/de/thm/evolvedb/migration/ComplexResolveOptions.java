@@ -46,7 +46,15 @@ public enum ComplexResolveOptions implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	CARTESIAN_PRODUCT(2, "CARTESIAN_PRODUCT", "Create a cartesian product of all associated tables.");
+	CARTESIAN_PRODUCT(2, "CARTESIAN_PRODUCT", "Create a cartesian product of all associated tables."), /**
+	 * The '<em><b>SPECIFY CONDITION MANUALLY</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SPECIFY_CONDITION_MANUALLY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SPECIFY_CONDITION_MANUALLY(3, "SPECIFY_CONDITION_MANUALLY", "Specify condition manually");
 
 	/**
 	 * The '<em><b>IGNORE</b></em>' literal value.
@@ -82,6 +90,17 @@ public enum ComplexResolveOptions implements Enumerator {
 	public static final int CARTESIAN_PRODUCT_VALUE = 2;
 
 	/**
+	 * The '<em><b>SPECIFY CONDITION MANUALLY</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SPECIFY_CONDITION_MANUALLY
+	 * @model literal="Specify condition manually"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SPECIFY_CONDITION_MANUALLY_VALUE = 3;
+
+	/**
 	 * An array of all the '<em><b>Complex Resolve Options</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,6 +111,7 @@ public enum ComplexResolveOptions implements Enumerator {
 			IGNORE,
 			RESOLVE_BY_DB_ID,
 			CARTESIAN_PRODUCT,
+			SPECIFY_CONDITION_MANUALLY,
 		};
 
 	/**
@@ -151,6 +171,7 @@ public enum ComplexResolveOptions implements Enumerator {
 			case IGNORE_VALUE: return IGNORE;
 			case RESOLVE_BY_DB_ID_VALUE: return RESOLVE_BY_DB_ID;
 			case CARTESIAN_PRODUCT_VALUE: return CARTESIAN_PRODUCT;
+			case SPECIFY_CONDITION_MANUALLY_VALUE: return SPECIFY_CONDITION_MANUALLY;
 		}
 		return null;
 	}

@@ -1640,7 +1640,9 @@ class ColumnMigrationUtil {
 
 		if (!objB.notNull)
 			migrationOptions.addAll(ColumnOptions.UPDATE_COLUMN_SET_TO_NULL)
-
+		
+		if(migrationOptions.size != 0)
+			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
 		return migrationOptions;
 	}
 
@@ -1662,6 +1664,8 @@ class ColumnMigrationUtil {
 				ColumnOptions.UPDATE_ROW_SET_TO_NULL
 			)
 
+		if(migrationOptions.size != 0)
+			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
 		return migrationOptions;
 
 	}
@@ -2284,6 +2288,8 @@ class ColumnMigrationUtil {
 			}
 		}
 
+		if(migrationOptions.size != 0)
+			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
 		return migrationOptions
 
 	}
@@ -2307,6 +2313,8 @@ class ColumnMigrationUtil {
 					ColumnOptions.UPDATE_COLUMN_SET_TO_NULL,
 					ColumnOptions.UPDATE_ROW_SET_TO_NULL
 				)
+				
+			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
 
 		}
 
@@ -2334,6 +2342,7 @@ class ColumnMigrationUtil {
 					ColumnOptions.UPDATE_ROW_SET_TO_DEFAULT
 				)
 			}
+			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
 
 		}
 

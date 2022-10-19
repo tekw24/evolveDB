@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
@@ -130,14 +131,26 @@ public class MddeDatabaseConnectionModelWizard extends Wizard implements INewWiz
 						}
 
 						// Save a copy to the generatedModel Folder
-						System.out.println("Path: "
-								+ mddeDatabaseModelNewFileCreationPage_4.getContainerFolder().getFullPath().toString());
+						IPath path = null;	
+						if (!mddeDatabaseModelNewFileCreationPage_4.getContainerFullPath().toFile().isDirectory()) {
+							
+							path = mddeDatabaseModelNewFileCreationPage_4.getContainerFullPath();
+							path = path.append("/genModel");
+							
+							IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
+							if (!folder.exists()) {
+								createFolder(folder, false, true, null);
+							}
+							
+						} else {
 
-						IPath path = mddeDatabaseModelNewFileCreationPage_4.getContainerFolder().getFullPath();
-						IFolder folder = mddeDatabaseModelNewFileCreationPage_4.getContainerFolder();
-						IFolder binFolder = folder.getFolder("genModel");
-						if (!binFolder.exists()) {
-							createFolder(binFolder, false, true, null);
+							path = mddeDatabaseModelNewFileCreationPage_4.getContainerFolder().getFullPath();
+							IFolder folder = mddeDatabaseModelNewFileCreationPage_4.getContainerFolder();
+							IFolder binFolder = folder.getFolder("genModel");
+							if (!binFolder.exists()) {
+								createFolder(binFolder, false, true, null);
+							}
+							path = path.append("genModel");
 						}
 
 						String filename = mddeDatabaseModelNewFileCreationPage_4.getFileName();
@@ -148,7 +161,7 @@ public class MddeDatabaseConnectionModelWizard extends Wizard implements INewWiz
 
 						ResourceSet resourceSet2 = new ResourceSetImpl();
 						Resource resource2 = resourceSet2.createResource(URI.createPlatformResourceURI(
-								path.append("genModel/" + (filename != null ? filename : "test.mdde")).toString(),
+								path.append("/" + (filename != null ? filename : "test.mdde")).toString(),
 								true));
 						resource2.getContents().add(rootObject);
 

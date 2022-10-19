@@ -132,6 +132,18 @@
       <handler
             class="de.thm.commands.OpenMDSEWizardCommand"
             commandId="ModelDrivenSchemaEvolution.command1">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFolder">
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
       <handler
             class="de.thm.mdde.handler.LiftedDifferenceBuilderHandler"

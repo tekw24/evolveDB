@@ -598,6 +598,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.RENAME_COLUMN);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CHANGE_REFERENTIAL_ACTION);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME);
+		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME);
 
 		initEEnum(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.class, "PartiallyResolvableOperatorType");
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.DELETE_COLUMN);
@@ -632,11 +633,13 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(columnOptionsEEnum, ColumnOptions.MIGRATE_DATA);
 		addEEnumLiteral(columnOptionsEEnum, ColumnOptions.DELETE_DUBLICATES);
 		addEEnumLiteral(columnOptionsEEnum, ColumnOptions.IGNORE_DUBLICATES);
+		addEEnumLiteral(columnOptionsEEnum, ColumnOptions.SPECIFY_CONDITION_MANUALLY);
 
 		initEEnum(complexResolveOptionsEEnum, ComplexResolveOptions.class, "ComplexResolveOptions");
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.IGNORE);
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.RESOLVE_BY_DB_ID);
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.CARTESIAN_PRODUCT);
+		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.SPECIFY_CONDITION_MANUALLY);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -1,5 +1,6 @@
 package de.thm.mdde.wizard;
 
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -140,6 +141,12 @@ public class MddeDatabaseModelNewFileCreationPage_4 extends WizardNewFileCreatio
 				setErrorMessage(MddeEditorPlugin.INSTANCE.getString(key, new Object[] { FORMATTED_FILE_EXTENSIONS }));
 				return false;
 			}
+//			if(getContainerFullPath() == null || !getContainerFullPath().toFile().isDirectory()) {
+//				setErrorMessage("Files should not be stored in the project root.");
+//				return false;
+//			}
+			
+			
 			return true;
 		}
 		return false;

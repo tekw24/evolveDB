@@ -106,7 +106,15 @@ public enum ColumnOptions implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	IGNORE_DUBLICATES(9, "IGNORE_DUBLICATES", "IGNORE_DUBLICATES");
+	IGNORE_DUBLICATES(9, "IGNORE_DUBLICATES", "IGNORE_DUBLICATES"), /**
+	 * The '<em><b>SPECIFY CONDITION MANUALLY</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SPECIFY_CONDITION_MANUALLY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SPECIFY_CONDITION_MANUALLY(10, "SPECIFY_CONDITION_MANUALLY", "Specify condition manually");
 
 	/**
 	 * The '<em><b>IGNORE</b></em>' literal value.
@@ -208,6 +216,17 @@ public enum ColumnOptions implements Enumerator {
 	public static final int IGNORE_DUBLICATES_VALUE = 9;
 
 	/**
+	 * The '<em><b>SPECIFY CONDITION MANUALLY</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SPECIFY_CONDITION_MANUALLY
+	 * @model literal="Specify condition manually"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SPECIFY_CONDITION_MANUALLY_VALUE = 10;
+
+	/**
 	 * An array of all the '<em><b>Column Options</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -224,6 +243,7 @@ public enum ColumnOptions implements Enumerator {
 			MIGRATE_DATA,
 			DELETE_DUBLICATES,
 			IGNORE_DUBLICATES,
+			SPECIFY_CONDITION_MANUALLY,
 		};
 
 	/**
@@ -289,6 +309,7 @@ public enum ColumnOptions implements Enumerator {
 			case MIGRATE_DATA_VALUE: return MIGRATE_DATA;
 			case DELETE_DUBLICATES_VALUE: return DELETE_DUBLICATES;
 			case IGNORE_DUBLICATES_VALUE: return IGNORE_DUBLICATES;
+			case SPECIFY_CONDITION_MANUALLY_VALUE: return SPECIFY_CONDITION_MANUALLY;
 		}
 		return null;
 	}
