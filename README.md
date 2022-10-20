@@ -4,6 +4,7 @@ A screencast of the demo is available at https://youtu.be/ieXmrDd2nw4.
 
 We also provide an end-user tutorial ([End_User_Tutorial.pdf](https://github.com/tekw24/evolveDB/files/9819474/End_User_Tutorial.pdf))  with detailed examples in our repo. If anything should be unclear or if you have questions, please do not hesitate to contact us.
 
+![overview](https://user-images.githubusercontent.com/107031692/196974028-73149364-f3ab-4b09-a0bc-8e2d8a729de8.png)
 
 
 The development of EvolveDB was supported by [StudiumPlus](https://www.studiumplus.de/sp/). StudiumPlus is part of the Technische Hochschule Mittelhessen (THM) and offers dual study programs. 
