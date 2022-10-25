@@ -4,6 +4,7 @@ package de.thm.evolvedb.mdde.impl;
 
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.DataType;
+import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.MddePackage;
 
 import de.thm.evolvedb.mdde.Table;
@@ -11,10 +12,13 @@ import de.thm.evolvedb.mdde.util.MddeValidator;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -26,6 +30,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -744,6 +750,39 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateUniqueConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context) {
+	
+		if (getUniqueConstraintName() != null && !getUniqueConstraintName().equals("")) {
+
+			EList<Column> columns = getTable().getColumns();
+			List<String> constraintNames = new ArrayList<>();
+			for(Column column : columns) {
+				if(column.equals(this))
+					continue;
+				if(column.getUnique() && column.getUniqueConstraintName() != null && !column.getUniqueConstraintName().equals(""))
+					constraintNames.add(column.getUniqueConstraintName());
+			}
+				
+			if (constraintNames.contains(getUniqueConstraintName())) {
+
+				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
+						MddeValidator.COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME,
+						"Invalid constraint name. The unique constraint name has to be unique!", new Object[] { this }));
+				return false;
+			}
+		}
+
+		return true;
+		
+		
+		
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -920,6 +959,8 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				return validateDefaultValue((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case MddePackage.COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP:
 				return validateSizeValue((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case MddePackage.COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP:
+				return validateUniqueConstraintName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

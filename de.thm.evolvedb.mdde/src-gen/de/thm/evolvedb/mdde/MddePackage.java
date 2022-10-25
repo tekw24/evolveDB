@@ -370,13 +370,22 @@ public interface MddePackage extends EPackage {
 	int COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Validate Unique Constraint Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP = NAMED_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Column</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLUMN_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
+	int COLUMN_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.mdde.impl.PrimaryKeyImpl <em>Primary Key</em>}' class.
@@ -522,6 +531,15 @@ public interface MddePackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIMARY_KEY___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP = COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Constraint Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_KEY___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP = COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Primary Key</em>' class.
@@ -712,6 +730,15 @@ public interface MddePackage extends EPackage {
 	 * @ordered
 	 */
 	int FOREIGN_KEY___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP = COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Constraint Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOREIGN_KEY___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP = COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Constraint Name</em>' operation.
@@ -1277,6 +1304,16 @@ public interface MddePackage extends EPackage {
 	EOperation getColumn__ValidateSizeValue__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link de.thm.evolvedb.mdde.Column#validateUniqueConstraintName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Constraint Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Unique Constraint Name</em>' operation.
+	 * @see de.thm.evolvedb.mdde.Column#validateUniqueConstraintName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getColumn__ValidateUniqueConstraintName__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for enum '{@link de.thm.evolvedb.mdde.DataType <em>Data Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1669,6 +1706,14 @@ public interface MddePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getColumn__ValidateSizeValue__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Unique Constraint Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getColumn__ValidateUniqueConstraintName__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.mdde.DataType <em>Data Type</em>}' enum.

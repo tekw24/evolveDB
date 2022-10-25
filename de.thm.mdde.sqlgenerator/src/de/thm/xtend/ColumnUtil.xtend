@@ -5,9 +5,6 @@ import java.util.Arrays
 import java.util.List
 import de.thm.evolvedb.mdde.DataType
 import java.util.Map
-import java.util.TreeMap
-import java.util.Map.Entry
-import java.util.HashMap
 import de.thm.evolvedb.mdde.Database_Schema
 import de.thm.evolvedb.mdde.PrimaryKey
 import de.thm.evolvedb.mdde.Table
@@ -116,7 +113,7 @@ class ColumnUtil {
 			return '';
 		} else {
 
-			var content = '''«IF SQLGenerator.textTypes.contains(column.type)»DEFAULT «column.defaultValue»'«ELSE»DEFAULT «column.defaultValue»«ENDIF»'''
+			var content = '''«IF SQLGenerator.textTypes.contains(column.type)»DEFAULT '«column.defaultValue»'«ELSE»DEFAULT «column.defaultValue»«ENDIF»'''
 			return content;
 		}
 

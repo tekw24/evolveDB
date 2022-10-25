@@ -16,6 +16,7 @@ import junit.textui.TestRunner;
  * <ul>
  *   <li>{@link de.thm.evolvedb.mdde.Column#validateDefaultValue(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Default Value</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#validateSizeValue(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Size Value</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.Column#validateUniqueConstraintName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Constraint Name</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -95,6 +96,19 @@ public class ColumnTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testValidateSizeValue__DiagnosticChain_Map() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link de.thm.evolvedb.mdde.Column#validateUniqueConstraintName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Constraint Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.mdde.Column#validateUniqueConstraintName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	public void testValidateUniqueConstraintName__DiagnosticChain_Map() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

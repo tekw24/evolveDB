@@ -230,4 +230,12 @@ public interface Column extends NamedElement {
 	 */
 	boolean validateSizeValue(DiagnosticChain diagnostics, Map<Object, Object> context);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean validateUniqueConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context);
+
 } // Column

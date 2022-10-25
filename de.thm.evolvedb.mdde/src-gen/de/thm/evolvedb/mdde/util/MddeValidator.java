@@ -114,12 +114,20 @@ public class MddeValidator extends EObjectValidator {
 	public static final int COLUMN__VALIDATE_SIZE_VALUE = 9;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Constraint Name' of 'Column'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME = 10;
+
+	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 9;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 10;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -278,6 +286,7 @@ public class MddeValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(primaryKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateDefaultValue(primaryKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateSizeValue(primaryKey, diagnostics, context);
+		if (result || diagnostics != null) result &= validateColumn_validateUniqueConstraintName(primaryKey, diagnostics, context);
 		return result;
 	}
 
@@ -299,6 +308,7 @@ public class MddeValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(foreignKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateDefaultValue(foreignKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateSizeValue(foreignKey, diagnostics, context);
+		if (result || diagnostics != null) result &= validateColumn_validateUniqueConstraintName(foreignKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateForeignKey_ForeignKeyHasToReferenceAKeyColumn(foreignKey, diagnostics, context);
 		if (result || diagnostics != null) result &= validateForeignKey_validateConstraintName(foreignKey, diagnostics, context);
 		return result;
@@ -395,6 +405,7 @@ public class MddeValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(column, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateDefaultValue(column, diagnostics, context);
 		if (result || diagnostics != null) result &= validateColumn_validateSizeValue(column, diagnostics, context);
+		if (result || diagnostics != null) result &= validateColumn_validateUniqueConstraintName(column, diagnostics, context);
 		return result;
 	}
 
@@ -418,6 +429,16 @@ public class MddeValidator extends EObjectValidator {
 	public boolean validateColumn_validateSizeValue(Column column, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return column.validateSizeValue(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateUniqueConstraintName constraint of '<em>Column</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateColumn_validateUniqueConstraintName(Column column, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return column.validateUniqueConstraintName(diagnostics, context);
 	}
 
 	/**

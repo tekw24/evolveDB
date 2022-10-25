@@ -142,6 +142,9 @@ class ComplexChanges {
 		}
 
 		var content = '''''';
+		
+		//Delete the constraint before creating the new table because the constraint name has to be unique.
+		content += DELETE_ELEMENT._DELETE_ForeignKey_Constraint(removeForeign.src as ForeignKey);
 
 		if (addObject === null || removeForeign === null)
 			return content;
@@ -179,13 +182,12 @@ class ComplexChanges {
 					
 					SET SQL_SAFE_UPDATES = @safe_mode;
 					COMMIT;
-					-- If executing the script fails, we suggest a rollback.
 					
 				'''
 
 			}
 
-			content += DELETE_ELEMENT._DELETE_ForeignKey_IN_Table_columns2(removeForeignKey);
+			content += DELETE_ELEMENT._DELETE_Column_IN_Table_columns2(removeForeignKey);
 
 		}
 

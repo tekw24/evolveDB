@@ -541,6 +541,15 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getColumn__ValidateUniqueConstraintName__DiagnosticChain_Map() {
+		return columnEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDataType() {
 		return dataTypeEEnum;
 	}
@@ -637,6 +646,7 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		createEAttribute(columnEClass, COLUMN__UNIQUE_CONSTRAINT_NAME);
 		createEOperation(columnEClass, COLUMN___VALIDATE_DEFAULT_VALUE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(columnEClass, COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP);
+		createEOperation(columnEClass, COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP);
 
 		// Create enums
 		dataTypeEEnum = createEEnum(DATA_TYPE);
@@ -797,6 +807,15 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getColumn__ValidateSizeValue__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSizeValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getColumn__ValidateUniqueConstraintName__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateUniqueConstraintName", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());

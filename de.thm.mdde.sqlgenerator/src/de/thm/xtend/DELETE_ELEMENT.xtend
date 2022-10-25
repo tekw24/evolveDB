@@ -145,6 +145,39 @@ class DELETE_ELEMENT {
 		return content;
 
 	}
+	
+	
+	def static String _DELETE_ForeignKey_Constraint(ForeignKey foreignKey) {
+
+		var content = ""
+
+		var parent = foreignKey.table
+
+		content += '''
+			-- Drop foreign key in «parent.name.toLowerCase»
+			ALTER TABLE `«parent.name.toLowerCase»`
+			DROP FOREIGN KEY `«foreignKey.constraintName»`;
+			
+		'''
+
+		return content;
+
+	}
+	
+	def static String _DELETE_Column_IN_Table_columns2(Column column) {
+		var content = ""
+
+		var parent = column.table
+
+		content += '''
+			-- Drop foreign key in «parent.name.toLowerCase»
+			ALTER TABLE `«parent.name.toLowerCase»`
+			DROP COLUMN `«column.name»`;
+			
+		'''
+
+		return content;
+	}
 
 	/**
 	 * Delete a foreignKey 
