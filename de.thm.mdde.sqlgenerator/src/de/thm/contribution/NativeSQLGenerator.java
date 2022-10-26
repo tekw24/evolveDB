@@ -14,7 +14,7 @@ public class NativeSQLGenerator implements ISQLGenerator {
 
 	@Override
 	public String getDisplayName() {
-		return "Native SQL Generator";
+		return "MySQL script generator";
 	}
 
 	@Override

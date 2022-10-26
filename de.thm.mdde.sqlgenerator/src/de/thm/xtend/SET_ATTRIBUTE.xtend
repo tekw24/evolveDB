@@ -722,7 +722,7 @@ class SET_ATTRIBUTE {
 						case IGNORE: {
 						}
 						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
-							content += '''-- TODO remove or change all null values of column «objB.name» '''
+							content += '''-- TODO remove all null values of column «objB.name» '''
 						}
 						case ColumnOptions.DELETE_ROW: {
 
@@ -769,7 +769,7 @@ class SET_ATTRIBUTE {
 						}
 						case ColumnOptions.UPDATE_ROW_SET_TO_DEFAULT: {
 
-							var whereClause = '''«objB.name» is not null;''';
+							var whereClause = '''«objB.name» is null;''';
 							var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
 								SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, objB.table.mainPrimaryKey,
 								whereClause)

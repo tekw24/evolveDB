@@ -22,6 +22,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
@@ -65,21 +66,27 @@ public class MddeDifferenceBuilderNewFilePage extends WizardNewFileCreationPage 
 
 		Composite control = (Composite) getControl();
 
-		Composite composite = new Composite(control, SWT.NONE);
+		
+		Group group = new Group(control, SWT.NONE);
+		group.setText("Migration model");
+		group.setLayoutData(group);
+		
 		{
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 2;
 			layout.verticalSpacing = 12;
-			composite.setLayout(layout);
+			group.setLayout(layout);
 
 			GridData data = new GridData();
 			data.verticalAlignment = GridData.FILL;
 			data.grabExcessVerticalSpace = true;
 			data.horizontalAlignment = GridData.FILL;
-			composite.setLayoutData(data);
+			group.setLayoutData(data);
 		}
+		
+		
 
-		createMigrationButton = new Button(composite, SWT.CHECK);
+		createMigrationButton = new Button(group, SWT.CHECK);
 		createMigrationButton.setText("Create Migration Model");
 		{
 			GridData data = new GridData();
@@ -91,11 +98,11 @@ public class MddeDifferenceBuilderNewFilePage extends WizardNewFileCreationPage 
 
 		}
 		
-		Label fileName = new Label(composite, SWT.NONE);
+		Label fileName = new Label(group, SWT.NONE);
 		fileName.setText("Migration Model file name:");
 		fileName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
-		text = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		text = new Text(group, SWT.SINGLE | SWT.BORDER);
 		{
 			GridData data2 = new GridData();
 			data2.horizontalAlignment = GridData.FILL;

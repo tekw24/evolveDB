@@ -7,17 +7,11 @@ import java.util.List
 import de.thm.exception.GenerationCanceledException
 import org.eclipse.emf.ecore.EReference
 import java.util.ArrayList
-import org.sidiff.difference.symmetric.Change
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IFile
 import java.io.InputStream
 import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IResource
-import org.sidiff.difference.symmetric.AddObject
-import org.sidiff.difference.symmetric.AddReference
-import org.sidiff.difference.symmetric.AttributeValueChange
-import org.sidiff.difference.symmetric.RemoveObject
-import org.sidiff.difference.symmetric.RemoveReference
 import org.sidiff.difference.symmetric.SymmetricDifference
 import org.sidiff.difference.symmetric.SemanticChangeSet
 import de.thm.evolvedb.mdde.Database_Schema
@@ -31,6 +25,7 @@ import de.thm.evolvedb.migration.PartiallyResolvable
 import de.thm.evolvedb.migration.PartiallyResolvableOperatorType
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable
 import de.thm.evolvedb.migration.NotAutomaticallyResolvableOperatorType
+import de.thm.evolvedb.migration.ColumnOptions
 
 class SQLGenerator {
 
@@ -75,9 +70,6 @@ class SQLGenerator {
 	 */
 	var int generatedFiles = 0;
 
-	var long statements = 0;
-
-	var long lineSeparators = 0;
 
 	var long character = 0;
 
@@ -157,36 +149,25 @@ class SQLGenerator {
 			makeProgressAndCheckCanceled(progressMonitor);
 		}
 
-		// create filter package folder
-//		var folder = project.getFolder("generatedFiles");
-//		if (!folder.exists()) {
-//			folder.create(true, true, null);
-//		}
-//		var DuplicateDatabaseSchema dds = new DuplicateDatabaseSchema
-//		var dump = dds.duplicateDatabaseSchema(databaseSchemaA)
+
 		var Migration migration = resourceDifference.allContents.findFirst[it instanceof Migration] as Migration
 		var SymmetricDifference difference = migration.symmetricDifference
 
-		var Resource modelA = difference.modelA
 		var Resource modelB = difference.modelB
-
-		var Database_Schema databaseSchemaA = modelA.allContents.
-			findFirst[it instanceof Database_Schema] as Database_Schema
-
-		var DuplicateDatabaseSchema dds = new DuplicateDatabaseSchema
-		var dump = dds.duplicateDatabaseSchema(databaseSchemaA)
 
 		// changes will be made in the schema described by the second model (modelB)
 		var Database_Schema databaseSchemaB = modelB.allContents.
 			findFirst[it instanceof Database_Schema] as Database_Schema
+			
+		var historyTable = migration.isHistoryTableRequired() 
 
 		var String content = '''
 			USE «databaseSchemaB.name»;
-			START TRANSACTION;
 			
+			«IF historyTable»
 			-- Creates an history table for deleted and updated values
 			«ColumnUtil.createDataCleansingTable(HISTORY_TABLE_NAME, databaseSchemaB)»
-			
+			«ENDIF»		
 		''';
 
 		if (processed === null)
@@ -242,7 +223,6 @@ class SQLGenerator {
 //		createFile(folder, "dump.sql", true, dump, progressMonitor);
 		// createFile(folder, "test.sql", true, content, progressMonitor);
 		content += '''
-			COMMIT;
 			-- If executing the script fails, we suggest a rollback.
 		'''
 		return content;
@@ -448,6 +428,30 @@ class SQLGenerator {
 		for (a : tmp.EAllReferences.filter[EAnnotations.exists[source.equals(DISPLAY_NAME)]]) {
 			checkCircleInDisplayNamePath(a.EReferenceType, start, path)
 		}
+	}
+	
+	
+	/**
+	 * @param migration The method checks if the migration contains 
+	 * operators with a possible breaking influence on existing data.
+	 */
+	
+	def boolean isHistoryTableRequired(Migration migration){
+		
+		if (migration.notAutimaticallyResolvable.size > 0)
+			return true;
+			
+		for(PartiallyResolvable partiallyResolvable : migration.partiallyResovableSMO){
+			
+			if(partiallyResolvable.processStatus === ProcessStatus.RESOLVED){
+				if(partiallyResolvable.resolveOptions !== ColumnOptions.IGNORE)
+					return true;
+				
+			}
+							
+		}
+		
+		return false;
 	}
 
 	def void makeProgressAndCheckCanceled(IProgressMonitor monitor) {
