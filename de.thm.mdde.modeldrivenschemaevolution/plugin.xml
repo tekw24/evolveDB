@@ -17,6 +17,11 @@
                      value="MddeDatabseConnectionWizard">
                </parameter>
             </command>
+            <command
+                  commandId="de.thm.mdde.downloaddriver"
+                  label="Download Driver"
+                  style="push">
+            </command>
             <separator
                   name="ModelDrivenSchemaEvolution.separator3"
                   visible="true">
@@ -64,6 +69,11 @@
                      name="newWizardId"
                      value="MddeDatabseConnectionWizard">
                </parameter>
+            </command>
+            <command
+                  commandId="de.thm.mdde.downloaddriver"
+                  label="Download Driver"
+                  style="push">
             </command>
             <separator
                   name="ModelDrivenSchemaEvolution.separator3"
@@ -125,6 +135,11 @@
             description="Create Migration Model"
             id="de.thm.mdde.createMigrationModel"
             name="Create Migration Model">
+      </command>
+      <command
+            description="Download Driver"
+            id="de.thm.mdde.downloaddriver"
+            name="Download Driver">
       </command>
    </extension>
    <extension
@@ -206,6 +221,10 @@
                </iterate>
             </with>
          </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.OpenDriverWizardCommand"
+            commandId="de.thm.mdde.downloaddriver">
       </handler>
    </extension>
    <extension

@@ -1,0 +1,42 @@
+/*
+ * DBeaver - Universal Database Manager
+ * Copyright (C) 2010-2022 DBeaver Corp and others
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package de.thm.mdde.runtime;
+
+import org.eclipse.jface.operation.IRunnableContext;
+
+import de.thm.mdde.connection.utils.RuntimeUtils;
+import de.thm.mdde.driver.runtime.model.DBRRunnableContext;
+import de.thm.mdde.driver.runtime.model.DBRRunnableWithProgress;
+
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * Progress monitor default implementation
+ */
+public class RunnableContextDelegate implements DBRRunnableContext {
+
+    private final IRunnableContext delegate;
+
+    public RunnableContextDelegate(IRunnableContext delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public void run(boolean fork, boolean cancelable, final DBRRunnableWithProgress runnable) throws InvocationTargetException, InterruptedException {
+        delegate.run(fork, cancelable, monitor -> runnable.run(RuntimeUtils.makeMonitor(monitor)));
+    }
+}

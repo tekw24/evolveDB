@@ -2,7 +2,6 @@ package de.thm.mdde.extensionpoint.evaluation;
 
 import de.thm.extensionpoint.interfaces.ISQLGenerator;
 
-import java.security.AlgorithmParameterGeneratorSpi;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,13 +39,6 @@ public class EvalutaionContributionHandler {
 			
 			return generators;
 			
-//			if(generators.size() > 0) {
-//				ISQLGenerator sqGenerator = chooseGenerator(generators);
-//				if (sqGenerator != null) {
-//					return sqGenerator;
-//					
-//				}
-//			}
 
 		} catch (CoreException ex) {
 			System.out.println(ex.getMessage());
