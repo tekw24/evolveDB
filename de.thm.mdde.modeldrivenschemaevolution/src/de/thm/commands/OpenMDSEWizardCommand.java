@@ -1,5 +1,6 @@
 package de.thm.commands;
 
+import de.thm.mdde.wizard.MddeDatabaseConnectionController;
 import de.thm.mdde.wizard.MddeDatabaseConnectionModelWizard;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -15,7 +16,7 @@ public class OpenMDSEWizardCommand extends AbstractHandler {
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 		//IWizard wizard = new MddeDatabaseConnectionModelWizard();
-		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard());
+		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard(new MddeDatabaseConnectionController()));
 		dialog.open();
 		
 

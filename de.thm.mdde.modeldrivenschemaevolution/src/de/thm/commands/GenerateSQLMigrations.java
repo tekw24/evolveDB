@@ -26,11 +26,9 @@ public class GenerateSQLMigrations extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		System.out.println("Generate SQL Migrations");
 
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		Object firstElement = selection.getFirstElement();
-		System.out.println(firstElement.getClass());
 		if (firstElement instanceof IFile) {
 			// get the selected ecore file
 			IFile fileEcore = (IFile) selection.getFirstElement();

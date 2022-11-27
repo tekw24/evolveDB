@@ -1,11 +1,15 @@
 package de.thm.commands;
 
 import de.thm.connection.classloader.DriverClassLoader;
+import de.thm.mdde.commonui.exception.handler.ErrorHandler;
+import de.thm.mdde.commonui.model.validation.ModelValidation;
 import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
+import de.thm.mdde.connection.ui.wizard.EDBConnectionWizard;
 import de.thm.mdde.datasource.EDBDataSource;
 import de.thm.mdde.drivermanager.DriverExtensionLoader;
 import de.thm.mdde.extensionpoint.evaluation.ExtensionPointHelper;
 import de.thm.mdde.preferences.EDBPreferenceInitializer;
+import de.thm.mdde.ui.MDDECodeGenerationWizard;
 import de.thm.mdde.wizard.MddeDatabaseConnectionModelWizard;
 
 import java.io.IOException;
@@ -20,12 +24,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.inject.Inject;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -39,6 +41,10 @@ public class OpenDriverWizardCommand extends AbstractHandler {
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 		// IWizard wizard = new MddeDatabaseConnectionModelWizard();
+		
+		WizardDialog wizardDialog = new WizardDialog(activeShell, new EDBConnectionWizard());
+
+		wizardDialog.open();
 
 		List<EDBDataSource> drivers = DriverExtensionLoader.loadRegisteredDrivers();
 
@@ -83,6 +89,10 @@ public class OpenDriverWizardCommand extends AbstractHandler {
 				dialog.open();
 			}
 		}
+		
+		
+
+	
 
 		return null;
 	}

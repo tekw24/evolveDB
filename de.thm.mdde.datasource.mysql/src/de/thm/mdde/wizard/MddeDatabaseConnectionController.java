@@ -16,8 +16,10 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXException;
 
 import de.thm.de.util.CustomJobChangedListener;
@@ -159,7 +161,7 @@ public class MddeDatabaseConnectionController {
 
 	}
 
-	protected EObject createModel() {
+	public EObject createModel() {
 		MYSQL_Database_Connector connector = new MYSQL_Database_Connector();
 		DatabaseMetaData dmd = connector.getDatabaseMetaData(user, host, port, schema);
 		MDDEModelCreator modelCreator = new MDDEModelCreator();
@@ -238,6 +240,14 @@ public class MddeDatabaseConnectionController {
 		return connectionWizardPage_1.isSchemaSelected();
 	}
 	
+	public void openConnectionUi() {
+		Shell activeShell = Display.getCurrent().getActiveShell();
+		//IWizard wizard = new MddeDatabaseConnectionModelWizard();
+		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard(this));
+		dialog.open();
+		
+	}
+	
 
 	// Getter and Setter
 
@@ -304,6 +314,8 @@ public class MddeDatabaseConnectionController {
 		this.jpaProvider = jpaProvider; 
 		
 	}
+
+
 
 	
 	

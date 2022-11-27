@@ -2,8 +2,9 @@ package de.thm.mdde.datasource;
 
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
-
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.INewWizard;
 
 public interface EDBDataSource {
 	
@@ -36,7 +37,18 @@ public interface EDBDataSource {
 	DBPDriverDependencies getDriverDependencies();
 	
 	
+	/**
+	 * The UI for entering the connection details.
+	 * @return
+	 */
+	void openConnectionUi();
 	
+	
+	/**
+	 * Returns the root element of the newly created model;
+	 * @return
+	 */
+	EObject getRootObject();
 	
 	
 
