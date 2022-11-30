@@ -36,7 +36,7 @@ public class MddeDatabaseConnectionModelWizard extends Wizard implements INewWiz
 	private MddeDatabaseModelConnectionWizardPage_2 mddeDatabaseModelConnectionWizardPage_2;
 
 	//private MddeDatabaseModelNewFileCreationPage_4 mddeDatabaseModelNewFileCreationPage_4;
-	private MddeDatabaseModelConnectionWizardPage_3 mddeDatabaseModelConnectionWizardPage_3;
+	//private MddeDatabaseModelConnectionWizardPage_3 mddeDatabaseModelConnectionWizardPage_3;
 
 	public MddeDatabaseConnectionModelWizard(MddeDatabaseConnectionController controller) {
 		super();
@@ -57,10 +57,18 @@ public class MddeDatabaseConnectionModelWizard extends Wizard implements INewWiz
 	public boolean canFinish() {
 		return connectionWizardPage_1.isPageComplete() && mddeDatabaseModelConnectionWizardPage_2.isPageComplete();
 	}
+	
+	
+	@Override
+	public boolean performCancel() {
+		controller.setCanceled(true);
+		return super.performCancel();
+	}
+	
 
 	@Override
 	public boolean performFinish() {
-		return false;
+		return true;
 
 //		try {
 			// Remember the file.
@@ -323,16 +331,11 @@ public class MddeDatabaseConnectionModelWizard extends Wizard implements INewWiz
 		return super.getPreviousPage(page);
 	}
 
-	private void createFolder(IFolder folder, boolean force, boolean local, IProgressMonitor monitor)
-			throws CoreException {
-		if (!folder.exists()) {
-			IContainer parent = folder.getParent();
-			if (parent instanceof IFolder) {
-				createFolder((IFolder) parent, force, local, null);
-			}
-			folder.create(force, local, monitor);
-		}
-	}
+
+
+	
+	
+	
 
 	/**
 	 * Get the file from the page. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -56,6 +56,11 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 		this.controller = controller;
 
 	}
+	
+	@Override
+	public boolean isPageComplete() {
+		return super.isPageComplete();
+	}
 
 	@Override
 	public void createControl(Composite parent) {
@@ -138,6 +143,7 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 			if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
 				String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
 				setErrorMessage(MddeEditorPlugin.INSTANCE.getString(key, new Object[] { FORMATTED_FILE_EXTENSIONS }));
+				setPageComplete(false);
 				return false;
 			}
 //			if(getContainerFullPath() == null || !getContainerFullPath().toFile().isDirectory()) {
@@ -145,9 +151,10 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 //				return false;
 //			}
 			
-			
+			setPageComplete(true);
 			return true;
 		}
+		setPageComplete(false);
 		return false;
 	}
 

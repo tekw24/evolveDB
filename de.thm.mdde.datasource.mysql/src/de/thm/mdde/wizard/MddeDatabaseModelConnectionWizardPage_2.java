@@ -59,7 +59,8 @@ public class MddeDatabaseModelConnectionWizardPage_2 extends WizardPage {
 				if (items.length == 1) {
 					controller.setSchema(items[0].getText());
 					setPageComplete(true);
-				}
+				}else
+					setPageComplete(false);
 
 			}
 

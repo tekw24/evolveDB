@@ -51,5 +51,12 @@ public interface EDBDataSource {
 	EObject getRootObject();
 	
 	
+	/**
+	 * Returns true if the user left the wizard via the cancel button.
+	 * @return
+	 */
+	boolean isCanceled();
+	
+	
 
 }

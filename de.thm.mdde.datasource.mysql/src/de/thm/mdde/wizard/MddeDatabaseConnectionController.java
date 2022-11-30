@@ -3,6 +3,7 @@ package de.thm.mdde.wizard;
 import java.io.File;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
+import java.sql.Driver;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,9 +45,15 @@ public class MddeDatabaseConnectionController {
 	private String schema;
 	private List<String> schemas;
 	private JPAProvider jpaProvider = null;
+	private Driver driver;
+	private MYSQL_Database_Connector connector;
+	
+	private boolean canceled = false;
 
-	public MddeDatabaseConnectionController() {
-
+	public MddeDatabaseConnectionController(Driver driver) {
+		
+		this.driver = driver;
+		this.connector = new MYSQL_Database_Connector(driver);
 	}
 
 	public MddeDatabaseConnectionController(User user, String host, String port, String schema) {
@@ -68,7 +75,6 @@ public class MddeDatabaseConnectionController {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				monitor.beginTask("Test Connection", monitor.UNKNOWN);
-				MYSQL_Database_Connector connector = new MYSQL_Database_Connector();
 
 				if (connector.testConnection(user, host, port, schema))
 					return new Status(Status.OK, "unknown", 1, "Connection Successful", null);
@@ -162,7 +168,6 @@ public class MddeDatabaseConnectionController {
 	}
 
 	public EObject createModel() {
-		MYSQL_Database_Connector connector = new MYSQL_Database_Connector();
 		DatabaseMetaData dmd = connector.getDatabaseMetaData(user, host, port, schema);
 		MDDEModelCreator modelCreator = new MDDEModelCreator();
 
@@ -173,7 +178,6 @@ public class MddeDatabaseConnectionController {
 	}
 
 	private void loadSchemas() {
-		MYSQL_Database_Connector connector = new MYSQL_Database_Connector();
 		schemas = connector.getAvailableSchemas(user, host, port, schema);
 	}
 
@@ -242,9 +246,12 @@ public class MddeDatabaseConnectionController {
 	
 	public void openConnectionUi() {
 		Shell activeShell = Display.getCurrent().getActiveShell();
-		//IWizard wizard = new MddeDatabaseConnectionModelWizard();
-		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard(this));
+		MddeDatabaseConnectionModelWizard wizard = new MddeDatabaseConnectionModelWizard(this);
+		WizardDialog dialog = new WizardDialog(activeShell, wizard);
+		dialog.setBlockOnOpen(true);
 		dialog.open();
+		
+		
 		
 	}
 	
@@ -314,6 +321,16 @@ public class MddeDatabaseConnectionController {
 		this.jpaProvider = jpaProvider; 
 		
 	}
+
+	public boolean isCanceled() {
+		return canceled;
+	}
+
+	public void setCanceled(boolean canceled) {
+		this.canceled = canceled;
+	}
+	
+	
 
 
 

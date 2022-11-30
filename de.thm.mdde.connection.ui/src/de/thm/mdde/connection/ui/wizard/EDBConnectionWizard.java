@@ -2,16 +2,29 @@ package de.thm.mdde.connection.ui.wizard;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.IOWrappedException;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -19,10 +32,16 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.ISetSelectionTarget;
 
 import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
-import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
 
 public class EDBConnectionWizard extends Wizard implements INewWizard {
 
@@ -45,8 +64,8 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 //			controller.setResModelFile(resModelFile);
 
 		setWindowTitle("Select Datasource Dialog");
-//		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
-//				.getImageDescriptor(MddeEditorPlugin.INSTANCE.getImage("full/wizban/NewMdde")));
+		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
+				.getImageDescriptor(MddeEditorPlugin.INSTANCE.getImage("full/wizban/NewMdde")));
 
 	}
 
@@ -66,30 +85,109 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 		try {
 			// Remember the file.
 			//
-			// final IFile modelFile = getFile();
+			final IFile modelFile = getFile();
+			
+			if(modelFile == null) {
+				MessageDialog.openError(getShell(), "File location not set", "Please select a location for the new model file.");
+				return false;
+			}
+				
 
 			// Do the work within an operation.
-			//
+
 			WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
 				@Override
 				protected void execute(IProgressMonitor progressMonitor) {
 					try {
+						// Create a resource set
+						//
+						ResourceSet resourceSet = new ResourceSetImpl();
 
-						// controller.generateMigrations(getFile(),
-						// mddeCodeGenerationWizardPage_2.getContainerFolder());
+						// Get the URI of the model file.
+						//
+						URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+
+						// Create a resource for this file.
+						//
+						Resource resource = resourceSet.createResource(fileURI);
+
+						EObject rootObject = controller.geteObject();
 
 						// Add the initial model object to the contents.
 
-//						// Save the contents of the resource to the file system.
+						if (rootObject != null) {
+							resource.getContents().add(rootObject);
+						}
 
-//						Map<Object, Object> options = new HashMap<Object, Object>();
-//						options.put(XMLResource.OPTION_ENCODING, mddeCodeGenerationWizardPage_2.getEncoding());
-//						resource.save(options);
+						// Save the contents of the resource to the file system.
+
+						Map<Object, Object> options = new HashMap<Object, Object>();
+						options.put(XMLResource.OPTION_ENCODING, edbDatabaseModelNewFileCreationPage.getEncoding());
+
+						try {
+							resource.save(options);
+						} catch (IOWrappedException e) {
+							// DO nothing
+							System.out.println("Exception");
+							e.printStackTrace();
+						}
+
+						// Save a copy to the generatedModel Folder
+						IPath path = null;
+						if (!edbDatabaseModelNewFileCreationPage.getContainerFullPath().toFile().isDirectory()) {
+
+							path = edbDatabaseModelNewFileCreationPage.getContainerFullPath();
+							path = path.append("/genModel");
+
+							IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
+							if (!folder.exists()) {
+								createFolder(folder, false, true, null);
+							}
+
+						} else {
+
+							path = edbDatabaseModelNewFileCreationPage.getContainerFolder().getFullPath();
+							IFolder folder = edbDatabaseModelNewFileCreationPage.getContainerFolder();
+							IFolder binFolder = folder.getFolder("genModel");
+							if (!binFolder.exists()) {
+								createFolder(binFolder, false, true, null);
+							}
+							path = path.append("genModel");
+						}
+
+						String filename = edbDatabaseModelNewFileCreationPage.getFileName();
+						if (filename != null) {
+							filename = filename.substring(0, filename.length() - 5);
+							filename = filename + "V2.mdde";
+						}
+
+						ResourceSet resourceSet2 = new ResourceSetImpl();
+						Resource resource2 = resourceSet2.createResource(URI.createPlatformResourceURI(
+								path.append("/" + (filename != null ? filename : "test.mdde")).toString(), true));
+						resource2.getContents().add(rootObject);
+
+						try {
+							resource2.save(options);
+						} catch (IOWrappedException e) {
+							// DO nothing
+							System.out.println("Exception");
+							e.printStackTrace();
+						}
+
+//						folder.create(false, true, progressMonitor);
+//						
+//						IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//						IProject project = root.getProject(projectName);
+
+//						Object firstElement = selection.getFirstElement();
+//						if (firstElement instanceof IAdaptable) {
+//							IProject project = (IProject) ((IAdaptable) firstElement).getAdapter(IProject.class);
+//							IPath path = project.getFullPath();
+//							System.out.println(path);
+//						}
 
 					} catch (Exception exception) {
-						// MddeEditorPlugin.INSTANCE.log(exception);
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
-								exception.getLocalizedMessage());
+						MddeEditorPlugin.INSTANCE.log(exception);
 					} finally {
 						progressMonitor.done();
 					}
@@ -98,33 +196,40 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 
 			getContainer().run(false, false, operation);
 
-			// TODO Kann ich die neue Datei im Explorer �ffnen?
-//			// Select the new file resource in the current view.
-//			//
-//			IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-//			IWorkbenchPage page = workbenchWindow.getActivePage();
-//			final IWorkbenchPart activePart = page.getActivePart();
-//			if (activePart instanceof ISetSelectionTarget) {
-//				final ISelection targetSelection = new StructuredSelection(modelFile);
-//				getShell().getDisplay().asyncExec(new Runnable() {
-//					@Override
-//					public void run() {
-//						((ISetSelectionTarget) activePart).selectReveal(targetSelection);
-//					}
-//				});
-//			}
-//
-//			// Open an editor on the new file.
-//			//
-//			try {
-//				page.openEditor(new FileEditorInput(modelFile),
-//						workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
-//			} catch (PartInitException exception) {
-//				MessageDialog.openError(workbenchWindow.getShell(),
-//						MddeEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
-//				return false;
-//			}
-//
+			// Select the new file resource in the current view.
+			//
+
+			if (workbench == null)
+				workbench = PlatformUI.getWorkbench();
+
+			if (workbench != null) {
+
+				IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+				IWorkbenchPage page = workbenchWindow.getActivePage();
+				final IWorkbenchPart activePart = page.getActivePart();
+				if (activePart instanceof ISetSelectionTarget) {
+					final ISelection targetSelection = new StructuredSelection(modelFile);
+					getShell().getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+						}
+					});
+				}
+
+				// Open an editor on the new file.
+				//
+				try {
+					page.openEditor(new FileEditorInput(modelFile),
+							workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+				} catch (PartInitException exception) {
+					MessageDialog.openError(workbenchWindow.getShell(),
+							MddeEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+					return false;
+				}
+
+			}
+
 			return true;
 		} catch (Exception exception) {
 			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", exception.getLocalizedMessage());
@@ -135,23 +240,21 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean canFinish() {
-		return edbSelectDatasourcePage.isPageComplete();
+		return edbSelectDatasourcePage.isPageComplete() && edbDatabaseModelNewFileCreationPage.isPageComplete();
 	}
 
 	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
 		if (page.equals(edbSelectDatasourcePage)) {
-			
+
 		}
 
 		return super.getNextPage(page);
 	}
-	
-	
 
 	@Override
 	public void addPages() {
-		controller = new EDBConnectionController();
+		controller = new EDBConnectionController(this);
 		edbSelectDatasourcePage = new EDBConnectionSelectDataSourcePage("Erste Seite", "Select Datasource", null,
 				controller);
 
@@ -205,13 +308,24 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 		super.addPages();
 	}
 
+	private void createFolder(IFolder folder, boolean force, boolean local, IProgressMonitor monitor)
+			throws CoreException {
+		if (!folder.exists()) {
+			IContainer parent = folder.getParent();
+			if (parent instanceof IFolder) {
+				createFolder((IFolder) parent, force, local, null);
+			}
+			folder.create(force, local, monitor);
+		}
+	}
+
 	/**
 	 * Get the file from the page. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-//	public IFile getFile() {
-//		return mddeCodeGenerationWizardPage_2.getFile();
-//	}
+	public IFile getFile() {
+		return edbDatabaseModelNewFileCreationPage.getModelFile();
+	}
 
 }

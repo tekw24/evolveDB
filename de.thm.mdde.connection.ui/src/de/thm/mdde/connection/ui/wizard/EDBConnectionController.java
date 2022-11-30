@@ -1,7 +1,5 @@
 package de.thm.mdde.connection.ui.wizard;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -12,16 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
 import de.thm.mdde.datasource.EDBDataSource;
@@ -31,8 +23,11 @@ public class EDBConnectionController {
 
 	private List<EDBDataSource> dataSources;
 	private EDBDataSource dataSource;
+	private EObject eObject;
+	private EDBConnectionWizard edbConnectionWizard;
 
-	public EDBConnectionController() {
+	public EDBConnectionController(EDBConnectionWizard edbConnectionWizard) {
+		this.edbConnectionWizard = edbConnectionWizard;
 
 	}
 
@@ -50,10 +45,6 @@ public class EDBConnectionController {
 				Class classToLoad = Class.forName(dataSource.getDriver().getDriverClassName(), true, child);
 				return classToLoad != null;
 
-//		Method method = classToLoad.getDeclaredMethod("myMethod");
-//		Object instance = classToLoad.newInstance();
-//		Object result = method.invoke(instance);
-
 			} catch (MalformedURLException | ClassNotFoundException | SecurityException | IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,14 +54,14 @@ public class EDBConnectionController {
 		}
 		return false;
 	}
-	
+
 	protected void openDownloadDriverPage() {
 		Shell activeShell = Display.getCurrent().getActiveShell();
 		DriverDownloadDialog dialog = new DriverDownloadDialog(activeShell, dataSource.getDriver(),
 				dataSource.getDriverDependencies(), false, false);
 		dialog.setMinimumPageSize(100, 100);
 		dialog.open();
-		
+
 	}
 
 	protected String[] loadGenerators() {
@@ -102,11 +93,31 @@ public class EDBConnectionController {
 		return false;
 	}
 
-	public void openConnectionUI() {
-		if(dataSource != null) {
+	/**
+	 * Opens the driver connection UI and waits until the UI is closed by the user.
+	 */
+	public boolean openConnectionUI() {
+		if (dataSource != null) {
 			dataSource.openConnectionUi();
+			if (!dataSource.isCanceled()) {
+				eObject = dataSource.getRootObject();
+				return true;
+			} else {
+				((WizardDialog) edbConnectionWizard.getContainer()).close();
+				
+			}
+
 		}
-		
+		return false;
+
+	}
+
+	public EObject geteObject() {
+		return eObject;
+	}
+
+	private void seteObject(EObject eObject) {
+		this.eObject = eObject;
 	}
 
 }

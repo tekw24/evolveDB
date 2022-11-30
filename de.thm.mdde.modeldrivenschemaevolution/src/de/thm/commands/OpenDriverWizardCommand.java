@@ -46,49 +46,49 @@ public class OpenDriverWizardCommand extends AbstractHandler {
 
 		wizardDialog.open();
 
-		List<EDBDataSource> drivers = DriverExtensionLoader.loadRegisteredDrivers();
-
-		if (drivers.size() == 1) {
-
-			EDBDataSource dataSource = drivers.get(0);
-
-			String path = dataSource.getDriver().getDriverLibraries().get(0).getLocalFile();
-			Path localFile = Paths.get(path);
-
-			if (Files.exists(localFile)) {
-
-				// Paths.get("C:\\Users\\Torben\\Documents\\Promotion2022\\mysql-connector-java-8.0.29.jar");
-
-				// DriverClassLoader driverClassLoader = new
-				// DriverClassLoader(dataSource.getDriver().getDriverLibraries(), null, null);
-
-				URLClassLoader child;
-				try {
-					child = new URLClassLoader(new URL[] { localFile.toUri().toURL() },
-							this.getClass().getClassLoader());
-
-					Class classToLoad = Class.forName(dataSource.getDriver().getDriverClassName(), true, child);
-
-					System.out.println();
-
-//			Method method = classToLoad.getDeclaredMethod("myMethod");
-//			Object instance = classToLoad.newInstance();
-//			Object result = method.invoke(instance);
-
-				} catch (MalformedURLException | ClassNotFoundException | SecurityException
-						| IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				trackUserSettings();
-
-				DriverDownloadDialog dialog = new DriverDownloadDialog(activeShell, dataSource.getDriver(),
-						dataSource.getDriverDependencies(), false, false);
-				dialog.setMinimumPageSize(100, 100);
-				dialog.open();
-			}
-		}
+//		List<EDBDataSource> drivers = DriverExtensionLoader.loadRegisteredDrivers();
+//
+//		if (drivers.size() == 1) {
+//
+//			EDBDataSource dataSource = drivers.get(0);
+//
+//			String path = dataSource.getDriver().getDriverLibraries().get(0).getLocalFile();
+//			Path localFile = Paths.get(path);
+//
+//			if (Files.exists(localFile)) {
+//
+//				// Paths.get("C:\\Users\\Torben\\Documents\\Promotion2022\\mysql-connector-java-8.0.29.jar");
+//
+//				// DriverClassLoader driverClassLoader = new
+//				// DriverClassLoader(dataSource.getDriver().getDriverLibraries(), null, null);
+//
+//				URLClassLoader child;
+//				try {
+//					child = new URLClassLoader(new URL[] { localFile.toUri().toURL() },
+//							this.getClass().getClassLoader());
+//
+//					Class classToLoad = Class.forName(dataSource.getDriver().getDriverClassName(), true, child);
+//
+//					System.out.println();
+//
+////			Method method = classToLoad.getDeclaredMethod("myMethod");
+////			Object instance = classToLoad.newInstance();
+////			Object result = method.invoke(instance);
+//
+//				} catch (MalformedURLException | ClassNotFoundException | SecurityException
+//						| IllegalArgumentException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//				trackUserSettings();
+//
+//				DriverDownloadDialog dialog = new DriverDownloadDialog(activeShell, dataSource.getDriver(),
+//						dataSource.getDriverDependencies(), false, false);
+//				dialog.setMinimumPageSize(100, 100);
+//				dialog.open();
+//			}
+//		}
 		
 		
 

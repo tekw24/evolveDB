@@ -16,7 +16,7 @@ public class OpenMDSEWizardCommand extends AbstractHandler {
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 		//IWizard wizard = new MddeDatabaseConnectionModelWizard();
-		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard(new MddeDatabaseConnectionController()));
+		WizardDialog dialog = new WizardDialog(activeShell, new MddeDatabaseConnectionModelWizard(new MddeDatabaseConnectionController(null)));
 		dialog.open();
 		
 

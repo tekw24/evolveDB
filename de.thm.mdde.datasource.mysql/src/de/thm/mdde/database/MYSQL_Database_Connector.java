@@ -2,6 +2,7 @@ package de.thm.mdde.database;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +19,18 @@ public class MYSQL_Database_Connector {
 
 	private Exception exception = null;
 	private ArrayList<String> schemas;
+	private Driver driver;
+
+	public MYSQL_Database_Connector(Driver driver) {
+		this.driver = driver;
+	}
 
 	public boolean testConnection(User user, String host, String port, String schema) {
 
 		Connection con = null;
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			//Class.forName("com.mysql.cj.jdbc.Driver");
 			String connectionString = "";
 			if (schema.equals("")) {
 				connectionString = "jdbc:mysql://" + host + ":" + port
@@ -32,8 +38,15 @@ public class MYSQL_Database_Connector {
 			} else
 				connectionString = "jdbc:mysql://" + host + ":" + port + "/" + schema
 						+ "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			
+			
+			Properties props = new Properties();
+			props.put("user", user.getUsername());
+			props.put("password", user.getPassword());
+			
+			con = driver.connect(connectionString, props);
 
-			con = DriverManager.getConnection(connectionString, user.getUsername(), user.getPassword());
+			//con = DriverManager.getConnection(connectionString, user.getUsername(), user.getPassword());
 
 			ResultSet rs = con.getMetaData().getCatalogs();
 
@@ -46,11 +59,6 @@ public class MYSQL_Database_Connector {
 
 			if (schemas.size() == 0)
 				throw new NoSchemaFoundException(Language.WIZARD_TEST_NOSCHEMA);
-			// here sonoo is database name, root is username and password
-//			Statement stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery("select * from emp");
-//			while (rs.next())
-//				System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
 			con.close();
 			return true;
 		} catch (Exception e) {
@@ -91,12 +99,15 @@ public class MYSQL_Database_Connector {
 		Connection con = null;
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
 			String connectionString = "";
 			connectionString = "jdbc:mysql://" + host + ":" + port + "/" + schema
 					+ "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
-			con = DriverManager.getConnection(connectionString, user.getUsername(), user.getPassword());
+			Properties props = new Properties();
+			props.put("user", user.getUsername());
+			props.put("password", user.getPassword());
+			
+			con = driver.connect(connectionString, props);
 
 			return con;
 
@@ -113,12 +124,15 @@ public class MYSQL_Database_Connector {
 		Connection con = null;
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
 			String connectionString = "";
 			connectionString = "jdbc:mysql://" + host + ":" + port + "/" + schema
 					+ "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
-			con = DriverManager.getConnection(connectionString, user.getUsername(), user.getPassword());
+			Properties props = new Properties();
+			props.put("user", user.getUsername());
+			props.put("password", user.getPassword());
+			
+			con = driver.connect(connectionString, props);
 
 			ResultSet rs = con.getMetaData().getCatalogs();
 
@@ -131,11 +145,6 @@ public class MYSQL_Database_Connector {
 
 			if (schemas.size() == 0)
 				throw new NoSchemaFoundException(Language.WIZARD_TEST_NOSCHEMA);
-			// here sonoo is database name, root is username and password
-//			Statement stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery("select * from emp");
-//			while (rs.next())
-//				System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
 			con.close();
 			return schemas;
 		} catch (Exception e) {

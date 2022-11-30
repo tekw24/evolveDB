@@ -12,8 +12,12 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -55,11 +59,13 @@ public class EDBMySQLDataSource implements EDBDataSource {
 
 	@Override
 	public void openConnectionUi() {
-		if (loadDriverClass()) {
-			connectionController = new MddeDatabaseConnectionController();
+		
+		Driver driver = loadDriverClass();
+		if (driver != null) {
+			connectionController = new MddeDatabaseConnectionController(driver);
 			connectionController.openConnectionUi();
 		} else {
-			//TODO Error Dialog
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "The driver class could not be loaded", "EvolveDB was not able to load the driver class from the file system. ");
 		}
 
 	}
@@ -69,7 +75,7 @@ public class EDBMySQLDataSource implements EDBDataSource {
 		return connectionController.createModel();
 	}
 
-	private boolean loadDriverClass() {
+	private Driver loadDriverClass() {
 
 		String path = getDriver().getDriverLibraries().get(0).getLocalFile();
 		Path localFile = Paths.get(path);
@@ -81,21 +87,31 @@ public class EDBMySQLDataSource implements EDBDataSource {
 				child = new URLClassLoader(new URL[] { localFile.toUri().toURL() }, this.getClass().getClassLoader());
 
 				Class classToLoad = Class.forName(getDriver().getDriverClassName(), true, child);
-				return classToLoad != null;
 
-//		Method method = classToLoad.getDeclaredMethod("myMethod");
-//		Object instance = classToLoad.newInstance();
-//		Object result = method.invoke(instance);
+				Driver driver = (Driver) classToLoad.newInstance();
+
+				return driver;
 
 			} catch (MalformedURLException | ClassNotFoundException | SecurityException | IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return false;
+
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
-		return false;
+		return null;
 
+	}
+
+	@Override
+	public boolean isCanceled() {
+		return connectionController.isCanceled();
 	}
 
 }

@@ -205,17 +205,19 @@ public class EDBConnectionSelectDataSourcePage extends WizardPage {
 
 	@Override
 	public void setVisible(boolean visible) {
+		boolean disposed = true;
 		if (!visible) {
 			if (!controller.checkDriverExists()) {
 				controller.openDownloadDriverPage();
-				if(controller.checkDriverExists()) {
-					controller.openConnectionUI();
+				if (controller.checkDriverExists()) {
+					disposed = controller.openConnectionUI();
 				}
-			}else
-				controller.openConnectionUI();
-		}
+			} else
+				disposed = controller.openConnectionUI();
 
-		super.setVisible(visible);
+		}
+		if (disposed)
+			super.setVisible(visible);
 	}
 
 }
