@@ -105,28 +105,7 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 		encodingField.select(0);
 		// encodingField.addModifyListener(validator);
 
-		// Save Configuration file
-		Button btnSaveConfiguration = new Button(composite, SWT.PUSH);
-		btnSaveConfiguration.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		//btnSaveConfiguration.setText(Language.WIZARD_SAVE_CONFIG);
-		btnSaveConfiguration.setText("text");
-		btnSaveConfiguration.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
-				String[] extensions = { "*.xml" };
-				fileDialog.setFilterExtensions(extensions);
-				fileDialog.setOverwrite(true);
-				fileDialog.setFilterPath(Platform.getLocation().toOSString());
-				String filename = fileDialog.open();
-				if (filename != null) {
-					
-					
-					//controller.saveConfigFile(filename);
-					
-				}
-			}
-		});
+
 
 	}
 

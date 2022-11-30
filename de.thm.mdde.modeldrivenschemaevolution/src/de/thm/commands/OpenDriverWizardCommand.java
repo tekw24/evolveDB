@@ -1,29 +1,12 @@
 package de.thm.commands;
 
-import de.thm.connection.classloader.DriverClassLoader;
-import de.thm.mdde.commonui.exception.handler.ErrorHandler;
-import de.thm.mdde.commonui.model.validation.ModelValidation;
-import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
-import de.thm.mdde.connection.ui.wizard.EDBConnectionWizard;
-import de.thm.mdde.datasource.EDBDataSource;
-import de.thm.mdde.drivermanager.DriverExtensionLoader;
-import de.thm.mdde.extensionpoint.evaluation.ExtensionPointHelper;
-import de.thm.mdde.preferences.EDBPreferenceInitializer;
-import de.thm.mdde.ui.MDDECodeGenerationWizard;
-import de.thm.mdde.wizard.MddeDatabaseConnectionModelWizard;
-
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -33,6 +16,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.service.prefs.Preferences;
+
+import de.thm.mdde.connection.ui.wizard.EDBConnectionWizard;
+import de.thm.mdde.preferences.EDBPreferenceInitializer;
 
 public class OpenDriverWizardCommand extends AbstractHandler {
 

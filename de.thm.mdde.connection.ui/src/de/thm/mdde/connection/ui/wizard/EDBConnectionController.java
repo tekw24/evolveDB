@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
+import de.thm.mdde.connection.model.DBPDriverLibrary;
 import de.thm.mdde.datasource.EDBDataSource;
 import de.thm.mdde.drivermanager.DriverExtensionLoader;
 
@@ -33,22 +34,35 @@ public class EDBConnectionController {
 
 	protected boolean checkDriverExists() {
 
-		String path = dataSource.getDriver().getDriverLibraries().get(0).getLocalFile();
-		Path localFile = Paths.get(path);
+		DBPDriverLibrary library = dataSource.getDriver().getDriverLibraries().get(0);
 
-		if (Files.exists(localFile)) {
+		for (String version : library.getAvailableVersions(null)) {
 
-			URLClassLoader child;
-			try {
-				child = new URLClassLoader(new URL[] { localFile.toUri().toURL() }, this.getClass().getClassLoader());
+			String path = library.getLocalFile();
+			path = String.format(path, version);
 
-				Class classToLoad = Class.forName(dataSource.getDriver().getDriverClassName(), true, child);
-				return classToLoad != null;
+			Path localFile = Paths.get(path);
 
-			} catch (MalformedURLException | ClassNotFoundException | SecurityException | IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
+			if (Files.exists(localFile)) {
+
+				URLClassLoader child;
+				try {
+					child = new URLClassLoader(new URL[] { localFile.toUri().toURL() },
+							this.getClass().getClassLoader());
+
+					Class classToLoad = Class.forName(dataSource.getDriver().getDriverClassName(), true, child);
+
+					library.setPreferredVersion(version);
+
+					return classToLoad != null;
+
+				} catch (MalformedURLException | ClassNotFoundException | SecurityException
+						| IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+
 			}
 
 		}
@@ -60,6 +74,7 @@ public class EDBConnectionController {
 		DriverDownloadDialog dialog = new DriverDownloadDialog(activeShell, dataSource.getDriver(),
 				dataSource.getDriverDependencies(), false, false);
 		dialog.setMinimumPageSize(100, 100);
+		dialog.setBlockOnOpen(true);
 		dialog.open();
 
 	}
@@ -104,7 +119,7 @@ public class EDBConnectionController {
 				return true;
 			} else {
 				((WizardDialog) edbConnectionWizard.getContainer()).close();
-				
+
 			}
 
 		}

@@ -97,7 +97,7 @@ public interface DBPDriverLibrary {
         throws IOException, InterruptedException;
 
     @NotNull
-    Collection<String> getAvailableVersions(DBRProgressMonitor monitor) throws IOException;
+    Collection<String> getAvailableVersions(DBRProgressMonitor monitor);
 
     String getPreferredVersion();
 

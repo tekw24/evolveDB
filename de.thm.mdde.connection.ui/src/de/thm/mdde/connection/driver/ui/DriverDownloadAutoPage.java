@@ -76,15 +76,15 @@ class DriverDownloadAutoPage extends DriverDownloadPage {
             infoText.setText(NLS.bind(UIConnectionMessages.dialog_driver_download_auto_page_driver_file_missing_text, driver.getFullName()));
             infoText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-            final Button forceCheckbox = UIUtils.createCheckbox(infoGroup, UIConnectionMessages.dialog_driver_download_auto_page_force_download, wizard.isForceDownload());
-            forceCheckbox.setToolTipText(UIConnectionMessages.dialog_driver_download_auto_page_force_download_tooltip);
-            forceCheckbox.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END | GridData.VERTICAL_ALIGN_BEGINNING));
-            forceCheckbox.addSelectionListener(new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    wizard.setForceDownload(forceCheckbox.getSelection());
-                }
-            });
+//            final Button forceCheckbox = UIUtils.createCheckbox(infoGroup, UIConnectionMessages.dialog_driver_download_auto_page_force_download, wizard.isForceDownload());
+//            forceCheckbox.setToolTipText(UIConnectionMessages.dialog_driver_download_auto_page_force_download_tooltip);
+//            forceCheckbox.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END | GridData.VERTICAL_ALIGN_BEGINNING));
+//            forceCheckbox.addSelectionListener(new SelectionAdapter() {
+//                @Override
+//                public void widgetSelected(SelectionEvent e) {
+//                    wizard.setForceDownload(forceCheckbox.getSelection());
+//                }
+//            });
         }
 
         {

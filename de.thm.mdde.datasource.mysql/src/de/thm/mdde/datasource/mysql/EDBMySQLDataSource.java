@@ -2,6 +2,7 @@ package de.thm.mdde.datasource.mysql;
 
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
+import de.thm.mdde.connection.model.DBPDriverLibrary;
 import de.thm.mdde.datasource.EDBDataSource;
 import de.thm.mdde.wizard.MddeDatabaseConnectionController;
 import de.thm.mdde.wizard.MddeDatabaseConnectionModelWizard;
@@ -76,8 +77,11 @@ public class EDBMySQLDataSource implements EDBDataSource {
 	}
 
 	private Driver loadDriverClass() {
+		DBPDriverLibrary library = getDriver().getDriverLibraries().get(0);
+		
+		String path = library.getLocalFile();
+		path = String.format(path, library.getPreferredVersion());
 
-		String path = getDriver().getDriverLibraries().get(0).getLocalFile();
 		Path localFile = Paths.get(path);
 
 		if (Files.exists(localFile)) {

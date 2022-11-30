@@ -11,7 +11,7 @@ public class PreferencesUtil {
 				"de.thm.mdde.preferences");
 		String location = scopedPreferenceStore.getString(EDBPreferenceInitializer.DRIVER_DEFAULT_LOCATION);
 
-		return location != null ? location.substring(1) : null;
+		return location;
 		
 	}
 

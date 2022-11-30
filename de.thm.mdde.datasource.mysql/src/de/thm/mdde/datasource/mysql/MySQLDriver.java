@@ -12,6 +12,8 @@ import de.thm.mdde.connection.model.DBPDriverLibrary;
 import de.thm.mdde.driver.runtime.model.DBRProgressMonitor;
 
 public class MySQLDriver implements DBPDriver{
+	
+	private List<DBPDriverLibrary> driverLibraries;
 
 	@Override
 	public String getName() {
@@ -240,8 +242,10 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public List<? extends DBPDriverLibrary> getDriverLibraries() {
-		// TODO Auto-generated method stub
-		return List.of(new MySQLDriverLibrary());
+		if(driverLibraries == null) {
+			driverLibraries = List.of(new MySQLDriverLibrary());
+		}
+		return driverLibraries;
 	}
 
 	@Override

@@ -90,8 +90,15 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public String getLocalFile() {
-		String path = PreferencesUtil.getDriverPath();	
-		return path + "mysql/mysql-connector-java-" + version + ".jar";
+		String path = PreferencesUtil.getDriverPath();
+//		if (path.lastIndexOf("/") == path.length() - 1)
+//			return path + "mysql/mysql-connector-java-" + version + ".jar";
+//		else
+//			return path + "/mysql/mysql-connector-java-" + version + ".jar";
+		if (path.lastIndexOf("/") == path.length() - 1)
+			return path + "mysql/mysql-connector-java-%s.jar";
+		else
+			return path + "/mysql/mysql-connector-java-%s.jar";
 	}
 
 	@Override
@@ -108,7 +115,9 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 	@Override
 	public void downloadLibraryFile(DBRProgressMonitor monitor, boolean forceUpdate, String taskName)
 			throws IOException, InterruptedException {
-		final Path localFile = Path.of(getLocalFile());
+		String path = getLocalFile();
+		path = String.format(path, getPreferredVersion());
+		final Path localFile = Path.of(path);
 		if (localFile == null) {
 			throw new IOException("No target file for '" + getPath() + "'");
 		}
@@ -135,7 +144,7 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 	}
 
 	@Override
-	public Collection<String> getAvailableVersions(DBRProgressMonitor monitor) throws IOException {
+	public Collection<String> getAvailableVersions(DBRProgressMonitor monitor) {
 		return List.of("8.0.31", "8.0.30", "8.0.29", "8.0.28");
 
 	}

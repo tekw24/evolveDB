@@ -19,7 +19,10 @@ public class EDBPreferenceInitializer extends AbstractPreferenceInitializer {
     	
     	Location location = Platform.getInstanceLocation();    	
         ScopedPreferenceStore scopedPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "de.thm.mdde.preferences");
-        scopedPreferenceStore.setDefault(DRIVER_DEFAULT_LOCATION, location.getURL().getPath() + "driver/");
+        String path = location.getURL().getPath() + "driver/";
+        path = path != null ? path.substring(1) : null;
+        
+        scopedPreferenceStore.setDefault(DRIVER_DEFAULT_LOCATION,path );
     
     }
 
