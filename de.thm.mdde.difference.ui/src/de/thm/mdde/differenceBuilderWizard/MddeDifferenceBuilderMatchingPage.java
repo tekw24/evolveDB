@@ -246,7 +246,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -266,7 +266,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -430,7 +430,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -450,7 +450,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});

@@ -119,22 +119,7 @@ public final class RuntimeUtils {
     public static String getNativeBinaryName(String binName) {
         return isWindows() ? binName + ".exe" : binName;
     }
-
-    //TODO Not Used
-    /*
-    public static File getNativeClientBinary(@NotNull DBPNativeClientLocation home, @Nullable String binFolder, @NotNull String binName) throws IOException {
-        binName = getNativeBinaryName(binName);
-        File dumpBinary = new File(home.getPath(),
-            binFolder == null ? binName : binFolder + "/" + binName);
-        if (!dumpBinary.exists()) {
-            dumpBinary = new File(home.getPath(), binName);
-            if (!dumpBinary.exists()) {
-                throw new IOException("Utility '" + binName + "' not found in client home '" + home.getDisplayName() + "' (" + home.getPath().getAbsolutePath() + ")");
-            }
-        }
-        return dumpBinary;
-    }
-    */
+   
 
     @NotNull
     public static IStatus stripStack(@NotNull IStatus status) {
@@ -222,59 +207,6 @@ public final class RuntimeUtils {
         }
     }
 
-    //TODO Not Used
-    /*
-    public static boolean runTask(final DBRRunnableWithProgress task, String taskName, final long waitTime) {
-        return runTask(task, taskName, waitTime, false);
-    }
-
-    public static boolean runTask(final DBRRunnableWithProgress task, String taskName, final long waitTime, boolean hidden) {
-        final MonitoringTask monitoringTask = new MonitoringTask(task);
-        Job monitorJob = new AbstractJob(taskName) {
-            {
-                setSystem(hidden);
-                setUser(!hidden);
-            }
-
-            @Override
-            protected IStatus run(DBRProgressMonitor monitor) {
-                monitor.beginTask(getName(), 1);
-                try {
-                    monitor.subTask("Execute task");
-                    monitoringTask.run(monitor);
-                } catch (InvocationTargetException e) {
-                    log.error(getName() + " - error", e.getTargetException());
-                    return Status.OK_STATUS;
-                } catch (InterruptedException e) {
-                    // do nothing
-                } finally {
-                    monitor.done();
-                }
-                return Status.OK_STATUS;
-            }
-        };
-
-        monitorJob.schedule();
-
-        // Wait for job to finish
-        long startTime = System.currentTimeMillis();
-        while (!monitoringTask.finished) {
-            if (waitTime > 0 && System.currentTimeMillis() - startTime > waitTime) {
-                break;
-            }
-            try {
-                if (!DBWorkbench.getPlatformUI().readAndDispatchEvents()) {
-                    Thread.sleep(50);
-                }
-            } catch (InterruptedException e) {
-                log.debug("Task '" + taskName + "' was interrupted");
-                break;
-            }
-        }
-
-        return monitoringTask.finished;
-    }
-    */
 
     public static String executeProcess(String binPath, String ... args) throws DBException {
         try {
@@ -321,20 +253,7 @@ public final class RuntimeUtils {
     }
 
 
-    /**
-     * Checks if current application is shipped from Windows store
-     * @return true if shipped from Windows store, false if not.
-     */
-    //TODO Not Used
-    /*
-    public static boolean isWindowsStoreApplication() {
-        if (!IS_WINDOWS) {
-            return false;
-        }
-        final String property = System.getProperty(DBConstants.IS_WINDOWS_STORE_APP);
-        return property != null && property.equalsIgnoreCase("true");
-    }
-    */
+
 
     public static boolean isMacOS() {
         return IS_MACOS;

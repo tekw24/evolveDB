@@ -21,7 +21,6 @@ public class ValueBreakpoint extends HenshinBreakpoint {
 			setAttribute("Type", type);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -31,7 +30,6 @@ public class ValueBreakpoint extends HenshinBreakpoint {
 			setAttribute("ValueString", valueString);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -57,7 +55,6 @@ public class ValueBreakpoint extends HenshinBreakpoint {
 			setAttribute("Index", index);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

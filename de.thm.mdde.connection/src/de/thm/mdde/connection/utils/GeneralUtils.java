@@ -327,81 +327,7 @@ public class GeneralUtils {
 //        return version.getMajor() + "." + version.getMinor();
 //    }
 
-    //TODO Not used
-    /*
-    @NotNull
-    public static Date getProductReleaseDate() {
-        Bundle definingBundle = null;
-        ApplicationDescriptor application = ApplicationRegistry.getInstance().getApplication();
-        if (application != null) {
-            definingBundle = application.getContributorBundle();
-        } else {
-            final IProduct product = Platform.getProduct();
-            if (product != null) {
-                definingBundle = product.getDefiningBundle();
-            }
-        }
-        if (definingBundle == null) {
-            return new Date();
-        }
-
-        final Dictionary<String, String> headers = definingBundle.getHeaders();
-        final String releaseDate = headers.get("Bundle-Release-Date");
-        if (releaseDate != null) {
-            try {
-                return new SimpleDateFormat(DEFAULT_DATE_PATTERN).parse(releaseDate);
-            } catch (ParseException e) {
-                log.debug(e);
-            }
-        }
-        final String buildTime = headers.get("Build-Time");
-        if (buildTime != null) {
-            try {
-                return new SimpleDateFormat(DEFAULT_TIMESTAMP_PATTERN).parse(buildTime);
-            } catch (ParseException e) {
-                log.debug(e);
-            }
-        }
-
-        // Failed to get valid date from product bundle
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2017);
-        calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        return calendar.getTime();
-    }
-    */
-
-    //TODO Not used
-    /*
-    @Nullable
-    public static Date getProductBuildTime() {
-        Bundle definingBundle = null;
-        ApplicationDescriptor application = ApplicationRegistry.getInstance().getApplication();
-        if (application != null) {
-            definingBundle = application.getContributorBundle();
-        } else {
-            final IProduct product = Platform.getProduct();
-            if (product != null) {
-                definingBundle = product.getDefiningBundle();
-            }
-        }
-        if (definingBundle == null) {
-            return null;
-        }
-
-        final Dictionary<String, String> headers = definingBundle.getHeaders();
-        final String buildTime = headers.get("Build-Time");
-        if (buildTime != null) {
-            try {
-                return new SimpleDateFormat(DEFAULT_TIMESTAMP_PATTERN).parse(buildTime);
-            } catch (ParseException e) {
-                log.debug(e);
-            }
-        }
-        return null;
-    }
-    */
+   
 
     public static String getExpressionParseMessage(Exception e) {
         String message = e.getMessage();
@@ -416,36 +342,6 @@ public class GeneralUtils {
         boolean setParameter(String name, String  value);
     }
     
-    //TODO unused
-
-//    public static class MapResolver implements IVariableResolver {
-//        private final Map<String, Object> variables;
-//
-//        public MapResolver(Map<String, Object> variables) {
-//            this.variables = variables;
-//        }
-//
-//        @Override
-//        public String get(String name) {
-//            Object value = variables.get(name);
-//            return value == null ? null : CommonUtils.toString(value);
-//        }
-//    }
-
-    //TODO unused
-//    public static String replaceSystemEnvironmentVariables(String string) {
-//        if (string == null) {
-//            return null;
-//        }
-//        return replaceVariables(string, System::getenv);
-//    }
-//
-//    public static String replaceSystemPropertyVariables(String string) {
-//        if (string == null) {
-//            return null;
-//        }
-//        return replaceVariables(string, System::getProperty);
-//    }
 
     @NotNull
     public static String variablePattern(String name) {
@@ -486,53 +382,6 @@ public class GeneralUtils {
         return null;
     }
 
-    
-    //TODO unused
-    /*
-    @NotNull
-    public static String replaceVariables(@NotNull String string, IVariableResolver resolver) {
-        if (CommonUtils.isEmpty(string)) {
-            return string;
-        }
-        // We save resolved vars here to avoid resolve recursive cycles
-        List<String> resolvedVars = null;
-        try {
-            Matcher matcher = VAR_PATTERN.matcher(string);
-            int pos = 0;
-            while (matcher.find(pos)) {
-                pos = matcher.end();
-                String varName = matcher.group(2);
-                if (resolvedVars != null && resolvedVars.contains(varName)) {
-                    continue;
-                }
-                String varValue = resolver.get(varName);
-                if (varValue == null) {
-                    varValue = matcher.group(3);
-                    if (varValue != null && varValue.startsWith(":")) {
-                        varValue = varValue.substring(1);
-                    }
-                }
-                if (varValue != null) {
-                    if (resolvedVars == null) {
-                        resolvedVars = new ArrayList<>();
-                        resolvedVars.add(varName);
-                    }
-                    if (matcher.start() == 0 && matcher.end() >= string.length() - 1) {
-                        string = varValue;
-                    } else {
-                        string = string.substring(0, matcher.start()) + varValue + string.substring(matcher.end());
-                    }
-                    matcher = VAR_PATTERN.matcher(string);
-                    pos = 0;
-                }
-            }
-            return string;
-        } catch (Exception e) {
-            log.warn("Error matching regex", e);
-            return string;
-        }
-    }
-    */
 
     public static IStatus makeExceptionStatus(Throwable ex) {
         return makeExceptionStatus(IStatus.ERROR, ex);
@@ -656,57 +505,7 @@ public class GeneralUtils {
         }
     }
     
-    //TODO not used
-
-//    @NotNull
-//    public static String serializeObject(@NotNull Object object) {
-//        try {
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            try (ObjectOutputStream os = new ObjectOutputStream(baos)) {
-//                os.writeObject(object);
-//            }
-//            return Base64.encode(baos.toByteArray());
-//        } catch (Throwable e) {
-//            log.warn("Error serializing object [" + object + "]", e);
-//            return "";
-//        }
-//    }
-//
-//    public static Object deserializeObject(String text) {
-//        try {
-//            final byte[] bytes = Base64.decode(text);
-//            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-//            try (ObjectInputStream is = new ObjectInputStream(bais)) {
-//                return is.readObject();
-//            }
-//        } catch (Throwable e) {
-//            log.warn("Error deserializing object [" + text + "]", e);
-//            return null;
-//        }
-//    }
-    
-    //TODO Not used
-
-//    public static Path getMetadataFolder() {
-//        try {
-//            final File workspacePath = RuntimeUtils.getLocalFileFromURL(Platform.getInstanceLocation().getURL());
-//            Path metaDir = getMetadataFolder(workspacePath.toPath());
-//            if (!Files.exists(metaDir)) {
-//                try {
-//                    Files.createDirectories(metaDir);
-//                } catch (IOException e) {
-//                    return Platform.getLogFileLocation().toFile().toPath();
-//                }
-//            }
-//            return metaDir;
-//        } catch (IOException e) {
-//            throw new IllegalStateException("Can't parse workspace location URL", e);
-//        }
-//    }
-//
-//    public static Path getMetadataFolder(Path workspaceFolder) {
-//        return workspaceFolder.resolve(DBPWorkspace.METADATA_FOLDER);
-//    }
+   
 
     @NotNull
     public static URI makeURIFromFilePath(@NotNull String path) throws URISyntaxException {

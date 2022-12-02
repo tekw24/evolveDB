@@ -79,18 +79,8 @@ public class ForeignKeyRenderer extends LinkControlSWTRenderer {
 	 */
 	@Override
 	protected ReferenceService getReferenceService() {
-		// TODO Auto-generated method stub
+
 		return new ForeignKeyReferenceService();
 	}
-
-	// @Override
-	// protected void postInit() {
-	// super.postInit();
-	// composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-	// new CustomReflectiveItemProviderAdapterFactory(),
-	// new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-	// adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
-	//
-	// }
 
 }

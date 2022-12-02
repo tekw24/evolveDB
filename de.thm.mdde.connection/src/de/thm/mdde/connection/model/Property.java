@@ -87,12 +87,6 @@ public @interface Property
     boolean expensive() default false;
 
     /**
-     * Multiline properties usually contain some big texts
-     */
-    //TODO not used
-    //PropertyLength length() default PropertyLength.LONG;
-
-    /**
      * Specific properties ae rendered separate from others
      */
     boolean specific() default false;
@@ -137,13 +131,6 @@ public @interface Property
     Class<? extends Format> formatter() default Format.class; //NON-NLS-1
 
     Class<? extends IPropertyValueTransformer> valueTransformer() default IPropertyValueTransformer.class;
-//TODO not used
-//    Class<? extends IPropertyValueListProvider> listProvider() default IPropertyValueListProvider.class;
-//
-//    Class<? extends IPropertyValueTransformer> valueRenderer() default IPropertyValueTransformer.class;
-//
-//    Class<? extends IPropertyValueValidator> valueValidator() default IPropertyValueValidator.class;
-//
-//    Class<? extends IPropertyValueValidator> visibleIf() default IPropertyValueValidator.class;
+
 
 }

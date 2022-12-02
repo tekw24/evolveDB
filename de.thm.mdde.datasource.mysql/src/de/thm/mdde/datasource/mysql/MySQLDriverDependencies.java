@@ -51,8 +51,7 @@ public class MySQLDriverDependencies implements DBPDriverDependencies{
 
 	@Override
 	public void resolveDependencies(DBRProgressMonitor monitor) throws DBException {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 }

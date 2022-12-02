@@ -51,7 +51,6 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public DBIcon getIcon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -87,8 +86,7 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public void setDisabled(boolean disabled) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -122,7 +120,6 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public Collection<? extends DBPDriverLibrary> getDependencies(DBRProgressMonitor monitor) throws IOException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

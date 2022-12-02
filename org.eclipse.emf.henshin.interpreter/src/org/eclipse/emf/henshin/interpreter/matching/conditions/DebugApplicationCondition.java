@@ -1108,7 +1108,6 @@ public void stepReturn() throws DebugException {
 			return false;
 			
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1141,7 +1140,6 @@ public void stepReturn() throws DebugException {
 				}
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
@@ -1205,8 +1203,7 @@ public void stepReturn() throws DebugException {
 	 * Suspends the application if certain criteria for the breakpoint are met.
 	 */
 	public void handleDebugState(HenshinBreakpoint henshinBreakpoint) {
-		
-		// TODO:
+	
 		
 		// get debug level of current henshinBreakpoint
 		DebugLevel henshinBreakpointDebugLevel = henshinBreakpoint.getDebugLevel();
@@ -1225,7 +1222,6 @@ public void stepReturn() throws DebugException {
 			try {
 				debugTarget.resume();
 			} catch (DebugException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

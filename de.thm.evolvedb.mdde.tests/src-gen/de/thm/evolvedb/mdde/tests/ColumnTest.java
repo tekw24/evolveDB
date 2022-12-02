@@ -83,7 +83,6 @@ public class ColumnTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testValidateDefaultValue__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -96,7 +95,7 @@ public class ColumnTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testValidateSizeValue__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -109,7 +108,7 @@ public class ColumnTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testValidateUniqueConstraintName__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

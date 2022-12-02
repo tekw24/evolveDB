@@ -22,7 +22,6 @@ public class ConstraintTypeBreakpoint extends HenshinBreakpoint {
 			setAttribute("Type", type.name());
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

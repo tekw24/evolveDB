@@ -88,7 +88,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetPrimaryKeys() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -101,7 +101,6 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetPrimaryKeyByName__String() {
-		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -114,7 +113,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetForeignKeys() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -127,7 +126,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetMainPrimaryKey() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -140,7 +139,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testOnlyOneAutoIncrementColumn__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -153,7 +152,6 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testNonKeyAutoIncrementColumn__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -166,7 +164,6 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testTableRequiresAKeyColumn__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -179,7 +176,6 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testTableRequiresAtLeastOneColumn__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

@@ -107,7 +107,7 @@ public class MddeDatabaseConnectionController {
 
 			@Override
 			public void scheduled(IJobChangeEvent event) {
-				// TODO Auto-generated method stub
+			
 
 			}
 
@@ -157,7 +157,6 @@ public class MddeDatabaseConnectionController {
 
 			@Override
 			public void scheduled(IJobChangeEvent event) {
-				// TODO Auto-generated method stub
 
 			}
 

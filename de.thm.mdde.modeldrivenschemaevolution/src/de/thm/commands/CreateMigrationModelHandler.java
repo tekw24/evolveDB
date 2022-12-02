@@ -121,7 +121,6 @@ public class CreateMigrationModelHandler extends AbstractHandler {
 				resXtendModelFile.save(Collections.emptyMap());
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				Shell activeShell = HandlerUtil.getActiveShell(event);
 				ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
 						"An error occured while creating the model!", activeShell, "Error", e);
@@ -137,7 +136,6 @@ public class CreateMigrationModelHandler extends AbstractHandler {
 			try {
 				project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

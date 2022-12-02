@@ -592,7 +592,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	@Override
 	public boolean ForeignKeyHasToReferenceAKeyColumn(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

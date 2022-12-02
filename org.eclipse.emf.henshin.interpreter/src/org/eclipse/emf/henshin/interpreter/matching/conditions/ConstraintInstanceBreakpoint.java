@@ -17,7 +17,6 @@ public class ConstraintInstanceBreakpoint extends HenshinBreakpoint {
 			setAttribute("ConstraintInstance", constraintInstance);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

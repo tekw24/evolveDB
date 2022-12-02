@@ -281,7 +281,7 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 					// Set this for the container.
 					//
 					// connectionWizardPage_1.setContainerFullPath(selectedResource.getFullPath());
-					// //TODO
+					//
 
 					// Make up a unique new name here.
 					//

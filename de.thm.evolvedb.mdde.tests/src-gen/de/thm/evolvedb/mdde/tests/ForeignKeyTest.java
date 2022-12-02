@@ -82,7 +82,7 @@ public class ForeignKeyTest extends ColumnTest {
 	 * @generated
 	 */
 	public void testValidateConstraintName__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -95,7 +95,7 @@ public class ForeignKeyTest extends ColumnTest {
 	 * @generated
 	 */
 	public void testForeignKeyHasToReferenceAKeyColumn__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

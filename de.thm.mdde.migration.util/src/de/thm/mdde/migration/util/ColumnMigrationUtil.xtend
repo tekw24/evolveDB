@@ -290,7 +290,6 @@ class ColumnMigrationUtil {
 						return migrationOptions;
 					}
 					case TEXT: {
-						// Die Daten k�nnten zu lang sein. Eventuell gegen die Size �berpr�fen. TODO
 						migrationOptions.addAll(ColumnOptions.values)
 						return migrationOptions;
 					}

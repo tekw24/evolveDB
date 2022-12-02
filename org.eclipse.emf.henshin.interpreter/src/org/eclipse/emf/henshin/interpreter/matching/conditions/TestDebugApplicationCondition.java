@@ -35,24 +35,22 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public <T> T getAdapter(Class<T> adapter) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
 			@Override
 			public void setAttributes(String[] attributeNames, Object[] values) throws CoreException {
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
 			public void setAttributes(Map<String, ? extends Object> attributes) throws CoreException {
-				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
 			public void setAttribute(String attributeName, boolean value) throws CoreException {
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
@@ -66,55 +64,55 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public void setAttribute(String attributeName, int value) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public boolean isSubtypeOf(String superType) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return false;
 			}
 
 			@Override
 			public String getType() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public IResource getResource() {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public long getId() {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public long getCreationTime() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public Object[] getAttributes(String[] attributeNames) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public Map<String, Object> getAttributes() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public boolean getAttribute(String attributeName, boolean defaultValue) {
-				// TODO Auto-generated method stub
+				
 				return true;
 			}
 
@@ -126,13 +124,13 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public int getAttribute(String attributeName, int defaultValue) {
-				// TODO Auto-generated method stub
+			
 				return 0;
 			}
 
 			@Override
 			public Object getAttribute(String attributeName) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
@@ -144,7 +142,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public void delete() throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 		};
@@ -169,25 +167,25 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public <T> T getAdapter(Class<T> adapter) {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public void setAttributes(String[] attributeNames, Object[] values) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttributes(Map<String, ? extends Object> attributes) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttribute(String attributeName, boolean value) throws CoreException {
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
@@ -212,49 +210,47 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public boolean isSubtypeOf(String superType) throws CoreException {
-				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public String getType() throws CoreException {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
 			@Override
 			public IResource getResource() {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public long getId() {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public long getCreationTime() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public Object[] getAttributes(String[] attributeNames) throws CoreException {
-				// TODO Auto-generated method stub
+			
 				return null;
 			}
 
 			@Override
 			public Map<String, Object> getAttributes() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public boolean getAttribute(String attributeName, boolean defaultValue) {
-				// TODO Auto-generated method stub
+				
 				return true;
 			}
 
@@ -282,7 +278,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public Object getAttribute(String attributeName) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
@@ -294,7 +290,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public void delete() throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 		};
@@ -328,25 +324,25 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public <T> T getAdapter(Class<T> adapter) {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public void setAttributes(String[] attributeNames, Object[] values) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttributes(Map<String, ? extends Object> attributes) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttribute(String attributeName, boolean value) throws CoreException {
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
@@ -363,49 +359,49 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public boolean isSubtypeOf(String superType) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return false;
 			}
 
 			@Override
 			public String getType() throws CoreException {
-				// TODO Auto-generated method stub
+			
 				return null;
 			}
 
 			@Override
 			public IResource getResource() {
-				// TODO Auto-generated method stub
+		
 				return null;
 			}
 
 			@Override
 			public long getId() {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public long getCreationTime() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public Object[] getAttributes(String[] attributeNames) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public Map<String, Object> getAttributes() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public boolean getAttribute(String attributeName, boolean defaultValue) {
-				// TODO Auto-generated method stub
+				
 				return true;
 			}
 
@@ -425,7 +421,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public Object getAttribute(String attributeName) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
@@ -437,7 +433,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public void delete() throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 		};
@@ -468,25 +464,25 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public <T> T getAdapter(Class<T> adapter) {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public void setAttributes(String[] attributeNames, Object[] values) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttributes(Map<String, ? extends Object> attributes) throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void setAttribute(String attributeName, boolean value) throws CoreException {
-				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
@@ -503,49 +499,49 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public boolean isSubtypeOf(String superType) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return false;
 			}
 
 			@Override
 			public String getType() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public IResource getResource() {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public long getId() {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public long getCreationTime() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return 0;
 			}
 
 			@Override
 			public Object[] getAttributes(String[] attributeNames) throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public Map<String, Object> getAttributes() throws CoreException {
-				// TODO Auto-generated method stub
+				
 				return null;
 			}
 
 			@Override
 			public boolean getAttribute(String attributeName, boolean defaultValue) {
-				// TODO Auto-generated method stub
+				
 				return true;
 			}
 
@@ -565,7 +561,6 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public Object getAttribute(String attributeName) throws CoreException {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
@@ -577,7 +572,7 @@ public class TestDebugApplicationCondition extends DebugApplicationCondition {
 
 			@Override
 			public void delete() throws CoreException {
-				// TODO Auto-generated method stub
+				
 
 			}
 		};

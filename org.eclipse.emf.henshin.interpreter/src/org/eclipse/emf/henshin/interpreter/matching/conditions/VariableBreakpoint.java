@@ -21,7 +21,6 @@ public class VariableBreakpoint extends HenshinBreakpoint {
 			setAttribute("TypeName", typeName);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}	
@@ -39,7 +38,6 @@ public class VariableBreakpoint extends HenshinBreakpoint {
 			setAttribute("Path", path);
 			updateMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

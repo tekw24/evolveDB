@@ -130,18 +130,5 @@ public class PrefUtils {
     }
 
     
-    /**
-     * Builds string of drivers with single connection option
-     */
-    //TODO not used
-    /*
-    public static String collectSingleConnectionDrivers() {
-        return DBWorkbench.getPlatform().getDataSourceProviderRegistry().getDataSourceProviders().stream()
-            .flatMap(pr -> pr.getDrivers().stream())
-            .filter(DBPDriver::isSingleConnection)
-            .sorted(Comparator.comparing(DBPNamedObject::getName))
-            .map(d -> " - " + d.getName())
-            .collect(Collectors.joining("\n"));
-    }
-    */
+
 }

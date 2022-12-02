@@ -58,7 +58,7 @@ public class EDBConnectionController {
 
 				} catch (MalformedURLException | ClassNotFoundException | SecurityException
 						| IllegalArgumentException e) {
-					// TODO Auto-generated catch block
+					//TODO Exception Dialog
 					e.printStackTrace();
 					return false;
 				}

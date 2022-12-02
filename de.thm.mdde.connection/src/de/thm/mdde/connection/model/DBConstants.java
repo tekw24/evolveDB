@@ -78,14 +78,6 @@ public class DBConstants {
     public static final String BOOLEAN_PROP_YES = "yes";
     public static final String BOOLEAN_PROP_NO = "no";
 
-    //TODO not used
-    /*
-    public static final DBDBinaryFormatter[] BINARY_FORMATS = {
-        new BinaryFormatterString(),
-        new BinaryFormatterHex(),
-        new BinaryFormatterBase64(),
-    };
-    */
 
     public static final String TYPE_NAME_CHAR = "CHAR";
     public static final String TYPE_NAME_CHAR2 = TYPE_NAME_CHAR.toLowerCase(Locale.ENGLISH);

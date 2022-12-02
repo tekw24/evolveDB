@@ -32,11 +32,7 @@ import java.nio.file.Path;
  */
 public interface DBPApplication {
 
-	
-	//TODO Ich denke nicht benötigt
-//	
-//    @NotNull
-//    DBPWorkspace createWorkspace(@NotNull DBPPlatform platform, @NotNull IWorkspace eclipseWorkspace);
+
 
     boolean isStandalone();
 

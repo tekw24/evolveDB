@@ -17,15 +17,17 @@
 package de.thm.mdde.connection.driver.ui;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
 import de.thm.connection.ui.DBeaverIcons;
 import de.thm.connection.ui.UIIcon;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
-import de.thm.mdde.connection.ui.internal.UIConnectionMessages;
 import de.thm.mdde.connection.ui.utils.UIUtils;
 
 /**
@@ -45,12 +47,6 @@ public class DriverDownloadDialog extends WizardDialog
         addPageChangedListener(event -> UIUtils.asyncExec(() -> getWizard().pageActivated(event.getSelectedPage())));
     }
 
-    //TODO 
-//    @Override
-//    protected IDialogSettings getDialogBoundsSettings()
-//    {
-//        return UIUtils.getDialogSettings(DIALOG_ID);
-//    }
 
     DBPDriver getDriver() {
         return getWizard().getDriver();
@@ -70,7 +66,7 @@ public class DriverDownloadDialog extends WizardDialog
         return dialogArea;
     }
 
-    //TODO DriverEditDialog zum editieren der Treiber
+    //TODO edit driver
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
 //        DriverDownloadWizard wizard = getWizard();

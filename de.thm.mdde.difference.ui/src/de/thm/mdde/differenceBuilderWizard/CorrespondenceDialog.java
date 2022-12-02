@@ -143,7 +143,6 @@ public class CorrespondenceDialog extends TitleAreaDialog {
 
 	@Override
 	protected void cancelPressed() {
-		// TODO Auto-generated method stub
 		super.cancelPressed();
 
 	}

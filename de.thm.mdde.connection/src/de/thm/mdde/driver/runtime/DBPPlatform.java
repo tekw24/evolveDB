@@ -17,15 +17,13 @@
 
 package de.thm.mdde.driver.runtime;
 
-import org.eclipse.core.runtime.Plugin;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import de.thm.mdde.app.model.DBPApplication;
 import de.thm.mdde.connection.model.preferences.DBPPreferenceStore;
 import de.thm.mdde.connection.utils.NotNull;
 import de.thm.mdde.driver.runtime.model.DBRProgressMonitor;
-
-import java.io.IOException;
-import java.nio.file.Path;
 
 /**
  * DBPPlatform
@@ -35,110 +33,12 @@ public interface DBPPlatform {
     @NotNull
     DBPApplication getApplication();
 
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBPWorkspace getWorkspace();
-    */
-    
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBNModel getNavigatorModel();
-    /*
-    
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBPDataSourceProviderRegistry getDataSourceProviderRegistry();
-    */
-
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    OSDescriptor getLocalSystem();
-    */
-
-    /**
-     * Returns global QM registry
-     */
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    QMRegistry getQueryManager();
-    */
-
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBDRegistry getValueHandlerRegistry();
-    */
-
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBERegistry getEditorsRegistry();
-    */
-
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBFRegistry getFileSystemRegistry();
-    */
-
     @NotNull
     DBPPreferenceStore getPreferenceStore();
 
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBACertificateStorage getCertificateStorage();
-    */
-
     @NotNull
     Path getTempFolder(DBRProgressMonitor monitor, String name) throws IOException;
-
-    /**
-     * Returns platform configuration controller,
-     * which keeps configuration which can be shared with other users.
-     */
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBConfigurationController getConfigurationController();
-    */
     
-    /**
-     * Returns configuration controller,
-     * which keeps product configuration which can be shared with other users.
-     */
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBConfigurationController getProductConfigurationController();
-    */
-    
-    /**
-     * Returns configuration controller,
-     * which keeps plugin configuration which can be shared with other users.
-     */
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBConfigurationController getPluginConfigurationController(@NotNull String pluginId);
-    */
 
     /**
      * Local config files are used to store some configuration specific to local machine only.
@@ -146,24 +46,7 @@ public interface DBPPlatform {
     @NotNull
     Path getLocalConfigurationFile(String fileName);
 
-    /**
-     * File controller allows to read/write binary files (e.g. custom driver libraries)
-     */
-  //TODO NOTUsed
-    /*
-    @NotNull
-    @NotNull
-    DBFileController getFileController();
-    */
 
-    /**
-     * Task controller can read and change tasks configuration file
-     */
-    //TODO NOTUsed
-    /*
-    @NotNull
-    DBTTaskController getTaskController();
-    */
 
     @Deprecated
     @NotNull

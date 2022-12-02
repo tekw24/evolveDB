@@ -43,7 +43,6 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public String getProviderId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -69,19 +68,16 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public DBPImage getIcon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public DBPImage getPlainIcon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public DBPImage getIconBig() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -187,7 +183,6 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public boolean isInternalDriver() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -224,19 +219,16 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public Map<String, Object> getConnectionProperties() {
-		// TODO Auto-generated method stub
 		return new TreeMap<>();
 	}
 
 	@Override
 	public Map<String, Object> getDriverParameters() {
-		// TODO Auto-generated method stub
 		return new TreeMap<>();
 	}
 
 	@Override
 	public Object getDriverParameter(String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -247,7 +239,6 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public String getLicense() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -271,25 +262,21 @@ public class MySQLDriver implements DBPDriver{
 
 	@Override
 	public boolean needsExternalDependencies() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public <T> T getDriverInstance(DBRProgressMonitor monitor) throws DBException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void loadDriver(DBRProgressMonitor monitor) throws DBException {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
 	public DBPDriver createOriginalCopy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

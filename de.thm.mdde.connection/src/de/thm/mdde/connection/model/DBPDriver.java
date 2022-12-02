@@ -17,11 +17,7 @@
 
 package de.thm.mdde.connection.model;
 
-//import org.jkiss.dbeaver.model.DBPDataSourceProvider;
-//import org.jkiss.dbeaver.model.DBPNamedObject;
-//import org.jkiss.dbeaver.model.navigator.meta.DBXTreeNode;
-//import org.jkiss.dbeaver.model.preferences.DBPPropertyDescriptor;
-//import org.jkiss.dbeaver.model.sql.SQLDialectMetadata;
+
 
 import de.thm.connection.ui.DBPImage;
 import de.thm.mdde.connection.utils.NotNull;
@@ -40,12 +36,6 @@ public interface DBPDriver extends DBPNamedObject
     /**
      * Driver contributor
      */
-	//TODO
-//    @NotNull
-//    DBPDataSourceProvider getDataSourceProvider();
-//
-//    @NotNull
-//    DBPDataSourceProviderDescriptor getProviderDescriptor();
 
     @NotNull
     String getId();
@@ -101,9 +91,6 @@ public interface DBPDriver extends DBPNamedObject
 
     @Nullable
     String getPropertiesWebURL();
-//TODO
-//    @NotNull
-//    SQLDialectMetadata getScriptDialect();
 
     boolean isClientRequired();
 
@@ -133,12 +120,6 @@ public interface DBPDriver extends DBPNamedObject
 
     int getPromotedScore();
 
-    //TODO
-//    @Nullable
-//    DBXTreeNode getNavigatorRoot();
-//
-//    @NotNull
-//    DBPPropertyDescriptor[] getProviderPropertyDescriptors();
 
     @NotNull
     Map<String, Object> getDefaultConnectionProperties();
@@ -156,16 +137,6 @@ public interface DBPDriver extends DBPNamedObject
 
     String getLicense();
 
-//    /**
-//     * Client manager or null
-//     */
-    //TODO
-//    @Nullable
-//    DBPNativeClientLocationManager getNativeClientManager();
-//
-//    
-//    @NotNull
-//    List<DBPNativeClientLocation> getNativeClientLocations();
 
     @Nullable
     ClassLoader getClassLoader();
@@ -182,8 +153,6 @@ public interface DBPDriver extends DBPNamedObject
 
     void loadDriver(DBRProgressMonitor monitor) throws DBException;
 
-    //TODO
-    //String getConnectionURL(DBPConnectionConfiguration configuration);
 
     /**
      * Create copy of
@@ -194,8 +163,6 @@ public interface DBPDriver extends DBPNamedObject
     /**
      * Show supported configuration types
      */
-    //TODO
-   // Set<DBPDriverConfigurationType> getSupportedConfigurationTypes();
 
     default String getFullId() {
         return getProviderId() + ":" + getId();

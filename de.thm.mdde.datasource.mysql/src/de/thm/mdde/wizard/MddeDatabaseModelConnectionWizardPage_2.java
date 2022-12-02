@@ -95,7 +95,7 @@ public class MddeDatabaseModelConnectionWizardPage_2 extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});

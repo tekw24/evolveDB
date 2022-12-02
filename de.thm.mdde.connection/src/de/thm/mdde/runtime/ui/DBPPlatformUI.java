@@ -109,13 +109,7 @@ public interface DBPPlatformUI {
 
     DBPAuthInfo promptUserCredentials(String prompt, String userNameLabel, String userName, String passwordLabel, String userPassword, boolean passwordOnly, boolean showSavePassword);
 
-    /**
-     * Asks for password change. Returns null if user canceled this action.
-     */
-    //TODO Not used
-    /*
-    DBAPasswordChangeInfo promptUserPasswordChange(String prompt, @Nullable String userName, @Nullable String oldPassword, boolean userEditable, boolean oldPasswordVisible);
-	*/
+   
     /**
      * Ask user to accept license agreement
      */
@@ -123,41 +117,11 @@ public interface DBPPlatformUI {
 
     boolean downloadDriverFiles(DBPDriver driverDescriptor, DBPDriverDependencies dependencies);
 
-    /**
-     * UI utilities
-     */
-    //TODO Not used
-    /*
-    DBNNode selectObject(@NotNull Object parentShell, String title, DBNNode rootNode, DBNNode selectedNode, Class<?>[] allowedTypes, Class<?>[] resultTypes, Class<?>[] leafTypes);
-    */
-    //TODO Not used
-    /*
-    void openEntityEditor(@NotNull DBSObject object);
-    void openEntityEditor(@NotNull DBNNode selectedNode, @Nullable String defaultPageId);
-
-    void openConnectionEditor(@NotNull DBPDataSourceContainer dataSourceContainer);
-
-    // Process execution
-    void executeProcess(@NotNull DBRProcessDescriptor processDescriptor);
-	*/
+ 
     // Execute some action in UI thread
     void executeWithProgress(@NotNull Runnable runnable);
 
     void executeWithProgress(@NotNull DBRRunnableWithProgress runnable) throws InvocationTargetException, InterruptedException;
-
-    /**
-     * Execute runnable task synchronously while displaying job indicator if needed
-     */
-    //TODO Not used
-    /*
-    @NotNull
-    <T> Future<T> executeWithProgressBlocking(@NotNull String operationDescription, @NotNull DBRRunnableWithResult<Future<T>> runnable);
-
-    @NotNull
-    <RESULT> Job createLoadingService(
-        ILoadService<RESULT> loadingService,
-        ILoadVisualizer<RESULT> visualizer);
-		*/
     /**
      * FIXME: this is a hack. We need to call platform (workbench) to refresh part's contexts (enabled commands).
      * There is no such thing as part in abstract UI. Need some better solution.

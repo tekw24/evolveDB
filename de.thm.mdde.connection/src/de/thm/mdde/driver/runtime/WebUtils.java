@@ -75,13 +75,10 @@ public class WebUtils {
             log.debug("Retry number " + retryNumber);
         }
         log.debug("Open [" + urlString + "]");
-        //TODO
-        //DBPPreferenceStore prefs = DBWorkbench.getPlatform().getPreferenceStore();
-        //String proxyHost = prefs.getString(ModelPreferences.UI_PROXY_HOST); //TODO Vielleicht kann ich den hier auch erstmal setzen?
+      
         String proxyHost = "";
         Proxy proxy = null;
         if (!CommonUtils.isEmpty(proxyHost)) {
-        	//TODO
 //            int proxyPort = prefs.getInt(ModelPreferences.UI_PROXY_PORT);
 //            if (proxyPort <= 0) {
 //                log.warn("Invalid proxy port: " + proxyPort);
@@ -141,14 +138,6 @@ public class WebUtils {
         }
     }
     
-    public static void main(String[] args) {
-		try {
-			WebUtils.downloadRemoteFile(new DefaultProgressMonitor(new NullProgressMonitor()), "Download", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.29/mysql-connector-java-8.0.29.jar", Paths.get("C:\\Users\\Torben\\Documents\\Promotion2022\\mysql-connector-java-8.0.29.jar"), new DBPAuthInfo(null, null, false));
-		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
     public static long downloadRemoteFile(
         @NotNull DBRProgressMonitor monitor,

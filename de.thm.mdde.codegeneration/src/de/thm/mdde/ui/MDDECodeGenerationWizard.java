@@ -115,34 +115,7 @@ public class MDDECodeGenerationWizard extends Wizard implements INewWizard{
 			};
 
 			getContainer().run(false, false, operation);
-			
-			//TODO Kann ich die neue Datei im Explorer �ffnen?
-//			// Select the new file resource in the current view.
-//			//
-//			IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-//			IWorkbenchPage page = workbenchWindow.getActivePage();
-//			final IWorkbenchPart activePart = page.getActivePart();
-//			if (activePart instanceof ISetSelectionTarget) {
-//				final ISelection targetSelection = new StructuredSelection(modelFile);
-//				getShell().getDisplay().asyncExec(new Runnable() {
-//					@Override
-//					public void run() {
-//						((ISetSelectionTarget) activePart).selectReveal(targetSelection);
-//					}
-//				});
-//			}
-//
-//			// Open an editor on the new file.
-//			//
-//			try {
-//				page.openEditor(new FileEditorInput(modelFile),
-//						workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
-//			} catch (PartInitException exception) {
-//				MessageDialog.openError(workbenchWindow.getShell(),
-//						MddeEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
-//				return false;
-//			}
-//
+		
 			return true;
 		} catch (Exception exception) {
 			MddeEditorPlugin.INSTANCE.log(exception);

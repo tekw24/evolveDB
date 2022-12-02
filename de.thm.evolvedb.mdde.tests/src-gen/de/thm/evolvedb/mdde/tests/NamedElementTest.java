@@ -100,7 +100,7 @@ public class NamedElementTest extends TestCase {
 	 * @generated
 	 */
 	public void testNameNotNull__DiagnosticChain_Map() {
-		// TODO: implement this operation test method
+		
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

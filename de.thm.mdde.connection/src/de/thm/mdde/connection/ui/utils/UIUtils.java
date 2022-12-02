@@ -614,41 +614,6 @@ public class UIUtils {
 		return text;
 	}
 
-	//TODO Not used
-    /*
-	@NotNull
-	public static Text createLabelTextAdvanced(@NotNull Composite parent, @NotNull String label, @Nullable String value,
-			int style) {
-		Label controlLabel = createControlLabel(parent, label);
-		Composite panel = createComposite(parent, 2);
-		panel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		Text text = new Text(panel, style);
-		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		fixReadonlyTextBackground(text);
-		if (value != null) {
-			text.setText(value);
-		}
-		ToolBar editTB = new ToolBar(panel, SWT.HORIZONTAL);
-		ToolItem editButton = new ToolItem(editTB, SWT.DOWN);
-		// Button editButton = new Button(panel, SWT.DOWN);
-		// editButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		// editButton.setText("...");
-		editButton.setImage(DBeaverIcons.getImage(UIIcon.EDIT)); // $NON-NLS-1$
-		editButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String newText = EditTextDialog.editText(parent.getShell(), label, text.getText());
-				if (newText != null) {
-					text.setText(newText);
-				}
-			}
-		});
-		editTB.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-
-		return text;
-	}
-	*/
 
 	@NotNull
 	public static Spinner createLabelSpinner(@NotNull Composite parent, @NotNull String label, @Nullable String tooltip,
@@ -991,15 +956,6 @@ public class UIUtils {
 		return encodingCombo;
 	}
 
-	//TODO Not used
-    /*
-	@NotNull
-	public static CustomSashForm createPartDivider(final IWorkbenchPart workbenchPart, Composite parent, int style) {
-		final CustomSashForm sash = new CustomSashForm(parent, style);
-
-		return sash;
-	}
-	*/
 
 	@NotNull
 	public static String formatMessage(@Nullable String message, @Nullable Object... args) {
@@ -1222,71 +1178,7 @@ public class UIUtils {
 		return dialogSettings.get(key);
 	}
 
-	//TODO Not used
-    /*
-	@Nullable
-	public static IWorkbenchPartSite getWorkbenchPartSite(IServiceLocator serviceLocator) {
-		IWorkbenchPartSite partSite = serviceLocator.getService(IWorkbenchPartSite.class);
-		if (partSite == null) {
-			IWorkbenchPart activePart = serviceLocator.getService(IWorkbenchPart.class);
-			if (activePart == null) {
-				IWorkbenchWindow workbenchWindow = getActiveWorkbenchWindow();
-				if (workbenchWindow != null) {
-					IWorkbenchPage activePage = workbenchWindow.getActivePage();
-					if (activePage != null) {
-						activePart = activePage.getActivePart();
-					}
-				}
-			}
-			if (activePart != null) {
-				partSite = activePart.getSite();
-			}
-		}
-		return partSite;
-	}
-	*/
 
-	//TODO Not used
-    /*
-	public static boolean isContextActive(String contextId) {
-		Collection<?> contextIds = getActiveWorkbenchWindow().getService(IContextService.class).getActiveContextIds();
-		for (Object id : contextIds) {
-			if (contextId.equals(id)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	*/
-
-	//TODO Not used
-    /*
-	@Nullable
-	public static ISelectionProvider getSelectionProvider(IServiceLocator serviceLocator) {
-		ISelectionProvider selectionProvider = serviceLocator.getService(ISelectionProvider.class);
-		if (selectionProvider != null) {
-			return selectionProvider;
-		}
-		IWorkbenchPartSite partSite = getWorkbenchPartSite(serviceLocator);
-		if (partSite == null) {
-			IWorkbenchPart activePart = serviceLocator.getService(IWorkbenchPart.class);
-			if (activePart == null) {
-				IWorkbenchWindow activeWindow = getActiveWorkbenchWindow();
-				if (activeWindow != null) {
-					activePart = activeWindow.getActivePage().getActivePart();
-				}
-			}
-			if (activePart != null) {
-				partSite = activePart.getSite();
-			}
-		}
-		if (partSite != null) {
-			return partSite.getSelectionProvider();
-		} else {
-			return null;
-		}
-	}
-	*/
 
 	public static void enableWithChildren(Control control, boolean enable) {
 		control.setEnabled(enable);
@@ -1436,17 +1328,6 @@ public class UIUtils {
 		}
 	}
 
-	// TODO Not used
-	/*
-	 * public static void createTableContextMenu(@NotNull final Table
-	 * table, @Nullable DBRCreator<Boolean, IContributionManager> menuCreator) {
-	 * MenuManager menuMgr = new MenuManager(); menuMgr.addMenuListener(manager -> {
-	 * if (menuCreator != null) { if (!menuCreator.createObject(menuMgr)) { return;
-	 * } } UIUtils.fillDefaultTableContextMenu(manager, table); });
-	 * menuMgr.setRemoveAllWhenShown(true);
-	 * table.setMenu(menuMgr.createContextMenu(table)); table.addDisposeListener(e
-	 * -> menuMgr.dispose()); }
-	 */
 
 	public static void setControlContextMenu(Control control, IMenuListener menuListener) {
 		MenuManager menuMgr = new MenuManager();
@@ -1456,95 +1337,8 @@ public class UIUtils {
 		control.addDisposeListener(e -> menuMgr.dispose());
 	}
 	
-	//TODO Not used
-    /*
+	
 
-	public static void fillDefaultTableContextMenu(IContributionManager menu, final Table table) {
-		if (table.getColumnCount() > 1) {
-			menu.add(new Action(NLS.bind(UIMessages.utils_actions_copy_label, table.getColumn(0).getText())) {
-				@Override
-				public void run() {
-					StringBuilder text = new StringBuilder();
-					for (TableItem item : table.getSelection()) {
-						if (text.length() > 0)
-							text.append("\n");
-						text.append(item.getText(0));
-					}
-					if (text.length() == 0) {
-						return;
-					}
-					UIUtils.setClipboardContents(table.getDisplay(), TextTransfer.getInstance(), text.toString());
-				}
-			});
-		}
-		menu.add(new Action(UIMessages.utils_actions_copy_all_label) {
-			@Override
-			public void run() {
-				StringBuilder text = new StringBuilder();
-				int columnCount = table.getColumnCount();
-				for (TableItem item : table.getSelection()) {
-					if (text.length() > 0)
-						text.append("\n");
-					for (int i = 0; i < columnCount; i++) {
-						if (i > 0)
-							text.append("\t");
-						text.append(item.getText(i));
-					}
-				}
-				if (text.length() == 0) {
-					return;
-				}
-				UIUtils.setClipboardContents(table.getDisplay(), TextTransfer.getInstance(), text.toString());
-			}
-		});
-	}
-	*/
-	
-	
-	
-	//TODO Not used
-    /*
-	public static void fillDefaultTreeContextMenu(IContributionManager menu, final Tree tree) {
-		if (tree.getColumnCount() > 1) {
-			menu.add(new Action("Copy " + tree.getColumn(0).getText()) {
-				@Override
-				public void run() {
-					StringBuilder text = new StringBuilder();
-					for (TreeItem item : tree.getSelection()) {
-						if (text.length() > 0)
-							text.append("\n");
-						text.append(item.getText(0));
-					}
-					if (text.length() == 0) {
-						return;
-					}
-					UIUtils.setClipboardContents(tree.getDisplay(), TextTransfer.getInstance(), text.toString());
-				}
-			});
-		}
-		menu.add(new Action(UIMessages.utils_actions_copy_all_label) {
-			@Override
-			public void run() {
-				StringBuilder text = new StringBuilder();
-				int columnCount = tree.getColumnCount();
-				for (TreeItem item : tree.getSelection()) {
-					if (text.length() > 0)
-						text.append("\n");
-					for (int i = 0; i < columnCount; i++) {
-						if (i > 0)
-							text.append("\t");
-						text.append(item.getText(i));
-					}
-				}
-				if (text.length() == 0) {
-					return;
-				}
-				UIUtils.setClipboardContents(tree.getDisplay(), TextTransfer.getInstance(), text.toString());
-			}
-		});
-		// menu.add(ActionFactory.SELECT_ALL.create(UIUtils.getActiveWorkbenchWindow()));
-	}
-	*/
 
 	public static void addFileOpenOverlay(Text text, SelectionListener listener) {
 		final Image browseImage = DBeaverIcons.getImage(DBIcon.TREE_FOLDER);
@@ -1594,23 +1388,6 @@ public class UIUtils {
 		runnableContext.run(fork, cancelable, monitor -> runnableWithProgress.run(RuntimeUtils.makeMonitor(monitor)));
 	}
 
-	// TODO Not used
-	/*
-	 * public static AbstractUIJob runUIJob(String jobName, final
-	 * DBRRunnableWithProgress runnableWithProgress) { return runUIJob(jobName, 0,
-	 * runnableWithProgress); }
-	 * 
-	 * public static AbstractUIJob runUIJob(String jobName, int timeout, final
-	 * DBRRunnableWithProgress runnableWithProgress) { AbstractUIJob job = new
-	 * AbstractUIJob(jobName) {
-	 * 
-	 * @Override public IStatus runInUIThread(DBRProgressMonitor monitor) { try {
-	 * runnableWithProgress.run(monitor); } catch (InvocationTargetException e) {
-	 * return GeneralUtils.makeExceptionStatus(e); } catch (InterruptedException e)
-	 * { return Status.CANCEL_STATUS; } return Status.OK_STATUS; } };
-	 * job.setSystem(true); job.schedule(timeout); return job; }
-	 */
-
 	@Nullable
 	public static IWorkbenchWindow findActiveWorkbenchWindow() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
@@ -1654,30 +1431,12 @@ public class UIUtils {
 		}
 	}
 
-	// TODO Not used
-	/*
-	 * public static DBRRunnableContext getDefaultRunnableContext() { IWorkbench
-	 * workbench = PlatformUI.getWorkbench(); if (workbench != null &&
-	 * workbench.getActiveWorkbenchWindow() != null) { return new
-	 * RunnableContextDelegate(workbench.getActiveWorkbenchWindow()); } else {
-	 * return (fork, cancelable, runnable) -> runnable.run(new
-	 * VoidProgressMonitor()); } }
-	 */
+
 
 	public static DBRRunnableContext getDialogRunnableContext() {
 		return (fork, cancelable, runnable) -> runInProgressDialog(runnable);
 	}
 
-	/**
-	 * Runs task in Eclipse progress service. NOTE: this call can't be canceled if
-	 * it will block in IO
-	 */
-	// TODO Not used
-	/*
-	 * public static void runInProgressService(final DBRRunnableWithProgress
-	 * runnable) throws InvocationTargetException, InterruptedException {
-	 * getDefaultRunnableContext().run(true, true, runnable); }
-	 */
 
 	/**
 	 * Runs task in Eclipse progress dialog. NOTE: this call can't be canceled if it
@@ -1711,13 +1470,6 @@ public class UIUtils {
 		}
 	}
 
-	// TODO Not used
-	/*
-	 * public static void runInUI(final DBRRunnableWithProgress runnable) {
-	 * IWorkbench workbench = PlatformUI.getWorkbench(); IWorkbenchWindow window =
-	 * workbench.getActiveWorkbenchWindow(); IRunnableContext context = window !=
-	 * null ? window : DummyRunnableContext.INSTANCE; runInUI(context, runnable); }
-	 */
 
 	public static Display getDisplay() {
 		try {
@@ -1786,20 +1538,6 @@ public class UIUtils {
 		return SHARED_TEXT_COLORS.getColor(rgb);
 	}
 
-	// TODO Not used
-	/*
-	 * public static Color getConnectionColor(DBPConnectionConfiguration
-	 * connectionInfo) { String rgbString = connectionInfo.getConnectionColor(); if
-	 * (CommonUtils.isEmpty(rgbString)) { rgbString =
-	 * connectionInfo.getConnectionType().getColor(); } if
-	 * (CommonUtils.isEmpty(rgbString)) { return null; } return
-	 * getConnectionColorByRGB(rgbString); }
-	 * 
-	 * public static Color getConnectionTypeColor(DBPConnectionType connectionType)
-	 * { String rgbString = connectionType.getColor(); if
-	 * (CommonUtils.isEmpty(rgbString)) { return null; } return
-	 * getConnectionColorByRGB(rgbString); }
-	 */
 
 	public static Color getConnectionColorByRGB(String rgbStringOrId) {
 		if (rgbStringOrId.isEmpty()) {
@@ -1863,37 +1601,6 @@ public class UIUtils {
 		return PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(id);
 	}
 
-	// TODO Not used
-	/*
-	 * public static void addVariablesToControl(@NotNull Control
-	 * controlForTip, @NotNull String[] variables, String toolTipPattern) { final
-	 * StringContentProposalProvider proposalProvider = new
-	 * StringContentProposalProvider(Arrays .stream(variables)
-	 * .map(GeneralUtils::variablePattern) .toArray(String[]::new));
-	 * 
-	 * UIUtils.setContentProposalToolTip(controlForTip, toolTipPattern, variables);
-	 * 
-	 * ContentAssistUtils.installContentProposal(controlForTip, new
-	 * SmartTextContentAdapter(), proposalProvider); }
-	 */
-
-	// TODO Not used
-	/*
-	 * public static void setContentProposalToolTip(Control control, String toolTip,
-	 * String ... variables) {
-	 * control.setToolTipText(getSupportedVariablesTip(toolTip, variables));
-	 * 
-	 * }
-	 * 
-	 * @NotNull public static String getSupportedVariablesTip(String toolTip, String
-	 * ... variables) { StringBuilder varsTip = new StringBuilder();
-	 * varsTip.append(toolTip).append(". ").append(UIMessages.
-	 * pref_page_connections_tool_tip_text_allowed_variables).append(":\n"); for
-	 * (int i = 0; i < variables.length; i++) { String var = variables[i]; if (i >
-	 * 0) varsTip.append(",\n");
-	 * varsTip.append("  ").append(GeneralUtils.variablePattern(var)); }
-	 * varsTip.append("."); //$NON-NLS-1$ return varsTip.toString(); }
-	 */
 
 	public static CoolItem createCoolItem(CoolBar coolBar, Control control) {
 		CoolItem item = new CoolItem(coolBar, SWT.NONE);
@@ -1930,19 +1637,6 @@ public class UIUtils {
 		}
 	}
 
-	// TODO not used
-	/*
-	 * public static void waitJobCompletion(AbstractJob job) { // Wait until job
-	 * finished Display display = Display.getCurrent(); while (!job.isFinished()) {
-	 * if (!display.readAndDispatch()) { display.sleep(); } } display.update(); }
-	 * 
-	 * 
-	 * public static void waitInUI(DBRCondition condition, long waitTime) {
-	 * syncExec(() -> { long startTime = System.currentTimeMillis(); Display display
-	 * = Display.getCurrent(); do { if (!display.readAndDispatch()) {
-	 * RuntimeUtils.pause(100); } } while (!condition.isConditionMet() &&
-	 * (System.currentTimeMillis() - startTime) < waitTime); display.update(); }); }
-	 */
 
 	public static void fixReadonlyTextBackground(Text textField) {
 		// There is still no good workaround:
@@ -2004,20 +1698,7 @@ public class UIUtils {
 		return greyLevel(rgb) < 128;
 	}
 
-	/**
-	 * Calculate the Contrast color based on Luma(brightness)
-	 * https://en.wikipedia.org/wiki/Luma_(video)
-	 *
-	 * Do not dispose returned color.
-	 */
-	// TODO
-	/*
-	 * Not used public static Color getContrastColor(Color color) { if (color ==
-	 * null) { return COLOR_BLACK; } double luminance = 1 - (0.299 * color.getRed()
-	 * + 0.587 * color.getGreen() + 0.114 * color.getBlue()) / 255; if (luminance >
-	 * 0.5) { return UIStyles.isDarkTheme() ? COLOR_WHITE_DARK : COLOR_WHITE; }
-	 * return COLOR_BLACK; }
-	 */
+
 
 	public static void openWebBrowser(String url) {
 		url = url.trim();
@@ -2038,21 +1719,6 @@ public class UIUtils {
 		}
 	}
 
-	// TODO Not used
-	/*
-	 * public static <T extends Control> void addEmptyTextHint(T control,
-	 * DBRValueProvider<String, T> tipProvider) { control.addPaintListener(new
-	 * PaintListener() { private Font hintFont =
-	 * UIUtils.modifyFont(control.getFont(), SWT.ITALIC); {
-	 * control.addDisposeListener(e -> hintFont.dispose()); }
-	 * 
-	 * @Override public void paintControl(PaintEvent e) { String tip =
-	 * tipProvider.getValue(control); if (tip != null &&
-	 * (isEmptyTextControl(control) && !control.isFocusControl())) {
-	 * e.gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_NORMAL_SHADOW
-	 * )); e.gc.setFont(hintFont); e.gc.drawText(tip, 2, 0, true);
-	 * e.gc.setFont(null); } } }); }
-	 */
 
 	private static boolean isEmptyTextControl(Control control) {
 		return (control instanceof Text && ((Text) control).getCharCount() == 0)
