@@ -25,7 +25,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.thm.mdde.connection.model.DBPDriverLibrary;
-import de.thm.mdde.connection.utils.CommonUtils;
 
 /**
  * DriverClassLoader

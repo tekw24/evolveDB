@@ -16,22 +16,14 @@
  */
 package de.thm.connection.maven;
 
-import org.xml.sax.Attributes;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import de.thm.mdde.connection.model.Log;
 import de.thm.mdde.connection.utils.CommonUtils;
 import de.thm.mdde.connection.utils.NotNull;
 import de.thm.mdde.connection.utils.Nullable;
-import de.thm.mdde.connection.utils.VersionUtils;
-import de.thm.mdde.driver.runtime.WebUtils;
-import de.thm.mdde.driver.runtime.model.DBRProgressMonitor;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Maven artifact descriptor
