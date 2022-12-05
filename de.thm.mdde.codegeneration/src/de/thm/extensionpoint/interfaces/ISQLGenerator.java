@@ -33,12 +33,16 @@ public interface ISQLGenerator {
 	 * @param resEcoreFile --> The matching model.
 	 * @param project --> The currently selected project.
 	 * @param generator --> The generator chosen by the user.
-	 * @param monitor 
+	 * @param monitor --> ProgressMonitor
 	 */
 	void generate(Resource resEcoreFile, IProgressMonitor monitor);
 	
 	
 	
+	/**
+	 * Returns the content for the migration script.
+	 * @return
+	 */
 	String getContent();
 
 }
