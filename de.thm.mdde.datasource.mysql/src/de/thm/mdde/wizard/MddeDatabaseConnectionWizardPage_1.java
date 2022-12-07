@@ -22,6 +22,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -48,6 +51,7 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 	private Text usernameText;
 	private Text textSchema;
 	private Button checkSchema;
+	private Button btnSaveConfiguration;
 
 	protected MddeDatabaseConnectionWizardPage_1(String pageName, IStructuredSelection selection,
 			MddeDatabaseConnectionController controller) {
@@ -104,11 +108,11 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fileDialog = new FileDialog(getShell());
 				// Set the text
-				fileDialog.setText("Select File");
+				fileDialog.setText(Messages.MddeDatabaseConnectionWizardPage_1_Select_FILE);
 				// Set filter on .txt files
-				fileDialog.setFilterExtensions(new String[] { "*.xml" });
+				fileDialog.setFilterExtensions(new String[] { Messages.MddeDatabaseConnectionWizardPage_1_1 });
 				// Put in a readable name for the filter
-				fileDialog.setFilterNames(new String[] { "XML(*.xml)" });
+				fileDialog.setFilterNames(new String[] { Messages.MddeDatabaseConnectionWizardPage_1_2 });
 				// Open Dialog and save result of selection
 
 				fileDialog.setFilterPath(Platform.getLocation().toOSString());
@@ -117,6 +121,7 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 				if (selected != null) {
 					config.setText(selected);
 					controller.selectConfigFile(selected);
+					enableExportConfigButton();
 				}
 
 				// System.out.println(selected);
@@ -125,12 +130,12 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 
 		Button btnWorkspaceFile = new Button(compConfig, SWT.PUSH);
 		btnWorkspaceFile.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		btnWorkspaceFile.setText("Select Workspace File");
+		btnWorkspaceFile.setText(Messages.MddeDatabaseConnectionWizardPage_1_SELECT_WORKSPACE_FILE);
 		btnWorkspaceFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ResourceFileSelectionDialog dialog = new ResourceFileSelectionDialog("Select file", "Select mdde configuration file from workspace",
-						new String[] { "xml" });
+				ResourceFileSelectionDialog dialog = new ResourceFileSelectionDialog(Messages.MddeDatabaseConnectionWizardPage_1_SELECT_FILE, Messages.MddeDatabaseConnectionWizardPage_1_SELECT_CONFIGURATION_TEXT,
+						new String[] { Messages.MddeDatabaseConnectionWizardPage_1_6 });
 				if (dialog.open() == Window.OK) {
 					Object[] result = dialog.getResult();
 					if (result.length == 1 && result[0] instanceof IFile) {
@@ -138,6 +143,7 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 						controller.selectConfigFile(iFile.getRawLocation().makeAbsolute().toFile());
 						// controller.selectConfigFile(((IFile)result[0]).getFullPath().toOSString());
 						config.setText(iFile.getFullPath().toOSString());
+						enableExportConfigButton();
 					}
 
 				}
@@ -153,6 +159,12 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 		// Textfield for the hostname
 		hostname = new Text(composite, SWT.BORDER | SWT.LEAD | SWT.SINGLE);
 		hostname.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		hostname.addModifyListener(new ModifyListener() {
+			  public void modifyText(ModifyEvent e) {
+				  enableExportConfigButton();
+			    }
+			
+		});
 
 		// Label for the port spinner
 		Label labelPort = new Label(composite, SWT.NONE);
@@ -165,6 +177,14 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 		portSpinner.setIncrement(1);
 		portSpinner.setMaximum(100000);
 		portSpinner.setMinimum(0);
+		portSpinner.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				enableExportConfigButton();
+			}
+		
+		});
+		
 		// Default Value for testing
 		// portSpinner.setSelection(3306);
 		hostname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -177,6 +197,13 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 		// Textfield for the username
 		usernameText = new Text(composite, SWT.BORDER | SWT.LEAD | SWT.SINGLE);
 		usernameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		usernameText.addModifyListener(new ModifyListener() {
+			  public void modifyText(ModifyEvent e) {
+				  enableExportConfigButton();
+			    }
+			
+		});
+			
 
 		// Label for the username textfield
 		Label labelPassword = new Label(composite, SWT.NONE);
@@ -193,7 +220,7 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 		checkSchema = new Button(composite, SWT.CHECK);
 		checkSchema.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1));
 		checkSchema.setText(
-				"Preselect a schema, otherwise a list of all available schemas will be displayed on the next page.");
+				Messages.MddeDatabaseConnectionWizardPage_1_PRESELECT_SCHEMA);
 
 		// Label for the schema textfield
 		Label labelSchema = new Label(composite, SWT.NONE);
@@ -209,6 +236,7 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				textSchema.setEnabled(checkSchema.getSelection());
+				enableExportConfigButton();
 			}
 		});
 
@@ -220,10 +248,10 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String host = hostname.getText();
-				String port = "" + portSpinner.getSelection();
+				String port = "" + portSpinner.getSelection(); //$NON-NLS-1$
 				String username = usernameText.getText();
 				String password = passwordField.getText();
-				String schema = checkSchema.getSelection() ? textSchema.getText() : "";
+				String schema = checkSchema.getSelection() ? textSchema.getText() : ""; //$NON-NLS-1$
 
 				User user = new User(username, password);
 				controller.testConnection(user, host, port, schema);
@@ -232,15 +260,19 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 		});
 		
 		// Save Configuration file
-		Button btnSaveConfiguration = new Button(composite, SWT.PUSH);
+		btnSaveConfiguration = new Button(composite, SWT.PUSH);
 		btnSaveConfiguration.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1,1));
+		btnSaveConfiguration.setEnabled(false);
 		//btnSaveConfiguration.setText(Language.WIZARD_SAVE_CONFIG);
-		btnSaveConfiguration.setText("text");
+		btnSaveConfiguration.setText(Messages.MddeDatabaseConnectionWizardPage_1_EXPORT_CONFIGURATION);
 		btnSaveConfiguration.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
+				
+				
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
-				String[] extensions = { "*.xml" };
+				String[] extensions = { Messages.MddeDatabaseConnectionWizardPage_1_11 };
 				fileDialog.setFilterExtensions(extensions);
 				fileDialog.setOverwrite(true);
 				fileDialog.setFilterPath(Platform.getLocation().toOSString());
@@ -273,12 +305,25 @@ public class MddeDatabaseConnectionWizardPage_1 extends WizardPage {
 	}
 
 	protected void setSchema(String schema) {
-		if (schema != null && !schema.equals("")) {
+		if (schema != null && !schema.equals("")) { //$NON-NLS-1$
 			checkSchema.setSelection(true);
 			textSchema.setEnabled(true);
 			textSchema.setText(schema);
 		}
 
+	}
+	
+	private void enableExportConfigButton() {
+		boolean enable = !usernameText.getText().isEmpty() && !hostname.getText().isEmpty() && portSpinner.getSelection() != 0;
+		if(enable) {
+			controller.setHost(hostname.getText());
+			controller.setUser(new User(usernameText.getText(), ""));
+			controller.setPort(""+portSpinner.getSelection());
+			if(isSchemaSelected())
+				controller.setSchema(textSchema.getText());
+		}
+		btnSaveConfiguration.setEnabled(enable);
+			
 	}
 
 	/**

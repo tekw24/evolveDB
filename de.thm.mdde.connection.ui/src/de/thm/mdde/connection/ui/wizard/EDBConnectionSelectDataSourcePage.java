@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.widgets.LabelFactory;
 import org.eclipse.jface.widgets.WidgetFactory;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -211,7 +212,8 @@ public class EDBConnectionSelectDataSourcePage extends WizardPage {
 				controller.openDownloadDriverPage();
 				if (controller.checkDriverExists()) {
 					disposed = controller.openConnectionUI();
-				}
+				}else
+					((WizardDialog) getContainer()).close();
 			} else
 				disposed = controller.openConnectionUI();
 

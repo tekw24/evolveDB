@@ -203,17 +203,13 @@ public class MddeDatabaseConnectionController {
 		boolean result = XMLFileReader.validateAgainstConfigurationSchema(source);
 
 		if (result) {
-			System.out.println("Validated successfully");
 			try {
 				ReverseDatabaseModel rdm = XMLFileReader.loadConfiguration(file);
 				connectionWizardPage_1.setHost(rdm.getHost());
 				connectionWizardPage_1.setPort( rdm.getPort());
 				connectionWizardPage_1.setUser( rdm.getUser());
 				connectionWizardPage_1.setSchema(rdm.getSchema());
-				if(rdm.getJpaProvider() != null) {
-					//NOT Used
-					//mddeDatabaseModelConnectionWizardPage_3.setJPAProvider(rdm.getJpaProvider());
-				}
+			
 				
 				
 				
@@ -248,8 +244,7 @@ public class MddeDatabaseConnectionController {
 		if (!filename.endsWith(".xml")) {
 			filename = filename + ".xml";
 		}
-		System.out.println(filename);
-		ReverseDatabaseModel model = new ReverseDatabaseModel(this.host, this.user.getUsername(), this.schema, this.port, this.jpaProvider);
+		ReverseDatabaseModel model = new ReverseDatabaseModel(this.host, this.user.getUsername(), this.schema, this.port);
 		XMLFileCreator.saveConfigurationFile(model, filename);
 		
 	}

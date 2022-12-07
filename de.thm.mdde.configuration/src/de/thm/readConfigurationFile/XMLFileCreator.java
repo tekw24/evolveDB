@@ -75,18 +75,18 @@ public class XMLFileCreator {
 
 			}
 
-			// JPA Provider
-			JPAProvider jpaProvider = model.getJpaProvider();
-
-			if (jpaProvider != null) {
-				Element ormTool = doc.createElement("orm_tool");
-				ormTool.setTextContent(jpaProvider.getName());
-				Attr version = doc.createAttribute("version");
-				version.setTextContent(jpaProvider.getVersion());
-				ormTool.setAttributeNode(version);
-				rootElement.appendChild(ormTool);
-
-			}
+//			// JPA Provider
+//			JPAProvider jpaProvider = model.getJpaProvider();
+//
+//			if (jpaProvider != null) {
+//				Element ormTool = doc.createElement("orm_tool");
+//				ormTool.setTextContent(jpaProvider.getName());
+//				Attr version = doc.createAttribute("version");
+//				version.setTextContent(jpaProvider.getVersion());
+//				ormTool.setAttributeNode(version);
+//				rootElement.appendChild(ormTool);
+//
+//			}
 
 			doc.appendChild(rootElement);
 

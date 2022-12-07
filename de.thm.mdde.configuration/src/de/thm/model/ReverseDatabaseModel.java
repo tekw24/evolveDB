@@ -22,8 +22,7 @@ public class ReverseDatabaseModel {
 	private String user;
 	private String schema;
 	private String port;
-	
-	private JPAProvider jpaProvider;
+
 	
 	
 	
@@ -38,15 +37,7 @@ public class ReverseDatabaseModel {
 		this.schema = schema;
 		this.port = port;
 	}
-	
-	public ReverseDatabaseModel(String host, String user, String schema, String port, JPAProvider jpaProvider) {
-		super();
-		this.host = host;
-		this.user = user;
-		this.schema = schema;
-		this.port = port;
-		this.jpaProvider = jpaProvider;
-	}
+
 	
 	public String getHost() {
 		return host;
@@ -73,12 +64,7 @@ public class ReverseDatabaseModel {
 	public void setPort(String port) {
 		this.port = port;
 	}
-	public JPAProvider getJpaProvider() {
-		return jpaProvider;
-	}
-	public void setJpaProvider(JPAProvider jpaProvider) {
-		this.jpaProvider = jpaProvider;
-	}
+
 	
 	
 	

@@ -70,9 +70,9 @@ public class XMLFileReader {
 	public static boolean validateAgainstConfigurationSchema(StreamSource source) {
 		try {
 			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			Schema schema = factory
-					.newSchema(new StreamSource(XMLFileReader.class.getResourceAsStream("/de/thm/schema/configuration.xsd")));
-			
+			Schema schema = factory.newSchema(
+					new StreamSource(XMLFileReader.class.getResourceAsStream("/de/thm/schema/configuration.xsd")));
+
 			// Schema schema = factory.newSchema( new
 			// StreamSource(ClassLoader.getSystemResourceAsStream("/configuration.xsd")));
 			// Schema schema = factory.newSchema(new StreamSource(new
@@ -89,7 +89,8 @@ public class XMLFileReader {
 
 	}
 
-	public static ReverseDatabaseModel loadConfiguration(File xml) throws ParserConfigurationException, SAXException, IOException {
+	public static ReverseDatabaseModel loadConfiguration(File xml)
+			throws ParserConfigurationException, SAXException, IOException {
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -109,20 +110,25 @@ public class XMLFileReader {
 		reverseDatabaseModel.setHost(root.getElementsByTagName("host").item(0).getTextContent());
 		reverseDatabaseModel.setPort(root.getElementsByTagName("port").item(0).getTextContent());
 		reverseDatabaseModel.setUser(root.getElementsByTagName("username").item(0).getTextContent());
-		reverseDatabaseModel.setSchema(root.getElementsByTagName("schema").item(0).getTextContent());
-		// System.out.println(root.getElementsByTagName("schema").item(0).getTextContent());
 
-		NodeList nl = root.getElementsByTagName("single_table_inheritance");
+		NodeList nl = root.getElementsByTagName("schema");
 		if (nl.getLength() > 0) {
-			System.out.println("single_table_inheritance");
-		}
+			reverseDatabaseModel.setSchema(root.getElementsByTagName("schema").item(0).getTextContent());
+		}else
+			reverseDatabaseModel.setSchema("");
 		
-		nl = root.getElementsByTagName("orm_tool");
-		if (nl.getLength() > 0) {
-			Element orm = (Element) nl.item(0);
-			JPAProvider jpaProvider = JPAProvider.getProvider(orm.getTextContent(), orm.getAttributeNode("version").getTextContent());
-			reverseDatabaseModel.setJpaProvider(jpaProvider);
-		}
+
+//		NodeList nl = root.getElementsByTagName("single_table_inheritance");
+//		if (nl.getLength() > 0) {
+//			System.out.println("single_table_inheritance");
+//		}
+//		
+//		nl = root.getElementsByTagName("orm_tool");
+//		if (nl.getLength() > 0) {
+//			Element orm = (Element) nl.item(0);
+//			JPAProvider jpaProvider = JPAProvider.getProvider(orm.getTextContent(), orm.getAttributeNode("version").getTextContent());
+//			reverseDatabaseModel.setJpaProvider(jpaProvider);
+//		}
 
 		return reverseDatabaseModel;
 

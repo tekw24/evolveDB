@@ -166,6 +166,10 @@ public class DBIcon implements DBPImage
     public static final DBIcon SMALL_INFO = new DBIcon("small_info", "status/info_small.png"); //$NON-NLS-1$ //$NON-NLS-2$
 
     public static final DBIcon TINY_ERROR = new DBIcon("tiny_error", "status/error_tiny.png"); //$NON-NLS-1$ //$NON-NLS-2$
+    
+    
+    public static final DBIcon MYSQL_DATABASE = new DBIcon("mysql_icon", "tree/mysql_icon.png"); //$NON-NLS-1$ //$NON-NLS-2$
+    
 
     private static final boolean VALIDATE_ICON_FILE = false;
 

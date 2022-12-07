@@ -51,7 +51,7 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public DBIcon getIcon() {
-		return null;
+		return DBIcon.MYSQL_DATABASE;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class MySQLDriverLibrary implements DBPDriverLibrary {
 
 	@Override
 	public String getDescription() {
-		return "No description";
+		return "JDBC connector for MySQL databases";
 	}
 
 	@Override

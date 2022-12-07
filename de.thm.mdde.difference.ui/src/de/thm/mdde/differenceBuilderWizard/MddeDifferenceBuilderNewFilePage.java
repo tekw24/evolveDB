@@ -56,7 +56,7 @@ public class MddeDifferenceBuilderNewFilePage extends WizardNewFileCreationPage 
 	 */
 
 	public static final String FORMATTED_FILE_EXTENSIONS = "symmetric";
-	public static final String FORMATTED_MIGRATION_FILE_EXTENSIONS = "symmetric";
+	public static final String FORMATTED_MIGRATION_FILE_EXTENSIONS = "migration";
 
 	private ArrayList<String> encodings;
 
