@@ -6,7 +6,7 @@ import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.DataType;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.MddePackage;
-
+import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.util.MddeValidator;
 import java.lang.reflect.InvocationTargetException;
@@ -763,11 +763,15 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 			for(Column column : columns) {
 				if(column.equals(this))
 					continue;
-				if(column.getUnique() && column.getUniqueConstraintName() != null && !column.getUniqueConstraintName().equals(""))
+				if(column.getUnique() && column.getUniqueConstraintName() != null && !column.getUniqueConstraintName().equals("")) {
 					constraintNames.add(column.getUniqueConstraintName());
+				}
 			}
 				
 			if (constraintNames.contains(getUniqueConstraintName())) {
+				
+				if(getUniqueConstraintName().equals("PRIMARY") && ((this instanceof ForeignKey) ||(this instanceof PrimaryKey))  )
+					return true;
 
 				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
 						MddeValidator.COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME,
