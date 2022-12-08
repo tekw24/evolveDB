@@ -195,7 +195,7 @@ class SET_ATTRIBUTE {
 		var content = ""
 
 		for (AttributeValueChange a : makeColumnUniqe) {
-			if (a.objA instanceof Table && a.objB instanceof Table) {
+			if (a.objA instanceof Column && a.objB instanceof Column) {
 
 				var objA = a.objA as Column
 				var objB = a.objB as Column
@@ -302,7 +302,7 @@ class SET_ATTRIBUTE {
 						constraintName = objB.uniqueConstraintName;
 					content += '''
 						-- Change uniqe attribute of «objA.name.toLowerCase» 
-						ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC) VISIBLE;
+						ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
 					'''
 
 				} else {
