@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-SrLsEcZEe6MX8ws8YXcUQ" name="DELETE_NamedElement" description="Deletes one NamedElement">
+  <annotations xmi:id="_-SrLsUcZEe6MX8ws8YXcUQ" key="INVERSE" value="CREATE_NamedElement"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-SrLskcZEe6MX8ws8YXcUQ" name="deleteNamedElement" description="deletes one NamedElement">
+    <parameters xmi:id="_-SrLs0cZEe6MX8ws8YXcUQ" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <lhs xmi:id="_-SrLtEcZEe6MX8ws8YXcUQ" name="LHS">
+      <nodes xmi:id="_-SrLtUcZEe6MX8ws8YXcUQ" name="ToBeDeleted">
+        <type href="http://www.thm.de/mdde#//NamedElement"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-SrLtkcZEe6MX8ws8YXcUQ" name="RHS"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-SrLt0cZEe6MX8ws8YXcUQ" name="mainUnit" activated="false" subUnits="_-SrLskcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-SrLuEcZEe6MX8ws8YXcUQ" name="ToBeDeleted">
+      <annotations xmi:id="_-SrLuUcZEe6MX8ws8YXcUQ" key="INVERSE" value="New"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <parameterMappings xmi:id="_-SrLukcZEe6MX8ws8YXcUQ" source="_-SrLuEcZEe6MX8ws8YXcUQ" target="_-SrLs0cZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

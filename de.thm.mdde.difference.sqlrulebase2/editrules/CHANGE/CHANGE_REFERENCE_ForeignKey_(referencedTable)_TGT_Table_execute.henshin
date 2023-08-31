@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-S-GoEcZEe6MX8ws8YXcUQ" name="CHANGE_REFERENCE_ForeignKey_(referencedTable)_TGT_Table" description="CHANGEs ForeignKey's reference referencedTable the target Table">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-S-GoUcZEe6MX8ws8YXcUQ" name="changeForeignKey_referencedTable_TO_Table" description="Change the EReference referencedTable">
+    <parameters xmi:id="_-S-GokcZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_-S-Go0cZEe6MX8ws8YXcUQ" name="OldTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-S-GpEcZEe6MX8ws8YXcUQ" name="NewTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <lhs xmi:id="_-S-GpUcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-S-GpkcZEe6MX8ws8YXcUQ" name="Selected" outgoing="_-S-GqUcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+      <nodes xmi:id="_-S-Gp0cZEe6MX8ws8YXcUQ" name="OldTarget" incoming="_-S-GqUcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_-S-GqEcZEe6MX8ws8YXcUQ" name="NewTarget">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <edges xmi:id="_-S-GqUcZEe6MX8ws8YXcUQ" source="_-S-GpkcZEe6MX8ws8YXcUQ" target="_-S-Gp0cZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ForeignKey/referencedTable"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_-S-GqkcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-S-Gq0cZEe6MX8ws8YXcUQ" name="Selected" outgoing="_-S-GrkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+      <nodes xmi:id="_-S-GrEcZEe6MX8ws8YXcUQ" name="OldTarget">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_-S-GrUcZEe6MX8ws8YXcUQ" name="NewTarget" incoming="_-S-GrkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <edges xmi:id="_-S-GrkcZEe6MX8ws8YXcUQ" source="_-S-Gq0cZEe6MX8ws8YXcUQ" target="_-S-GrUcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ForeignKey/referencedTable"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-S-Gr0cZEe6MX8ws8YXcUQ" origin="_-S-GpkcZEe6MX8ws8YXcUQ" image="_-S-Gq0cZEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_-S-GsEcZEe6MX8ws8YXcUQ" origin="_-S-Gp0cZEe6MX8ws8YXcUQ" image="_-S-GrEcZEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_-S-GsUcZEe6MX8ws8YXcUQ" origin="_-S-GqEcZEe6MX8ws8YXcUQ" image="_-S-GrUcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-S-GskcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-S-GoUcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-S-Gs0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_-S-GtEcZEe6MX8ws8YXcUQ" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-S-GtUcZEe6MX8ws8YXcUQ" name="NewTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameterMappings xmi:id="_-S-GtkcZEe6MX8ws8YXcUQ" source="_-S-Gs0cZEe6MX8ws8YXcUQ" target="_-S-GokcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-S-Gt0cZEe6MX8ws8YXcUQ" source="_-S-GtEcZEe6MX8ws8YXcUQ" target="_-S-Go0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-S-GuEcZEe6MX8ws8YXcUQ" source="_-S-GtUcZEe6MX8ws8YXcUQ" target="_-S-GpEcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

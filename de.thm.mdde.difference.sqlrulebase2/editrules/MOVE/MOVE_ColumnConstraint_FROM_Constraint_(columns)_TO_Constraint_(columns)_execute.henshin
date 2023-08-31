@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-S4nEEcZEe6MX8ws8YXcUQ" name="MOVE_ColumnConstraint_FROM_Constraint_(columns)_TO_Constraint_(columns)" description="MOVEs ColumnConstraint from Constraint(Reference:columns) to Constraint(Reference:columns">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-S4nEUcZEe6MX8ws8YXcUQ" name="moveColumnConstraint_FROM_Constraint_columns_TO_Constraint_Constraint" description="Moves ColumnConstraint from Constraint(Reference:columns) toConstraint(Reference:Constraint)">
+    <parameters xmi:id="_-S4nEkcZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </parameters>
+    <parameters xmi:id="_-S4nE0cZEe6MX8ws8YXcUQ" name="OldSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Constraint"/>
+    </parameters>
+    <parameters xmi:id="_-S4nFEcZEe6MX8ws8YXcUQ" name="NewSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Constraint"/>
+    </parameters>
+    <lhs xmi:id="_-S4nFUcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-S4nFkcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-S4nGUcZEe6MX8ws8YXcUQ" outgoing="_-S4nGkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+      <nodes xmi:id="_-S4nF0cZEe6MX8ws8YXcUQ" name="OldSource" incoming="_-S4nGkcZEe6MX8ws8YXcUQ" outgoing="_-S4nGUcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Constraint"/>
+      </nodes>
+      <nodes xmi:id="_-S4nGEcZEe6MX8ws8YXcUQ" name="NewSource">
+        <type href="http://www.thm.de/mdde#//Constraint"/>
+      </nodes>
+      <edges xmi:id="_-S4nGUcZEe6MX8ws8YXcUQ" source="_-S4nF0cZEe6MX8ws8YXcUQ" target="_-S4nFkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Constraint/columns"/>
+      </edges>
+      <edges xmi:id="_-S4nGkcZEe6MX8ws8YXcUQ" source="_-S4nFkcZEe6MX8ws8YXcUQ" target="_-S4nF0cZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint/constraint"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_-S4nG0cZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-S4nHEcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-S4nH0cZEe6MX8ws8YXcUQ" outgoing="_-S4nIEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+      <nodes xmi:id="_-S4nHUcZEe6MX8ws8YXcUQ" name="OldSource">
+        <type href="http://www.thm.de/mdde#//Constraint"/>
+      </nodes>
+      <nodes xmi:id="_-S4nHkcZEe6MX8ws8YXcUQ" name="NewSource" incoming="_-S4nIEcZEe6MX8ws8YXcUQ" outgoing="_-S4nH0cZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Constraint"/>
+      </nodes>
+      <edges xmi:id="_-S4nH0cZEe6MX8ws8YXcUQ" source="_-S4nHkcZEe6MX8ws8YXcUQ" target="_-S4nHEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Constraint/columns"/>
+      </edges>
+      <edges xmi:id="_-S4nIEcZEe6MX8ws8YXcUQ" source="_-S4nHEcZEe6MX8ws8YXcUQ" target="_-S4nHkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint/constraint"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-S4nIUcZEe6MX8ws8YXcUQ" origin="_-S4nFkcZEe6MX8ws8YXcUQ" image="_-S4nHEcZEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_-S4nIkcZEe6MX8ws8YXcUQ" origin="_-S4nF0cZEe6MX8ws8YXcUQ" image="_-S4nHUcZEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_-S4nI0cZEe6MX8ws8YXcUQ" origin="_-S4nGEcZEe6MX8ws8YXcUQ" image="_-S4nHkcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-S4nJEcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-S4nEUcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-S4nJUcZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </parameters>
+    <parameters xmi:id="_-S4nJkcZEe6MX8ws8YXcUQ" name="OldSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Constraint"/>
+    </parameters>
+    <parameters xmi:id="_-S4nJ0cZEe6MX8ws8YXcUQ" name="NewSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Constraint"/>
+    </parameters>
+    <parameterMappings xmi:id="_-S4nKEcZEe6MX8ws8YXcUQ" source="_-S4nJUcZEe6MX8ws8YXcUQ" target="_-S4nEkcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-S4nKUcZEe6MX8ws8YXcUQ" source="_-S4nJkcZEe6MX8ws8YXcUQ" target="_-S4nE0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-S4nKkcZEe6MX8ws8YXcUQ" source="_-S4nJ0cZEe6MX8ws8YXcUQ" target="_-S4nFEcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

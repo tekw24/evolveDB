@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-UABYEcZEe6MX8ws8YXcUQ" name="CREATE_PrimaryKey_IN_Table_(columns)" description="Creates one PrimaryKey in Table">
+  <annotations xmi:id="_-UABYUcZEe6MX8ws8YXcUQ" key="INVERSE" value="DELETE_PrimaryKey_IN_Table_(columns)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-UABYkcZEe6MX8ws8YXcUQ" name="createPrimaryKey_IN_Table" description="creates one PrimaryKey in the context: Table">
+    <parameters xmi:id="_-UABY0cZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-UABZEcZEe6MX8ws8YXcUQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_-UABZUcZEe6MX8ws8YXcUQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_-UABZkcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-UABZ0cZEe6MX8ws8YXcUQ" name="Selected">
+        <annotations xmi:id="_-UABaEcZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-UABaUcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-UABakcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-UABcEcZEe6MX8ws8YXcUQ" outgoing="_-UABb0cZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-UABa0cZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_-UABbEcZEe6MX8ws8YXcUQ" name="New" incoming="_-UABb0cZEe6MX8ws8YXcUQ" outgoing="_-UABcEcZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-UABbUcZEe6MX8ws8YXcUQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+        <attributes xmi:id="_-UABbkcZEe6MX8ws8YXcUQ" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_-UABb0cZEe6MX8ws8YXcUQ" source="_-UABakcZEe6MX8ws8YXcUQ" target="_-UABbEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_-UABcEcZEe6MX8ws8YXcUQ" source="_-UABbEcZEe6MX8ws8YXcUQ" target="_-UABakcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-UABcUcZEe6MX8ws8YXcUQ" origin="_-UABZ0cZEe6MX8ws8YXcUQ" image="_-UABakcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-UABckcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-UABYkcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-UABc0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <annotations xmi:id="_-UABdEcZEe6MX8ws8YXcUQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-UABdUcZEe6MX8ws8YXcUQ" name="New">
+      <annotations xmi:id="_-UABdkcZEe6MX8ws8YXcUQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </parameters>
+    <parameters xmi:id="_-UABd0cZEe6MX8ws8YXcUQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_-UABeEcZEe6MX8ws8YXcUQ" source="_-UABc0cZEe6MX8ws8YXcUQ" target="_-UABY0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-UABeUcZEe6MX8ws8YXcUQ" source="_-UABZEcZEe6MX8ws8YXcUQ" target="_-UABdUcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-UABekcZEe6MX8ws8YXcUQ" source="_-UABd0cZEe6MX8ws8YXcUQ" target="_-UABZUcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

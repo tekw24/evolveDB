@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-TwJwEcZEe6MX8ws8YXcUQ" name="CREATE_NamedElement" description="Creates one NamedElement">
+  <annotations xmi:id="_-TwJwUcZEe6MX8ws8YXcUQ" key="INVERSE" value="DELETE_NamedElement"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-TwJwkcZEe6MX8ws8YXcUQ" name="createNamedElement" description="creates one NamedElement">
+    <parameters xmi:id="_-TwJw0cZEe6MX8ws8YXcUQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <parameters xmi:id="_-TwJxEcZEe6MX8ws8YXcUQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_-TwJxUcZEe6MX8ws8YXcUQ" name="Lhs"/>
+    <rhs xmi:id="_-TwJxkcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-TwJx0cZEe6MX8ws8YXcUQ" name="New">
+        <type href="http://www.thm.de/mdde#//NamedElement"/>
+        <attributes xmi:id="_-TwJyEcZEe6MX8ws8YXcUQ" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-TwJyUcZEe6MX8ws8YXcUQ" name="mainUnit" activated="false" subUnits="_-TwJwkcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-TwJykcZEe6MX8ws8YXcUQ" name="New">
+      <annotations xmi:id="_-TwJy0cZEe6MX8ws8YXcUQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//NamedElement"/>
+    </parameters>
+    <parameters xmi:id="_-TwJzEcZEe6MX8ws8YXcUQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_-TwJzUcZEe6MX8ws8YXcUQ" source="_-TwJw0cZEe6MX8ws8YXcUQ" target="_-TwJykcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-TwJzkcZEe6MX8ws8YXcUQ" source="_-TwJzEcZEe6MX8ws8YXcUQ" target="_-TwJxEcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

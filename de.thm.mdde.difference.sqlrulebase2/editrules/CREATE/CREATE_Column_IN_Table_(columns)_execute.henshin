@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-Su2EEcZEe6MX8ws8YXcUQ" name="CREATE_Column_IN_Table_(columns)" description="Creates one Column in Table">
+  <annotations xmi:id="_-Su2EUcZEe6MX8ws8YXcUQ" key="INVERSE" value="DELETE_Column_IN_Table_(columns)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-Su2EkcZEe6MX8ws8YXcUQ" name="createColumn_IN_Table" description="creates one Column in the context: Table">
+    <parameters xmi:id="_-Su2E0cZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-Su2FEcZEe6MX8ws8YXcUQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-Su2FUcZEe6MX8ws8YXcUQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_-Su2FkcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-Su2F0cZEe6MX8ws8YXcUQ" name="Selected">
+        <annotations xmi:id="_-Su2GEcZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-Su2GUcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-Su2GkcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-Su2IEcZEe6MX8ws8YXcUQ" outgoing="_-Su2H0cZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-Su2G0cZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_-Su2HEcZEe6MX8ws8YXcUQ" name="New" incoming="_-Su2H0cZEe6MX8ws8YXcUQ" outgoing="_-Su2IEcZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-Su2HUcZEe6MX8ws8YXcUQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_-Su2HkcZEe6MX8ws8YXcUQ" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_-Su2H0cZEe6MX8ws8YXcUQ" source="_-Su2GkcZEe6MX8ws8YXcUQ" target="_-Su2HEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Table/columns"/>
+      </edges>
+      <edges xmi:id="_-Su2IEcZEe6MX8ws8YXcUQ" source="_-Su2HEcZEe6MX8ws8YXcUQ" target="_-Su2GkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column/table"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-Su2IUcZEe6MX8ws8YXcUQ" origin="_-Su2F0cZEe6MX8ws8YXcUQ" image="_-Su2GkcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-Su2IkcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-Su2EkcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-Su2I0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <annotations xmi:id="_-Su2JEcZEe6MX8ws8YXcUQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-Su2JUcZEe6MX8ws8YXcUQ" name="New">
+      <annotations xmi:id="_-Su2JkcZEe6MX8ws8YXcUQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-Su2J0cZEe6MX8ws8YXcUQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_-Su2KEcZEe6MX8ws8YXcUQ" source="_-Su2I0cZEe6MX8ws8YXcUQ" target="_-Su2E0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-Su2KUcZEe6MX8ws8YXcUQ" source="_-Su2FEcZEe6MX8ws8YXcUQ" target="_-Su2JUcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-Su2KkcZEe6MX8ws8YXcUQ" source="_-Su2J0cZEe6MX8ws8YXcUQ" target="_-Su2FUcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

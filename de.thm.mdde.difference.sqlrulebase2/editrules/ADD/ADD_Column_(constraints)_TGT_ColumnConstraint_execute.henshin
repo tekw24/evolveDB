@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-SpWgEcZEe6MX8ws8YXcUQ" name="ADD_Column_(constraints)_TGT_ColumnConstraint" description="Adds to Column's reference constraints the target ColumnConstraint">
+  <annotations xmi:id="_-SpWgUcZEe6MX8ws8YXcUQ" key="INVERSE" value="REMOVE_Column_(constraints)_TGT_ColumnConstraint"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-SpWgkcZEe6MX8ws8YXcUQ" name="addToColumn_constraints_ColumnConstraint" description="Adds to Column's reference constraints the target ColumnConstraint">
+    <parameters xmi:id="_-SpWg0cZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-SpWhEcZEe6MX8ws8YXcUQ" name="NewTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </parameters>
+    <lhs xmi:id="_-SpWhUcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-SpWhkcZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_-SpWh0cZEe6MX8ws8YXcUQ" name="NewTarget">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-SpWiEcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-SpWiUcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-SpWjEcZEe6MX8ws8YXcUQ" outgoing="_-SpWi0cZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_-SpWikcZEe6MX8ws8YXcUQ" name="NewTarget" incoming="_-SpWi0cZEe6MX8ws8YXcUQ" outgoing="_-SpWjEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+      <edges xmi:id="_-SpWi0cZEe6MX8ws8YXcUQ" source="_-SpWiUcZEe6MX8ws8YXcUQ" target="_-SpWikcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column/constraints"/>
+      </edges>
+      <edges xmi:id="_-SpWjEcZEe6MX8ws8YXcUQ" source="_-SpWikcZEe6MX8ws8YXcUQ" target="_-SpWiUcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint/column"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-SpWjUcZEe6MX8ws8YXcUQ" origin="_-SpWhkcZEe6MX8ws8YXcUQ" image="_-SpWiUcZEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_-SpWjkcZEe6MX8ws8YXcUQ" origin="_-SpWh0cZEe6MX8ws8YXcUQ" image="_-SpWikcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-SpWj0cZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-SpWgkcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-SpWkEcZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <annotations xmi:id="_-SpWkUcZEe6MX8ws8YXcUQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-SpWkkcZEe6MX8ws8YXcUQ" name="NewTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </parameters>
+    <parameterMappings xmi:id="_-SpWk0cZEe6MX8ws8YXcUQ" source="_-SpWkEcZEe6MX8ws8YXcUQ" target="_-SpWg0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-SpWlEcZEe6MX8ws8YXcUQ" source="_-SpWkkcZEe6MX8ws8YXcUQ" target="_-SpWhEcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

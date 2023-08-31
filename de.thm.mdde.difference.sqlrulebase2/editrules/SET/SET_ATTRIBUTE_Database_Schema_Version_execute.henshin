@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-TKT4EcZEe6MX8ws8YXcUQ" name="SET_ATTRIBUTE_Database_Schema_Version" description="Sets Database_Schema Version">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-TKT4UcZEe6MX8ws8YXcUQ" name="setDatabase_SchemaVersion" description="Sets the EAttribute version">
+    <parameters xmi:id="_-TKT4kcZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_-TKT40cZEe6MX8ws8YXcUQ" name="Version" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_-TKT5EcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-TKT5UcZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-TKT5kcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-TKT50cZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//Database_Schema"/>
+        <attributes xmi:id="_-TKT6EcZEe6MX8ws8YXcUQ" value="Version">
+          <type href="http://www.thm.de/mdde#//Database_Schema/version"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_-TKT6UcZEe6MX8ws8YXcUQ" origin="_-TKT5UcZEe6MX8ws8YXcUQ" image="_-TKT50cZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-TKT6kcZEe6MX8ws8YXcUQ" name="mainUnit" activated="false" subUnits="_-TKT4UcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-TKT60cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+    </parameters>
+    <parameters xmi:id="_-TKT7EcZEe6MX8ws8YXcUQ" name="Version">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_-TKT7UcZEe6MX8ws8YXcUQ" source="_-TKT60cZEe6MX8ws8YXcUQ" target="_-TKT4kcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-TKT7kcZEe6MX8ws8YXcUQ" source="_-TKT7EcZEe6MX8ws8YXcUQ" target="_-TKT40cZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

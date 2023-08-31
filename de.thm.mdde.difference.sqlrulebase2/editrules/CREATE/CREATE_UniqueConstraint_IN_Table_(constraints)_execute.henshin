@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-UCdoEcZEe6MX8ws8YXcUQ" name="CREATE_UniqueConstraint_IN_Table_(constraints)" description="Creates one UniqueConstraint in Table">
+  <annotations xmi:id="_-UCdoUcZEe6MX8ws8YXcUQ" key="INVERSE" value="DELETE_UniqueConstraint_IN_Table_(constraints)"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-UCdokcZEe6MX8ws8YXcUQ" name="createUniqueConstraint_IN_Table" description="creates one UniqueConstraint in the context: Table">
+    <parameters xmi:id="_-UCdo0cZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-UCdpEcZEe6MX8ws8YXcUQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_-UCdpUcZEe6MX8ws8YXcUQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_-UCdpkcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-UCdp0cZEe6MX8ws8YXcUQ" name="Selected">
+        <annotations xmi:id="_-UCdqEcZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-UCdqUcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-UCdqkcZEe6MX8ws8YXcUQ" name="Selected" incoming="_-UCdsEcZEe6MX8ws8YXcUQ" outgoing="_-UCdr0cZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-UCdq0cZEe6MX8ws8YXcUQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/mdde#//Table"/>
+      </nodes>
+      <nodes xmi:id="_-UCdrEcZEe6MX8ws8YXcUQ" name="New" incoming="_-UCdr0cZEe6MX8ws8YXcUQ" outgoing="_-UCdsEcZEe6MX8ws8YXcUQ">
+        <annotations xmi:id="_-UCdrUcZEe6MX8ws8YXcUQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/mdde#//UniqueConstraint"/>
+        <attributes xmi:id="_-UCdrkcZEe6MX8ws8YXcUQ" value="Name">
+          <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_-UCdr0cZEe6MX8ws8YXcUQ" source="_-UCdqkcZEe6MX8ws8YXcUQ" target="_-UCdrEcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Table/constraints"/>
+      </edges>
+      <edges xmi:id="_-UCdsEcZEe6MX8ws8YXcUQ" source="_-UCdrEcZEe6MX8ws8YXcUQ" target="_-UCdqkcZEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Constraint/table"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-UCdsUcZEe6MX8ws8YXcUQ" origin="_-UCdp0cZEe6MX8ws8YXcUQ" image="_-UCdqkcZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-UCdskcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-UCdokcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-UCds0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <annotations xmi:id="_-UCdtEcZEe6MX8ws8YXcUQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+    </parameters>
+    <parameters xmi:id="_-UCdtUcZEe6MX8ws8YXcUQ" name="New">
+      <annotations xmi:id="_-UCdtkcZEe6MX8ws8YXcUQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_-UCdt0cZEe6MX8ws8YXcUQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_-UCduEcZEe6MX8ws8YXcUQ" source="_-UCds0cZEe6MX8ws8YXcUQ" target="_-UCdo0cZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-UCduUcZEe6MX8ws8YXcUQ" source="_-UCdpEcZEe6MX8ws8YXcUQ" target="_-UCdtUcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-UCdukcZEe6MX8ws8YXcUQ" source="_-UCdt0cZEe6MX8ws8YXcUQ" target="_-UCdpUcZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

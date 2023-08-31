@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-TIesEcZEe6MX8ws8YXcUQ" name="SET_ATTRIBUTE_ForeignKey_OnUpdate" description="Sets ForeignKey OnUpdate">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-TIesUcZEe6MX8ws8YXcUQ" name="setForeignKeyOnUpdate" description="Sets the EAttribute OnUpdate">
+    <parameters xmi:id="_-TIeskcZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_-TIes0cZEe6MX8ws8YXcUQ" name="OnUpdate" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <lhs xmi:id="_-TIetEcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-TIetUcZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-TIetkcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-TIet0cZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//ForeignKey"/>
+        <attributes xmi:id="_-TIeuEcZEe6MX8ws8YXcUQ" value="OnUpdate">
+          <type href="http://www.thm.de/mdde#//ForeignKey/OnUpdate"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_-TIeuUcZEe6MX8ws8YXcUQ" origin="_-TIetUcZEe6MX8ws8YXcUQ" image="_-TIet0cZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-TIeukcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-TIesUcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-TIeu0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+    </parameters>
+    <parameters xmi:id="_-TIevEcZEe6MX8ws8YXcUQ" name="OnUpdate">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//Referential_Action"/>
+    </parameters>
+    <parameterMappings xmi:id="_-TIevUcZEe6MX8ws8YXcUQ" source="_-TIeu0cZEe6MX8ws8YXcUQ" target="_-TIeskcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-TIevkcZEe6MX8ws8YXcUQ" source="_-TIevEcZEe6MX8ws8YXcUQ" target="_-TIes0cZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

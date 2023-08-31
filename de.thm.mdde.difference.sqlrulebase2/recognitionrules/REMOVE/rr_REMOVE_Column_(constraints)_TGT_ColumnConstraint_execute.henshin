@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_KoMW5kcaEe6MX8ws8YXcUQ" name="RR: REMOVE_Column_(constraints)_TGT_ColumnConstraint" description="Recognize: Removes Column's reference constraints the target ColumnConstraint">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_KoMW50caEe6MX8ws8YXcUQ" name="rr:removeFromColumn_constraints_ColumnConstraint" description="Recognize: Removes from Column's reference constraints the target ColumnConstraint">
+    <parameters xmi:id="_KoMW6EcaEe6MX8ws8YXcUQ" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_KoMW6UcaEe6MX8ws8YXcUQ" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </parameters>
+    <lhs xmi:id="_KoMW6kcaEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_KoMW60caEe6MX8ws8YXcUQ" name="A.Selected" incoming="_KoMW9EcaEe6MX8ws8YXcUQ _KoMW-UcaEe6MX8ws8YXcUQ _KoMW-0caEe6MX8ws8YXcUQ" outgoing="_KoMW90caEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_KoMW7EcaEe6MX8ws8YXcUQ" name="A.OldTarget" incoming="_KoMW9UcaEe6MX8ws8YXcUQ _KoMW90caEe6MX8ws8YXcUQ _KoMW-EcaEe6MX8ws8YXcUQ" outgoing="_KoMW-0caEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+      <nodes xmi:id="_KoMW7UcaEe6MX8ws8YXcUQ" name="" outgoing="_KoMW9EcaEe6MX8ws8YXcUQ _KoMW9UcaEe6MX8ws8YXcUQ _KoMW9kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMW7kcaEe6MX8ws8YXcUQ" name="" incoming="_KoMW9kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_KoMW70caEe6MX8ws8YXcUQ" value="&quot;constraints&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_KoMW8EcaEe6MX8ws8YXcUQ" name="" outgoing="_KoMW-EcaEe6MX8ws8YXcUQ _KoMW-UcaEe6MX8ws8YXcUQ _KoMW-kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMW8UcaEe6MX8ws8YXcUQ" name="" incoming="_KoMW-kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_KoMW8kcaEe6MX8ws8YXcUQ" value="&quot;column&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_KoMW80caEe6MX8ws8YXcUQ" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_KoMW9EcaEe6MX8ws8YXcUQ" source="_KoMW7UcaEe6MX8ws8YXcUQ" target="_KoMW60caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_KoMW9UcaEe6MX8ws8YXcUQ" source="_KoMW7UcaEe6MX8ws8YXcUQ" target="_KoMW7EcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_KoMW9kcaEe6MX8ws8YXcUQ" source="_KoMW7UcaEe6MX8ws8YXcUQ" target="_KoMW7kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_KoMW90caEe6MX8ws8YXcUQ" source="_KoMW60caEe6MX8ws8YXcUQ" target="_KoMW7EcaEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column/constraints"/>
+      </edges>
+      <edges xmi:id="_KoMW-EcaEe6MX8ws8YXcUQ" source="_KoMW8EcaEe6MX8ws8YXcUQ" target="_KoMW7EcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_KoMW-UcaEe6MX8ws8YXcUQ" source="_KoMW8EcaEe6MX8ws8YXcUQ" target="_KoMW60caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_KoMW-kcaEe6MX8ws8YXcUQ" source="_KoMW8EcaEe6MX8ws8YXcUQ" target="_KoMW8UcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_KoMW-0caEe6MX8ws8YXcUQ" source="_KoMW7EcaEe6MX8ws8YXcUQ" target="_KoMW60caEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint/column"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_KoMW_EcaEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_KoMW_UcaEe6MX8ws8YXcUQ" name="A.Selected" incoming="_KoMXDUcaEe6MX8ws8YXcUQ _KoMXEkcaEe6MX8ws8YXcUQ _KoMXFEcaEe6MX8ws8YXcUQ" outgoing="_KoMXEEcaEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+      <nodes xmi:id="_KoMW_kcaEe6MX8ws8YXcUQ" name="A.OldTarget" incoming="_KoMXDkcaEe6MX8ws8YXcUQ _KoMXEEcaEe6MX8ws8YXcUQ _KoMXEUcaEe6MX8ws8YXcUQ" outgoing="_KoMXFEcaEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+      </nodes>
+      <nodes xmi:id="_KoMW_0caEe6MX8ws8YXcUQ" name="" incoming="_KoMXFUcaEe6MX8ws8YXcUQ" outgoing="_KoMXDUcaEe6MX8ws8YXcUQ _KoMXDkcaEe6MX8ws8YXcUQ _KoMXD0caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMXAEcaEe6MX8ws8YXcUQ" name="" incoming="_KoMXD0caEe6MX8ws8YXcUQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMXAUcaEe6MX8ws8YXcUQ" name="" incoming="_KoMXFkcaEe6MX8ws8YXcUQ" outgoing="_KoMXEUcaEe6MX8ws8YXcUQ _KoMXEkcaEe6MX8ws8YXcUQ _KoMXE0caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMXAkcaEe6MX8ws8YXcUQ" name="" incoming="_KoMXE0caEe6MX8ws8YXcUQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_KoMXA0caEe6MX8ws8YXcUQ" name="ChangeSet" incoming="_KoMXF0caEe6MX8ws8YXcUQ" outgoing="_KoMXFUcaEe6MX8ws8YXcUQ _KoMXFkcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_KoMXBEcaEe6MX8ws8YXcUQ" value="&quot;REMOVE_Column_(constraints)_TGT_ColumnConstraint&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_KoMXBUcaEe6MX8ws8YXcUQ" value="&quot;Removes Column's reference constraints the target ColumnConstraint&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_KoMXBkcaEe6MX8ws8YXcUQ" value="&quot;REMOVE_Column_(constraints)_TGT_ColumnConstraint&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_KoMXB0caEe6MX8ws8YXcUQ" value="&quot;RR: REMOVE_Column_(constraints)_TGT_ColumnConstraint&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_KoMXCEcaEe6MX8ws8YXcUQ" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_KoMXCUcaEe6MX8ws8YXcUQ" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_KoMXCkcaEe6MX8ws8YXcUQ" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_KoMXC0caEe6MX8ws8YXcUQ" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_KoMXDEcaEe6MX8ws8YXcUQ" name="" outgoing="_KoMXF0caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_KoMXDUcaEe6MX8ws8YXcUQ" source="_KoMW_0caEe6MX8ws8YXcUQ" target="_KoMW_UcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_KoMXDkcaEe6MX8ws8YXcUQ" source="_KoMW_0caEe6MX8ws8YXcUQ" target="_KoMW_kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_KoMXD0caEe6MX8ws8YXcUQ" source="_KoMW_0caEe6MX8ws8YXcUQ" target="_KoMXAEcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_KoMXEEcaEe6MX8ws8YXcUQ" source="_KoMW_UcaEe6MX8ws8YXcUQ" target="_KoMW_kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//Column/constraints"/>
+      </edges>
+      <edges xmi:id="_KoMXEUcaEe6MX8ws8YXcUQ" source="_KoMXAUcaEe6MX8ws8YXcUQ" target="_KoMW_kcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_KoMXEkcaEe6MX8ws8YXcUQ" source="_KoMXAUcaEe6MX8ws8YXcUQ" target="_KoMW_UcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_KoMXE0caEe6MX8ws8YXcUQ" source="_KoMXAUcaEe6MX8ws8YXcUQ" target="_KoMXAkcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_KoMXFEcaEe6MX8ws8YXcUQ" source="_KoMW_kcaEe6MX8ws8YXcUQ" target="_KoMW_UcaEe6MX8ws8YXcUQ">
+        <type href="http://www.thm.de/mdde#//ColumnConstraint/column"/>
+      </edges>
+      <edges xmi:id="_KoMXFUcaEe6MX8ws8YXcUQ" source="_KoMXA0caEe6MX8ws8YXcUQ" target="_KoMW_0caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_KoMXFkcaEe6MX8ws8YXcUQ" source="_KoMXA0caEe6MX8ws8YXcUQ" target="_KoMXAUcaEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_KoMXF0caEe6MX8ws8YXcUQ" source="_KoMXDEcaEe6MX8ws8YXcUQ" target="_KoMXA0caEe6MX8ws8YXcUQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_KoMXGEcaEe6MX8ws8YXcUQ" origin="_KoMW60caEe6MX8ws8YXcUQ" image="_KoMW_UcaEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXGUcaEe6MX8ws8YXcUQ" origin="_KoMW7EcaEe6MX8ws8YXcUQ" image="_KoMW_kcaEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXGkcaEe6MX8ws8YXcUQ" origin="_KoMW7UcaEe6MX8ws8YXcUQ" image="_KoMW_0caEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXG0caEe6MX8ws8YXcUQ" origin="_KoMW7kcaEe6MX8ws8YXcUQ" image="_KoMXAEcaEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXHEcaEe6MX8ws8YXcUQ" origin="_KoMW8EcaEe6MX8ws8YXcUQ" image="_KoMXAUcaEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXHUcaEe6MX8ws8YXcUQ" origin="_KoMW8UcaEe6MX8ws8YXcUQ" image="_KoMXAkcaEe6MX8ws8YXcUQ"/>
+    <mappings xmi:id="_KoMXHkcaEe6MX8ws8YXcUQ" origin="_KoMW80caEe6MX8ws8YXcUQ" image="_KoMXDEcaEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>

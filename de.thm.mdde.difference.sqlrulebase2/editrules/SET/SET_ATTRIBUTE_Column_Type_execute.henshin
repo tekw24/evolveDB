@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-T7v8EcZEe6MX8ws8YXcUQ" name="SET_ATTRIBUTE_Column_Type" description="Sets Column Type">
+  <imports href="http://www.thm.de/mdde#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_-T7v8UcZEe6MX8ws8YXcUQ" name="setColumnType" description="Sets the EAttribute type">
+    <parameters xmi:id="_-T7v8kcZEe6MX8ws8YXcUQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-T7v80cZEe6MX8ws8YXcUQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <lhs xmi:id="_-T7v9EcZEe6MX8ws8YXcUQ" name="Lhs">
+      <nodes xmi:id="_-T7v9UcZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-T7v9kcZEe6MX8ws8YXcUQ" name="Rhs">
+      <nodes xmi:id="_-T7v90cZEe6MX8ws8YXcUQ" name="Selected">
+        <type href="http://www.thm.de/mdde#//Column"/>
+        <attributes xmi:id="_-T7v-EcZEe6MX8ws8YXcUQ" value="Type">
+          <type href="http://www.thm.de/mdde#//Column/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_-T7v-UcZEe6MX8ws8YXcUQ" origin="_-T7v9UcZEe6MX8ws8YXcUQ" image="_-T7v90cZEe6MX8ws8YXcUQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_-T7v-kcZEe6MX8ws8YXcUQ" name="mainUnit" subUnits="_-T7v8UcZEe6MX8ws8YXcUQ">
+    <parameters xmi:id="_-T7v-0cZEe6MX8ws8YXcUQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+    </parameters>
+    <parameters xmi:id="_-T7v_EcZEe6MX8ws8YXcUQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/mdde#//DataType"/>
+    </parameters>
+    <parameterMappings xmi:id="_-T7v_UcZEe6MX8ws8YXcUQ" source="_-T7v-0cZEe6MX8ws8YXcUQ" target="_-T7v8kcZEe6MX8ws8YXcUQ"/>
+    <parameterMappings xmi:id="_-T7v_kcZEe6MX8ws8YXcUQ" source="_-T7v_EcZEe6MX8ws8YXcUQ" target="_-T7v80cZEe6MX8ws8YXcUQ"/>
+  </units>
+</henshin:Module>
