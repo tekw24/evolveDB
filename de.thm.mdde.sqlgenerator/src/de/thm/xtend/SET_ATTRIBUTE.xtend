@@ -14,6 +14,8 @@ import de.thm.evolvedb.migration.PartiallyResolvable
 import org.eclipse.emf.common.util.UniqueEList.FastCompare
 import de.thm.evolvedb.migration.ColumnOptions
 import de.thm.mdde.migration.util.ColumnMigrationUtil
+import de.thm.evolvedb.mdde.Constraint
+import de.thm.evolvedb.mdde.UniqueConstraint
 
 class SET_ATTRIBUTE {
 
@@ -161,7 +163,7 @@ class SET_ATTRIBUTE {
 					content += '''
 						-- Change primary foreign key attribute of «objB.name.toLowerCase» 
 						ALTER TABLE «objA.table.name.toLowerCase» DROP PRIMARY KEY «IF foreignKeys.size > 0»,
-												ADD PRIMARY KEY (`«FOR e : foreignKeys SEPARATOR "`,`"»« e.name»«ENDFOR»`
+													ADD PRIMARY KEY (`«FOR e : foreignKeys SEPARATOR "`,`"»« e.name»«ENDFOR»`
 						«ELSE»;
 						«ENDIF»
 					'''
@@ -177,148 +179,148 @@ class SET_ATTRIBUTE {
 
 	}
 
-	/**
-	 * Change the column size for text data types. If the data type is not a text type, the columns display value is changed. 
-	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
-	 */
-	def static String _SET_ATTRIBUTE_Column_Unique(PartiallyResolvable partiallyResolvableOperator) {
-		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
-			partiallyResolvableOperator.semanticChangeSets.size == 1) {
-			var SemanticChangeSet setColumnSize = partiallyResolvableOperator.semanticChangeSets.get(0)
-			return _SET_ATTRIBUTE_Column_Unique2(setColumnSize, partiallyResolvableOperator.resolveOptions);
-		}
-		return ""
-	}
+//	/**
+//	 * Change the column size for text data types. If the data type is not a text type, the columns display value is changed. 
+//	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
+//	 */
+//	def static String _SET_ATTRIBUTE_Column_Unique(PartiallyResolvable partiallyResolvableOperator) {
+//		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
+//			partiallyResolvableOperator.semanticChangeSets.size == 1) {
+//			var SemanticChangeSet setColumnSize = partiallyResolvableOperator.semanticChangeSets.get(0)
+//			return _SET_ATTRIBUTE_Column_Unique2(setColumnSize, partiallyResolvableOperator.resolveOptions);
+//		}
+//		return ""
+//	}
 
-	def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOptions columnOptions) {
-		var List<AttributeValueChange> makeColumnUniqe = set.changes.filter(AttributeValueChange).toList
-		var content = ""
-
-		for (AttributeValueChange a : makeColumnUniqe) {
-			if (a.objA instanceof Column && a.objB instanceof Column) {
-
-				var objA = a.objA as Column
-				var objB = a.objB as Column
-
-				if (objB.unique) {
-
-					switch columnOptions {
-						case ColumnOptions.IGNORE: {
-						}
-						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
-							content +=
-								'''-- TODO change all values of column «objB.name» that violate the new unique constraint'''
-						}
-						case ColumnOptions.DELETE_ROW: {
-
-							var key = objB.table.mainPrimaryKey;
-
-							var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
-								objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
-
-							content += '''
-								-- Set all values to null that violate the unique constraint
-								BEGIN;
-								SET @safe_mode = @@SQL_SAFE_UPDATES;
-								SET SQL_SAFE_UPDATES = 0;
-								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
-								CREATE TEMPORARY TABLE my_temp_table
-								(SELECT «objB.name» FROM «objB.table.name.toLowerCase» 
-								GROUP BY «objB.name»
-								HAVING COUNT(«objB.name») > 1);
-								
-								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
-								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
-								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
-								GROUP BY «objB.name»
-								HAVING COUNT(«objB.name») > 1);
-								«historyInsert»
-								DELETE FROM «objB.table.name.toLowerCase» where «objB.name» IN (SELECT * from my_temp_table);
-								SET SQL_SAFE_UPDATES = @safe_mode;
-								COMMIT;
-								
-							'''
-							content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
-							content += ColumnUtil.deleteTemporaryTable("my_temp_table");
-
-						}
-						case ColumnOptions.UPDATE_COLUMN_SET_TO_NULL: {
-
-							var whereClause = '''«objB.name» is not null;''';
-							var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
-								SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, objB.table.mainPrimaryKey,
-								whereClause)
-
-							content += '''
-								-- Set «objB.name.toLowerCase» values to null 
-								SET @safe_mode = @@SQL_SAFE_UPDATES;
-								SET SQL_SAFE_UPDATES = 0;
-								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
-								SET SQL_SAFE_UPDATES = @safe_mode;
-								COMMIT;
-								-- If executing the script fails, we suggest a rollback.
-								
-							'''
-
-						}
-						case ColumnOptions.UPDATE_ROW_SET_TO_NULL: {
-
-							var key = objB.table.mainPrimaryKey;
-							var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
-								objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
-
-							content += '''
-								-- Set all values to null that violate the unique constraint
-								BEGIN;
-								SET @safe_mode = @@SQL_SAFE_UPDATES;
-								SET SQL_SAFE_UPDATES = 0;
-								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
-								CREATE TEMPORARY TABLE my_temp_table
-								(SELECT «objA.name» FROM «objA.table.name.toLowerCase» 
-								GROUP BY «objA.name»
-								HAVING COUNT(«objA.name») > 1);
-								
-								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
-								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
-								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
-								GROUP BY «objB.name»
-								HAVING COUNT(«objB.name») > 1);
-								«historyInsert»
-								UPDATE «objA.table.name.toLowerCase» SET «objA.name» = null where «objA.name» IN (SELECT * from my_temp_table);
-								SET SQL_SAFE_UPDATES = @safe_mode;
-								COMMIT;
-								
-							'''
-							content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
-							content += ColumnUtil.deleteTemporaryTable("my_temp_table");
-
-						}
-					}
-
-					var constraintName = objB.table.name.toUpperCase + "_UNIQUE";
-
-					if (objB.uniqueConstraintName !== null && !objB.uniqueConstraintName.equals(""))
-						constraintName = objB.uniqueConstraintName;
-					content += '''
-						-- Change uniqe attribute of «objA.name.toLowerCase» 
-						ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
-					'''
-
-				} else {
-					content += '''
-						-- Change uniqe attribute of «objA.name.toLowerCase» 
-						ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objB.uniqueConstraintName»`;
-					'''
-
-				}
-
-			}
-
-		}
-		return content;
-
-	}
+//	def static String _SET_ATTRIBUTE_Column_Unique2(SemanticChangeSet set, ColumnOptions columnOptions) {
+//		var List<AttributeValueChange> makeColumnUniqe = set.changes.filter(AttributeValueChange).toList
+//		var content = ""
+//
+//		for (AttributeValueChange a : makeColumnUniqe) {
+//			if (a.objA instanceof Column && a.objB instanceof Column) {
+//
+//				var objA = a.objA as Column
+//				var objB = a.objB as Column
+//
+//				if (objB.unique) {
+//
+//					switch columnOptions {
+//						case ColumnOptions.IGNORE: {
+//						}
+//						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+//							content +=
+//								'''-- TODO change all values of column «objB.name» that violate the new unique constraint'''
+//						}
+//						case ColumnOptions.DELETE_ROW: {
+//
+//							var key = objB.table.mainPrimaryKey;
+//
+//							var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+//								objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
+//
+//							content += '''
+//								-- Set all values to null that violate the unique constraint
+//								BEGIN;
+//								SET @safe_mode = @@SQL_SAFE_UPDATES;
+//								SET SQL_SAFE_UPDATES = 0;
+//								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+//								CREATE TEMPORARY TABLE my_temp_table
+//								(SELECT «objB.name» FROM «objB.table.name.toLowerCase» 
+//								GROUP BY «objB.name»
+//								HAVING COUNT(«objB.name») > 1);
+//								
+//								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
+//								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
+//								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//								GROUP BY «objB.name»
+//								HAVING COUNT(«objB.name») > 1);
+//								«historyInsert»
+//								DELETE FROM «objB.table.name.toLowerCase» where «objB.name» IN (SELECT * from my_temp_table);
+//								SET SQL_SAFE_UPDATES = @safe_mode;
+//								COMMIT;
+//								
+//							'''
+//							content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
+//							content += ColumnUtil.deleteTemporaryTable("my_temp_table");
+//
+//						}
+//						case ColumnOptions.UPDATE_COLUMN_SET_TO_NULL: {
+//
+//							var whereClause = '''«objB.name» is not null;''';
+//							var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
+//								SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, objB.table.mainPrimaryKey,
+//								whereClause)
+//
+//							content += '''
+//								-- Set «objB.name.toLowerCase» values to null 
+//								SET @safe_mode = @@SQL_SAFE_UPDATES;
+//								SET SQL_SAFE_UPDATES = 0;
+//								«historyInsert»
+//								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+//								SET SQL_SAFE_UPDATES = @safe_mode;
+//								COMMIT;
+//								-- If executing the script fails, we suggest a rollback.
+//								
+//							'''
+//
+//						}
+//						case ColumnOptions.UPDATE_ROW_SET_TO_NULL: {
+//
+//							var key = objB.table.mainPrimaryKey;
+//							var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+//								objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
+//
+//							content += '''
+//								-- Set all values to null that violate the unique constraint
+//								BEGIN;
+//								SET @safe_mode = @@SQL_SAFE_UPDATES;
+//								SET SQL_SAFE_UPDATES = 0;
+//								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+//								CREATE TEMPORARY TABLE my_temp_table
+//								(SELECT «objA.name» FROM «objA.table.name.toLowerCase» 
+//								GROUP BY «objA.name»
+//								HAVING COUNT(«objA.name») > 1);
+//								
+//								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
+//								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
+//								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//								GROUP BY «objB.name»
+//								HAVING COUNT(«objB.name») > 1);
+//								«historyInsert»
+//								UPDATE «objA.table.name.toLowerCase» SET «objA.name» = null where «objA.name» IN (SELECT * from my_temp_table);
+//								SET SQL_SAFE_UPDATES = @safe_mode;
+//								COMMIT;
+//								
+//							'''
+//							content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
+//							content += ColumnUtil.deleteTemporaryTable("my_temp_table");
+//
+//						}
+//					}
+//
+//					var constraintName = objB.table.name.toUpperCase + "_UNIQUE";
+//
+//					if (objB.uniqueConstraintName !== null && !objB.uniqueConstraintName.equals(""))
+//						constraintName = objB.uniqueConstraintName;
+//					content += '''
+//						-- Change uniqe attribute of «objA.name.toLowerCase» 
+//						ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
+//					'''
+//
+//				} else {
+//					content += '''
+//						-- Change uniqe attribute of «objA.name.toLowerCase» 
+//						ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objB.uniqueConstraintName»`;
+//					'''
+//
+//				}
+//
+//			}
+//
+//		}
+//		return content;
+//
+//	}
 
 	/**
 	 * Change the column type. 
@@ -348,10 +350,9 @@ class SET_ATTRIBUTE {
 					case IGNORE: {
 					}
 					case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
-						content +=
-							'''
+						content += '''
 							-- TODO change all values of column «objB.name» that are incompatible with the new type «objB.type.getName»
-							'''
+						'''
 					}
 					case DELETE_ROW: {
 
@@ -508,12 +509,14 @@ class SET_ATTRIBUTE {
 				var sizeA = 0;
 				var sizeB = 0;
 				if (objA.size !== null)
-					sizeA = ColumnUtil.decimalTypes.contains(objA.type) ? ColumnUtil.
-						getDecimalSizeValue(objA.size) : ColumnUtil.getSizeValue(objA.size);
+					sizeA = ColumnUtil.decimalTypes.contains(objA.type)
+						? ColumnUtil.getDecimalSizeValue(objA.size)
+						: ColumnUtil.getSizeValue(objA.size);
 
 				if (objB.size !== null)
-					sizeB = ColumnUtil.decimalTypes.contains(objB.type) ? ColumnUtil.
-						getDecimalSizeValue(objB.size) : ColumnUtil.getSizeValue(objB.size);
+					sizeB = ColumnUtil.decimalTypes.contains(objB.type)
+						? ColumnUtil.getDecimalSizeValue(objB.size)
+						: ColumnUtil.getSizeValue(objB.size);
 
 				// if (sizeA > sizeB) {
 				if (compatibility) {
@@ -526,10 +529,9 @@ class SET_ATTRIBUTE {
 								// IGNORE existing data.
 							}
 							case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
-								content +=
-									'''
+								content += '''
 									-- TODO change all values of column «objB.name» that are incompatible with the new size 
-									'''
+								'''
 							}
 							case DELETE_ROW: {
 
@@ -956,15 +958,17 @@ class SET_ATTRIBUTE {
 		var content = ""
 
 		for (AttributeValueChange a : changeColumnType) {
-			if (a.objA instanceof Column && a.objB instanceof Column) {
+			if (a.objA instanceof Constraint && a.objB instanceof Constraint) {
 
-				var objA = a.objA as Column
-				var objB = a.objB as Column
+				var objA = a.objA as Constraint
+				var objB = a.objB as Constraint
 
 				content += '''
-					-- Change uniqe constraint name of «objA.name.toLowerCase» 
-					ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.uniqueConstraintName»`;
-					ALTER TABLE «objB.table.name.toLowerCase» ADD UNIQUE INDEX `«objB.uniqueConstraintName»` (`«objB.name»` ASC) VISIBLE;
+					-- Change constraint name of «objA.name.toLowerCase» 
+					ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.name»`;
+					ALTER TABLE «objB.table.name.toLowerCase» ADD 
+					«IF objB instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «objB.name» ( 
+					«FOR Column c : objB.columns SEPARATOR',' AFTER ';'»«c.name» «ENDFOR» )
 					
 				'''
 
@@ -1026,10 +1030,9 @@ class SET_ATTRIBUTE {
 						case IGNORE: {
 						}
 						case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
-							content +=
-								'''
+							content += '''
 								-- TODO change all values of column «objB.name» that are incompatible with the new type «objB.type.getName» or size
-								'''
+							'''
 						}
 						case DELETE_ROW: {
 

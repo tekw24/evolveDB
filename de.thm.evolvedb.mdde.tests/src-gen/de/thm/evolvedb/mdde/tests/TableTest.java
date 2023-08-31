@@ -18,10 +18,6 @@ import junit.textui.TestRunner;
  *   <li>{@link de.thm.evolvedb.mdde.Table#getPrimaryKeyByName(java.lang.String) <em>Get Primary Key By Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Table#getForeignKeys() <em>Get Foreign Keys</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Table#getMainPrimaryKey() <em>Get Main Primary Key</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Table#OnlyOneAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Only One Auto Increment Column</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Table#NonKeyAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Non Key Auto Increment Column</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Table#TableRequiresAKeyColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires AKey Column</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Table#TableRequiresAtLeastOneColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires At Least One Column</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -88,7 +84,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetPrimaryKeys() {
-		
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -101,6 +97,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetPrimaryKeyByName__String() {
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -113,7 +110,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetForeignKeys() {
-		
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -126,56 +123,7 @@ public class TableTest extends NamedElementTest {
 	 * @generated
 	 */
 	public void testGetMainPrimaryKey() {
-		
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
-	}
-
-	/**
-	 * Tests the '{@link de.thm.evolvedb.mdde.Table#OnlyOneAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Only One Auto Increment Column</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.mdde.Table#OnlyOneAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	public void testOnlyOneAutoIncrementColumn__DiagnosticChain_Map() {
-		
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
-	}
-
-	/**
-	 * Tests the '{@link de.thm.evolvedb.mdde.Table#NonKeyAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Non Key Auto Increment Column</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.mdde.Table#NonKeyAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	public void testNonKeyAutoIncrementColumn__DiagnosticChain_Map() {
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
-	}
-
-	/**
-	 * Tests the '{@link de.thm.evolvedb.mdde.Table#TableRequiresAKeyColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires AKey Column</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.mdde.Table#TableRequiresAKeyColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	public void testTableRequiresAKeyColumn__DiagnosticChain_Map() {
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
-	}
-
-	/**
-	 * Tests the '{@link de.thm.evolvedb.mdde.Table#TableRequiresAtLeastOneColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires At Least One Column</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.mdde.Table#TableRequiresAtLeastOneColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	public void testTableRequiresAtLeastOneColumn__DiagnosticChain_Map() {
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

@@ -34,9 +34,9 @@ public class MddeTests extends TestSuite {
 		suite.addTestSuite(TableTest.class);
 		suite.addTestSuite(PrimaryKeyTest.class);
 		suite.addTestSuite(ForeignKeyTest.class);
-		suite.addTestSuite(NamedElementTest.class);
-		suite.addTestSuite(Database_SchemaTest.class);
 		suite.addTestSuite(ColumnTest.class);
+		suite.addTestSuite(UniqueConstraintTest.class);
+		suite.addTestSuite(IndexTest.class);
 		return suite;
 	}
 

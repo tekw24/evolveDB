@@ -89,7 +89,8 @@ public class MddeDifferenceBuilderController {
 		LiftingSettings settings = LiftingSettings.defaultSettings();
 
 		// Get rulebase
-		ILiftingRuleBase ruleBase = PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase5");
+		//ILiftingRuleBase ruleBase = PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase5"); TODO
+		ILiftingRuleBase ruleBase = PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase2");
 		settings.setRuleBases(Set.of(ruleBase));
 		settings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING);
 

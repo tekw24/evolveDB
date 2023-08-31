@@ -21,8 +21,13 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "de.thm.emf.ecp.migration.ui.emailcontrol.messages"; //$NON-NLS-1$
+	public static String SemanticChangeSetRenderer_0;
+	public static String SemanticChangeSetRenderer_1;
+	public static String SemanticChangeSetRenderer_2;
+	public static String SemanticChangeSetRenderer_3;
 	public static String SemanticChangeSetRenderer_AutoIncrement;
 	public static String SemanticChangeSetRenderer_Column;
+	public static String SemanticChangeSetRenderer_Column_Index_Remove;
 	public static String SemanticChangeSetRenderer_ColumnDES;
 	public static String SemanticChangeSetRenderer_COLUMN_MODELA;
 	public static String SemanticChangeSetRenderer_COLUMN_MODELB;
@@ -55,6 +60,7 @@ public class Messages extends NLS {
 	public static String SemanticChangeSetRenderer_Size;
 	public static String SemanticChangeSetRenderer_Table;
 	public static String SemanticChangeSetRenderer_Unique;
+	public static String SemanticChangeSetRenderer_uniqueConstraint;
 
 	static {
 		// initialize resource bundle

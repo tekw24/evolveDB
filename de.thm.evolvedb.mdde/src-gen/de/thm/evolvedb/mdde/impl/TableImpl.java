@@ -3,20 +3,17 @@
 package de.thm.evolvedb.mdde.impl;
 
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.MddePackage;
 import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
-import de.thm.evolvedb.mdde.util.MddeValidator;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Map;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -37,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.thm.evolvedb.mdde.impl.TableImpl#getSchema <em>Schema</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.TableImpl#getColumns <em>Columns</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.TableImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,6 +49,16 @@ public class TableImpl extends NamedElementImpl implements Table {
 	 * @ordered
 	 */
 	protected EList<Column> columns;
+
+	/**
+	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConstraints()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Constraint> constraints;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -130,6 +138,18 @@ public class TableImpl extends NamedElementImpl implements Table {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Constraint> getConstraints() {
+		if (constraints == null) {
+			constraints = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, MddePackage.TABLE__CONSTRAINTS, MddePackage.CONSTRAINT__TABLE);
+		}
+		return constraints;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -197,141 +217,6 @@ public class TableImpl extends NamedElementImpl implements Table {
 	}
 
 	/**
-	 * The cached validation expression for the '{@link #OnlyOneAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Only One Auto Increment Column</em>}' invariant operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #OnlyOneAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ONLY_ONE_AUTO_INCREMENT_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION = "Tuple {\n" +
-		"\tmessage : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',\n" +
-		"\tstatus : Boolean = self.columns-> notEmpty() and\n" +
-		"\t\t((columns->one(c1 | c1.autoIncrement)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)))\n" +
-		"}.status";
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean OnlyOneAutoIncrementColumn(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return
-			MddeValidator.validate
-				(MddePackage.Literals.TABLE,
-				 this,
-				 diagnostics,
-				 context,
-				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-				 MddePackage.Literals.TABLE___ONLY_ONE_AUTO_INCREMENT_COLUMN__DIAGNOSTICCHAIN_MAP,
-				 ONLY_ONE_AUTO_INCREMENT_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION,
-				 Diagnostic.ERROR,
-				 MddeValidator.DIAGNOSTIC_SOURCE,
-				 MddeValidator.TABLE__ONLY_ONE_AUTO_INCREMENT_COLUMN);
-	}
-
-	/**
-	 * The cached validation expression for the '{@link #NonKeyAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Non Key Auto Increment Column</em>}' invariant operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #NonKeyAutoIncrementColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NON_KEY_AUTO_INCREMENT_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION = "Tuple {\n" +
-		"\tmessage : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',\n" +
-		"\tstatus : Boolean = self.columns-> notEmpty() and\n" +
-		"\t\t((columns->one(c1 | c1.oclIsTypeOf(PrimaryKey) and c1.autoIncrement)) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()))\n" +
-		"}.status";
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean NonKeyAutoIncrementColumn(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return
-			MddeValidator.validate
-				(MddePackage.Literals.TABLE,
-				 this,
-				 diagnostics,
-				 context,
-				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-				 MddePackage.Literals.TABLE___NON_KEY_AUTO_INCREMENT_COLUMN__DIAGNOSTICCHAIN_MAP,
-				 NON_KEY_AUTO_INCREMENT_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION,
-				 Diagnostic.ERROR,
-				 MddeValidator.DIAGNOSTIC_SOURCE,
-				 MddeValidator.TABLE__NON_KEY_AUTO_INCREMENT_COLUMN);
-	}
-
-	/**
-	 * The cached validation expression for the '{@link #TableRequiresAKeyColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires AKey Column</em>}' invariant operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #TableRequiresAKeyColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TABLE_REQUIRES_AKEY_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION = "Tuple {\n" +
-		"\tmessage : String = 'The Table ' + Table.name + ' requires a primary key or a set of primary foreign keys!',\n" +
-		"\tstatus : Boolean = self.columns-> notEmpty() and\n" +
-		"\t\t(columns->exists(oclIsTypeOf(PrimaryKey)) or columns -> exists(c1 | (c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)))\n" +
-		"}.status";
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean TableRequiresAKeyColumn(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return
-			MddeValidator.validate
-				(MddePackage.Literals.TABLE,
-				 this,
-				 diagnostics,
-				 context,
-				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-				 MddePackage.Literals.TABLE___TABLE_REQUIRES_AKEY_COLUMN__DIAGNOSTICCHAIN_MAP,
-				 TABLE_REQUIRES_AKEY_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION,
-				 Diagnostic.ERROR,
-				 MddeValidator.DIAGNOSTIC_SOURCE,
-				 MddeValidator.TABLE__TABLE_REQUIRES_AKEY_COLUMN);
-	}
-
-	/**
-	 * The cached validation expression for the '{@link #TableRequiresAtLeastOneColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Table Requires At Least One Column</em>}' invariant operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #TableRequiresAtLeastOneColumn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TABLE_REQUIRES_AT_LEAST_ONE_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION = "Tuple {\n" +
-		"\tmessage : String = 'The Table ' + Table.name + ' requires at least one column!',\n" +
-		"\tstatus : Boolean = self.columns->notEmpty()\n" +
-		"}.status";
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean TableRequiresAtLeastOneColumn(DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return
-			MddeValidator.validate
-				(MddePackage.Literals.TABLE,
-				 this,
-				 diagnostics,
-				 context,
-				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
-				 MddePackage.Literals.TABLE___TABLE_REQUIRES_AT_LEAST_ONE_COLUMN__DIAGNOSTICCHAIN_MAP,
-				 TABLE_REQUIRES_AT_LEAST_ONE_COLUMN_DIAGNOSTIC_CHAIN_MAP__EEXPRESSION,
-				 Diagnostic.ERROR,
-				 MddeValidator.DIAGNOSTIC_SOURCE,
-				 MddeValidator.TABLE__TABLE_REQUIRES_AT_LEAST_ONE_COLUMN);
-	}
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -346,6 +231,8 @@ public class TableImpl extends NamedElementImpl implements Table {
 				return basicSetSchema((Database_Schema)otherEnd, msgs);
 			case MddePackage.TABLE__COLUMNS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getColumns()).basicAdd(otherEnd, msgs);
+			case MddePackage.TABLE__CONSTRAINTS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConstraints()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -362,6 +249,8 @@ public class TableImpl extends NamedElementImpl implements Table {
 				return basicSetSchema(null, msgs);
 			case MddePackage.TABLE__COLUMNS:
 				return ((InternalEList<?>)getColumns()).basicRemove(otherEnd, msgs);
+			case MddePackage.TABLE__CONSTRAINTS:
+				return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -392,6 +281,8 @@ public class TableImpl extends NamedElementImpl implements Table {
 				return getSchema();
 			case MddePackage.TABLE__COLUMNS:
 				return getColumns();
+			case MddePackage.TABLE__CONSTRAINTS:
+				return getConstraints();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -412,6 +303,10 @@ public class TableImpl extends NamedElementImpl implements Table {
 				getColumns().clear();
 				getColumns().addAll((Collection<? extends Column>)newValue);
 				return;
+			case MddePackage.TABLE__CONSTRAINTS:
+				getConstraints().clear();
+				getConstraints().addAll((Collection<? extends Constraint>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -430,6 +325,9 @@ public class TableImpl extends NamedElementImpl implements Table {
 			case MddePackage.TABLE__COLUMNS:
 				getColumns().clear();
 				return;
+			case MddePackage.TABLE__CONSTRAINTS:
+				getConstraints().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -446,6 +344,8 @@ public class TableImpl extends NamedElementImpl implements Table {
 				return getSchema() != null;
 			case MddePackage.TABLE__COLUMNS:
 				return columns != null && !columns.isEmpty();
+			case MddePackage.TABLE__CONSTRAINTS:
+				return constraints != null && !constraints.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -467,14 +367,6 @@ public class TableImpl extends NamedElementImpl implements Table {
 				return getForeignKeys();
 			case MddePackage.TABLE___GET_MAIN_PRIMARY_KEY:
 				return getMainPrimaryKey();
-			case MddePackage.TABLE___ONLY_ONE_AUTO_INCREMENT_COLUMN__DIAGNOSTICCHAIN_MAP:
-				return OnlyOneAutoIncrementColumn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case MddePackage.TABLE___NON_KEY_AUTO_INCREMENT_COLUMN__DIAGNOSTICCHAIN_MAP:
-				return NonKeyAutoIncrementColumn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case MddePackage.TABLE___TABLE_REQUIRES_AKEY_COLUMN__DIAGNOSTICCHAIN_MAP:
-				return TableRequiresAKeyColumn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case MddePackage.TABLE___TABLE_REQUIRES_AT_LEAST_ONE_COLUMN__DIAGNOSTICCHAIN_MAP:
-				return TableRequiresAtLeastOneColumn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -22,7 +22,7 @@ import java.util.List;
 import de.thm.evolvedb.mdde.DataType;
 
 public class DataTypeUtil {
-	
+
 	public static List<DataType> textTypes = Arrays.asList(DataType.CHAR, DataType.VARCHAR, DataType.TINYTEXT);
 	public static List<DataType> binaryTypes = Arrays.asList(DataType.BINARY, DataType.VARBINARY, DataType.BLOB,
 			DataType.BIT);
@@ -32,17 +32,22 @@ public class DataTypeUtil {
 	public static List<DataType> decimalTypes = Arrays.asList(DataType.DEC, DataType.DECIMAL, DataType.FLOAT);
 
 	public static List<DataType> typesWithoutSize = Arrays.asList(DataType.TINYBLOB, DataType.TINYTEXT,
-			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, DataType.BINARY,
-			DataType.VARBINARY, DataType.BOOL, DataType.BOOLEAN, DataType.DATE, DataType.YEAR);
-	
+			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, 
+			DataType.BOOL, DataType.BOOLEAN, DataType.DATE, DataType.YEAR, DataType.BIGINT_UNSIGNED,
+			DataType.INT_UNSIGNED, DataType.INT_UNSIGNED, DataType.MEDIUMINT_UNSIGNED, DataType.SMALLINT_UNSIGNED,
+			DataType.TINYINT_UNSIGNED);
+
 	public static DataType findDataTypeByLiteral(String literal) {
-		DataType type = DataType.valueOf(literal);
-		if(type != null)
+		DataType type = DataType.get(literal);
+		if (type != null)
 			return type;
-		else
-			return null; //TODO Exception handling
+		else {
+			type = DataType.valueOf(literal);
+			if (type != null) {
+				return type;
+			} else
+				return null; // TODO Exception handling
+		}
 	}
-	
-	
 
 }

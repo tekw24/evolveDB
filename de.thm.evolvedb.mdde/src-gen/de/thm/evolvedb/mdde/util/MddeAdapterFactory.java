@@ -91,6 +91,22 @@ public class MddeAdapterFactory extends AdapterFactoryImpl {
 				return createColumnAdapter();
 			}
 			@Override
+			public Adapter caseConstraint(Constraint object) {
+				return createConstraintAdapter();
+			}
+			@Override
+			public Adapter caseUniqueConstraint(UniqueConstraint object) {
+				return createUniqueConstraintAdapter();
+			}
+			@Override
+			public Adapter caseIndex(Index object) {
+				return createIndexAdapter();
+			}
+			@Override
+			public Adapter caseColumnConstraint(ColumnConstraint object) {
+				return createColumnConstraintAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -190,6 +206,62 @@ public class MddeAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createColumnAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.mdde.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.mdde.Constraint
+	 * @generated
+	 */
+	public Adapter createConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.mdde.UniqueConstraint <em>Unique Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.mdde.UniqueConstraint
+	 * @generated
+	 */
+	public Adapter createUniqueConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.mdde.Index <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.mdde.Index
+	 * @generated
+	 */
+	public Adapter createIndexAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.mdde.ColumnConstraint <em>Column Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.mdde.ColumnConstraint
+	 * @generated
+	 */
+	public Adapter createColumnConstraintAdapter() {
 		return null;
 	}
 

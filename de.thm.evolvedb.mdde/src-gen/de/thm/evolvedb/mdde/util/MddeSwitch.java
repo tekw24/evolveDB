@@ -109,6 +109,35 @@ public class MddeSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case MddePackage.CONSTRAINT: {
+				Constraint constraint = (Constraint)theEObject;
+				T result = caseConstraint(constraint);
+				if (result == null) result = caseNamedElement(constraint);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MddePackage.UNIQUE_CONSTRAINT: {
+				UniqueConstraint uniqueConstraint = (UniqueConstraint)theEObject;
+				T result = caseUniqueConstraint(uniqueConstraint);
+				if (result == null) result = caseConstraint(uniqueConstraint);
+				if (result == null) result = caseNamedElement(uniqueConstraint);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MddePackage.INDEX: {
+				Index index = (Index)theEObject;
+				T result = caseIndex(index);
+				if (result == null) result = caseConstraint(index);
+				if (result == null) result = caseNamedElement(index);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MddePackage.COLUMN_CONSTRAINT: {
+				ColumnConstraint columnConstraint = (ColumnConstraint)theEObject;
+				T result = caseColumnConstraint(columnConstraint);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -200,6 +229,66 @@ public class MddeSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseColumn(Column object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConstraint(Constraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unique Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unique Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUniqueConstraint(UniqueConstraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Index</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Index</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIndex(Index object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Column Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Column Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseColumnConstraint(ColumnConstraint object) {
 		return null;
 	}
 

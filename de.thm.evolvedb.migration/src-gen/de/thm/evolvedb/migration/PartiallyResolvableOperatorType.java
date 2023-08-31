@@ -89,16 +89,14 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	SET_FOREIGNKEYS_TARGET_TABLE(6, "SET_FOREIGNKEYS_TARGET_TABLE", "SET_FOREIGNKEYS_TARGET_TABLE"),
 
 	/**
-	 * The '<em><b>SET COLUMN UNIQUE</b></em>' literal object.
+	 * The '<em><b>CREATE UNIQUE CONSTRAINT</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SET_COLUMN_UNIQUE_VALUE
+	 * @see #CREATE_UNIQUE_CONSTRAINT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SET_COLUMN_UNIQUE(7, "SET_COLUMN_UNIQUE", "SET_COLUMN_UNIQUE"),
-
-	/**
+	CREATE_UNIQUE_CONSTRAINT(7, "CREATE_UNIQUE_CONSTRAINT", "CREATE_UNIQUE_CONSTRAINT"), /**
 	 * The '<em><b>SET COLUMN TYPE</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -164,7 +162,15 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	CHANGE_1N_INTO_NM_MOVE(14, "CHANGE_1N_INTO_NM_MOVE", "CHANGE_1N_INTO_NM_MOVE");
+	CHANGE_1N_INTO_NM_MOVE(14, "CHANGE_1N_INTO_NM_MOVE", "CHANGE_1N_INTO_NM_MOVE"), /**
+	 * The '<em><b>ADD COLUMN UNIQUE INDEX</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_COLUMN_UNIQUE_INDEX_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ADD_COLUMN_UNIQUE_INDEX(15, "ADD_COLUMN_UNIQUE_INDEX", "ADD_COLUMN_UNIQUE_INDEX");
 
 	/**
 	 * The '<em><b>DELETE COLUMN</b></em>' literal value.
@@ -244,15 +250,15 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	public static final int SET_FOREIGNKEYS_TARGET_TABLE_VALUE = 6;
 
 	/**
-	 * The '<em><b>SET COLUMN UNIQUE</b></em>' literal value.
+	 * The '<em><b>CREATE UNIQUE CONSTRAINT</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SET_COLUMN_UNIQUE
+	 * @see #CREATE_UNIQUE_CONSTRAINT
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SET_COLUMN_UNIQUE_VALUE = 7;
+	public static final int CREATE_UNIQUE_CONSTRAINT_VALUE = 7;
 
 	/**
 	 * The '<em><b>SET COLUMN TYPE</b></em>' literal value.
@@ -332,6 +338,17 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	public static final int CHANGE_1N_INTO_NM_MOVE_VALUE = 14;
 
 	/**
+	 * The '<em><b>ADD COLUMN UNIQUE INDEX</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_COLUMN_UNIQUE_INDEX
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ADD_COLUMN_UNIQUE_INDEX_VALUE = 15;
+
+	/**
 	 * An array of all the '<em><b>Partially Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -346,7 +363,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			SET_COLUMN_NOT_NULL,
 			SET_COLUMN_SIZE,
 			SET_FOREIGNKEYS_TARGET_TABLE,
-			SET_COLUMN_UNIQUE,
+			CREATE_UNIQUE_CONSTRAINT,
 			SET_COLUMN_TYPE,
 			CHANGE_1N_INTO_NM,
 			CHANGE_1N_INTO_NM_PRESERVE,
@@ -354,6 +371,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			CHANGE_NM_INTO_1N_PRESERVE,
 			SET_COLUMN_TYPE_AND_SIZE,
 			CHANGE_1N_INTO_NM_MOVE,
+			ADD_COLUMN_UNIQUE_INDEX,
 		};
 
 	/**
@@ -417,7 +435,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			case SET_COLUMN_NOT_NULL_VALUE: return SET_COLUMN_NOT_NULL;
 			case SET_COLUMN_SIZE_VALUE: return SET_COLUMN_SIZE;
 			case SET_FOREIGNKEYS_TARGET_TABLE_VALUE: return SET_FOREIGNKEYS_TARGET_TABLE;
-			case SET_COLUMN_UNIQUE_VALUE: return SET_COLUMN_UNIQUE;
+			case CREATE_UNIQUE_CONSTRAINT_VALUE: return CREATE_UNIQUE_CONSTRAINT;
 			case SET_COLUMN_TYPE_VALUE: return SET_COLUMN_TYPE;
 			case CHANGE_1N_INTO_NM_VALUE: return CHANGE_1N_INTO_NM;
 			case CHANGE_1N_INTO_NM_PRESERVE_VALUE: return CHANGE_1N_INTO_NM_PRESERVE;
@@ -425,6 +443,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			case CHANGE_NM_INTO_1N_PRESERVE_VALUE: return CHANGE_NM_INTO_1N_PRESERVE;
 			case SET_COLUMN_TYPE_AND_SIZE_VALUE: return SET_COLUMN_TYPE_AND_SIZE;
 			case CHANGE_1N_INTO_NM_MOVE_VALUE: return CHANGE_1N_INTO_NM_MOVE;
+			case ADD_COLUMN_UNIQUE_INDEX_VALUE: return ADD_COLUMN_UNIQUE_INDEX;
 		}
 		return null;
 	}

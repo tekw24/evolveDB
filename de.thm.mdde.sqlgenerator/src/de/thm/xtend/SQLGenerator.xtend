@@ -251,6 +251,16 @@ class SQLGenerator {
 			case ResolvableOperatorType.CREATE_PRIMARY_KEY: {
 				return CREATE_ELEMENT._CREATE_PrimaryKey_IN_Table_columns(resolvableOperator);
 			}
+			case ResolvableOperatorType.CREATE_INDEX_IN_TABLE: {
+				return CREATE_ELEMENT._CREATE_INDEX_IN_Table_constraints(resolvableOperator);
+			}
+			case ResolvableOperatorType.REMOVE_CONSTRAINT: {
+				return DELETE_ELEMENT.DELETE_CONSTRAINT_IN_Table(resolvableOperator);//TODO
+			}
+			case ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME: {
+				return SET_ATTRIBUTE._SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(resolvableOperator);//TODO
+			}
+			
 			case ResolvableOperatorType.CHANGE_REFERENTIAL_ACTION: {
 				return SET_ATTRIBUTE._CHANGE_Literal_ForeignKey(resolvableOperator);
 			}
@@ -259,9 +269,6 @@ class SQLGenerator {
 			}
 			case ResolvableOperatorType.SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME: {
 				return SET_ATTRIBUTE._CHANGE_ForeignKey_constraint_name(resolvableOperator);
-			}
-			case ResolvableOperatorType.SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME: {
-				return SET_ATTRIBUTE._SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(resolvableOperator);
 			}
 			case ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
@@ -279,8 +286,8 @@ class SQLGenerator {
 			case PartiallyResolvableOperatorType.SET_COLUMN_SIZE: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_Size(partiallyResolvable);
 			}
-			case PartiallyResolvableOperatorType.SET_COLUMN_UNIQUE: {
-				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_Unique(partiallyResolvable);
+			case PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT: {
+				return CREATE_ELEMENT._CREATE_UNIQUE_INDEX_IN_Table_constraints(partiallyResolvable);
 			}
 			case PartiallyResolvableOperatorType.SET_COLUMN_TYPE: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_Type(partiallyResolvable);

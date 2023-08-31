@@ -8,6 +8,13 @@ import de.thm.evolvedb.mdde.ForeignKey
 import de.thm.evolvedb.mdde.Table
 import de.thm.evolvedb.migration.PartiallyResolvable
 import de.thm.evolvedb.migration.ProcessStatus
+import de.thm.evolvedb.migration.ResolvableOperator
+import java.util.List
+import de.thm.evolvedb.mdde.Constraint
+import org.sidiff.difference.symmetric.RemoveReference
+import org.eclipse.emf.ecore.EObject
+import de.thm.evolvedb.mdde.Index
+import de.thm.evolvedb.mdde.UniqueConstraint
 
 class DELETE_ELEMENT {
 
@@ -145,8 +152,7 @@ class DELETE_ELEMENT {
 		return content;
 
 	}
-	
-	
+
 	def static String _DELETE_ForeignKey_Constraint(ForeignKey foreignKey) {
 
 		var content = ""
@@ -163,7 +169,7 @@ class DELETE_ELEMENT {
 		return content;
 
 	}
-	
+
 	def static String _DELETE_Column_IN_Table_columns2(Column column) {
 		var content = ""
 
@@ -213,4 +219,87 @@ class DELETE_ELEMENT {
 		return content;
 
 	}
+
+	def static String DELETE_CONSTRAINT_IN_Table(ResolvableOperator operator) {
+		if (operator.processStatus === ProcessStatus.RESOLVED && operator.semanticChangeSets.size == 1) {
+			var SemanticChangeSet defaultValue = operator.semanticChangeSets.get(0)
+			return DELETE_CONSTRAINT_IN_Table2(defaultValue);
+		}
+		return ""
+	}
+
+	def static String DELETE_CONSTRAINT_IN_Table2(SemanticChangeSet set) {
+		var List<RemoveObject> changeColumnType = set.changes.filter(RemoveObject).toList
+		var content = ""
+
+		if (changeColumnType.size > 0) {
+
+			for (RemoveObject a : changeColumnType) {
+				if (a.obj instanceof Constraint) {
+
+					var objA = a.obj as Constraint
+					content += '''
+						-- Change constraint name of «objA.name.toLowerCase» 
+						ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.name»`;
+						
+					'''
+
+					return content;
+				}
+			}
+
+		} else {
+			var List<RemoveReference> removeReference = set.changes.filter(RemoveReference).toList
+
+			if (removeReference.size > 0) {
+				var RemoveReference removeObject = removeReference.get(0);
+
+				var EObject eObject = removeObject.src
+
+				var Constraint constraint;
+				var Column column;
+
+				if (eObject instanceof Constraint) {
+					constraint = eObject as Constraint;
+					column = removeObject.getTgt() as Column
+				} else {
+					constraint = removeObject.getTgt() as Constraint;
+					column = removeObject.getSrc() as Column;
+				}
+
+				content += '''
+					-- Remove column «column.name.toLowerCase» from Index «constraint.name.toLowerCase» 
+					ALTER TABLE «constraint.table.name.toLowerCase» DROP INDEX `«constraint.name»`;
+					
+				'''
+				if (constraint instanceof Index) {
+					var index = constraint as Index
+					index.columns.remove(column);
+					var Table owner = index.table
+					content += '''
+						ALTER TABLE `«index.table.name.toLowerCase»` 
+						«CREATE_ELEMENT.createConstraintString(index, false)»
+						 ;
+					'''
+					return content;
+
+				} else if (constraint instanceof UniqueConstraint) {
+
+					var index = constraint as UniqueConstraint
+					var Table owner = index.table
+					index.columns.remove(column);
+					content += '''
+						ALTER TABLE `«index.table.name.toLowerCase»` 
+						«CREATE_ELEMENT.createConstraintString(index, false)»
+						 ;
+					'''
+					return content;
+				}
+
+			}
+
+		}
+		return content;
+	}
+
 }

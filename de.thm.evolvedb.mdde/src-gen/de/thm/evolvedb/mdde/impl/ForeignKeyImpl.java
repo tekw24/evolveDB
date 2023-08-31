@@ -8,6 +8,7 @@ import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Referential_Action;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.util.MddeValidator;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
@@ -32,27 +33,20 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedTable
- * <em>Referenced Table</em>}</li>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getPrimaryForeignKey
- * <em>Primary Foreign Key</em>}</li>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnUpdate <em>On
- * Update</em>}</li>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnDelete <em>On
- * Delete</em>}</li>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getConstraintName
- * <em>Constraint Name</em>}</li>
- * <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedKeyColumn
- * <em>Referenced Key Column</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedTable <em>Referenced Table</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getPrimaryForeignKey <em>Primary Foreign Key</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnUpdate <em>On Update</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getOnDelete <em>On Delete</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getConstraintName <em>Constraint Name</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ForeignKeyImpl#getReferencedKeyColumn <em>Referenced Key Column</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	/**
-	 * The cached value of the '{@link #getReferencedTable() <em>Referenced
-	 * Table</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getReferencedTable() <em>Referenced Table</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getReferencedTable()
 	 * @generated
 	 * @ordered
@@ -60,9 +54,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Table referencedTable;
 
 	/**
-	 * The default value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign
-	 * Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign Key</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getPrimaryForeignKey()
 	 * @generated
 	 * @ordered
@@ -70,9 +63,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Boolean PRIMARY_FOREIGN_KEY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign
-	 * Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getPrimaryForeignKey() <em>Primary Foreign Key</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getPrimaryForeignKey()
 	 * @generated
 	 * @ordered
@@ -80,9 +72,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Boolean primaryForeignKey = PRIMARY_FOREIGN_KEY_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getOnUpdate() <em>On Update</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getOnUpdate() <em>On Update</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOnUpdate()
 	 * @generated
 	 * @ordered
@@ -90,9 +81,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Referential_Action ON_UPDATE_EDEFAULT = Referential_Action.RESTRICT;
 
 	/**
-	 * The cached value of the '{@link #getOnUpdate() <em>On Update</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getOnUpdate() <em>On Update</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOnUpdate()
 	 * @generated
 	 * @ordered
@@ -100,9 +90,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Referential_Action onUpdate = ON_UPDATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getOnDelete() <em>On Delete</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getOnDelete() <em>On Delete</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOnDelete()
 	 * @generated
 	 * @ordered
@@ -110,9 +99,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final Referential_Action ON_DELETE_EDEFAULT = Referential_Action.RESTRICT;
 
 	/**
-	 * The cached value of the '{@link #getOnDelete() <em>On Delete</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getOnDelete() <em>On Delete</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOnDelete()
 	 * @generated
 	 * @ordered
@@ -120,9 +108,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected Referential_Action onDelete = ON_DELETE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getConstraintName() <em>Constraint
-	 * Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getConstraintName() <em>Constraint Name</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getConstraintName()
 	 * @generated
 	 * @ordered
@@ -130,9 +117,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected static final String CONSTRAINT_NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getConstraintName() <em>Constraint
-	 * Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getConstraintName() <em>Constraint Name</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getConstraintName()
 	 * @generated
 	 * @ordered
@@ -140,9 +126,8 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 	protected String constraintName = CONSTRAINT_NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReferencedKeyColumn() <em>Referenced Key
-	 * Column</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getReferencedKeyColumn() <em>Referenced Key Column</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getReferencedKeyColumn()
 	 * @generated
 	 * @ordered
@@ -151,7 +136,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ForeignKeyImpl() {
@@ -160,7 +144,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -170,18 +153,16 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Table getReferencedTable() {
 		if (referencedTable != null && referencedTable.eIsProxy()) {
-			InternalEObject oldReferencedTable = (InternalEObject) referencedTable;
-			referencedTable = (Table) eResolveProxy(oldReferencedTable);
+			InternalEObject oldReferencedTable = (InternalEObject)referencedTable;
+			referencedTable = (Table)eResolveProxy(oldReferencedTable);
 			if (referencedTable != oldReferencedTable) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MddePackage.FOREIGN_KEY__REFERENCED_TABLE,
-							oldReferencedTable, referencedTable));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MddePackage.FOREIGN_KEY__REFERENCED_TABLE, oldReferencedTable, referencedTable));
 			}
 		}
 		return referencedTable;
@@ -189,7 +170,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Table basicGetReferencedTable() {
@@ -198,7 +178,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -206,13 +185,11 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 		Table oldReferencedTable = referencedTable;
 		referencedTable = newReferencedTable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__REFERENCED_TABLE,
-					oldReferencedTable, referencedTable));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__REFERENCED_TABLE, oldReferencedTable, referencedTable));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -222,7 +199,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -230,13 +206,11 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 		Boolean oldPrimaryForeignKey = primaryForeignKey;
 		primaryForeignKey = newPrimaryForeignKey;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY,
-					oldPrimaryForeignKey, primaryForeignKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY, oldPrimaryForeignKey, primaryForeignKey));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -246,7 +220,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -254,13 +227,11 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 		Referential_Action oldOnUpdate = onUpdate;
 		onUpdate = newOnUpdate == null ? ON_UPDATE_EDEFAULT : newOnUpdate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__ON_UPDATE, oldOnUpdate,
-					onUpdate));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__ON_UPDATE, oldOnUpdate, onUpdate));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -270,7 +241,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -278,13 +248,11 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 		Referential_Action oldOnDelete = onDelete;
 		onDelete = newOnDelete == null ? ON_DELETE_EDEFAULT : newOnDelete;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__ON_DELETE, oldOnDelete,
-					onDelete));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__ON_DELETE, oldOnDelete, onDelete));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -294,7 +262,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -302,25 +269,21 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 		String oldConstraintName = constraintName;
 		constraintName = newConstraintName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__CONSTRAINT_NAME,
-					oldConstraintName, constraintName));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.FOREIGN_KEY__CONSTRAINT_NAME, oldConstraintName, constraintName));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public PrimaryKey getReferencedKeyColumn() {
 		if (referencedKeyColumn != null && referencedKeyColumn.eIsProxy()) {
-			InternalEObject oldReferencedKeyColumn = (InternalEObject) referencedKeyColumn;
-			referencedKeyColumn = (PrimaryKey) eResolveProxy(oldReferencedKeyColumn);
+			InternalEObject oldReferencedKeyColumn = (InternalEObject)referencedKeyColumn;
+			referencedKeyColumn = (PrimaryKey)eResolveProxy(oldReferencedKeyColumn);
 			if (referencedKeyColumn != oldReferencedKeyColumn) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN, oldReferencedKeyColumn,
-							referencedKeyColumn));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN, oldReferencedKeyColumn, referencedKeyColumn));
 			}
 		}
 		return referencedKeyColumn;
@@ -328,7 +291,6 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public PrimaryKey basicGetReferencedKeyColumn() {
@@ -409,173 +371,162 @@ public class ForeignKeyImpl extends ColumnImpl implements ForeignKey {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			if (referencedKeyColumn != null)
-				msgs = ((InternalEObject) referencedKeyColumn).eInverseRemove(this,
-						MddePackage.PRIMARY_KEY__REFERENCED_BY, PrimaryKey.class, msgs);
-			return basicSetReferencedKeyColumn((PrimaryKey) otherEnd, msgs);
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				if (referencedKeyColumn != null)
+					msgs = ((InternalEObject)referencedKeyColumn).eInverseRemove(this, MddePackage.PRIMARY_KEY__REFERENCED_BY, PrimaryKey.class, msgs);
+				return basicSetReferencedKeyColumn((PrimaryKey)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			return basicSetReferencedKeyColumn(null, msgs);
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				return basicSetReferencedKeyColumn(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
-			if (resolve)
-				return getReferencedTable();
-			return basicGetReferencedTable();
-		case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
-			return getPrimaryForeignKey();
-		case MddePackage.FOREIGN_KEY__ON_UPDATE:
-			return getOnUpdate();
-		case MddePackage.FOREIGN_KEY__ON_DELETE:
-			return getOnDelete();
-		case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
-			return getConstraintName();
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			if (resolve)
-				return getReferencedKeyColumn();
-			return basicGetReferencedKeyColumn();
+			case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
+				if (resolve) return getReferencedTable();
+				return basicGetReferencedTable();
+			case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
+				return getPrimaryForeignKey();
+			case MddePackage.FOREIGN_KEY__ON_UPDATE:
+				return getOnUpdate();
+			case MddePackage.FOREIGN_KEY__ON_DELETE:
+				return getOnDelete();
+			case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
+				return getConstraintName();
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				if (resolve) return getReferencedKeyColumn();
+				return basicGetReferencedKeyColumn();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
-			setReferencedTable((Table) newValue);
-			return;
-		case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
-			setPrimaryForeignKey((Boolean) newValue);
-			return;
-		case MddePackage.FOREIGN_KEY__ON_UPDATE:
-			setOnUpdate((Referential_Action) newValue);
-			return;
-		case MddePackage.FOREIGN_KEY__ON_DELETE:
-			setOnDelete((Referential_Action) newValue);
-			return;
-		case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
-			setConstraintName((String) newValue);
-			return;
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			setReferencedKeyColumn((PrimaryKey) newValue);
-			return;
+			case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
+				setReferencedTable((Table)newValue);
+				return;
+			case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
+				setPrimaryForeignKey((Boolean)newValue);
+				return;
+			case MddePackage.FOREIGN_KEY__ON_UPDATE:
+				setOnUpdate((Referential_Action)newValue);
+				return;
+			case MddePackage.FOREIGN_KEY__ON_DELETE:
+				setOnDelete((Referential_Action)newValue);
+				return;
+			case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
+				setConstraintName((String)newValue);
+				return;
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				setReferencedKeyColumn((PrimaryKey)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
-			setReferencedTable((Table) null);
-			return;
-		case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
-			setPrimaryForeignKey(PRIMARY_FOREIGN_KEY_EDEFAULT);
-			return;
-		case MddePackage.FOREIGN_KEY__ON_UPDATE:
-			setOnUpdate(ON_UPDATE_EDEFAULT);
-			return;
-		case MddePackage.FOREIGN_KEY__ON_DELETE:
-			setOnDelete(ON_DELETE_EDEFAULT);
-			return;
-		case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
-			setConstraintName(CONSTRAINT_NAME_EDEFAULT);
-			return;
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			setReferencedKeyColumn((PrimaryKey) null);
-			return;
+			case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
+				setReferencedTable((Table)null);
+				return;
+			case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
+				setPrimaryForeignKey(PRIMARY_FOREIGN_KEY_EDEFAULT);
+				return;
+			case MddePackage.FOREIGN_KEY__ON_UPDATE:
+				setOnUpdate(ON_UPDATE_EDEFAULT);
+				return;
+			case MddePackage.FOREIGN_KEY__ON_DELETE:
+				setOnDelete(ON_DELETE_EDEFAULT);
+				return;
+			case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
+				setConstraintName(CONSTRAINT_NAME_EDEFAULT);
+				return;
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				setReferencedKeyColumn((PrimaryKey)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
-			return referencedTable != null;
-		case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
-			return PRIMARY_FOREIGN_KEY_EDEFAULT == null ? primaryForeignKey != null
-					: !PRIMARY_FOREIGN_KEY_EDEFAULT.equals(primaryForeignKey);
-		case MddePackage.FOREIGN_KEY__ON_UPDATE:
-			return onUpdate != ON_UPDATE_EDEFAULT;
-		case MddePackage.FOREIGN_KEY__ON_DELETE:
-			return onDelete != ON_DELETE_EDEFAULT;
-		case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
-			return CONSTRAINT_NAME_EDEFAULT == null ? constraintName != null
-					: !CONSTRAINT_NAME_EDEFAULT.equals(constraintName);
-		case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
-			return referencedKeyColumn != null;
+			case MddePackage.FOREIGN_KEY__REFERENCED_TABLE:
+				return referencedTable != null;
+			case MddePackage.FOREIGN_KEY__PRIMARY_FOREIGN_KEY:
+				return PRIMARY_FOREIGN_KEY_EDEFAULT == null ? primaryForeignKey != null : !PRIMARY_FOREIGN_KEY_EDEFAULT.equals(primaryForeignKey);
+			case MddePackage.FOREIGN_KEY__ON_UPDATE:
+				return onUpdate != ON_UPDATE_EDEFAULT;
+			case MddePackage.FOREIGN_KEY__ON_DELETE:
+				return onDelete != ON_DELETE_EDEFAULT;
+			case MddePackage.FOREIGN_KEY__CONSTRAINT_NAME:
+				return CONSTRAINT_NAME_EDEFAULT == null ? constraintName != null : !CONSTRAINT_NAME_EDEFAULT.equals(constraintName);
+			case MddePackage.FOREIGN_KEY__REFERENCED_KEY_COLUMN:
+				return referencedKeyColumn != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-		case MddePackage.FOREIGN_KEY___VALIDATE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP:
-			return validateConstraintName((DiagnosticChain) arguments.get(0), (Map<Object, Object>) arguments.get(1));
+			case MddePackage.FOREIGN_KEY___VALIDATE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP:
+				return validateConstraintName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+//			case MddePackage.FOREIGN_KEY___FOREIGN_KEY_HAS_TO_REFERENCE_AKEY_COLUMN__DIAGNOSTICCHAIN_MAP:
+//				return ForeignKeyHasToReferenceAKeyColumn((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (primaryForeignKey: ");

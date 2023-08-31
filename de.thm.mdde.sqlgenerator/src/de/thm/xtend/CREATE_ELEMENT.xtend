@@ -9,6 +9,11 @@ import java.util.List
 import de.thm.evolvedb.mdde.Column
 import de.thm.evolvedb.migration.ResolvableOperator
 import de.thm.evolvedb.migration.ProcessStatus
+import de.thm.evolvedb.mdde.Constraint
+import de.thm.evolvedb.mdde.UniqueConstraint
+import de.thm.evolvedb.mdde.Index
+import de.thm.evolvedb.migration.PartiallyResolvable
+import de.thm.evolvedb.migration.ColumnOptions
 
 class CREATE_ELEMENT {
 
@@ -49,7 +54,7 @@ class CREATE_ELEMENT {
 
 			if (primaryKey != null) {
 
-				content+='''
+				content += '''
 					-- Create Table «entity.name»
 					CREATE TABLE IF NOT EXISTS «entity.name»  (
 					«IF primaryKey !== null» 
@@ -65,16 +70,16 @@ class CREATE_ELEMENT {
 						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
-					
+					«createConstraintString(entity, true)»
 					);
 				'''
 
 			} else if (primaryForeignKeys.size > 0) {
 
-				content+='''
+				content += '''
 					-- Create Table «entity.name»
 					CREATE TABLE IF NOT EXISTS «entity.name»  (
-					«FOR ForeignKey e : foreignKeys SEPARATOR ',' AFTER ',' »
+					«FOR ForeignKey e : foreignKeys SEPARATOR ',' AFTER ','»
 						`«e.name»` «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»
 					«ENDFOR»
 					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER ','»
@@ -82,7 +87,7 @@ class CREATE_ELEMENT {
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
 					«IF primaryForeignKeys.size > 0»
-					PRIMARY KEY(«FOR ForeignKey e : primaryForeignKeys SEPARATOR ','»`«e.name»` «ENDFOR»),
+						PRIMARY KEY(«FOR ForeignKey e : primaryForeignKeys SEPARATOR ','»`«e.name»` «ENDFOR»),
 					«ENDIF»
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
 						CONSTRAINT `«e.constraintName»`
@@ -91,13 +96,48 @@ class CREATE_ELEMENT {
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
+					«createConstraintString(entity, true)»
 					);
 				'''
 
+			} else {
+				content += '''
+					-- Create Table «entity.name»
+					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
+						«e.name.toUpperCase» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
+						FOREIGN KEY («e.name.toUpperCase») REFERENCES «e.referencedTable.name»(DB_ID)
+						ON DELETE «e.onDelete.name()»
+						ON UPDATE «e.onUpdate.name()»
+					«ENDFOR»
+					«FOR Column e : columns BEFORE ',' SEPARATOR ','»
+						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+						«ColumnUtil.getDefaultValueString(e)»
+					«ENDFOR»
+					«createConstraintString(entity, true)»
+					);
+				'''
 			}
 
 		}
 		return content;
+	}
+
+	def static String createConstraintString(Table table, boolean commaBefore) {
+		
+		'''
+			«IF commaBefore»,«ENDIF»«FOR Constraint e : table.constraints SEPARATOR ','»
+				«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR Column c : e.columns SEPARATOR ', '»«c.name»«ENDFOR» )
+			«ENDFOR»
+		'''
+	}
+	
+	def static String createConstraintString(Constraint constraint, boolean commaBefore) {
+		
+		'''
+			«IF commaBefore»,«ENDIF»
+			ADD «IF constraint instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «constraint.name» ( «FOR Column c : constraint.columns SEPARATOR ', '»«c.name»«ENDFOR» )
+		'''
 	}
 
 	/**
@@ -166,7 +206,7 @@ class CREATE_ELEMENT {
 
 		return ""
 	}
-	
+
 	def static String _CREATE_ForeignKey_IN_Table_columns2(SemanticChangeSet set) {
 		var AddObject a = set.changes.findFirst[it instanceof AddObject] as AddObject
 		return _CREATE_Table_IN_Database_Schema_entites2(a)
@@ -242,5 +282,181 @@ class CREATE_ELEMENT {
 		}
 
 	}
+
+	def static _CREATE_INDEX_IN_Table_constraints(de.thm.evolvedb.migration.ResolvableOperator set) {
+		if (set.processStatus === ProcessStatus.RESOLVED) {
+			var SemanticChangeSet addObject = set.semanticChangeSets.findFirst [
+				editRName.equals('CREATE_Index_IN_Table_(constraints)')
+			]
+			return _CREATE_INDEX_IN_Table_constraints2(addObject);
+		}
+
+		return ""
+	}
+
+	def static _CREATE_INDEX_IN_Table_constraints2(SemanticChangeSet set, ColumnOptions option) {
+		var AddObject a = set.changes.findFirst[it instanceof AddObject] as AddObject
+
+		if (a.obj instanceof Index) {
+			var index = a.obj as Index
+
+			var Table owner = index.table
+			var content = '''
+				-- Add the new index «index.name.toUpperCase» in Table «index.table.name.toLowerCase»
+				ALTER TABLE `«index.table.name.toLowerCase»` 
+				«createConstraintString(index, false)» ;
+			'''
+			return content;
+
+		} else if (a.obj instanceof UniqueConstraint) {
+
+			var index = a.obj as UniqueConstraint
+			var Table owner = index.table
+			var content = '''
+				-- Add the new index «index.name.toUpperCase» in Table «index.table.name.toLowerCase»
+				ALTER TABLE `«index.table.name.toLowerCase»` 
+				«createConstraintString(index, false)» ;
+			'''
+			return content;
+		}
+	}
+
+	def static _CREATE_INDEX_IN_Table_constraints2(SemanticChangeSet set) {
+		_CREATE_INDEX_IN_Table_constraints2(set, null);
+	}
+
+	def static String _CREATE_UNIQUE_INDEX_IN_Table_constraints(PartiallyResolvable resolvable) {
+		if (resolvable.processStatus === ProcessStatus.RESOLVED) {
+			var SemanticChangeSet addObject = resolvable.semanticChangeSets.findFirst [
+				editRName.equals('CREATE_UniqueConstraint_IN_Table_(constraints)')
+			]
+			return _CREATE_INDEX_IN_Table_constraints2(addObject, resolvable.resolveOptions);
+		}
+
+		return ""
+	}
+	
+
+//def static String _resolveUniqueIndex(UniqueConstraint constraint, ColumnOptions columnOptions ) {
+//	
+//	
+//	
+//	var content = '''''';
+//	switch columnOptions {
+//		
+//		case ColumnOptions.IGNORE: {
+//			return '';
+//		}
+//		case ColumnOptions.SPECIFY_CONDITION_MANUALLY: {
+//			content += '''-- TODO change all values of column «objB.name» that violate the new unique constraint'''
+//		}
+//		case ColumnOptions.DELETE_ROW: {
+//
+//			var key = objB.table.mainPrimaryKey;
+//
+//			var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+//				objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
+//
+//			content += '''
+//				-- Set all values to null that violate the unique constraint
+//				BEGIN;
+//				SET @safe_mode = @@SQL_SAFE_UPDATES;
+//				SET SQL_SAFE_UPDATES = 0;
+//				DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+//				CREATE TEMPORARY TABLE my_temp_table
+//				(SELECT «objB.name» FROM «objB.table.name.toLowerCase» 
+//				GROUP BY «objB.name»
+//				HAVING COUNT(«objB.name») > 1);
+//				
+//				DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
+//				CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
+//				(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//				GROUP BY «objB.name»
+//				HAVING COUNT(«objB.name») > 1);
+//				«historyInsert»
+//				DELETE FROM «objB.table.name.toLowerCase» where «objB.name» IN (SELECT * from my_temp_table);
+//				SET SQL_SAFE_UPDATES = @safe_mode;
+//				COMMIT;
+//				
+//			'''
+//			content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
+//			content += ColumnUtil.deleteTemporaryTable("my_temp_table");
+//
+//		}
+//		case ColumnOptions.UPDATE_COLUMN_SET_TO_NULL: {
+//
+//			var whereClause = '''«objB.name» is not null;''';
+//			var historyInsert = ColumnUtil.createInsertColumnHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+//				objB.table.schema, objB, objB.table.mainPrimaryKey, whereClause)
+//
+//			content += '''
+//				-- Set «objB.name.toLowerCase» values to null 
+//				SET @safe_mode = @@SQL_SAFE_UPDATES;
+//				SET SQL_SAFE_UPDATES = 0;
+//				«historyInsert»
+//				UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+//				SET SQL_SAFE_UPDATES = @safe_mode;
+//				COMMIT;
+//				-- If executing the script fails, we suggest a rollback.
+//				
+//			'''
+//
+//		}
+//		case ColumnOptions.UPDATE_ROW_SET_TO_NULL: {
+//
+//			var key = objB.table.mainPrimaryKey;
+//			var historyInsert = ColumnUtil.createInsertRowHistoryScript(SQLGenerator.HISTORY_TABLE_NAME,
+//				objB.table.schema, objB.table, key, SQLGenerator.TEMPORY_TABLE_NAME)
+//
+//			content += '''
+//				-- Set all values to null that violate the unique constraint
+//				BEGIN;
+//				SET @safe_mode = @@SQL_SAFE_UPDATES;
+//				SET SQL_SAFE_UPDATES = 0;
+//				DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+//				CREATE TEMPORARY TABLE my_temp_table
+//				(SELECT «objA.name» FROM «objA.table.name.toLowerCase» 
+//				GROUP BY «objA.name»
+//				HAVING COUNT(«objA.name») > 1);
+//				
+//				DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
+//				CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
+//				(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//				GROUP BY «objB.name»
+//				HAVING COUNT(«objB.name») > 1);
+//				«historyInsert»
+//				UPDATE «objA.table.name.toLowerCase» SET «objA.name» = null where «objA.name» IN (SELECT * from my_temp_table);
+//				SET SQL_SAFE_UPDATES = @safe_mode;
+//				COMMIT;
+//				
+//			'''
+//			content += ColumnUtil.deleteTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME);
+//			content += ColumnUtil.deleteTemporaryTable("my_temp_table");
+//
+//		}
+//	}
+//
+//	var constraintName = objB.table.name.toUpperCase + "_UNIQUE";
+//
+//	if (objB.uniqueConstraintName !== null && !objB.uniqueConstraintName.equals(""))
+//		constraintName = objB.uniqueConstraintName;
+//	content += '''
+//		-- Change uniqe attribute of «objA.name.toLowerCase» 
+//		ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
+//	'''
+//
+//
+//else {
+//
+//	content += '''
+//						-- Change uniqe attribute of «
+//	objA.name.toLowerCase» 
+//						ALTER TABLE «
+//	objA.table.name.toLowerCase» DROP INDEX `«
+//	objB.uniqueConstraintName»`;
+//					'''
+//
+//}
+//	}
 
 }

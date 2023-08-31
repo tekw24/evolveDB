@@ -210,6 +210,75 @@ public class MddeItemProviderAdapterFactory extends MddeAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.mdde.UniqueConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected UniqueConstraintItemProvider uniqueConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.mdde.UniqueConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createUniqueConstraintAdapter() {
+		if (uniqueConstraintItemProvider == null) {
+			uniqueConstraintItemProvider = new UniqueConstraintItemProvider(this);
+		}
+
+		return uniqueConstraintItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.mdde.Index} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IndexItemProvider indexItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.mdde.Index}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIndexAdapter() {
+		if (indexItemProvider == null) {
+			indexItemProvider = new IndexItemProvider(this);
+		}
+
+		return indexItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.mdde.ColumnConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ColumnConstraintItemProvider columnConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.mdde.ColumnConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createColumnConstraintAdapter() {
+		if (columnConstraintItemProvider == null) {
+			columnConstraintItemProvider = new ColumnConstraintItemProvider(this);
+		}
+
+		return columnConstraintItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -320,6 +389,9 @@ public class MddeItemProviderAdapterFactory extends MddeAdapterFactory
 		if (namedElementItemProvider != null) namedElementItemProvider.dispose();
 		if (database_SchemaItemProvider != null) database_SchemaItemProvider.dispose();
 		if (columnItemProvider != null) columnItemProvider.dispose();
+		if (uniqueConstraintItemProvider != null) uniqueConstraintItemProvider.dispose();
+		if (indexItemProvider != null) indexItemProvider.dispose();
+		if (columnConstraintItemProvider != null) columnConstraintItemProvider.dispose();
 	}
 
 }

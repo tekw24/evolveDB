@@ -3,22 +3,19 @@
 package de.thm.evolvedb.mdde.impl;
 
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.DataType;
-import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.MddePackage;
-import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.util.MddeValidator;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -30,9 +27,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
@@ -44,11 +41,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getTable <em>Table</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getDefaultValue <em>Default Value</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getNotNull <em>Not Null</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getUnique <em>Unique</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getAutoIncrement <em>Auto Increment</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getSize <em>Size</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getUniqueConstraintName <em>Unique Constraint Name</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,8 +76,9 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * @generated NOT
 	 */
 	public static List<DataType> typesWithoutSize = Arrays.asList(DataType.TINYBLOB, DataType.TINYTEXT,
-			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, DataType.BINARY,
-			DataType.VARBINARY, DataType.BOOL, DataType.BOOLEAN, DataType.DATE, DataType.YEAR);
+			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, 
+			DataType.BOOL, DataType.BOOLEAN, DataType.DATE, DataType.YEAR);
+	
 	/**
 	 * The default value of the '{@link #getDefaultValue() <em>Default Value</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -114,22 +111,6 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * @ordered
 	 */
 	protected Boolean notNull = NOT_NULL_EDEFAULT;
-	/**
-	 * The default value of the '{@link #getUnique() <em>Unique</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getUnique()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Boolean UNIQUE_EDEFAULT = Boolean.FALSE;
-	/**
-	 * The cached value of the '{@link #getUnique() <em>Unique</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getUnique()
-	 * @generated
-	 * @ordered
-	 */
-	protected Boolean unique = UNIQUE_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getAutoIncrement() <em>Auto Increment</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -186,24 +167,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	protected DataType type = TYPE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getUniqueConstraintName() <em>Unique Constraint Name</em>}' attribute.
+	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUniqueConstraintName()
+	 * @see #getConstraints()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String UNIQUE_CONSTRAINT_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getUniqueConstraintName() <em>Unique Constraint Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUniqueConstraintName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String uniqueConstraintName = UNIQUE_CONSTRAINT_NAME_EDEFAULT;
+	protected EList<ColumnConstraint> constraints;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -309,27 +280,6 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * @generated
 	 */
 	@Override
-	public Boolean getUnique() {
-		return unique;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnique(Boolean newUnique) {
-		Boolean oldUnique = unique;
-		unique = newUnique;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__UNIQUE, oldUnique, unique));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Boolean getAutoIncrement() {
 		return autoIncrement;
 	}
@@ -393,22 +343,11 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public String getUniqueConstraintName() {
-		return uniqueConstraintName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUniqueConstraintName(String newUniqueConstraintName) {
-		String oldUniqueConstraintName = uniqueConstraintName;
-		uniqueConstraintName = newUniqueConstraintName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME, oldUniqueConstraintName, uniqueConstraintName));
+	public EList<ColumnConstraint> getConstraints() {
+		if (constraints == null) {
+			constraints = new EObjectWithInverseResolvingEList<ColumnConstraint>(ColumnConstraint.class, this, MddePackage.COLUMN__CONSTRAINTS, MddePackage.COLUMN_CONSTRAINT__COLUMN);
+		}
+		return constraints;
 	}
 
 	/**
@@ -586,13 +525,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				int size = Integer.valueOf(getSize());
 				if (size > 0)
 					if (diagnostics != null) {
-						diagnostics.add(new BasicDiagnostic(Diagnostic.WARNING, MddeValidator.DIAGNOSTIC_SOURCE,
-								MddeValidator.COLUMN__VALIDATE_DEFAULT_VALUE,
-								"The selected data type does not support a size or display witdh value.",
-								new Object[] { this }));
+						//TODO Necessary?
+//						diagnostics.add(new BasicDiagnostic(Diagnostic.WARNING, MddeValidator.DIAGNOSTIC_SOURCE,
+//								MddeValidator.COLUMN__VALIDATE_DEFAULT_VALUE,
+//								"The selected data type does not support a size or display witdh value.",
+//								new Object[] { this }));
 					}
 
-				returnValue = false;
+				//returnValue = false;
 
 			} else if (dateTypesWithFraction.contains(getType())) {
 				int size = Integer.valueOf(getSize());
@@ -755,41 +695,42 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * @generated NOT
 	 */
 	public boolean validateUniqueConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context) {
-	
-		if (getUniqueConstraintName() != null && !getUniqueConstraintName().equals("")) {
-
-			EList<Column> columns = getTable().getColumns();
-			List<String> constraintNames = new ArrayList<>();
-			for(Column column : columns) {
-				if(column.equals(this))
-					continue;
-				if(column.getUnique() && column.getUniqueConstraintName() != null && !column.getUniqueConstraintName().equals("")) {
-					constraintNames.add(column.getUniqueConstraintName());
-				}
-			}
-				
-			if (constraintNames.contains(getUniqueConstraintName())) {
-				
-				if(getUniqueConstraintName().equals("PRIMARY") && ((this instanceof ForeignKey) ||(this instanceof PrimaryKey))  )
-					return true;
-
-				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
-						MddeValidator.COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME,
-						"Invalid constraint name. The unique constraint name has to be unique!", new Object[] { this }));
-				return false;
-			}
-		}
-
+//	
+//		if (getUniqueConstraintName() != null && !getUniqueConstraintName().equals("")) {
+//
+//			EList<Column> columns = getTable().getColumns();
+//			List<String> constraintNames = new ArrayList<String>();
+//			for(Column column : columns) {
+//				if(column.equals(this))
+//					continue;
+//				if(column.getUnique() && column.getUniqueConstraintName() != null && !column.getUniqueConstraintName().equals("")) {
+//					constraintNames.add(column.getUniqueConstraintName());
+//				}
+//			}
+//				
+//			if (constraintNames.contains(getUniqueConstraintName())) {
+//				
+//				if(getUniqueConstraintName().equals("PRIMARY") && ((this instanceof ForeignKey) ||(this instanceof PrimaryKey))  )
+//					return true;
+//
+//				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
+//						MddeValidator.COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME,
+//						"Invalid constraint name. The unique constraint name has to be unique!", new Object[] { this }));
+//				return false;
+//			}
+//		}
+//
 		return true;
-		
-		
-		
+//		
+//		
+//		
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -797,6 +738,8 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetTable((Table)otherEnd, msgs);
+			case MddePackage.COLUMN__CONSTRAINTS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConstraints()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -810,6 +753,8 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 		switch (featureID) {
 			case MddePackage.COLUMN__TABLE:
 				return basicSetTable(null, msgs);
+			case MddePackage.COLUMN__CONSTRAINTS:
+				return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -840,16 +785,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				return getDefaultValue();
 			case MddePackage.COLUMN__NOT_NULL:
 				return getNotNull();
-			case MddePackage.COLUMN__UNIQUE:
-				return getUnique();
 			case MddePackage.COLUMN__AUTO_INCREMENT:
 				return getAutoIncrement();
 			case MddePackage.COLUMN__SIZE:
 				return getSize();
 			case MddePackage.COLUMN__TYPE:
 				return getType();
-			case MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME:
-				return getUniqueConstraintName();
+			case MddePackage.COLUMN__CONSTRAINTS:
+				return getConstraints();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -858,6 +801,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -870,9 +814,6 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 			case MddePackage.COLUMN__NOT_NULL:
 				setNotNull((Boolean)newValue);
 				return;
-			case MddePackage.COLUMN__UNIQUE:
-				setUnique((Boolean)newValue);
-				return;
 			case MddePackage.COLUMN__AUTO_INCREMENT:
 				setAutoIncrement((Boolean)newValue);
 				return;
@@ -882,8 +823,9 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 			case MddePackage.COLUMN__TYPE:
 				setType((DataType)newValue);
 				return;
-			case MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME:
-				setUniqueConstraintName((String)newValue);
+			case MddePackage.COLUMN__CONSTRAINTS:
+				getConstraints().clear();
+				getConstraints().addAll((Collection<? extends ColumnConstraint>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -905,9 +847,6 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 			case MddePackage.COLUMN__NOT_NULL:
 				setNotNull(NOT_NULL_EDEFAULT);
 				return;
-			case MddePackage.COLUMN__UNIQUE:
-				setUnique(UNIQUE_EDEFAULT);
-				return;
 			case MddePackage.COLUMN__AUTO_INCREMENT:
 				setAutoIncrement(AUTO_INCREMENT_EDEFAULT);
 				return;
@@ -917,8 +856,8 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 			case MddePackage.COLUMN__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
-			case MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME:
-				setUniqueConstraintName(UNIQUE_CONSTRAINT_NAME_EDEFAULT);
+			case MddePackage.COLUMN__CONSTRAINTS:
+				getConstraints().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -937,16 +876,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
 			case MddePackage.COLUMN__NOT_NULL:
 				return NOT_NULL_EDEFAULT == null ? notNull != null : !NOT_NULL_EDEFAULT.equals(notNull);
-			case MddePackage.COLUMN__UNIQUE:
-				return UNIQUE_EDEFAULT == null ? unique != null : !UNIQUE_EDEFAULT.equals(unique);
 			case MddePackage.COLUMN__AUTO_INCREMENT:
 				return AUTO_INCREMENT_EDEFAULT == null ? autoIncrement != null : !AUTO_INCREMENT_EDEFAULT.equals(autoIncrement);
 			case MddePackage.COLUMN__SIZE:
 				return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
 			case MddePackage.COLUMN__TYPE:
 				return type != TYPE_EDEFAULT;
-			case MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME:
-				return UNIQUE_CONSTRAINT_NAME_EDEFAULT == null ? uniqueConstraintName != null : !UNIQUE_CONSTRAINT_NAME_EDEFAULT.equals(uniqueConstraintName);
+			case MddePackage.COLUMN__CONSTRAINTS:
+				return constraints != null && !constraints.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -982,16 +919,12 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 		result.append(defaultValue);
 		result.append(", notNull: ");
 		result.append(notNull);
-		result.append(", unique: ");
-		result.append(unique);
 		result.append(", autoIncrement: ");
 		result.append(autoIncrement);
 		result.append(", size: ");
 		result.append(size);
 		result.append(", type: ");
 		result.append(type);
-		result.append(", uniqueConstraintName: ");
-		result.append(uniqueConstraintName);
 		result.append(')');
 		return result.toString();
 	}

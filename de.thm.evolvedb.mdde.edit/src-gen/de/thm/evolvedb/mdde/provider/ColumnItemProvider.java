@@ -3,7 +3,6 @@
 package de.thm.evolvedb.mdde.provider;
 
 import de.thm.evolvedb.mdde.Column;
-
 import de.thm.evolvedb.mdde.MddePackage;
 import de.thm.evolvedb.mdde.impl.ColumnImpl;
 
@@ -12,7 +11,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
@@ -50,11 +48,11 @@ public class ColumnItemProvider extends NamedElementItemProvider {
 
 			addDefaultValuePropertyDescriptor(object);
 			addNotNullPropertyDescriptor(object);
-			addUniquePropertyDescriptor(object);
 			addAutoIncrementPropertyDescriptor(object);
 			addSizePropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
-			addUniqueConstraintNamePropertyDescriptor(object);
+			addConstraintsPropertyDescriptor(object);
+			
 		} else if (sizePropertyDescriptor != null) {
 			itemPropertyDescriptors.remove(sizePropertyDescriptor);
 			addSizePropertyDescriptor(object);
@@ -98,28 +96,6 @@ public class ColumnItemProvider extends NamedElementItemProvider {
 				 getString("_UI_Column_notNull_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Column_notNull_feature", "_UI_Column_type"),
 				 MddePackage.Literals.COLUMN__NOT_NULL,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Unique feature.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addUniquePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Column_unique_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Column_unique_feature", "_UI_Column_type"),
-				 MddePackage.Literals.COLUMN__UNIQUE,
 				 true,
 				 false,
 				 false,
@@ -216,23 +192,23 @@ public class ColumnItemProvider extends NamedElementItemProvider {
 	}
 
 	/**
-	 * This adds a property descriptor for the Unique Constraint Name feature.
+	 * This adds a property descriptor for the Constraints feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addUniqueConstraintNamePropertyDescriptor(Object object) {
+	protected void addConstraintsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Column_uniqueConstraintName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Column_uniqueConstraintName_feature", "_UI_Column_type"),
-				 MddePackage.Literals.COLUMN__UNIQUE_CONSTRAINT_NAME,
+				 getString("_UI_Column_constraints_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Column_constraints_feature", "_UI_Column_type"),
+				 MddePackage.Literals.COLUMN__CONSTRAINTS,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
@@ -276,11 +252,9 @@ public class ColumnItemProvider extends NamedElementItemProvider {
 		switch (notification.getFeatureID(Column.class)) {
 			case MddePackage.COLUMN__DEFAULT_VALUE:
 			case MddePackage.COLUMN__NOT_NULL:
-			case MddePackage.COLUMN__UNIQUE:
 			case MddePackage.COLUMN__AUTO_INCREMENT:
 			case MddePackage.COLUMN__SIZE:
 			case MddePackage.COLUMN__TYPE:
-			case MddePackage.COLUMN__UNIQUE_CONSTRAINT_NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

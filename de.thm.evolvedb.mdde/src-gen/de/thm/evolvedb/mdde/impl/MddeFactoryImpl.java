@@ -63,6 +63,9 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 			case MddePackage.NAMED_ELEMENT: return createNamedElement();
 			case MddePackage.DATABASE_SCHEMA: return createDatabase_Schema();
 			case MddePackage.COLUMN: return createColumn();
+			case MddePackage.UNIQUE_CONSTRAINT: return createUniqueConstraint();
+			case MddePackage.INDEX: return createIndex();
+			case MddePackage.COLUMN_CONSTRAINT: return createColumnConstraint();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -80,6 +83,8 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 				return createDataTypeFromString(eDataType, initialValue);
 			case MddePackage.REFERENTIAL_ACTION:
 				return createReferential_ActionFromString(eDataType, initialValue);
+			case MddePackage.SORT_SEQUENCE:
+				return createSortSequenceFromString(eDataType, initialValue);
 			case MddePackage.COLUMN_SIZE:
 				return createColumnSizeFromString(eDataType, initialValue);
 			default:
@@ -99,6 +104,8 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 				return convertDataTypeToString(eDataType, instanceValue);
 			case MddePackage.REFERENTIAL_ACTION:
 				return convertReferential_ActionToString(eDataType, instanceValue);
+			case MddePackage.SORT_SEQUENCE:
+				return convertSortSequenceToString(eDataType, instanceValue);
 			case MddePackage.COLUMN_SIZE:
 				return convertColumnSizeToString(eDataType, instanceValue);
 			default:
@@ -177,6 +184,36 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public UniqueConstraint createUniqueConstraint() {
+		UniqueConstraintImpl uniqueConstraint = new UniqueConstraintImpl();
+		return uniqueConstraint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Index createIndex() {
+		IndexImpl index = new IndexImpl();
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ColumnConstraint createColumnConstraint() {
+		ColumnConstraintImpl columnConstraint = new ColumnConstraintImpl();
+		return columnConstraint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DataType createDataTypeFromString(EDataType eDataType, String initialValue) {
 		DataType result = DataType.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -209,6 +246,26 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 	 * @generated
 	 */
 	public String convertReferential_ActionToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SortSequence createSortSequenceFromString(EDataType eDataType, String initialValue) {
+		SortSequence result = SortSequence.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertSortSequenceToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

@@ -597,8 +597,11 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.RENAME_COLUMN);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CHANGE_REFERENTIAL_ACTION);
-		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME);
+		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME);
+		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CREATE_INDEX_IN_TABLE);
+		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.ADD_COLUMN_TO_INDEX);
+		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.REMOVE_CONSTRAINT);
 
 		initEEnum(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.class, "PartiallyResolvableOperatorType");
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.DELETE_COLUMN);
@@ -608,7 +611,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_NOT_NULL);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_SIZE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_FOREIGNKEYS_TARGET_TABLE);
-		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_UNIQUE);
+		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_TYPE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_PRESERVE);
@@ -616,6 +619,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_NM_INTO_1N_PRESERVE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_TYPE_AND_SIZE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_MOVE);
+		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.ADD_COLUMN_UNIQUE_INDEX);
 
 		initEEnum(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.class, "NotAutomaticallyResolvableOperatorType");
 		addEEnumLiteral(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.MOVE_PRIMARY_KEY);

@@ -22,6 +22,8 @@ import java.util.List
 import de.thm.evolvedb.mdde.DataType
 import de.thm.evolvedb.migration.ColumnOptions
 import java.util.ArrayList
+import de.thm.evolvedb.mdde.Constraint
+import de.thm.evolvedb.mdde.UniqueConstraint
 
 class ColumnMigrationUtil {
 
@@ -31,9 +33,10 @@ class ColumnMigrationUtil {
 		DataType.TIME);
 	public static List<DataType> dateTypes = Arrays.asList(DataType.DATE, DataType.YEAR);
 	public static List<DataType> decimalTypes = Arrays.asList(DataType.DEC, DataType.DECIMAL, DataType.FLOAT,
-		DataType.DOUBLE);
+		DataType.DOUBLE, DataType.DOUBLE_UNSIGNED );
 	public static List<DataType> displayWitdhTypes = Arrays.asList(DataType.BIGINT, DataType.INT, DataType.INTEGER,
-		DataType.SMALLINT, DataType.MEDIUMINT);
+		DataType.SMALLINT, DataType.MEDIUMINT, DataType.BIGINT_UNSIGNED, DataType.INT_UNSIGNED, DataType.INTEGER_UNSIGNED,
+		DataType.SMALLINT_UNSIGNED, DataType.MEDIUMINT_UNSIGNED);
 	public static List<DataType> binaryTypes = Arrays.asList(DataType.BINARY, DataType.VARBINARY, DataType.BLOB,
 		DataType.TINYBLOB, DataType.BIT, DataType.MEDIUMBLOB, DataType.LONGBLOB);
 
@@ -1668,7 +1671,7 @@ class ColumnMigrationUtil {
 		var List<ColumnOptions> migrationOptions = new ArrayList<ColumnOptions>();
 		migrationOptions.addAll(ColumnOptions.IGNORE, ColumnOptions.DELETE_ROW)
 
-		if (objB.defaultValue !== null && !objB.unique)
+		if (objB.defaultValue !== null) // && !objB.unique TODO
 			migrationOptions.addAll(
 				ColumnOptions.UPDATE_COLUMN_SET_TO_DEFAULT,
 				ColumnOptions.UPDATE_ROW_SET_TO_DEFAULT
@@ -2266,7 +2269,7 @@ class ColumnMigrationUtil {
 				migrationOptions.addAll(
 					ColumnOptions.IGNORE
 				)
-				if (objB.defaultValue !== null && !objB.unique)
+				if (objB.defaultValue !== null ) //&& !objB.unique TODO
 					migrationOptions.addAll(
 						ColumnOptions.UPDATE_COLUMN_SET_TO_DEFAULT,
 						ColumnOptions.UPDATE_ROW_SET_TO_DEFAULT
@@ -2289,7 +2292,7 @@ class ColumnMigrationUtil {
 				migrationOptions.addAll(
 					ColumnOptions.IGNORE
 				)
-				if (objB.defaultValue !== null && !objB.unique)
+				if (objB.defaultValue !== null) // && !objB.unique TODO
 					migrationOptions.addAll(
 						ColumnOptions.UPDATE_COLUMN_SET_TO_DEFAULT,
 						ColumnOptions.UPDATE_ROW_SET_TO_DEFAULT
@@ -2314,24 +2317,30 @@ class ColumnMigrationUtil {
 	 */
 	def static List<ColumnOptions> checkColumnUniqueCompatibility(Column objA, Column objB) {
 		var List<ColumnOptions> migrationOptions = new ArrayList<ColumnOptions>();
-
-		if (!objB.unique) {
-			return migrationOptions;
-		} else {
-
-			migrationOptions.addAll(
-				ColumnOptions.IGNORE
-			)
-			if (!objB.notNull)
-				migrationOptions.addAll(
-					ColumnOptions.DELETE_ROW,
-					ColumnOptions.UPDATE_COLUMN_SET_TO_NULL,
-					ColumnOptions.UPDATE_ROW_SET_TO_NULL
-				)
-				
-			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
-
-		}
+		
+//		for(Constraint c :objB.constraints.filter[it instanceof UniqueConstraint]){
+//			
+//		}
+//		 TODO
+//
+//
+//		if (!objB.unique) {
+//			return migrationOptions;
+//		} else {
+//
+//			migrationOptions.addAll(
+//				ColumnOptions.IGNORE
+//			)
+//			if (!objB.notNull)
+//				migrationOptions.addAll(
+//					ColumnOptions.DELETE_ROW,
+//					ColumnOptions.UPDATE_COLUMN_SET_TO_NULL,
+//					ColumnOptions.UPDATE_ROW_SET_TO_NULL
+//				)
+//				
+//			migrationOptions.add(ColumnOptions.SPECIFY_CONDITION_MANUALLY)
+//
+//		}
 
 		return migrationOptions
 	}

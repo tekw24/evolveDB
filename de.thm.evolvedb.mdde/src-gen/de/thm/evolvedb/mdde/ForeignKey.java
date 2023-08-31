@@ -3,7 +3,6 @@
 package de.thm.evolvedb.mdde;
 
 import java.util.Map;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 
 /**
@@ -25,6 +24,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  *
  * @see de.thm.evolvedb.mdde.MddePackage#getForeignKey()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='ForeignKeyHasToReferenceAKeyColumn'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot ForeignKeyHasToReferenceAKeyColumn='Tuple {\n\tmessage : String = \'The referenced column should not be empty!\',\n\tstatus : Boolean = self.referencedTable-&gt; notEmpty()\n}.status'"
  * @generated
  */
 public interface ForeignKey extends Column {
@@ -177,10 +177,9 @@ public interface ForeignKey extends Column {
 	boolean validateConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='Tuple {\n\tmessage : String = \'The referenced column should not be empty!\',\n\tstatus : Boolean = self.referencedTable-&gt; notEmpty()\n}.status'"
-	 * @generated
+	 * @param diagnostics
+	 * @param context
+	 * @return
 	 */
 	boolean ForeignKeyHasToReferenceAKeyColumn(DiagnosticChain diagnostics, Map<Object, Object> context);
 

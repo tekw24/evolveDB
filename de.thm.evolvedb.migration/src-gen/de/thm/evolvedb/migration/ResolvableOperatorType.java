@@ -109,14 +109,14 @@ public enum ResolvableOperatorType implements Enumerator {
 	CHANGE_REFERENTIAL_ACTION(8, "CHANGE_REFERENTIAL_ACTION", "CHANGE_REFERENTIAL_ACTION"),
 
 	/**
-	 * The '<em><b>SET ATTRIBUTE UNIQUE CONSTRAINT NAME</b></em>' literal object.
+	 * The '<em><b>SET ATTRIBUTE CONSTRAINT NAME</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME_VALUE
+	 * @see #SET_ATTRIBUTE_CONSTRAINT_NAME_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(9, "SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME", "SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME"), /**
+	SET_ATTRIBUTE_CONSTRAINT_NAME(9, "SET_ATTRIBUTE_CONSTRAINT_NAME", "SET_ATTRIBUTE_CONSTRAINT_NAME"), /**
 	 * The '<em><b>SET ATTRIBUTE FOREIGNKEY CONSTRAINT NAME</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -124,7 +124,31 @@ public enum ResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME(10, "SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME", "SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME");
+	SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME(10, "SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME", "SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME"), /**
+	 * The '<em><b>CREATE INDEX IN TABLE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_INDEX_IN_TABLE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CREATE_INDEX_IN_TABLE(11, "CREATE_INDEX_IN_TABLE", "CREATE_INDEX_IN_TABLE"), /**
+	 * The '<em><b>ADD COLUMN TO INDEX</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_COLUMN_TO_INDEX_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ADD_COLUMN_TO_INDEX(12, "ADD_COLUMN_TO_INDEX", "ADD_COLUMN_TO_INDEX"), /**
+	 * The '<em><b>REMOVE CONSTRAINT</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_CONSTRAINT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	REMOVE_CONSTRAINT(13, "REMOVE_CONSTRAINT", "REMOVE_CONSTRAINT");
 
 	/**
 	 * The '<em><b>CREATE TABLE</b></em>' literal value.
@@ -226,15 +250,15 @@ public enum ResolvableOperatorType implements Enumerator {
 	public static final int CHANGE_REFERENTIAL_ACTION_VALUE = 8;
 
 	/**
-	 * The '<em><b>SET ATTRIBUTE UNIQUE CONSTRAINT NAME</b></em>' literal value.
+	 * The '<em><b>SET ATTRIBUTE CONSTRAINT NAME</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME
+	 * @see #SET_ATTRIBUTE_CONSTRAINT_NAME
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME_VALUE = 9;
+	public static final int SET_ATTRIBUTE_CONSTRAINT_NAME_VALUE = 9;
 
 	/**
 	 * The '<em><b>SET ATTRIBUTE FOREIGNKEY CONSTRAINT NAME</b></em>' literal value.
@@ -246,6 +270,39 @@ public enum ResolvableOperatorType implements Enumerator {
 	 * @ordered
 	 */
 	public static final int SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME_VALUE = 10;
+
+	/**
+	 * The '<em><b>CREATE INDEX IN TABLE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_INDEX_IN_TABLE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CREATE_INDEX_IN_TABLE_VALUE = 11;
+
+	/**
+	 * The '<em><b>ADD COLUMN TO INDEX</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_COLUMN_TO_INDEX
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ADD_COLUMN_TO_INDEX_VALUE = 12;
+
+	/**
+	 * The '<em><b>REMOVE CONSTRAINT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_CONSTRAINT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REMOVE_CONSTRAINT_VALUE = 13;
 
 	/**
 	 * An array of all the '<em><b>Resolvable Operator Type</b></em>' enumerators.
@@ -264,8 +321,11 @@ public enum ResolvableOperatorType implements Enumerator {
 			SET_COLUMN_AUTO_INCREMENT,
 			RENAME_COLUMN,
 			CHANGE_REFERENTIAL_ACTION,
-			SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME,
+			SET_ATTRIBUTE_CONSTRAINT_NAME,
 			SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME,
+			CREATE_INDEX_IN_TABLE,
+			ADD_COLUMN_TO_INDEX,
+			REMOVE_CONSTRAINT,
 		};
 
 	/**
@@ -331,8 +391,11 @@ public enum ResolvableOperatorType implements Enumerator {
 			case SET_COLUMN_AUTO_INCREMENT_VALUE: return SET_COLUMN_AUTO_INCREMENT;
 			case RENAME_COLUMN_VALUE: return RENAME_COLUMN;
 			case CHANGE_REFERENTIAL_ACTION_VALUE: return CHANGE_REFERENTIAL_ACTION;
-			case SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME_VALUE: return SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME;
+			case SET_ATTRIBUTE_CONSTRAINT_NAME_VALUE: return SET_ATTRIBUTE_CONSTRAINT_NAME;
 			case SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME_VALUE: return SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME;
+			case CREATE_INDEX_IN_TABLE_VALUE: return CREATE_INDEX_IN_TABLE;
+			case ADD_COLUMN_TO_INDEX_VALUE: return ADD_COLUMN_TO_INDEX;
+			case REMOVE_CONSTRAINT_VALUE: return REMOVE_CONSTRAINT;
 		}
 		return null;
 	}

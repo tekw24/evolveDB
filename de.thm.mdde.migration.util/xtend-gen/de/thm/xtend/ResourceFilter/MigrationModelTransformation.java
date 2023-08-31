@@ -17,14 +17,22 @@
 package de.thm.xtend.ResourceFilter;
 
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.ColumnConstraint;
+import de.thm.evolvedb.mdde.Constraint;
+import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
+import de.thm.evolvedb.mdde.Index;
 import de.thm.evolvedb.mdde.Table;
+import de.thm.evolvedb.mdde.UniqueConstraint;
 import de.thm.evolvedb.migration.ColumnOptions;
 import de.thm.evolvedb.migration.Migration;
+import de.thm.evolvedb.migration.MigrationFactory;
+import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.PartiallyResolvable;
 import de.thm.evolvedb.migration.PartiallyResolvableOperatorType;
 import de.thm.evolvedb.migration.ResolvableOperator;
 import de.thm.evolvedb.migration.ResolvableOperatorType;
+import de.thm.evolvedb.migration.SchemaModificationOperator;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -36,11 +44,17 @@ import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.RemoveObject;
+import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
 @SuppressWarnings("all")
 public class MigrationModelTransformation {
+  protected MigrationPackage migrationPackage = MigrationPackage.eINSTANCE;
+
+  protected MigrationFactory migrationFactory = this.migrationPackage.getMigrationFactory();
+
   public void runMigrtaionTransformation(final Resource resXtendModelFile, final Resource resSymmetricModel) {
     final Function1<EObject, Boolean> _function = (EObject it) -> {
       return Boolean.valueOf((it instanceof Migration));
@@ -50,7 +64,10 @@ public class MigrationModelTransformation {
     this.transformNewTableOperator(migration);
     this.transformRenameOperator(migration);
     this.setMigrationOptionFor1N_NM_Rule(migration);
-    this.removeUniqueConstraintName(migration);
+    this.removeDatabaseSchemaChange(migration);
+    this.transformConstraints(migration);
+    this.transformIndexConstraints(migration);
+    this.transformNewIndexOperator(migration);
     final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
       return Boolean.valueOf((it instanceof SymmetricDifference));
     };
@@ -60,29 +77,150 @@ public class MigrationModelTransformation {
     migration.setUriSymetricDifferenceModel(resSymmetricModel.getURI().toString());
   }
 
-  public void removeUniqueConstraintName(final Migration migration) {
+  /**
+   * Database schema name changes are currently not in the scope.
+   */
+  public void removeDatabaseSchemaChange(final Migration migration) {
     EList<ResolvableOperator> resolvableOperators = migration.getResolvableSMO();
     final Function1<ResolvableOperator, Boolean> _function = (ResolvableOperator it) -> {
-      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME));
+      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.RENAME_TABLE));
     };
-    List<ResolvableOperator> uniqueConstraintName = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
-    for (final ResolvableOperator rO : uniqueConstraintName) {
+    List<ResolvableOperator> rename = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
+    for (final ResolvableOperator rO : rename) {
       {
         final Function1<Change, Boolean> _function_1 = (Change it) -> {
           return Boolean.valueOf((it instanceof AttributeValueChange));
         };
         Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
         AttributeValueChange ad = ((AttributeValueChange) _findFirst);
-        EObject _objA = ad.getObjA();
-        if ((_objA instanceof Column)) {
-          EObject _objA_1 = ad.getObjA();
-          Column objA = ((Column) _objA_1);
-          if (((objA.getUniqueConstraintName() == null) || (objA.getUniqueConstraintName() == ""))) {
-            migration.getSchemaModificationOperators().remove(rO);
+        EObject _objB = ad.getObjB();
+        if ((_objB instanceof Database_Schema)) {
+          migration.getSchemaModificationOperators().remove(rO);
+        }
+      }
+    }
+  }
+
+  /**
+   * Constraints can be either Indexes or Unique Constraints. Both have to be resolved seperately.
+   */
+  public void transformConstraints(final Migration migration) {
+    EList<ResolvableOperator> resolvableOperators = migration.getResolvableSMO();
+    final Function1<ResolvableOperator, Boolean> _function = (ResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.CREATE_INDEX_IN_TABLE));
+    };
+    List<ResolvableOperator> createIndex = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
+    for (final ResolvableOperator resolvable : createIndex) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(resolvable.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        AddObject ad = ((AddObject) _findFirst);
+        Constraint constraint = null;
+        SchemaModificationOperator smo = null;
+        EObject _obj = ad.getObj();
+        if ((_obj instanceof UniqueConstraint)) {
+          EObject _obj_1 = ad.getObj();
+          UniqueConstraint uniqueConstraint = ((UniqueConstraint) _obj_1);
+          migration.getSchemaModificationOperators().remove(resolvable);
+          EObject _create = this.migrationFactory.create(
+            this.migrationPackage.getPartiallyResolvable());
+          PartiallyResolvable partiallyResolvable = ((PartiallyResolvable) _create);
+          partiallyResolvable.setDisplayName(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT);
+          partiallyResolvable.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+          migration.getSchemaModificationOperators().add(partiallyResolvable);
+          constraint = uniqueConstraint;
+          smo = partiallyResolvable;
+        } else {
+          EObject _obj_2 = ad.getObj();
+          if ((_obj_2 instanceof Index)) {
+            EObject _obj_3 = ad.getObj();
+            Index index = ((Index) _obj_3);
+            constraint = index;
+            smo = resolvable;
+          }
+        }
+        if ((constraint != null)) {
+          final Function1<ResolvableOperator, Boolean> _function_2 = (ResolvableOperator it) -> {
+            return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.ADD_COLUMN_TO_INDEX));
+          };
+          List<ResolvableOperator> addColumnToIndex = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function_2));
+          for (final ResolvableOperator r0 : addColumnToIndex) {
+            {
+              List<SemanticChangeSet> sets = r0.getSemanticChangeSets();
+              for (final SemanticChangeSet set : sets) {
+                {
+                  final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                    return Boolean.valueOf((it instanceof AddReference));
+                  };
+                  Change _findFirst_1 = IterableExtensions.<Change>findFirst(set.getChanges(), _function_3);
+                  AddReference ar = ((AddReference) _findFirst_1);
+                  if ((ar.getSrc().equals(constraint) || ar.getTgt().equals(constraint))) {
+                    migration.getSchemaModificationOperators().remove(r0);
+                    EList<SemanticChangeSet> _semanticChangeSets = r0.getSemanticChangeSets();
+                    for (final SemanticChangeSet temp : _semanticChangeSets) {
+                      boolean _contains = smo.getSemanticChangeSets().contains(temp);
+                      boolean _not = (!_contains);
+                      if (_not) {
+                        smo.getSemanticChangeSets().add(temp);
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     }
+  }
+
+  public void transformIndexConstraints(final Migration migration) {
+    EList<ResolvableOperator> resolvableOperators = migration.getResolvableSMO();
+    final Function1<ResolvableOperator, Boolean> _function = (ResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.REMOVE_CONSTRAINT));
+    };
+    List<ResolvableOperator> createIndex = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
+    for (final ResolvableOperator resolvable : createIndex) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof RemoveObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(resolvable.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        RemoveObject removeObject = ((RemoveObject) _findFirst);
+        if ((removeObject != null)) {
+          ColumnConstraint columnConstraint = null;
+          EObject _obj = removeObject.getObj();
+          if ((_obj instanceof ColumnConstraint)) {
+            EObject _obj_1 = removeObject.getObj();
+            columnConstraint = ((ColumnConstraint) _obj_1);
+            for (final ResolvableOperator reference : createIndex) {
+              boolean _equals = reference.equals(resolvable);
+              boolean _not = (!_equals);
+              if (_not) {
+                final Function1<Change, Boolean> _function_2 = (Change it) -> {
+                  return Boolean.valueOf((it instanceof RemoveReference));
+                };
+                List<Change> changes = IterableExtensions.<Change>toList(IterableExtensions.<Change>filter(reference.getSemanticChangeSets().get(0).getChanges(), _function_2));
+                for (final Change change : changes) {
+                  {
+                    RemoveReference removeReference = ((RemoveReference) change);
+                    if ((removeReference.getSrc().equals(columnConstraint) || 
+                      removeReference.getTgt().equals(columnConstraint))) {
+                      migration.getSchemaModificationOperators().remove(reference);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void removeUniqueConstraintName(final Migration migration) {
   }
 
   public void transformRenameOperator(final Migration migration) {
@@ -101,6 +239,11 @@ public class MigrationModelTransformation {
         EObject _objB = ad.getObjB();
         if ((_objB instanceof Column)) {
           rO.setDisplayName(ResolvableOperatorType.RENAME_COLUMN);
+        } else {
+          EObject _objB_1 = ad.getObjB();
+          if ((_objB_1 instanceof Constraint)) {
+            rO.setDisplayName(ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME);
+          }
         }
       }
     }
@@ -152,6 +295,58 @@ public class MigrationModelTransformation {
                       migration.getSchemaModificationOperators().remove(partiallyResolvable);
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformNewIndexOperator(final Migration migration) {
+    EList<ResolvableOperator> resolvableOperators = migration.getResolvableSMO();
+    final Function1<ResolvableOperator, Boolean> _function = (ResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.CREATE_INDEX_IN_TABLE));
+    };
+    List<ResolvableOperator> createIndex = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
+    final Function1<ResolvableOperator, Boolean> _function_1 = (ResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(ResolvableOperatorType.ADD_COLUMN_TO_INDEX));
+    };
+    List<ResolvableOperator> addColumnIndex = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function_1));
+    resolvableOperators.removeAll(createIndex);
+    for (final ResolvableOperator rO : createIndex) {
+      {
+        final Function1<Change, Boolean> _function_2 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_2);
+        AddObject ad = ((AddObject) _findFirst);
+        EObject _obj = ad.getObj();
+        Constraint constraint = ((Constraint) _obj);
+        for (final ResolvableOperator resolvable : addColumnIndex) {
+          final Function1<SemanticChangeSet, Boolean> _function_3 = (SemanticChangeSet it) -> {
+            final Function1<Change, Boolean> _function_4 = (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof AddReference));
+            };
+            return Boolean.valueOf(IterableExtensions.<Change>exists(it.getChanges(), _function_4));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_3);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_4 = (Change it) -> {
+                return Boolean.valueOf((it instanceof AddReference));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_4);
+              AddReference a = ((AddReference) _findFirst_1);
+              EObject _src = a.getSrc();
+              if ((_src instanceof ColumnConstraint)) {
+                EObject _src_1 = a.getSrc();
+                ColumnConstraint c = ((ColumnConstraint) _src_1);
+                boolean _equals = c.getConstraint().equals(constraint);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
                 }
               }
             }

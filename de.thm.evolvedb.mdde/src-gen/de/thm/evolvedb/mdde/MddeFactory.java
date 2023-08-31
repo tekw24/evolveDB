@@ -76,6 +76,33 @@ public interface MddeFactory extends EFactory {
 	Column createColumn();
 
 	/**
+	 * Returns a new object of class '<em>Unique Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Unique Constraint</em>'.
+	 * @generated
+	 */
+	UniqueConstraint createUniqueConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Index</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Index</em>'.
+	 * @generated
+	 */
+	Index createIndex();
+
+	/**
+	 * Returns a new object of class '<em>Column Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Column Constraint</em>'.
+	 * @generated
+	 */
+	ColumnConstraint createColumnConstraint();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

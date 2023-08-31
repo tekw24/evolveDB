@@ -336,7 +336,87 @@ public enum DataType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	YEAR(31, "YEAR", "YEAR");
+	YEAR(31, "YEAR", "YEAR"), /**
+	 * The '<em><b>BIGINT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #BIGINT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	BIGINT_UNSIGNED(32, "BIGINT_UNSIGNED", "BIGINT UNSIGNED"), /**
+	 * The '<em><b>INT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #INT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	INT_UNSIGNED(33, "INT_UNSIGNED", "INT UNSIGNED"), /**
+	 * The '<em><b>INTEGER UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #INTEGER_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	INTEGER_UNSIGNED(34, "INTEGER_UNSIGNED", "INTEGER UNSIGNED"), /**
+	 * The '<em><b>TINYINT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #TINYINT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	TINYINT_UNSIGNED(35, "TINYINT_UNSIGNED", "TINYINT UNSIGNED"), /**
+	 * The '<em><b>SMALLINT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SMALLINT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SMALLINT_UNSIGNED(36, "SMALLINT_UNSIGNED", "SMALLINT UNSIGNED"), /**
+	 * The '<em><b>MEDIUMINT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #MEDIUMINT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	MEDIUMINT_UNSIGNED(37, "MEDIUMINT_UNSIGNED", "MEDIUMINT UNSIGNED"), /**
+	 * The '<em><b>FLOAT UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #FLOAT_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	FLOAT_UNSIGNED(38, "FLOAT_UNSIGNED", "FLOAT UNSIGNED"), /**
+	 * The '<em><b>DOUBLE UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DOUBLE_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DOUBLE_UNSIGNED(39, "DOUBLE_UNSIGNED", "DOUBLE UNSIGNED"), /**
+	 * The '<em><b>DECIMAL UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DECIMAL_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DECIMAL_UNSIGNED(40, "DECIMAL_UNSIGNED", "DECIMAL UNSIGNED"), /**
+	 * The '<em><b>DEC UNSIGNED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DEC_UNSIGNED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DEC_UNSIGNED(41, "DEC_UNSIGNED", "DEC UNSIGNED");
 
 	/**
 	 * The '<em><b>CHAR</b></em>' literal value.
@@ -691,6 +771,116 @@ public enum DataType implements Enumerator {
 	public static final int YEAR_VALUE = 31;
 
 	/**
+	 * The '<em><b>BIGINT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #BIGINT_UNSIGNED
+	 * @model literal="BIGINT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BIGINT_UNSIGNED_VALUE = 32;
+
+	/**
+	 * The '<em><b>INT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #INT_UNSIGNED
+	 * @model literal="INT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INT_UNSIGNED_VALUE = 33;
+
+	/**
+	 * The '<em><b>INTEGER UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #INTEGER_UNSIGNED
+	 * @model literal="INTEGER UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INTEGER_UNSIGNED_VALUE = 34;
+
+	/**
+	 * The '<em><b>TINYINT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #TINYINT_UNSIGNED
+	 * @model literal="TINYINT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TINYINT_UNSIGNED_VALUE = 35;
+
+	/**
+	 * The '<em><b>SMALLINT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SMALLINT_UNSIGNED
+	 * @model literal="SMALLINT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SMALLINT_UNSIGNED_VALUE = 36;
+
+	/**
+	 * The '<em><b>MEDIUMINT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #MEDIUMINT_UNSIGNED
+	 * @model literal="MEDIUMINT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int MEDIUMINT_UNSIGNED_VALUE = 37;
+
+	/**
+	 * The '<em><b>FLOAT UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #FLOAT_UNSIGNED
+	 * @model literal="FLOAT UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FLOAT_UNSIGNED_VALUE = 38;
+
+	/**
+	 * The '<em><b>DOUBLE UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DOUBLE_UNSIGNED
+	 * @model literal="DOUBLE UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DOUBLE_UNSIGNED_VALUE = 39;
+
+	/**
+	 * The '<em><b>DECIMAL UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DECIMAL_UNSIGNED
+	 * @model literal="DECIMAL UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DECIMAL_UNSIGNED_VALUE = 40;
+
+	/**
+	 * The '<em><b>DEC UNSIGNED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DEC_UNSIGNED
+	 * @model literal="DEC UNSIGNED"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEC_UNSIGNED_VALUE = 41;
+
+	/**
 	 * An array of all the '<em><b>Data Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -730,6 +920,16 @@ public enum DataType implements Enumerator {
 			TIMESTAMP,
 			TIME,
 			YEAR,
+			BIGINT_UNSIGNED,
+			INT_UNSIGNED,
+			INTEGER_UNSIGNED,
+			TINYINT_UNSIGNED,
+			SMALLINT_UNSIGNED,
+			MEDIUMINT_UNSIGNED,
+			FLOAT_UNSIGNED,
+			DOUBLE_UNSIGNED,
+			DECIMAL_UNSIGNED,
+			DEC_UNSIGNED,
 		};
 
 	/**
@@ -818,6 +1018,16 @@ public enum DataType implements Enumerator {
 			case TIMESTAMP_VALUE: return TIMESTAMP;
 			case TIME_VALUE: return TIME;
 			case YEAR_VALUE: return YEAR;
+			case BIGINT_UNSIGNED_VALUE: return BIGINT_UNSIGNED;
+			case INT_UNSIGNED_VALUE: return INT_UNSIGNED;
+			case INTEGER_UNSIGNED_VALUE: return INTEGER_UNSIGNED;
+			case TINYINT_UNSIGNED_VALUE: return TINYINT_UNSIGNED;
+			case SMALLINT_UNSIGNED_VALUE: return SMALLINT_UNSIGNED;
+			case MEDIUMINT_UNSIGNED_VALUE: return MEDIUMINT_UNSIGNED;
+			case FLOAT_UNSIGNED_VALUE: return FLOAT_UNSIGNED;
+			case DOUBLE_UNSIGNED_VALUE: return DOUBLE_UNSIGNED;
+			case DECIMAL_UNSIGNED_VALUE: return DECIMAL_UNSIGNED;
+			case DEC_UNSIGNED_VALUE: return DEC_UNSIGNED;
 		}
 		return null;
 	}

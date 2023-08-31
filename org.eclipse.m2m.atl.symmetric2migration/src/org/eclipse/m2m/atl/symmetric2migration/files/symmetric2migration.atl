@@ -93,8 +93,17 @@ helper def: resolvableRules : Sequence(String) =
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION',
-			'SET_ATTRIBUTE_Column_UniqueConstraintName',
-			'SET_ATTRIBUTE_ForeignKey_ConstraintName'
+			'SET_ATTRIBUTE_ForeignKey_ConstraintName',
+			'CREATE_Index_IN_Table_(constraints)',
+			'DELETE_Index_IN_Table_(constraints)',
+			'DELETE_UniqueConstraint_IN_Table_(constraints)',
+			'REMOVE_Column_(constraints)_TGT_ColumnConstraint',
+			'SET_REFERENCE_ColumnConstraint_(column)_TGT_Column',
+			'CREATE_ColumnConstraint_IN_Constraint_(columns)',
+			'DELETE_ColumnConstraint_IN_Constraint_(columns)',
+			'ADD_Column_(constraints)_TGT_ColumnConstraint'
+			
+			
 			
 			};
 
@@ -130,12 +139,19 @@ helper def: resolvableEnumType : Map(String, Migration!ResolvableOperatorType) =
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
 		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('SET_ATTRIBUTE_Column_UniqueConstraintName', #SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME),
-		('SET_ATTRIBUTE_ForeignKey_ConstraintName', #SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME)
+		('SET_ATTRIBUTE_ForeignKey_ConstraintName', #SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME),
+		('CREATE_Index_IN_Table_(constraints)', #CREATE_INDEX_IN_TABLE),
+		('REMOVE_Column_(constraints)_TGT_ColumnConstraint', #REMOVE_CONSTRAINT),
+		('DELETE_Index_IN_Table_(constraints)',#REMOVE_CONSTRAINT),
+		('DELETE_UniqueConstraint_IN_Table_(constraints)',#REMOVE_CONSTRAINT),
+		('SET_REFERENCE_ColumnConstraint_(column)_TGT_Column',#ADD_COLUMN_TO_INDEX),
+		('CREATE_ColumnConstraint_IN_Constraint_(columns)',#ADD_COLUMN_TO_INDEX),
+		('DELETE_ColumnConstraint_IN_Constraint_(columns)', #REMOVE_CONSTRAINT),
+		('ADD_Column_(constraints)_TGT_ColumnConstraint', #ADD_COLUMN_TO_INDEX)
 		
 		
 		
-			
+		
 	};
 	
 
@@ -154,7 +170,9 @@ helper def: partiallyResolvableRules : Sequence(String) =
 			'CHANGE_1N_INTO_NM_MOVE',
 			'CHANGE_NM_INTO_1N',
 			'CHANGE_NM_INTO_1N_PRESERVE',
-			'SET_ATTRIBUTE_Column_Size_and_Type'
+			'SET_ATTRIBUTE_Column_Size_and_Type',
+			'CREATE_UniqueConstraint_IN_Table_(constraints)'
+			
 			};
 
 helper def: partiallyResolvableEnumType : Map(String, Migration!PartiallyResolvableOperatorType) =  
@@ -167,6 +185,7 @@ helper def: partiallyResolvableEnumType : Map(String, Migration!PartiallyResolva
 		('SET_ATTRIBUTE_Column_Unique', #SET_COLUMN_UNIQUE),
 		('SET_ATTRIBUTE_Column_Type', #SET_COLUMN_TYPE),
 		('SET_ATTRIBUTE_Column_Size_and_Type', #SET_COLUMN_TYPE_AND_SIZE),
+		('CREATE_UniqueConstraint_IN_Table_(constraints)', #CREATE_UNIQUE_CONSTRAINT),
 		
 		
 		('SET_REFERENCE_ForeignKey_(referencedTable)_TGT_Table', #SET_FOREIGNKEYS_TARGET_TABLE),

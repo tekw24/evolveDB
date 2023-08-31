@@ -16,9 +16,11 @@
  */
 package de.thm.mdde.controller;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +32,18 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.thm.de.util.DataTypeUtil;
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.ColumnConstraint;
+import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
+import de.thm.evolvedb.mdde.Index;
 import de.thm.evolvedb.mdde.MddeFactory;
 import de.thm.evolvedb.mdde.MddePackage;
 import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Referential_Action;
+import de.thm.evolvedb.mdde.SortSequence;
 import de.thm.evolvedb.mdde.Table;
+import de.thm.evolvedb.mdde.UniqueConstraint;
 
 public class MDDEModelCreator {
 
@@ -80,13 +87,32 @@ public class MDDEModelCreator {
 				ResultSet foreignKeys = dmd.getImportedKeys(schema, null, tableName);
 				ResultSet indices = dmd.getIndexInfo(schema, null, tableName, true, false);
 
+				ResultSet indexConstraints = dmd.getIndexInfo(schema, null, tableName, false, false);
+
+				Map<String, List<String>> uniqueIndex = new TreeMap<String, List<String>>();
+				Map<String, List<IndexInfo>> columnindex = new TreeMap<String, List<IndexInfo>>();
+
 				while (indices.next()) {
 					System.out.println(indices.getString("COLUMN_NAME"));
 					System.out.println(indices.getString("INDEX_NAME"));
 					System.out.println(indices.getString("TABLE_NAME"));
+					
+					if(indices.getString("INDEX_NAME").equals("PRIMARY")) {
+						continue;
+					}
+					
+
 					System.out.println(indices.getShort("TYPE"));
 					System.out.println(indices.getString("ASC_OR_DESC"));
 					System.out.println(indices.getString("INDEX_QUALIFIER"));
+
+					Long qualifier = indices.getLong("CARDINALITY");
+					if (qualifier != null && qualifier > 0)
+						System.out.println("Stop");
+
+					Long pages = indices.getLong("PAGES");
+					if (pages != null && qualifier > 0)
+						System.out.println("Stop");
 
 					System.out.println("tableIndexStatistic " + DatabaseMetaData.tableIndexStatistic);
 					System.out.println("tableIndexClustered  " + DatabaseMetaData.tableIndexClustered);
@@ -94,9 +120,110 @@ public class MDDEModelCreator {
 					System.out.println("tableIndexOther " + DatabaseMetaData.tableIndexOther);
 
 					if (indices.getShort("TYPE") == DatabaseMetaData.tableIndexOther) {
+						String name = indices.getString("INDEX_NAME");
 						index.put(indices.getString("COLUMN_NAME"), indices.getString("INDEX_NAME"));
+
+						if (uniqueIndex.containsKey(name))
+							uniqueIndex.get(name).add(indices.getString("COLUMN_NAME"));
+						else {
+							ArrayList<String> columns = new ArrayList<>();
+							columns.add(indices.getString("COLUMN_NAME"));
+							uniqueIndex.put(name, columns);
+						}
 					}
 
+				}
+
+				while (indexConstraints.next()) {
+					System.out.println(indexConstraints.getString("COLUMN_NAME"));
+					System.out.println(indexConstraints.getString("INDEX_NAME"));
+					System.out.println(indexConstraints.getString("TABLE_NAME"));
+					System.out.println(indexConstraints.getShort("TYPE"));
+					System.out.println(indexConstraints.getString("ASC_OR_DESC"));
+					System.out.println(indexConstraints.getString("INDEX_QUALIFIER"));
+
+					System.out.println("tableIndexStatistic " + DatabaseMetaData.tableIndexStatistic);
+					System.out.println("tableIndexClustered  " + DatabaseMetaData.tableIndexClustered);
+					System.out.println("tableIndexHashed  " + DatabaseMetaData.tableIndexHashed);
+					System.out.println("tableIndexOther " + DatabaseMetaData.tableIndexOther);
+
+					System.out.println(indexConstraints.getString("FILTER_CONDITION"));
+					System.out.println(indexConstraints.getShort("ORDINAL_POSITION"));
+					
+					String name = indexConstraints.getString("INDEX_NAME");
+					//The method returns all Index Constraints whether unique or not
+					if(uniqueIndex.containsKey(name))
+						continue;
+
+					String asc_or_desc = indexConstraints.getString("ASC_OR_DESC");
+
+					SortSequence sortSequence = null;
+					if (asc_or_desc != null) {
+
+						switch (asc_or_desc) {
+						case "A":
+							sortSequence = SortSequence.ASCENDING;
+							break;
+						case "D":
+							sortSequence = SortSequence.DESCENDING;
+							break;
+
+						default:
+							sortSequence = SortSequence.ASCENDING;
+							break;
+						}
+
+					}
+
+					Long qualifier = indexConstraints.getLong("CARDINALITY");
+					if (qualifier != null && qualifier > 0)
+						System.out.println("Stop");
+
+					Long pages = indexConstraints.getLong("PAGES");
+					if (pages != null && qualifier > 0)
+						System.out.println("Stop");
+
+					IndexInfo indexInfo = new IndexInfo(indexConstraints.getString("COLUMN_NAME"), 0L, sortSequence);
+					
+					if (columnindex.containsKey(name)) {
+
+						columnindex.get(name).add(indexInfo);
+					} else {
+						ArrayList<IndexInfo> columns = new ArrayList<>();
+						columns.add(indexInfo);
+						columnindex.put(name, columns);
+					}
+
+				}
+
+				// get index subparts
+				if (columnindex.size() > 0) {
+					Connection con = dmd.getConnection();
+					Statement stm = con.createStatement();
+
+					String query = "SHOW INDEXES FROM " + tableName + " where Sub_part > 0";
+					ResultSet set = stm.executeQuery(query);
+
+					while (set.next()) {
+						System.out.println("SubPart " + set.getString("Key_name"));
+						System.out.println("SubPart " + set.getString("Column_name"));
+						System.out.println("SubPart " + set.getLong("Sub_part"));
+						Long subPart = set.getLong("Sub_part");
+
+						if (subPart != null && subPart > 0) {
+							String columnName = set.getString("Column_name");
+							String keyString = set.getString("Key_name");
+							List<IndexInfo> indexInfos = columnindex.get(keyString);
+							if(indexInfos == null)
+								continue;
+							for (IndexInfo i : indexInfos) {
+								if (i.getColumnName().equals(columnName)) {
+									i.setLength(subPart);
+								}
+							}
+						}
+
+					}
 				}
 
 				Map<String, Column> attributeMap = new TreeMap<String, Column>();
@@ -177,10 +304,10 @@ public class MDDEModelCreator {
 						attribute.setNotNull(!rsAttributes.getString("IS_NULLABLE").equals("YES"));
 						attributeMap.put(rsAttributes.getString("COLUMN_NAME"), attribute);
 						// Check if the column has the uniqe flag
-						if (index.containsKey(attribute.getName())) {
-							attribute.setUnique(true);
-							attribute.setUniqueConstraintName(index.get(attribute.getName()));
-						}
+//						if (index.containsKey(attribute.getName())) {
+//							attribute.setUnique(true);
+//							attribute.setUniqueConstraintName(index.get(attribute.getName()));
+//						}
 
 					} else {
 						ForeignKey key = (ForeignKey) attributeMap.get(rsAttributes.getString("COLUMN_NAME"));
@@ -190,13 +317,48 @@ public class MDDEModelCreator {
 						key.setNotNull(!rsAttributes.getString("IS_NULLABLE").equals("YES"));
 
 						// Check if the column has the uniqe flag
-						if (index.containsKey(key.getName())) {
-							key.setUnique(true);
-							key.setUniqueConstraintName(index.get(key.getName()));
-						}
+//						if (index.containsKey(key.getName())) {
+//							key.setUnique(true);
+//							key.setUniqueConstraintName(index.get(key.getName()));
+//						}
 
 					}
 
+				}
+
+				// Add Unique Constraints
+				for (Entry<String, List<String>> entry : uniqueIndex.entrySet()) {
+					UniqueConstraint unique = (UniqueConstraint) mddeFactory.create(mddePackage.getUniqueConstraint());
+					unique.setName(entry.getKey());
+					table.getConstraints().add(unique);
+					unique.setTable(table);
+
+					for (String name : entry.getValue()) {
+						Column column = attributeMap.get(name);
+						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory.create(mddePackage.getColumnConstraint());
+						unique.getColumns().add(columnConstraint);
+						column.getConstraints().add(columnConstraint);
+						columnConstraint.setColumn(column);
+						columnConstraint.setConstraint(unique);
+					}
+				}
+
+				// Add index constraints
+				for (Entry<String, List<IndexInfo>> entry : columnindex.entrySet()) {
+					Index indexconstraint = (Index) mddeFactory.create(mddePackage.getIndex());
+					indexconstraint.setName(entry.getKey());
+					table.getConstraints().add(indexconstraint);
+					indexconstraint.setTable(table);
+
+					for (IndexInfo indexInfo : entry.getValue()) {
+						Column column = attributeMap.get(indexInfo.getColumnName());
+						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory.create(mddePackage.getColumnConstraint());
+						columnConstraint.setLength(indexInfo.getLength());
+						indexconstraint.getColumns().add(columnConstraint);
+						column.getConstraints().add(columnConstraint);
+						columnConstraint.setColumn(column);
+						columnConstraint.setConstraint(indexconstraint);
+					}
 				}
 
 				for (String name : primaryKeyNames) {
@@ -276,7 +438,62 @@ public class MDDEModelCreator {
 				// No fractional digits
 				column.setSize(String.valueOf(0));
 			}
+		} else if (!DataTypeUtil.typesWithoutSize.contains(column.getType())) {
+			column.setSize(String.valueOf(rsAttributes.getInt("COLUMN_SIZE")));
 		}
+	}
+
+	private class IndexInfo {
+		String columnName;
+		Long length;
+		SortSequence sortSequence;
+
+		/**
+		 * @param columnName
+		 * @param sortSequence
+		 */
+		public IndexInfo(String columnName, SortSequence sortSequence) {
+			super();
+			this.columnName = columnName;
+			this.sortSequence = sortSequence;
+		}
+
+		/**
+		 * @param columnName
+		 * @param length
+		 * @param sortSequence
+		 */
+		public IndexInfo(String columnName, Long length, SortSequence sortSequence) {
+			super();
+			this.columnName = columnName;
+			this.length = length;
+			this.sortSequence = sortSequence;
+		}
+
+		public String getColumnName() {
+			return columnName;
+		}
+
+		public void setColumnName(String columnName) {
+			this.columnName = columnName;
+		}
+
+		public Long getLength() {
+			return length;
+		}
+
+		public void setLength(Long length) {
+			this.length = length;
+		}
+
+		public SortSequence getSortSequence() {
+			return sortSequence;
+		}
+
+		public void setSortSequence(SortSequence sortSequence) {
+			this.sortSequence = sortSequence;
+		}
+
 	}
 
 }

@@ -5,12 +5,9 @@ package de.thm.evolvedb.mdde.util;
 import de.thm.evolvedb.mdde.*;
 
 import java.util.Map;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.EObjectValidator;
@@ -42,60 +39,12 @@ public class MddeValidator extends EObjectValidator {
 	public static final String DIAGNOSTIC_SOURCE = "de.thm.evolvedb.mdde";
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Only One Auto Increment Column' of 'Table'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int TABLE__ONLY_ONE_AUTO_INCREMENT_COLUMN = 1;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Non Key Auto Increment Column' of 'Table'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int TABLE__NON_KEY_AUTO_INCREMENT_COLUMN = 2;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Table Requires AKey Column' of 'Table'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int TABLE__TABLE_REQUIRES_AKEY_COLUMN = 3;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Table Requires At Least One Column' of 'Table'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int TABLE__TABLE_REQUIRES_AT_LEAST_ONE_COLUMN = 4;
-
-	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Constraint Name' of 'Foreign Key'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int FOREIGN_KEY__VALIDATE_CONSTRAINT_NAME = 5;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Foreign Key Has To Reference AKey Column' of 'Foreign Key'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int FOREIGN_KEY__FOREIGN_KEY_HAS_TO_REFERENCE_AKEY_COLUMN = 6;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Name Not Null' of 'Named Element'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int NAMED_ELEMENT__NAME_NOT_NULL = 7;
+	public static final int FOREIGN_KEY__VALIDATE_CONSTRAINT_NAME = 1;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Default Value' of 'Column'.
@@ -103,7 +52,7 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int COLUMN__VALIDATE_DEFAULT_VALUE = 8;
+	public static final int COLUMN__VALIDATE_DEFAULT_VALUE = 2;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Size Value' of 'Column'.
@@ -111,7 +60,7 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int COLUMN__VALIDATE_SIZE_VALUE = 9;
+	public static final int COLUMN__VALIDATE_SIZE_VALUE = 3;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Constraint Name' of 'Column'.
@@ -119,7 +68,15 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME = 10;
+	public static final int COLUMN__VALIDATE_UNIQUE_CONSTRAINT_NAME = 4;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Constraint Name' of 'Constraint'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int CONSTRAINT__VALIDATE_UNIQUE_CONSTRAINT_NAME = 5;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -127,7 +84,7 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 10;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 5;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -136,16 +93,6 @@ public class MddeValidator extends EObjectValidator {
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
-
-	/**
-	 * Delegates evaluation of the given invariant expression against the object in the given context.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context, String validationDelegate, EOperation invariant, String expression, int severity, String source, int code) {
-		return EObjectValidator.validate(eClass, eObject, diagnostics, context, validationDelegate, invariant, expression, severity, source, code);
-	}
 
 	/**
 	 * Creates an instance of the switch.
@@ -190,10 +137,20 @@ public class MddeValidator extends EObjectValidator {
 				return validateDatabase_Schema((Database_Schema)value, diagnostics, context);
 			case MddePackage.COLUMN:
 				return validateColumn((Column)value, diagnostics, context);
+			case MddePackage.CONSTRAINT:
+				return validateConstraint((Constraint)value, diagnostics, context);
+			case MddePackage.UNIQUE_CONSTRAINT:
+				return validateUniqueConstraint((UniqueConstraint)value, diagnostics, context);
+			case MddePackage.INDEX:
+				return validateIndex((Index)value, diagnostics, context);
+			case MddePackage.COLUMN_CONSTRAINT:
+				return validateColumnConstraint((ColumnConstraint)value, diagnostics, context);
 			case MddePackage.DATA_TYPE:
 				return validateDataType((DataType)value, diagnostics, context);
 			case MddePackage.REFERENTIAL_ACTION:
 				return validateReferential_Action((Referential_Action)value, diagnostics, context);
+			case MddePackage.SORT_SEQUENCE:
+				return validateSortSequence((SortSequence)value, diagnostics, context);
 			case MddePackage.COLUMN_SIZE:
 				return validateColumnSize((String)value, diagnostics, context);
 			default:
@@ -220,9 +177,19 @@ public class MddeValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateTable_TableRequiresAtLeastOneColumn(table, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTable_OnlyOneAutoIncrementColumn(table, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTable_NonKeyAutoIncrementColumn(table, diagnostics, context);
-		if (result || diagnostics != null) result &= validateTable_TableRequiresAKeyColumn(table, diagnostics, context);
 		return result;
 	}
+
+	/**
+	 * The cached validation expression for the TableRequiresAtLeastOneColumn constraint of '<em>Table</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String TABLE__TABLE_REQUIRES_AT_LEAST_ONE_COLUMN__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'The Table ' + Table.name + ' requires at least one column!',\n" +
+		"\tstatus : Boolean = self.columns->notEmpty()\n" +
+		"}.status";
 
 	/**
 	 * Validates the TableRequiresAtLeastOneColumn constraint of '<em>Table</em>'.
@@ -230,20 +197,19 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateTable_TableRequiresAtLeastOneColumn(Table table, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return table.TableRequiresAtLeastOneColumn(diagnostics, context);
-	}
-
-	/**
-	 * Validates the TableRequiresAKeyColumn constraint of '<em>Table</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateTable_TableRequiresAKeyColumn(Table table, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return table.TableRequiresAKeyColumn(diagnostics, context);
+	public boolean validateTable_TableRequiresAtLeastOneColumn(Table table, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.TABLE,
+				 table,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TableRequiresAtLeastOneColumn",
+				 TABLE__TABLE_REQUIRES_AT_LEAST_ONE_COLUMN__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -252,10 +218,32 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateTable_OnlyOneAutoIncrementColumn(Table table, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return table.OnlyOneAutoIncrementColumn(diagnostics, context);
+	public boolean validateTable_OnlyOneAutoIncrementColumn(Table table, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.TABLE,
+				 table,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "OnlyOneAutoIncrementColumn",
+				 TABLE__ONLY_ONE_AUTO_INCREMENT_COLUMN__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the NonKeyAutoIncrementColumn constraint of '<em>Table</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String TABLE__NON_KEY_AUTO_INCREMENT_COLUMN__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',\n" +
+		"\tstatus : Boolean = self.columns-> notEmpty() and\n" +
+		"\t\t((columns->one(c1 | c1.oclIsTypeOf(PrimaryKey) and c1.autoIncrement)) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()))\n" +
+		"}.status";
 
 	/**
 	 * Validates the NonKeyAutoIncrementColumn constraint of '<em>Table</em>'.
@@ -263,10 +251,32 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateTable_NonKeyAutoIncrementColumn(Table table, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return table.NonKeyAutoIncrementColumn(diagnostics, context);
+	public boolean validateTable_NonKeyAutoIncrementColumn(Table table, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.TABLE,
+				 table,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "NonKeyAutoIncrementColumn",
+				 TABLE__NON_KEY_AUTO_INCREMENT_COLUMN__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the OnlyOneAutoIncrementColumn constraint of '<em>Table</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String TABLE__ONLY_ONE_AUTO_INCREMENT_COLUMN__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'Incorrect table definition; The table ' + Table.name + '  can only have one auto column and it must be defined as a key!',\n" +
+		"\tstatus : Boolean = self.columns-> notEmpty() and\n" +
+		"\t\t((columns->one(c1 | c1.autoIncrement)) or (columns-> select(c1 | c1.autoIncrement) -> isEmpty()) or ((columns-> select(c1 | c1.oclIsTypeOf(PrimaryKey)) -> isEmpty()) and columns->exists(c1 | c1.oclIsTypeOf(ForeignKey) and c1.oclAsType(ForeignKey).primaryForeignKey)))\n" +
+		"}.status";
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -293,7 +303,7 @@ public class MddeValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public boolean validateForeignKey(ForeignKey foreignKey, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(foreignKey, diagnostics, context)) return false;
@@ -315,24 +325,44 @@ public class MddeValidator extends EObjectValidator {
 	}
 
 	/**
+	 * The cached validation expression for the ForeignKeyHasToReferenceAKeyColumn constraint of '<em>Foreign Key</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String FOREIGN_KEY__FOREIGN_KEY_HAS_TO_REFERENCE_AKEY_COLUMN__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'The referenced column should not be empty!',\n" +
+		"\tstatus : Boolean = self.referencedTable-> notEmpty()\n" +
+		"}.status";
+
+	/**
 	 * Validates the ForeignKeyHasToReferenceAKeyColumn constraint of '<em>Foreign Key</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateForeignKey_ForeignKeyHasToReferenceAKeyColumn(ForeignKey foreignKey,
-			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return foreignKey.ForeignKeyHasToReferenceAKeyColumn(diagnostics, context);
+	public boolean validateForeignKey_ForeignKeyHasToReferenceAKeyColumn(ForeignKey foreignKey, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.FOREIGN_KEY,
+				 foreignKey,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "ForeignKeyHasToReferenceAKeyColumn",
+				 FOREIGN_KEY__FOREIGN_KEY_HAS_TO_REFERENCE_AKEY_COLUMN__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
 	 * Validates the validateConstraintName constraint of '<em>Foreign Key</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public boolean validateForeignKey_validateConstraintName(ForeignKey foreignKey, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
+	public boolean validateForeignKey_validateConstraintName(ForeignKey foreignKey, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return foreignKey.validateConstraintName(diagnostics, context);
 	}
 
@@ -357,14 +387,35 @@ public class MddeValidator extends EObjectValidator {
 	}
 
 	/**
+	 * The cached validation expression for the NameNotNull constraint of '<em>Named Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String NAMED_ELEMENT__NAME_NOT_NULL__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'Name should not be empty!',\n" +
+		"\tstatus : Boolean = self.name->size() > 0\n" +
+		"}.status";
+
+	/**
 	 * Validates the NameNotNull constraint of '<em>Named Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateNamedElement_NameNotNull(NamedElement namedElement, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return namedElement.NameNotNull(diagnostics, context);
+	public boolean validateNamedElement_NameNotNull(NamedElement namedElement, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.NAMED_ELEMENT,
+				 namedElement,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "NameNotNull",
+				 NAMED_ELEMENT__NAME_NOT_NULL__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -446,6 +497,120 @@ public class MddeValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateConstraint(Constraint constraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(constraint, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_ConstraintWithoutColumn(constraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_validateUniqueConstraintName(constraint, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * The cached validation expression for the ConstraintWithoutColumn constraint of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String CONSTRAINT__CONSTRAINT_WITHOUT_COLUMN__EEXPRESSION = "Tuple {\n" +
+		"\tmessage : String = 'The Constraint ' + Constraint.name + ' has to reference at least one column!',\n" +
+		"\tstatus : Boolean = self.columns->notEmpty()\n" +
+		"}.status";
+
+	/**
+	 * Validates the ConstraintWithoutColumn constraint of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateConstraint_ConstraintWithoutColumn(Constraint constraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(MddePackage.Literals.CONSTRAINT,
+				 constraint,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "ConstraintWithoutColumn",
+				 CONSTRAINT__CONSTRAINT_WITHOUT_COLUMN__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * Validates the validateUniqueConstraintName constraint of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateConstraint_validateUniqueConstraintName(Constraint constraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return constraint.validateUniqueConstraintName(diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateUniqueConstraint(UniqueConstraint uniqueConstraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(uniqueConstraint, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_ConstraintWithoutColumn(uniqueConstraint, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_validateUniqueConstraintName(uniqueConstraint, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateIndex(Index index, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(index, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNamedElement_NameNotNull(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_ConstraintWithoutColumn(index, diagnostics, context);
+		if (result || diagnostics != null) result &= validateConstraint_validateUniqueConstraintName(index, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateColumnConstraint(ColumnConstraint columnConstraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(columnConstraint, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateDataType(DataType dataType, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
@@ -457,6 +622,15 @@ public class MddeValidator extends EObjectValidator {
 	 */
 	public boolean validateReferential_Action(Referential_Action referential_Action, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSortSequence(SortSequence sortSequence, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 
@@ -477,6 +651,7 @@ public class MddeValidator extends EObjectValidator {
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
+		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT
 		return super.getResourceLocator();

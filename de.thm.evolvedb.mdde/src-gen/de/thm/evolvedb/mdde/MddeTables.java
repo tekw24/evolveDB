@@ -256,8 +256,7 @@ public class MddeTables extends AbstractTables
 		public static final ExecutorProperty _Column__size = new EcoreExecutorProperty(MddePackage.Literals.COLUMN__SIZE, Types._Column, 3);
 		public static final ExecutorProperty _Column__table = new EcoreExecutorProperty(MddePackage.Literals.COLUMN__TABLE, Types._Column, 4);
 		public static final ExecutorProperty _Column__type = new EcoreExecutorProperty(MddePackage.Literals.COLUMN__TYPE, Types._Column, 5);
-		public static final ExecutorProperty _Column__unique = new EcoreExecutorProperty(MddePackage.Literals.COLUMN__UNIQUE, Types._Column, 6);
-		public static final ExecutorProperty _Column__uniqueConstraintName = new EcoreExecutorProperty(MddePackage.Literals.COLUMN__UNIQUE_CONSTRAINT_NAME, Types._Column, 7);
+	
 
 		public static final ExecutorProperty _Database_Schema__entites = new EcoreExecutorProperty(MddePackage.Literals.DATABASE_SCHEMA__ENTITES, Types._Database_Schema, 0);
 		public static final ExecutorProperty _Database_Schema__location = new EcoreExecutorProperty(MddePackage.Literals.DATABASE_SCHEMA__LOCATION, Types._Database_Schema, 1);
@@ -756,8 +755,6 @@ public class MddeTables extends AbstractTables
 			MddeTables.Properties._Column__size,
 			MddeTables.Properties._Column__table,
 			MddeTables.Properties._Column__type,
-			MddeTables.Properties._Column__unique,
-			MddeTables.Properties._Column__uniqueConstraintName
 		};
 
 		private static final ExecutorProperty /*@NonNull*/ [] _ColumnSize = {};
@@ -791,9 +788,8 @@ public class MddeTables extends AbstractTables
 			MddeTables.Properties._ForeignKey__referencedTable,
 			MddeTables.Properties._Column__size,
 			MddeTables.Properties._Column__table,
-			MddeTables.Properties._Column__type,
-			MddeTables.Properties._Column__unique,
-			MddeTables.Properties._Column__uniqueConstraintName
+			MddeTables.Properties._Column__type
+			
 		};
 
 		private static final ExecutorProperty /*@NonNull*/ [] _NamedElement = {
@@ -813,9 +809,7 @@ public class MddeTables extends AbstractTables
 			MddeTables.Properties._PrimaryKey__referencedBy,
 			MddeTables.Properties._Column__size,
 			MddeTables.Properties._Column__table,
-			MddeTables.Properties._Column__type,
-			MddeTables.Properties._Column__unique,
-			MddeTables.Properties._Column__uniqueConstraintName
+			MddeTables.Properties._Column__type
 		};
 
 		private static final ExecutorProperty /*@NonNull*/ [] _Referential_Action = {
@@ -895,6 +889,12 @@ public class MddeTables extends AbstractTables
 		public static final EcoreExecutorEnumerationLiteral _DataType__TIMESTAMP = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("TIMESTAMP"), Types._DataType, 29);
 		public static final EcoreExecutorEnumerationLiteral _DataType__TIME = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("TIME"), Types._DataType, 30);
 		public static final EcoreExecutorEnumerationLiteral _DataType__YEAR = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("YEAR"), Types._DataType, 31);
+		public static final EcoreExecutorEnumerationLiteral _DataType__BIGINT_UNSIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("BIGINT_UNSIGNED"), Types._DataType, 32);
+		public static final EcoreExecutorEnumerationLiteral _DataType__INT_UNSIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("INT_UNSIGNED"), Types._DataType, 33);
+		public static final EcoreExecutorEnumerationLiteral _DataType__INTEGER_SIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("INTEGER_SIGNED"), Types._DataType, 34);
+		public static final EcoreExecutorEnumerationLiteral _DataType__TINYINT_UNSIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("TINYINT_UNSIGNED"), Types._DataType, 35);
+		public static final EcoreExecutorEnumerationLiteral _DataType__SMALLINT_UNSIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("SMALLINT_UNSIGNED"), Types._DataType, 36);
+		public static final EcoreExecutorEnumerationLiteral _DataType__MEDIUMINT_UNSIGNED = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.DATA_TYPE.getEEnumLiteral("MEDIUMINT_UNSIGNED"), Types._DataType, 37);
 		private static final EcoreExecutorEnumerationLiteral /*@NonNull*/ [] _DataType = {
 			_DataType__CHAR,
 			_DataType__VARCHAR,
@@ -927,7 +927,13 @@ public class MddeTables extends AbstractTables
 			_DataType__DATETIME,
 			_DataType__TIMESTAMP,
 			_DataType__TIME,
-			_DataType__YEAR
+			_DataType__YEAR,
+			_DataType__BIGINT_UNSIGNED,
+			_DataType__INT_UNSIGNED,
+			_DataType__INTEGER_SIGNED,
+			_DataType__TINYINT_UNSIGNED,
+			_DataType__SMALLINT_UNSIGNED,
+			_DataType__MEDIUMINT_UNSIGNED
 		};
 
 		public static final EcoreExecutorEnumerationLiteral _Referential_Action__RESTRICT = new EcoreExecutorEnumerationLiteral(MddePackage.Literals.REFERENTIAL_ACTION.getEEnumLiteral("RESTRICT"), Types._Referential_Action, 0);

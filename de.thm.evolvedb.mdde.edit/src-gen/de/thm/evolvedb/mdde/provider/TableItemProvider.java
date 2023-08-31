@@ -62,6 +62,7 @@ public class TableItemProvider extends NamedElementItemProvider {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(MddePackage.Literals.TABLE__COLUMNS);
+			childrenFeatures.add(MddePackage.Literals.TABLE__CONSTRAINTS);
 		}
 		return childrenFeatures;
 	}
@@ -117,6 +118,7 @@ public class TableItemProvider extends NamedElementItemProvider {
 
 		switch (notification.getFeatureID(Table.class)) {
 			case MddePackage.TABLE__COLUMNS:
+			case MddePackage.TABLE__CONSTRAINTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -148,6 +150,16 @@ public class TableItemProvider extends NamedElementItemProvider {
 			(createChildParameter
 				(MddePackage.Literals.TABLE__COLUMNS,
 				 MddeFactory.eINSTANCE.createForeignKey()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(MddePackage.Literals.TABLE__CONSTRAINTS,
+				 MddeFactory.eINSTANCE.createUniqueConstraint()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(MddePackage.Literals.TABLE__CONSTRAINTS,
+				 MddeFactory.eINSTANCE.createIndex()));
 	}
 
 }

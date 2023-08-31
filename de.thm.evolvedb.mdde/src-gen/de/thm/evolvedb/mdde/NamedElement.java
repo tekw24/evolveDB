@@ -2,10 +2,6 @@
  */
 package de.thm.evolvedb.mdde;
 
-import java.util.Map;
-
-import org.eclipse.emf.common.util.DiagnosticChain;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * @see de.thm.evolvedb.mdde.MddePackage#getNamedElement()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='NameNotNull'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot NameNotNull='Tuple {\n\tmessage : String = \'Name should not be empty!\',\n\tstatus : Boolean = self.name-&gt;size() &gt; 0\n}.status'"
  * @generated
  */
 public interface NamedElement extends EObject {
@@ -46,13 +43,5 @@ public interface NamedElement extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='Tuple {\n\tmessage : String = \'Name should not be empty!\',\n\tstatus : Boolean = self.name-&gt;size() &gt; 0\n}.status'"
-	 * @generated
-	 */
-	boolean NameNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // NamedElement

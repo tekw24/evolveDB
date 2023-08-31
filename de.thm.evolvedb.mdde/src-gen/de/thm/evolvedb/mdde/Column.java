@@ -5,6 +5,7 @@ package de.thm.evolvedb.mdde;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,11 +19,10 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  *   <li>{@link de.thm.evolvedb.mdde.Column#getTable <em>Table</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#getDefaultValue <em>Default Value</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#getNotNull <em>Not Null</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Column#getUnique <em>Unique</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#getAutoIncrement <em>Auto Increment</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#getSize <em>Size</em>}</li>
  *   <li>{@link de.thm.evolvedb.mdde.Column#getType <em>Type</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.Column#getUniqueConstraintName <em>Unique Constraint Name</em>}</li>
+ *   <li>{@link de.thm.evolvedb.mdde.Column#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @see de.thm.evolvedb.mdde.MddePackage#getColumn()
@@ -100,29 +100,6 @@ public interface Column extends NamedElement {
 	void setNotNull(Boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Unique</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unique</em>' attribute.
-	 * @see #setUnique(Boolean)
-	 * @see de.thm.evolvedb.mdde.MddePackage#getColumn_Unique()
-	 * @model default="false"
-	 * @generated
-	 */
-	Boolean getUnique();
-
-	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.mdde.Column#getUnique <em>Unique</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Unique</em>' attribute.
-	 * @see #getUnique()
-	 * @generated
-	 */
-	void setUnique(Boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Auto Increment</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
@@ -193,26 +170,18 @@ public interface Column extends NamedElement {
 	void setType(DataType value);
 
 	/**
-	 * Returns the value of the '<em><b>Unique Constraint Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Constraints</b></em>' reference list.
+	 * The list contents are of type {@link de.thm.evolvedb.mdde.ColumnConstraint}.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.mdde.ColumnConstraint#getColumn <em>Column</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unique Constraint Name</em>' attribute.
-	 * @see #setUniqueConstraintName(String)
-	 * @see de.thm.evolvedb.mdde.MddePackage#getColumn_UniqueConstraintName()
-	 * @model
+	 * @return the value of the '<em>Constraints</em>' reference list.
+	 * @see de.thm.evolvedb.mdde.MddePackage#getColumn_Constraints()
+	 * @see de.thm.evolvedb.mdde.ColumnConstraint#getColumn
+	 * @model opposite="column"
 	 * @generated
 	 */
-	String getUniqueConstraintName();
-
-	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.mdde.Column#getUniqueConstraintName <em>Unique Constraint Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Unique Constraint Name</em>' attribute.
-	 * @see #getUniqueConstraintName()
-	 * @generated
-	 */
-	void setUniqueConstraintName(String value);
+	EList<ColumnConstraint> getConstraints();
 
 	/**
 	 * <!-- begin-user-doc -->

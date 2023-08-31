@@ -13,12 +13,6 @@ import junit.textui.TestRunner;
  * <!-- begin-user-doc -->
  * A test case for the model object '<em><b>Named Element</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following operations are tested:
- * <ul>
- *   <li>{@link de.thm.evolvedb.mdde.NamedElement#NameNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Name Not Null</em>}</li>
- * </ul>
- * </p>
  * @generated
  */
 public class NamedElementTest extends TestCase {
@@ -90,19 +84,6 @@ public class NamedElementTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		setFixture(null);
-	}
-
-	/**
-	 * Tests the '{@link de.thm.evolvedb.mdde.NamedElement#NameNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Name Not Null</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.mdde.NamedElement#NameNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	public void testNameNotNull__DiagnosticChain_Map() {
-		
-		// Ensure that you remove @generated or mark it @generated NOT
-		fail();
 	}
 
 } //NamedElementTest

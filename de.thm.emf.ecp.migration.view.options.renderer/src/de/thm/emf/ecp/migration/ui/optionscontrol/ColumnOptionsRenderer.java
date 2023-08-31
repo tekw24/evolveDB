@@ -302,42 +302,42 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 			}
 
 				break;
-			case SET_COLUMN_UNIQUE: {
-				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
-					final SemanticChangeSet set = partiallyResolvable.getSemanticChangeSets().get(0);
-
-					for (final Change change : set.getChanges()) {
-						if (change instanceof AttributeValueChange) {
-							final AttributeValueChange avc = (AttributeValueChange) change;
-							final Object objA = avc.getObjA();
-							final Object objB = avc.getObjB();
-
-							if (objA instanceof Column) {
-								final Column columnA = (Column) objA;
-								final Column columnB = (Column) objB;
-
-								final List<ColumnOptions> compatibility = ColumnMigrationUtil
-									.checkColumnUniqueCompatibility(columnA,
-										columnB);
-
-								if (compatibility.size() == 0) {
-									return composite;
-								}
-								createComboBoxComponent(composite, compatibility,
-									Messages.ColumnOptionsRenderer_UNIQUE_CONSTRAINT);
-								return composite;
-
-							}
-
-						}
-
-					}
-
-					break;
-				}
-
-			}
-				break;
+			// case SET_COLUMN_UNIQUE: {TODO Column Unique
+			// if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
+			// final SemanticChangeSet set = partiallyResolvable.getSemanticChangeSets().get(0);
+			//
+			// for (final Change change : set.getChanges()) {
+			// if (change instanceof AttributeValueChange) {
+			// final AttributeValueChange avc = (AttributeValueChange) change;
+			// final Object objA = avc.getObjA();
+			// final Object objB = avc.getObjB();
+			//
+			// if (objA instanceof Column) {
+			// final Column columnA = (Column) objA;
+			// final Column columnB = (Column) objB;
+			//
+			// final List<ColumnOptions> compatibility = ColumnMigrationUtil
+			// .checkColumnUniqueCompatibility(columnA,
+			// columnB);
+			//
+			// if (compatibility.size() == 0) {
+			// return composite;
+			// }
+			// createComboBoxComponent(composite, compatibility,
+			// Messages.ColumnOptionsRenderer_UNIQUE_CONSTRAINT);
+			// return composite;
+			//
+			// }
+			//
+			// }
+			//
+			// }
+			//
+			// break;
+			// }
+			//
+			// }
+			// break;
 			case SET_COLUMN_NOT_NULL: {
 
 				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
@@ -737,23 +737,23 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 			return;
 		}
 
-		if (MddePackage.eINSTANCE.getColumn_Unique().getName().equals(eAttribute.getName())) {
-			final Text header = new Text(composite, SWT.WRAP);
-			Boolean unique = false;
-			if (columnB != null) {
-				unique = columnB.getUnique() != null ? columnB.getUnique() : false;
-			}
-
-			if (unique) {
-				// header.setText(Messages.SemanticChangeSetRenderer_descriptionMakeColumnUnique);
-			} else {
-				// header.setText(Messages.SemanticChangeSetRenderer_descriptionRemoveColumnUnique);
-			}
-			final GridData gridData = new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1);
-			gridData.widthHint = 500;
-			header.setLayoutData(gridData);
-			return;
-		}
+		// if (MddePackage.eINSTANCE.getColumn_Unique().getName().equals(eAttribute.getName())) {
+		// final Text header = new Text(composite, SWT.WRAP);
+		// Boolean unique = false;
+		// if (columnB != null) {
+		// unique = columnB.getUnique() != null ? columnB.getUnique() : false;
+		// }
+		//
+		// if (unique) {
+		// // header.setText(Messages.SemanticChangeSetRenderer_descriptionMakeColumnUnique);
+		// } else {
+		// // header.setText(Messages.SemanticChangeSetRenderer_descriptionRemoveColumnUnique);
+		// }
+		// final GridData gridData = new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1);
+		// gridData.widthHint = 500;
+		// header.setLayoutData(gridData);
+		// return;
+		// }TODO UNIQUE
 
 		if (MddePackage.eINSTANCE.getColumn_Size().getName().equals(eAttribute.getName())) {
 			// final Label header = new Label(composite, SWT.WRAP);

@@ -134,7 +134,7 @@ public class MigrationTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetResolvableSMO() {
-		
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -147,7 +147,7 @@ public class MigrationTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetPartiallyResovableSMO() {
-		
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
@@ -160,7 +160,7 @@ public class MigrationTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetNotAutimaticallyResolvable() {
-		
+		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}
