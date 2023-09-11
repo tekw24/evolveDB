@@ -21,13 +21,23 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ui.EditorToolBar;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.emfforms.spi.editor.IEditingDomainAware;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTBuilder;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.PasteMasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
@@ -37,11 +47,14 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import de.thm.evolvedb.migration.SchemaModificationOperator;
+import de.thm.mdde.migration.view.editor.action.ResolvemasterDetailAction;
+import de.thm.mdde.migration.view.editor.action.UnresolvemasterDetailAction;
 import de.thm.mdde.migration.view.editor.toolbar.GenerateAction;
 import de.thm.mdde.migration.view.editor.toolbar.ValidateModelAction;
 
@@ -187,6 +200,27 @@ public class MigrationCustomEditor extends GenericEditor {
 		};
 		ViewerFilter[] array = {viewerFilter};
 		builder.customizeViewerFilters(array);
+		
+		builder.customizeMenu(new MenuProvider() {
+			@Override
+			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
+				final MenuManager menuMgr = new MenuManager();
+				menuMgr.setRemoveAllWhenShown(true);
+				
+				final List<MasterDetailAction> masterDetailActions = ActionCollector.newList().addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
+						.add(new ResolvemasterDetailAction(editingDomain)).add(new UnresolvemasterDetailAction(editingDomain)).getList();
+
+				menuMgr.addMenuListener(new TreeMasterDetailMenuListener(new ChildrenDescriptorCollector(), menuMgr,
+					treeViewer, editingDomain, masterDetailActions, getCreateElementCallback(),
+					new DefaultDeleteActionBuilder()));
+				final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
+				return menu;
+
+			}
+		});
+		
+		
+		
 		return super.customizeTree(builder);
 	}
 	
@@ -196,5 +230,11 @@ public class MigrationCustomEditor extends GenericEditor {
 		super.refreshTreeAfterResourceChange();
 		
 	}
+	
+	public MasterDetailAction addResolveAction(EditingDomain editingDomain) {
+		return new ResolvemasterDetailAction(editingDomain);
+	}
+	
+	
 
 }

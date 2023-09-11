@@ -14,6 +14,7 @@ import de.thm.evolvedb.mdde.UniqueConstraint
 import de.thm.evolvedb.mdde.Index
 import de.thm.evolvedb.migration.PartiallyResolvable
 import de.thm.evolvedb.migration.ColumnOptions
+import de.thm.evolvedb.mdde.ColumnConstraint
 
 class CREATE_ELEMENT {
 
@@ -127,7 +128,7 @@ class CREATE_ELEMENT {
 		
 		'''
 			«IF commaBefore»,«ENDIF»«FOR Constraint e : table.constraints SEPARATOR ','»
-				«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR Column c : e.columns SEPARATOR ', '»«c.name»«ENDFOR» )
+				«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR ColumnConstraint c : e.columns SEPARATOR ', '»«c.column.name»«ENDFOR» )
 			«ENDFOR»
 		'''
 	}
@@ -136,7 +137,7 @@ class CREATE_ELEMENT {
 		
 		'''
 			«IF commaBefore»,«ENDIF»
-			ADD «IF constraint instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «constraint.name» ( «FOR Column c : constraint.columns SEPARATOR ', '»«c.name»«ENDFOR» )
+			ADD «IF constraint instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «constraint.name» ( «FOR ColumnConstraint c : constraint.columns SEPARATOR ', '»«c.column.name»«IF c.length > 0»(«c.length»)«ENDIF»«ENDFOR» )
 		'''
 	}
 

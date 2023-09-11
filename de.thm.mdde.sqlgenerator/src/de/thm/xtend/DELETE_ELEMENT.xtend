@@ -15,6 +15,7 @@ import org.sidiff.difference.symmetric.RemoveReference
 import org.eclipse.emf.ecore.EObject
 import de.thm.evolvedb.mdde.Index
 import de.thm.evolvedb.mdde.UniqueConstraint
+import de.thm.evolvedb.mdde.ColumnConstraint
 
 class DELETE_ELEMENT {
 
@@ -120,10 +121,10 @@ class DELETE_ELEMENT {
 			var parent = foreignKey.table
 
 			content += '''
-				-- Drop foreign key in «parent.name.toLowerCase»
-				ALTER TABLE `«parent.name.toLowerCase»`
+				-- Drop foreign key in «parent.name»
+				ALTER TABLE `«parent.name»`
 				DROP FOREIGN KEY `«foreignKey.constraintName»`;
-				ALTER TABLE `«parent.name.toLowerCase»`
+				ALTER TABLE `«parent.name»`
 				DROP COLUMN `«foreignKey.name»`;
 				
 			'''
@@ -141,10 +142,10 @@ class DELETE_ELEMENT {
 		var parent = foreignKey.table
 
 		content += '''
-			-- Drop foreign key in «parent.name.toLowerCase»
-			ALTER TABLE `«parent.name.toLowerCase»`
+			-- Drop foreign key in «parent.name»
+			ALTER TABLE `«parent.name»`
 			DROP FOREIGN KEY `«foreignKey.constraintName»`;
-			ALTER TABLE `«parent.name.toLowerCase»`
+			ALTER TABLE `«parent.name»`
 			DROP COLUMN `«foreignKey.name»`;
 			
 		'''
@@ -160,8 +161,8 @@ class DELETE_ELEMENT {
 		var parent = foreignKey.table
 
 		content += '''
-			-- Drop foreign key in «parent.name.toLowerCase»
-			ALTER TABLE `«parent.name.toLowerCase»`
+			-- Drop foreign key in «parent.name»
+			ALTER TABLE `«parent.name»`
 			DROP FOREIGN KEY `«foreignKey.constraintName»`;
 			
 		'''
@@ -176,8 +177,8 @@ class DELETE_ELEMENT {
 		var parent = column.table
 
 		content += '''
-			-- Drop foreign key in «parent.name.toLowerCase»
-			ALTER TABLE `«parent.name.toLowerCase»`
+			-- Drop foreign key in «parent.name»
+			ALTER TABLE `«parent.name»`
 			DROP COLUMN `«column.name»`;
 			
 		'''
@@ -235,16 +236,33 @@ class DELETE_ELEMENT {
 		if (changeColumnType.size > 0) {
 
 			for (RemoveObject a : changeColumnType) {
-				if (a.obj instanceof Constraint) {
+				if (a.obj instanceof ColumnConstraint) {
 
-					var objA = a.obj as Constraint
+					var objA = a.obj as ColumnConstraint
+					var constraint = objA.constraint
+					constraint.columns.remove(objA);
+									
 					content += '''
-						-- Change constraint name of «objA.name.toLowerCase» 
-						ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.name»`;
+						-- Remove constraint «objA.column.name» from «constraint.name» 
+						ALTER TABLE «constraint.table.name» DROP INDEX `«constraint.name»`,
+						«CREATE_ELEMENT.createConstraintString(constraint, false)»;
+						
 						
 					'''
 
 					return content;
+				}
+				else if(a.obj instanceof Constraint){
+					
+					var objA = a.obj as Constraint
+					content += '''
+						-- Remove constraint «objA.name» 
+						ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
+						
+					'''
+
+					return content;
+					
 				}
 			}
 
@@ -268,8 +286,8 @@ class DELETE_ELEMENT {
 				}
 
 				content += '''
-					-- Remove column «column.name.toLowerCase» from Index «constraint.name.toLowerCase» 
-					ALTER TABLE «constraint.table.name.toLowerCase» DROP INDEX `«constraint.name»`;
+					-- Remove column «column.name» from Index «constraint.name» 
+					ALTER TABLE «constraint.table.name» DROP INDEX `«constraint.name»`;
 					
 				'''
 				if (constraint instanceof Index) {
@@ -277,7 +295,7 @@ class DELETE_ELEMENT {
 					index.columns.remove(column);
 					var Table owner = index.table
 					content += '''
-						ALTER TABLE `«index.table.name.toLowerCase»` 
+						ALTER TABLE `«index.table.name»` 
 						«CREATE_ELEMENT.createConstraintString(index, false)»
 						 ;
 					'''
@@ -289,7 +307,7 @@ class DELETE_ELEMENT {
 					var Table owner = index.table
 					index.columns.remove(column);
 					content += '''
-						ALTER TABLE `«index.table.name.toLowerCase»` 
+						ALTER TABLE `«index.table.name»` 
 						«CREATE_ELEMENT.createConstraintString(index, false)»
 						 ;
 					'''

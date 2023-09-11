@@ -16,6 +16,7 @@ import de.thm.evolvedb.migration.ColumnOptions
 import de.thm.mdde.migration.util.ColumnMigrationUtil
 import de.thm.evolvedb.mdde.Constraint
 import de.thm.evolvedb.mdde.UniqueConstraint
+import de.thm.evolvedb.mdde.ColumnConstraint
 
 class SET_ATTRIBUTE {
 
@@ -50,15 +51,15 @@ class SET_ATTRIBUTE {
 				var objB = ad.objB as ForeignKey
 
 				content += '''
-					-- Change name of foriegn key «objA.name.toLowerCase» 
-					ALTER TABLE `«objA.table.name.toLowerCase»` 
+					-- Change name of foriegn key «objA.name» 
+					ALTER TABLE `«objA.table.name»` 
 					DROP FOREIGN KEY `«objA.constraintName»`;
-					ALTER TABLE `«objA.table.name.toLowerCase»` 
-					CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
-					ALTER TABLE `«objA.table.name.toLowerCase»` 
+					ALTER TABLE `«objA.table.name»` 
+					CHANGE COLUMN `«objA.name»` `«objB.name»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+					ALTER TABLE `«objA.table.name»` 
 					ADD CONSTRAINT `«objA.constraintName»`
-					FOREIGN KEY (`«objB.name.toUpperCase»`)
-					REFERENCES `«objB.referencedTable.name.toLowerCase»` (`«objB.referencedKeyColumn.name»`);
+					FOREIGN KEY (`«objB.name»`)
+					REFERENCES `«objB.referencedTable.name»` (`«objB.referencedKeyColumn.name»`);
 				'''
 
 			} else if (ad.objA instanceof PrimaryKey && ad.objB instanceof PrimaryKey) {
@@ -69,28 +70,28 @@ class SET_ATTRIBUTE {
 				if (objA.referencedBy.size == 0) {
 
 					content += '''
-						-- Change name of primaryKey «objA.name.toLowerCase» 				
-						ALTER TABLE «objB.table.name.toLowerCase» 
-						CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+						-- Change name of primaryKey «objA.name» 				
+						ALTER TABLE «objB.table.name» 
+						CHANGE COLUMN `«objA.name»` `«objB.name»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
 					'''
 
 				} else {
 					// If the primaryKey is referenced by foreign keys, we have to delete and recreate the foreign key constraints
 					content += '''
-						-- Change name of primaryKey «objA.name.toLowerCase»
+						-- Change name of primaryKey «objA.name»
 						-- Delete existing foreign key constraints
 						«FOR ForeignKey foreignKey : objA.referencedBy»
-							ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
+							ALTER TABLE `«foreignKey.table.name»` 
 							DROP FOREIGN KEY `«foreignKey.constraintName»`;
 						«ENDFOR»
-						ALTER TABLE «objB.table.name.toLowerCase» 
-						CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
+						ALTER TABLE «objB.table.name» 
+						CHANGE COLUMN `«objA.name»` `«objB.name»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» «objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» ;
 						-- Recreate foreign key constraints
 						«FOR ForeignKey foreignKey : objA.referencedBy»
-							ALTER TABLE `«foreignKey.table.name.toLowerCase»` 
+							ALTER TABLE `«foreignKey.table.name»` 
 							ADD CONSTRAINT `«foreignKey.constraintName»`
-							FOREIGN KEY (`«foreignKey.name.toUpperCase»`)
-							REFERENCES `«objB.table.name.toLowerCase»` (`«objB.name.toUpperCase»`);
+							FOREIGN KEY (`«foreignKey.name»`)
+							REFERENCES `«objB.table.name»` (`«objB.name»`);
 						«ENDFOR»
 					'''
 				}
@@ -101,10 +102,10 @@ class SET_ATTRIBUTE {
 				var objB = ad.objB as Column
 
 				content += '''
-					-- Change name of «objA.name.toLowerCase» 
-					ALTER TABLE `«objA.table.name.toLowerCase»` 
-					CHANGE COLUMN `«objA.name.toUpperCase»` `«objB.name.toUpperCase»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» 
-					«objA.notNull !== null && objA.notNull ? "NULL" : "NOT NULL"» «objA.autoIncrement !== null && objA.autoIncrement ? "AUTO_INCREMENT" : ""»
+					-- Change name of «objA.name» 
+					ALTER TABLE `«objA.table.name»` 
+					CHANGE COLUMN `«objA.name»` `«objB.name»` «objA.type.getName»«ColumnUtil.getSizeString(objA)» 
+					«objA.notNull !== null && objA.notNull ? "NOT NULL" : "NULL"» «objA.autoIncrement !== null && objA.autoIncrement ? "AUTO_INCREMENT" : ""»
 					«ColumnUtil.getDefaultValueString(objA)» ;
 				'''
 
@@ -118,8 +119,8 @@ class SET_ATTRIBUTE {
 				var objB = ad.objB as Table
 
 				content += '''
-					-- Change name of «objA.name.toLowerCase» 
-					ALTER TABLE «objA.name.toLowerCase» RENAME TO «objB.name.toLowerCase»;
+					-- Change name of «objA.name» 
+					ALTER TABLE «objA.name» RENAME TO «objB.name»;
 				'''
 
 			}
@@ -143,8 +144,8 @@ class SET_ATTRIBUTE {
 				if (objB.primaryForeignKey) {
 
 					content += '''
-						-- Change primary foreign key attribute of «objB.name.toLowerCase» 
-						ALTER TABLE «objB.table.name.toLowerCase» ADD PRIMARY KEY (`«objB.name»`) ;
+						-- Change primary foreign key attribute of «objB.name» 
+						ALTER TABLE «objB.table.name» ADD PRIMARY KEY (`«objB.name»`) ;
 						
 					'''
 
@@ -161,8 +162,8 @@ class SET_ATTRIBUTE {
 					}
 
 					content += '''
-						-- Change primary foreign key attribute of «objB.name.toLowerCase» 
-						ALTER TABLE «objA.table.name.toLowerCase» DROP PRIMARY KEY «IF foreignKeys.size > 0»,
+						-- Change primary foreign key attribute of «objB.name» 
+						ALTER TABLE «objA.table.name» DROP PRIMARY KEY «IF foreignKeys.size > 0»,
 													ADD PRIMARY KEY (`«FOR e : foreignKeys SEPARATOR "`,`"»« e.name»«ENDFOR»`
 						«ELSE»;
 						«ENDIF»
@@ -225,17 +226,17 @@ class SET_ATTRIBUTE {
 //								SET SQL_SAFE_UPDATES = 0;
 //								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
 //								CREATE TEMPORARY TABLE my_temp_table
-//								(SELECT «objB.name» FROM «objB.table.name.toLowerCase» 
+//								(SELECT «objB.name» FROM «objB.table.name» 
 //								GROUP BY «objB.name»
 //								HAVING COUNT(«objB.name») > 1);
 //								
 //								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
 //								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
-//								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//								(SELECT «key.name» FROM «objB.table.name» 
 //								GROUP BY «objB.name»
 //								HAVING COUNT(«objB.name») > 1);
 //								«historyInsert»
-//								DELETE FROM «objB.table.name.toLowerCase» where «objB.name» IN (SELECT * from my_temp_table);
+//								DELETE FROM «objB.table.name» where «objB.name» IN (SELECT * from my_temp_table);
 //								SET SQL_SAFE_UPDATES = @safe_mode;
 //								COMMIT;
 //								
@@ -252,11 +253,11 @@ class SET_ATTRIBUTE {
 //								whereClause)
 //
 //							content += '''
-//								-- Set «objB.name.toLowerCase» values to null 
+//								-- Set «objB.name» values to null 
 //								SET @safe_mode = @@SQL_SAFE_UPDATES;
 //								SET SQL_SAFE_UPDATES = 0;
 //								«historyInsert»
-//								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+//								UPDATE `«objB.table.name»` SET `«objB.name»` = null;
 //								SET SQL_SAFE_UPDATES = @safe_mode;
 //								COMMIT;
 //								-- If executing the script fails, we suggest a rollback.
@@ -277,17 +278,17 @@ class SET_ATTRIBUTE {
 //								SET SQL_SAFE_UPDATES = 0;
 //								DROP TEMPORARY TABLE IF EXISTS my_temp_table;
 //								CREATE TEMPORARY TABLE my_temp_table
-//								(SELECT «objA.name» FROM «objA.table.name.toLowerCase» 
+//								(SELECT «objA.name» FROM «objA.table.name» 
 //								GROUP BY «objA.name»
 //								HAVING COUNT(«objA.name») > 1);
 //								
 //								DROP TEMPORARY TABLE IF EXISTS «SQLGenerator.TEMPORY_TABLE_NAME»;
 //								CREATE TEMPORARY TABLE «SQLGenerator.TEMPORY_TABLE_NAME»
-//								(SELECT «key.name» FROM «objB.table.name.toLowerCase» 
+//								(SELECT «key.name» FROM «objB.table.name» 
 //								GROUP BY «objB.name»
 //								HAVING COUNT(«objB.name») > 1);
 //								«historyInsert»
-//								UPDATE «objA.table.name.toLowerCase» SET «objA.name» = null where «objA.name» IN (SELECT * from my_temp_table);
+//								UPDATE «objA.table.name» SET «objA.name» = null where «objA.name» IN (SELECT * from my_temp_table);
 //								SET SQL_SAFE_UPDATES = @safe_mode;
 //								COMMIT;
 //								
@@ -298,19 +299,19 @@ class SET_ATTRIBUTE {
 //						}
 //					}
 //
-//					var constraintName = objB.table.name.toUpperCase + "_UNIQUE";
+//					var constraintName = objB.table.name + "_UNIQUE";
 //
 //					if (objB.uniqueConstraintName !== null && !objB.uniqueConstraintName.equals(""))
 //						constraintName = objB.uniqueConstraintName;
 //					content += '''
-//						-- Change uniqe attribute of «objA.name.toLowerCase» 
-//						ALTER TABLE «objA.table.name.toLowerCase» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
+//						-- Change uniqe attribute of «objA.name» 
+//						ALTER TABLE «objA.table.name» ADD UNIQUE INDEX `«constraintName»` (`«objB.name»` ASC);
 //					'''
 //
 //				} else {
 //					content += '''
-//						-- Change uniqe attribute of «objA.name.toLowerCase» 
-//						ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objB.uniqueConstraintName»`;
+//						-- Change uniqe attribute of «objA.name» 
+//						ALTER TABLE «objA.table.name» DROP INDEX `«objB.uniqueConstraintName»`;
 //					'''
 //
 //				}
@@ -366,7 +367,7 @@ class SET_ATTRIBUTE {
 								objB.table, objB.table.mainPrimaryKey, whereClause);
 
 						content += '''
-							-- Set «objB.name.toLowerCase» values to null
+							-- Set «objB.name» values to null
 							BEGIN; 
 							SET @safe_mode = @@SQL_SAFE_UPDATES;
 							SET SQL_SAFE_UPDATES = 0;
@@ -392,12 +393,12 @@ class SET_ATTRIBUTE {
 
 						// Aktuell nur von string zu number
 						content += '''
-							-- Set «objB.name.toLowerCase» values to null
+							-- Set «objB.name» values to null
 							BEGIN; 
 							SET @safe_mode = @@SQL_SAFE_UPDATES;
 							SET SQL_SAFE_UPDATES = 0;
 							«historyInsert»
-							UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
+							UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
 							SET SQL_SAFE_UPDATES = @safe_mode;
 							COMMIT;
 							-- If executing the script fails, we suggest a rollback.
@@ -418,12 +419,12 @@ class SET_ATTRIBUTE {
 
 						// Aktuell nur von string zu number
 						content += '''
-							-- Set «objB.name.toLowerCase» values to null
+							-- Set «objB.name» values to null
 							BEGIN; 
 							SET @safe_mode = @@SQL_SAFE_UPDATES;
 							SET SQL_SAFE_UPDATES = 0;
 							«historyInsert»
-							UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
+							UPDATE `«objB.table.name»` SET `«objB.name»` = null where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
 							SET SQL_SAFE_UPDATES = @safe_mode;
 							COMMIT;
 							-- If executing the script fails, we suggest a rollback.
@@ -438,12 +439,12 @@ class SET_ATTRIBUTE {
 							objB.table.schema, objB, objB.table.mainPrimaryKey, whereClause)
 
 						content += '''
-							-- Set «objB.name.toLowerCase» values to null
+							-- Set «objB.name» values to null
 							BEGIN; 
 							SET @safe_mode = @@SQL_SAFE_UPDATES;
 							SET SQL_SAFE_UPDATES = 0;
 							«historyInsert»
-							UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
+							UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
 							SET SQL_SAFE_UPDATES = @safe_mode;
 							COMMIT;
 							-- If executing the script fails, we suggest a rollback.
@@ -456,11 +457,11 @@ class SET_ATTRIBUTE {
 							objB.table.schema, objB, objB.table.mainPrimaryKey, whereClause)
 
 						content += '''
-							-- Set «objB.name.toLowerCase» values to null 
+							-- Set «objB.name» values to null 
 							SET @safe_mode = @@SQL_SAFE_UPDATES;
 							SET SQL_SAFE_UPDATES = 0;
 							«historyInsert»
-							UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+							UPDATE `«objB.table.name»` SET `«objB.name»` = null;
 							SET SQL_SAFE_UPDATES = @safe_mode;
 							COMMIT;
 							-- If executing the script fails, we suggest a rollback.
@@ -471,8 +472,8 @@ class SET_ATTRIBUTE {
 
 				// This operator is executed first. Therefore, not null depends on objA
 				content += '''
-					-- Change column type of «objB.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objA.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+					-- Change column type of «objB.name» 
+					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objA.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 				'''
 
 			}
@@ -546,12 +547,12 @@ class SET_ATTRIBUTE {
 										objB.table, objB.table.mainPrimaryKey, whereClause);
 
 								content += '''
-									-- delete «objB.name.toLowerCase» values which exceed the new column size
+									-- delete «objB.name» values which exceed the new column size
 									BEGIN; 
 									SET @safe_mode = @@SQL_SAFE_UPDATES;
 									SET SQL_SAFE_UPDATES = 0;
 									«historyInsert»
-									DELETE FROM `«objB.table.name.toLowerCase»` WHERE «whereClause»
+									DELETE FROM `«objB.table.name»` WHERE «whereClause»
 									SET SQL_SAFE_UPDATES = @safe_mode;
 									COMMIT;
 									-- If executing the script fails, we suggest a rollback.
@@ -567,12 +568,12 @@ class SET_ATTRIBUTE {
 									SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, key, whereClause)
 
 								content += '''
-									-- Set «objB.name.toLowerCase» values to null
+									-- Set «objB.name» values to null
 									BEGIN; 
 									SET @safe_mode = @@SQL_SAFE_UPDATES;
 									SET SQL_SAFE_UPDATES = 0;
 									«historyInsert»
-									UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
+									UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
 									SET SQL_SAFE_UPDATES = @safe_mode;
 									COMMIT;
 									-- If executing the script fails, we suggest a rollback.
@@ -587,11 +588,11 @@ class SET_ATTRIBUTE {
 									SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, key, whereClause)
 
 								content += '''
-									-- Set «objB.name.toLowerCase» values to null 
+									-- Set «objB.name» values to null 
 									SET @safe_mode = @@SQL_SAFE_UPDATES;
 									SET SQL_SAFE_UPDATES = 0;
 									«historyInsert»
-									UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+									UPDATE `«objB.table.name»` SET `«objB.name»` = null;
 									SET SQL_SAFE_UPDATES = @safe_mode;
 									COMMIT;
 									-- If executing the script fails, we suggest a rollback.
@@ -608,12 +609,12 @@ class SET_ATTRIBUTE {
 
 								// Aktuell nur von string zu number
 								content += '''
-									-- Set «objB.name.toLowerCase» values to null
+									-- Set «objB.name» values to null
 									BEGIN; 
 									SET @safe_mode = @@SQL_SAFE_UPDATES;
 									SET SQL_SAFE_UPDATES = 0;
 									«historyInsert»
-									UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null WHERE LENGTH(«objB.name») > «sizeB»;
+									UPDATE `«objB.table.name»` SET `«objB.name»` = null WHERE LENGTH(«objB.name») > «sizeB»;
 									SET SQL_SAFE_UPDATES = @safe_mode;
 									COMMIT;
 									-- If executing the script fails, we suggest a rollback.
@@ -627,12 +628,12 @@ class SET_ATTRIBUTE {
 									SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, key, whereClause)
 								// Aktuell nur von string zu number
 								content += '''
-									-- Set «objB.name.toLowerCase» values to null
+									-- Set «objB.name» values to null
 									BEGIN; 
 									SET @safe_mode = @@SQL_SAFE_UPDATES;
 									SET SQL_SAFE_UPDATES = 0;
 									«historyInsert»
-									UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» WHERE LENGTH(«objB.name») > «sizeB»;
+									UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» WHERE LENGTH(«objB.name») > «sizeB»;
 									SET SQL_SAFE_UPDATES = @safe_mode;
 									COMMIT;
 									-- If executing the script fails, we suggest a rollback.
@@ -640,16 +641,16 @@ class SET_ATTRIBUTE {
 							}
 						}
 						content += '''
-							-- Change column size of «objB.name.toLowerCase» 
-							ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+							-- Change column size of «objB.name» 
+							ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 						'''
 
 					} else if (ColumnUtil.dateTypesWithFraction.contains(objB.type)) {
 						// The default value is changed automatically.
 						// Existing data is reduced automatically too.
 						content += '''
-							-- Change fraction digits of «objB.name.toLowerCase» 
-							ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+							-- Change fraction digits of «objB.name» 
+							ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 						'''
 					}
 
@@ -667,22 +668,22 @@ class SET_ATTRIBUTE {
 //							// if safe mode is enabled a key column has to be used in the where clause
 //							content += '''
 //								SET SQL_SAFE_UPDATES = 0;
-//								-- Update values in «objB.name.toLowerCase» 
-//								UPDATE `«objB.table.name.toLowerCase»`  SET `«objB.name»`= MOD(`«objB.name»`, «longValue»);
+//								-- Update values in «objB.name» 
+//								UPDATE `«objB.table.name»`  SET `«objB.name»`= MOD(`«objB.name»`, «longValue»);
 //								SET SQL_SAFE_UPDATES = 1;
 //							'''
 //
 //						}
 //						content += '''
-//							-- Change size of «objB.name.toLowerCase» 
-//							ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+//							-- Change size of «objB.name» 
+//							ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 //						'''
 //					}
 				} else {
 					// A is smaller than B
 					content += '''
-						-- Change size of «objB.name.toLowerCase» 
-						ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+						-- Change size of «objB.name» 
+						ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 					'''
 				}
 				return content
@@ -738,12 +739,12 @@ class SET_ATTRIBUTE {
 									objB.table, objB.table.mainPrimaryKey, whereClause);
 
 							content += '''
-								-- Delete all rows with null values in the column «objB.name.toLowerCase».
+								-- Delete all rows with null values in the column «objB.name».
 								BEGIN;
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								DELETE FROM `«objB.table.name.toLowerCase»` where `«objB.name»` is NULL;
+								DELETE FROM `«objB.table.name»` where `«objB.name»` is NULL;
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 							'''
@@ -758,12 +759,12 @@ class SET_ATTRIBUTE {
 								whereClause)
 
 							content += '''
-								-- Set all values in the column «objB.name.toLowerCase» to the default value.
+								-- Set all values in the column «objB.name» to the default value.
 								BEGIN;
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» ;
+								UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» ;
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 							'''
@@ -777,12 +778,12 @@ class SET_ATTRIBUTE {
 								whereClause)
 
 							content += '''
-								-- Set all null values in the column «objB.name.toLowerCase» to the default value.
+								-- Set all null values in the column «objB.name» to the default value.
 								BEGIN;
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where `«objB.name»` is NULL;
+								UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where `«objB.name»` is NULL;
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 							'''
@@ -792,8 +793,8 @@ class SET_ATTRIBUTE {
 				}
 
 				content += '''
-					-- Change column not null of «objB.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+					-- Change column not null of «objB.name» 
+					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 				'''
 				return content;
 			}
@@ -830,15 +831,15 @@ class SET_ATTRIBUTE {
 				var objB = a.objB as ForeignKey
 
 				content += '''
-					-- change foreign key constraint «objB.name.toLowerCase»
-					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					-- change foreign key constraint «objB.name»
+					ALTER TABLE `«objB.table.name»` 
 					DROP FOREIGN KEY `«objA.constraintName»`;
 									
-					-- Create foreign key in «objB.table.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					-- Create foreign key in «objB.table.name» 
+					ALTER TABLE `«objB.table.name»` 
 					ADD CONSTRAINT `«objB.constraintName»`
-					  FOREIGN KEY (`«objB.name.toUpperCase»`)
-					  REFERENCES `«objB.referencedTable.name.toLowerCase»`(`«objB.referencedKeyColumn.name.toUpperCase»`)
+					  FOREIGN KEY (`«objB.name»`)
+					  REFERENCES `«objB.referencedTable.name»`(`«objB.referencedKeyColumn.name»`)
 					  ON DELETE «objB.onDelete.name()»
 					  ON UPDATE «objB.onUpdate.name()»;
 				'''
@@ -877,15 +878,15 @@ class SET_ATTRIBUTE {
 				var objB = a.objB as ForeignKey
 
 				content += '''
-					-- change foreign key constraint «objB.name.toLowerCase»
-					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					-- change foreign key constraint «objB.name»
+					ALTER TABLE `«objB.table.name»` 
 					DROP FOREIGN KEY `«objA.constraintName»`;
 									
-					-- Create foreign key in «objB.table.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` 
+					-- Create foreign key in «objB.table.name» 
+					ALTER TABLE `«objB.table.name»` 
 					ADD CONSTRAINT `«objB.constraintName»`
-					  FOREIGN KEY (`«objB.name.toUpperCase»`)
-					  REFERENCES `«objB.referencedTable.name.toLowerCase»`(`«objB.referencedKeyColumn.name.toUpperCase»`)
+					  FOREIGN KEY (`«objB.name»`)
+					  REFERENCES `«objB.referencedTable.name»`(`«objB.referencedKeyColumn.name»`)
 					  ON DELETE «objB.onDelete.name()»
 					  ON UPDATE «objB.onUpdate.name()»;
 				'''
@@ -926,8 +927,8 @@ class SET_ATTRIBUTE {
 				var objB = a.objB as Column
 
 				content += '''
-					-- Change default value of «objB.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objA.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+					-- Change default value of «objB.name» 
+					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objA.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 				'''
 				return content;
 			}
@@ -964,11 +965,11 @@ class SET_ATTRIBUTE {
 				var objB = a.objB as Constraint
 
 				content += '''
-					-- Change constraint name of «objA.name.toLowerCase» 
-					ALTER TABLE «objA.table.name.toLowerCase» DROP INDEX `«objA.name»`;
-					ALTER TABLE «objB.table.name.toLowerCase» ADD 
+					-- Change constraint name of «objA.name» 
+					ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
+					ALTER TABLE «objB.table.name» ADD 
 					«IF objB instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «objB.name» ( 
-					«FOR Column c : objB.columns SEPARATOR',' AFTER ';'»«c.name» «ENDFOR» )
+					«FOR ColumnConstraint c : objB.columns SEPARATOR',' AFTER ';'»«c.column.name» «ENDFOR» )
 					
 				'''
 
@@ -1045,12 +1046,12 @@ class SET_ATTRIBUTE {
 								ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
 									objB.table, objB.table.mainPrimaryKey, whereClause);
 							content += '''
-								-- Set «objB.name.toLowerCase» values to null
+								-- Set «objB.name» values to null
 								BEGIN; 
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								DELETE FROM `«objB.table.name.toLowerCase»` where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
+								DELETE FROM `«objB.table.name»` where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 								-- If executing the script fails, we suggest a rollback.
@@ -1069,12 +1070,12 @@ class SET_ATTRIBUTE {
 								ColumnUtil.createTemporaryTable(SQLGenerator.TEMPORY_TABLE_NAME, objB.table.schema,
 									objB.table, objB.table.mainPrimaryKey, whereClause);
 							content += '''
-								-- Set «objB.name.toLowerCase» values to null
+								-- Set «objB.name» values to null
 								BEGIN; 
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
+								UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)» where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 								-- If executing the script fails, we suggest a rollback.
@@ -1094,12 +1095,12 @@ class SET_ATTRIBUTE {
 									objB.table, objB.table.mainPrimaryKey, whereClause);
 							// Aktuell nur von string zu number
 							content += '''
-								-- Set «objB.name.toLowerCase» values to null
+								-- Set «objB.name» values to null
 								BEGIN; 
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
+								UPDATE `«objB.table.name»` SET `«objB.name»` = null where «key.name» in (Select «key.name» from «SQLGenerator.TEMPORY_TABLE_NAME»);
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 								-- If executing the script fails, we suggest a rollback.
@@ -1115,12 +1116,12 @@ class SET_ATTRIBUTE {
 								whereClause)
 
 							content += '''
-								-- Set «objB.name.toLowerCase» values to null
+								-- Set «objB.name» values to null
 								BEGIN; 
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
+								UPDATE `«objB.table.name»` SET `«objB.name»` = «ColumnUtil.getDefaultValueStringWithoutDEFAULT(objB)»;
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 								-- If executing the script fails, we suggest a rollback.
@@ -1135,11 +1136,11 @@ class SET_ATTRIBUTE {
 								whereClause)
 
 							content += '''
-								-- Set «objB.name.toLowerCase» values to null 
+								-- Set «objB.name» values to null 
 								SET @safe_mode = @@SQL_SAFE_UPDATES;
 								SET SQL_SAFE_UPDATES = 0;
 								«historyInsert»
-								UPDATE `«objB.table.name.toLowerCase»` SET `«objB.name»` = null;
+								UPDATE `«objB.table.name»` SET `«objB.name»` = null;
 								SET SQL_SAFE_UPDATES = @safe_mode;
 								COMMIT;
 								-- If executing the script fails, we suggest a rollback.
@@ -1150,8 +1151,8 @@ class SET_ATTRIBUTE {
 
 				}
 				content += '''
-					-- Change column type and size of «objB.name.toLowerCase» 
-					ALTER TABLE `«objB.table.name.toLowerCase»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+					-- Change column type and size of «objB.name» 
+					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
 				'''
 
 			}
