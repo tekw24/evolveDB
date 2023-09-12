@@ -273,6 +273,11 @@ class SQLGenerator {
 			case ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
 			}
+			
+			case ResolvableOperatorType.ADD_COLUMN_TO_INDEX: {
+				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
+			}
+			
 			default: {
 				println("Operator does not exists")
 			}

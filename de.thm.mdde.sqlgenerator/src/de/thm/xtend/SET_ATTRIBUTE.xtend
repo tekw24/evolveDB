@@ -969,7 +969,7 @@ class SET_ATTRIBUTE {
 					ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
 					ALTER TABLE «objB.table.name» ADD 
 					«IF objB instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «objB.name» ( 
-					«FOR ColumnConstraint c : objB.columns SEPARATOR',' AFTER ';'»«c.column.name» «ENDFOR» )
+					«FOR ColumnConstraint c : objB.columns SEPARATOR','»«c.column.name» «ENDFOR» );
 					
 				'''
 

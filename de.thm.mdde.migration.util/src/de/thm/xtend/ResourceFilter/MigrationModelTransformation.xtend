@@ -61,6 +61,7 @@ class MigrationModelTransformation {
 		migration.removeDatabaseSchemaChange
 		migration.transformConstraints
 		migration.transformIndexConstraints
+		migration.transformUniqueConstraints
 		migration.transformNewIndexOperator
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
@@ -145,6 +146,74 @@ class MigrationModelTransformation {
 									smo.semanticChangeSets.add(temp);
 							}
 
+						} else if (constraint.columns.contains(ar.src) || constraint.columns.contains(ar.tgt)) {
+							migration.schemaModificationOperators.remove(r0);
+
+							for (temp : r0.semanticChangeSets) {
+								if (!smo.semanticChangeSets.contains(temp))
+									smo.semanticChangeSets.add(temp);
+							}
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Constraints can be either Indexes or Unique Constraints. Both have to be resolved seperately.
+	 */
+	def void transformUniqueConstraints(Migration migration) {
+		var EList<PartiallyResolvable> partiallyResovableSMO = migration.partiallyResovableSMO;
+		var List<PartiallyResolvable> createIndex = partiallyResovableSMO.filter [
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT)
+		].toList
+		for (PartiallyResolvable resolvable : createIndex) {
+
+			var AddObject ad = resolvable.semanticChangeSets.get(0).changes.
+				findFirst[it instanceof AddObject] as AddObject;
+
+			var Constraint constraint;
+			var SchemaModificationOperator smo;
+
+			if (ad.obj instanceof UniqueConstraint) {
+				var UniqueConstraint uniqueConstraint = ad.obj as UniqueConstraint;
+
+				constraint = uniqueConstraint
+				smo = resolvable
+
+			}
+			if (constraint !== null) {
+				var List<ResolvableOperator> addColumnToIndex = migration.resolvableSMO.filter [
+					it.displayName.equals(ResolvableOperatorType.ADD_COLUMN_TO_INDEX)
+				].toList
+				for (ResolvableOperator r0 : addColumnToIndex) {
+					var List<SemanticChangeSet> sets = r0.semanticChangeSets
+
+					for (SemanticChangeSet set : sets) {
+
+						var AddReference ar = set.changes.findFirst[it instanceof AddReference] as AddReference;
+						if (ar.src.equals(constraint) || ar.tgt.equals(constraint)) {
+
+							migration.schemaModificationOperators.remove(r0);
+
+							for (temp : r0.semanticChangeSets) {
+								if (!smo.semanticChangeSets.contains(temp))
+									smo.semanticChangeSets.add(temp);
+							}
+
+						} else if (constraint.columns.contains(ar.src) || constraint.columns.contains(ar.tgt)) {
+							migration.schemaModificationOperators.remove(r0);
+
+							for (temp : r0.semanticChangeSets) {
+								if (!smo.semanticChangeSets.contains(temp))
+									smo.semanticChangeSets.add(temp);
+							}
 						}
 
 					}
@@ -240,8 +309,13 @@ class MigrationModelTransformation {
 			if (ad.objB instanceof Column) {
 				rO.displayName = ResolvableOperatorType.RENAME_COLUMN;
 
-			} else if (ad.objB instanceof Constraint)
+			} else if (ad.objB instanceof Constraint) {
 				rO.displayName = ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME;
+
+			}else if (ad.objB instanceof ColumnConstraint){
+				migration.schemaModificationOperators.remove(rO);
+			}
+
 		}
 
 	}
@@ -293,8 +367,7 @@ class MigrationModelTransformation {
 		}
 
 	}
-	
-	
+
 	/**
 	 * 
 	 */
@@ -303,12 +376,11 @@ class MigrationModelTransformation {
 		var List<ResolvableOperator> createIndex = resolvableOperators.filter [
 			it.displayName.equals(ResolvableOperatorType.CREATE_INDEX_IN_TABLE)
 		].toList
-		
+
 		var List<ResolvableOperator> addColumnIndex = resolvableOperators.filter [
 			it.displayName.equals(ResolvableOperatorType.ADD_COLUMN_TO_INDEX)
 		].toList
-		
-		
+
 		resolvableOperators.removeAll(createIndex);
 
 		for (ResolvableOperator rO : createIndex) {
@@ -323,7 +395,7 @@ class MigrationModelTransformation {
 				]) {
 					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
 					if (a.src instanceof ColumnConstraint) {
-						
+
 						var ColumnConstraint c = a.src as ColumnConstraint;
 						if (c.constraint.equals(constraint)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
@@ -340,7 +412,6 @@ class MigrationModelTransformation {
 		}
 
 	}
-	
 
 	def PartiallyResolvable findSetReferenceOperatorForForeignKey(Migration migration, ForeignKey foreignKey) {
 		var EList<PartiallyResolvable> partiallyResolvable = migration.partiallyResovableSMO;

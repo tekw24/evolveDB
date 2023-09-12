@@ -274,24 +274,24 @@ class DELETE_ELEMENT {
 
 				var EObject eObject = removeObject.src
 
-				var Constraint constraint;
+				var ColumnConstraint constraint;
 				var Column column;
 
-				if (eObject instanceof Constraint) {
-					constraint = eObject as Constraint;
+				if (eObject instanceof ColumnConstraint) {
+					constraint = eObject as ColumnConstraint;
 					column = removeObject.getTgt() as Column
 				} else {
-					constraint = removeObject.getTgt() as Constraint;
+					constraint = removeObject.getTgt() as ColumnConstraint;
 					column = removeObject.getSrc() as Column;
 				}
 
 				content += '''
 					-- Remove column «column.name» from Index «constraint.name» 
-					ALTER TABLE «constraint.table.name» DROP INDEX `«constraint.name»`;
+					ALTER TABLE «constraint.column.table.name» DROP INDEX `«constraint.name»`;
 					
 				'''
-				if (constraint instanceof Index) {
-					var index = constraint as Index
+				if (constraint.constraint instanceof Index) {
+					var index = constraint.constraint  as Index
 					index.columns.remove(column);
 					var Table owner = index.table
 					content += '''
@@ -301,9 +301,9 @@ class DELETE_ELEMENT {
 					'''
 					return content;
 
-				} else if (constraint instanceof UniqueConstraint) {
+				} else if (constraint.constraint instanceof UniqueConstraint) {
 
-					var index = constraint as UniqueConstraint
+					var index = constraint.constraint as UniqueConstraint
 					var Table owner = index.table
 					index.columns.remove(column);
 					content += '''

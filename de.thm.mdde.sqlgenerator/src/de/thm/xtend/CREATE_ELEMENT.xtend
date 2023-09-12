@@ -44,33 +44,37 @@ class CREATE_ELEMENT {
 		if (a.obj instanceof Table) {
 			entity = a.obj as Table
 
-			var PrimaryKey primaryKey = entity.columns.findFirst[it instanceof PrimaryKey] as PrimaryKey
+			var List<PrimaryKey> primaryKeys = entity.columns.filter[it instanceof PrimaryKey].map[it as PrimaryKey].
+				toList
 			var List<ForeignKey> foreignKeys = entity.columns.filter[it instanceof ForeignKey].map[it as ForeignKey].
 				toList
 			var List<ForeignKey> primaryForeignKeys = foreignKeys.filter[it.primaryForeignKey].toList
 
 			var List<Column> columns = entity.columns.filter[it instanceof Column].toList
-			columns.remove(primaryKey)
+			columns.removeAll(primaryKeys)
 			columns.removeAll(foreignKeys)
 
-			if (primaryKey != null) {
+			if (primaryKeys.size > 0) {
 
 				content += '''
 					-- Create Table «entity.name»
 					CREATE TABLE IF NOT EXISTS «entity.name»  (
-					«IF primaryKey !== null» 
-						«primaryKey.name.toUpperCase» «primaryKey.type.getName()»«ColumnUtil.getSizeString(primaryKey)» «primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""» «primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""», PRIMARY KEY («primaryKey.name»));
-					«ENDIF»
+					«FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»
+						«primaryKey.name» «primaryKey.type.getLiteral()»«ColumnUtil.getSizeString(primaryKey)» «primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""» «primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""»
+					«ENDFOR»
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
-						«e.name.toUpperCase» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
-						FOREIGN KEY («e.name.toUpperCase») REFERENCES «e.referencedTable.name»(DB_ID)
+						«e.name» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
+						FOREIGN KEY («e.name») REFERENCES «e.referencedTable.name»(DB_ID)
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
-					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER extraKomma(primaryForeignKeys.size)»
+					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER ','»
 						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
+					
+					PRIMARY KEY («FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»«primaryKey.name» «ENDFOR»)
+					
 					«createConstraintString(entity, true)»
 					);
 				'''
@@ -92,7 +96,7 @@ class CREATE_ELEMENT {
 					«ENDIF»
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
 						CONSTRAINT `«e.constraintName»`
-						FOREIGN KEY (`«e.name.toUpperCase»`) 
+						FOREIGN KEY (`«e.name»`) 
 						REFERENCES `«e.referencedTable.name»`(`«e.referencedKeyColumn.name»`)
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
@@ -106,13 +110,13 @@ class CREATE_ELEMENT {
 					-- Create Table «entity.name»
 					CREATE TABLE IF NOT EXISTS «entity.name»  (
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
-						«e.name.toUpperCase» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
-						FOREIGN KEY («e.name.toUpperCase») REFERENCES «e.referencedTable.name»(DB_ID)
+						«e.name» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
+						FOREIGN KEY («e.name») REFERENCES «e.referencedTable.name»(DB_ID)
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
-					«FOR Column e : columns BEFORE ',' SEPARATOR ','»
-						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+					«FOR Column e : columns SEPARATOR ','»
+						«IF foreignKeys.size > 0»,«ENDIF»«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
 					«createConstraintString(entity, true)»
@@ -125,16 +129,16 @@ class CREATE_ELEMENT {
 	}
 
 	def static String createConstraintString(Table table, boolean commaBefore) {
-		
+
 		'''
 			«IF commaBefore»,«ENDIF»«FOR Constraint e : table.constraints SEPARATOR ','»
-				«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR ColumnConstraint c : e.columns SEPARATOR ', '»«c.column.name»«ENDFOR» )
+							«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR ColumnConstraint c : e.columns SEPARATOR ', '»«c.column.name»«ENDFOR» )
 			«ENDFOR»
 		'''
 	}
-	
+
 	def static String createConstraintString(Constraint constraint, boolean commaBefore) {
-		
+
 		'''
 			«IF commaBefore»,«ENDIF»
 			ADD «IF constraint instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «constraint.name» ( «FOR ColumnConstraint c : constraint.columns SEPARATOR ', '»«c.column.name»«IF c.length > 0»(«c.length»)«ENDIF»«ENDFOR» )
@@ -227,13 +231,13 @@ class CREATE_ELEMENT {
 			content += '''
 				-- add new column for foreign key
 				ALTER TABLE `«parent.name.toLowerCase»` 
-				ADD COLUMN `«key.name.toUpperCase»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»;
+				ADD COLUMN `«key.name»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»;
 								
 				-- Create foreign key in «parent.name.toLowerCase»
 				ALTER TABLE `«parent.name.toLowerCase»` 
 				ADD CONSTRAINT `«key.constraintName»`
-				  FOREIGN KEY (`«key.name.toUpperCase»`)
-				  REFERENCES `«key.referencedTable.name.toLowerCase»`(`«key.referencedKeyColumn.name.toUpperCase»`)
+				  FOREIGN KEY (`«key.name»`)
+				  REFERENCES `«key.referencedTable.name.toLowerCase»`(`«key.referencedKeyColumn.name»`)
 				  ON DELETE «key.onDelete.name()»
 				  ON UPDATE «key.onUpdate.name()»;
 			'''
@@ -273,9 +277,9 @@ class CREATE_ELEMENT {
 
 			var Table owner = attribute.table
 			var content = '''
-				-- Add the new column «attribute.name.toUpperCase» in Table «attribute.table.name.toLowerCase»
+				-- Add the new column «attribute.name» in Table «attribute.table.name.toLowerCase»
 				ALTER TABLE `«attribute.table.name.toLowerCase»` 
-				ADD COLUMN `«attribute.name.toUpperCase»` «attribute.type»«ColumnUtil.getSizeString(attribute)» «attribute.notNull !== null && attribute.notNull ? "NOT NULL" : ""» «attribute.autoIncrement !== null && attribute.autoIncrement ? "AUTO_INCREMENT" : ""» 
+				ADD COLUMN `«attribute.name»` «attribute.type»«ColumnUtil.getSizeString(attribute)» «attribute.notNull !== null && attribute.notNull ? "NOT NULL" : ""» «attribute.autoIncrement !== null && attribute.autoIncrement ? "AUTO_INCREMENT" : ""» 
 				«ColumnUtil.getDefaultValueString(attribute)» ;
 			'''
 			return content;
@@ -303,7 +307,7 @@ class CREATE_ELEMENT {
 
 			var Table owner = index.table
 			var content = '''
-				-- Add the new index «index.name.toUpperCase» in Table «index.table.name.toLowerCase»
+				-- Add the new index «index.name» in Table «index.table.name.toLowerCase»
 				ALTER TABLE `«index.table.name.toLowerCase»` 
 				«createConstraintString(index, false)» ;
 			'''
@@ -314,7 +318,7 @@ class CREATE_ELEMENT {
 			var index = a.obj as UniqueConstraint
 			var Table owner = index.table
 			var content = '''
-				-- Add the new index «index.name.toUpperCase» in Table «index.table.name.toLowerCase»
+				-- Add the new index «index.name» in Table «index.table.name.toLowerCase»
 				ALTER TABLE `«index.table.name.toLowerCase»` 
 				«createConstraintString(index, false)» ;
 			'''
@@ -336,7 +340,37 @@ class CREATE_ELEMENT {
 
 		return ""
 	}
-	
+
+	def static _ADD_COLUMN_TO_INDEX(de.thm.evolvedb.migration.ResolvableOperator set) {
+		if (set.processStatus === ProcessStatus.RESOLVED) {
+			var SemanticChangeSet addObject = set.semanticChangeSets.findFirst [
+				editRName.equals('CREATE_UniqueConstraint_IN_Table_(constraints)')
+			]
+			return _ADD_COLUMN_TO_INDEX2(addObject, null);
+		}
+
+		return ""
+	}
+
+	def static _ADD_COLUMN_TO_INDEX2(SemanticChangeSet set, ColumnOptions option) {
+		var AddObject a = set.changes.findFirst[it instanceof AddObject] as AddObject
+
+		if (a.obj instanceof ColumnConstraint) {
+			var content = '''''';
+			var objA = a.obj as ColumnConstraint
+			var constraint = objA.constraint
+			var column = objA.column
+
+			content += '''
+				-- Add column «column.name» to constraint «constraint.name»
+				ALTER TABLE «constraint.table.name» DROP INDEX `«constraint.name»`,
+				«CREATE_ELEMENT.createConstraintString(constraint, false)»;
+			'''
+
+			return content;
+
+		}
+	}
 
 //def static String _resolveUniqueIndex(UniqueConstraint constraint, ColumnOptions columnOptions ) {
 //	
@@ -437,7 +471,7 @@ class CREATE_ELEMENT {
 //		}
 //	}
 //
-//	var constraintName = objB.table.name.toUpperCase + "_UNIQUE";
+//	var constraintName = objB.table.name + "_UNIQUE";
 //
 //	if (objB.uniqueConstraintName !== null && !objB.uniqueConstraintName.equals(""))
 //		constraintName = objB.uniqueConstraintName;
@@ -459,5 +493,4 @@ class CREATE_ELEMENT {
 //
 //}
 //	}
-
 }

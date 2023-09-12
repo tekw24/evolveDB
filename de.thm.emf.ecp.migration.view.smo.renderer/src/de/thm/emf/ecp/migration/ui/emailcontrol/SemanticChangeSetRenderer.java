@@ -276,6 +276,92 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 							}
 
+						} else if (set.getEditRName().equals("CREATE_ColumnConstraint_IN_Constraint_(columns)")) { //$NON-NLS-1$
+							final Optional<Change> optional2 = set.getChanges().stream()
+								.filter(n -> n instanceof AddObject).findFirst();
+							if (optional2.isPresent()) {
+
+								final AddObject addObject = (AddObject) optional2.get();
+
+								final ColumnConstraint columnConstraint = (ColumnConstraint) addObject.getObj();
+
+								createCompositeForConstraint(composite, columnConstraint.getConstraint(),
+									columnConstraint.getConstraint().getName(), null,
+									"Existing Constraint:"); //$NON-NLS-1$
+
+								final Label label = new Label(composite, SWT.NONE);
+								label.setText("Adds the following column to the existing constraint:");
+
+								final Composite area = new Composite(composite, SWT.NONE);
+								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+								GridDataFactory.fillDefaults().grab(true, false)
+									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+								// createDescription(composite, eAttribute, columnA, columnB);
+
+								final Column columnA = columnConstraint.getColumn();
+
+								final Grid grid = createGrid(area, 3, 1);
+
+								final GridItem item = new GridItem(grid, SWT.NONE);
+								item.setText(columnA.getName());
+								item.setText(1, columnA.eClass().getName());
+								item.setText(2, columnA.getType().getName());
+								item.setText(3, columnA.getSize() != null ? columnA.getSize()
+									: Messages.SemanticChangeSetRenderer_null);
+								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+									: Messages.SemanticChangeSetRenderer_null);
+								// item.setChecked(5, columnA.getUnique());
+								item.setChecked(5, columnA.getAutoIncrement());
+
+							}
+
+						} else if (set.getEditRName().equals("SET_REFERENCE_ColumnConstraint_(column)_TGT_Column")) { //$NON-NLS-1$
+							final Optional<Change> optional2 = set.getChanges().stream()
+								.filter(n -> n instanceof AddReference).findFirst();
+							if (optional2.isPresent()) {
+
+								final AddReference addObject = (AddReference) optional2.get();
+
+								ColumnConstraint columnConstraint = null;
+								Column columnA = null;
+								if (addObject.getSrc() instanceof ColumnConstraint) {
+									columnConstraint = (ColumnConstraint) addObject.getSrc();
+									columnA = (Column) addObject.getTgt();
+								} else {
+									columnConstraint = (ColumnConstraint) addObject.getTgt();
+									columnA = (Column) addObject.getSrc();
+								}
+
+								createCompositeForConstraint(composite, columnConstraint.getConstraint(),
+									columnConstraint.getConstraint().getName(), null,
+									"Existing Constraint:"); //$NON-NLS-1$
+
+								final Label label = new Label(composite, SWT.NONE);
+								label.setText("Adds the following column to the existing constraint:");
+
+								final Composite area = new Composite(composite, SWT.NONE);
+								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+								GridDataFactory.fillDefaults().grab(true, false)
+									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+								// createDescription(composite, eAttribute, columnA, columnB)
+
+								final Grid grid = createGrid(area, 3, 1);
+
+								final GridItem item = new GridItem(grid, SWT.NONE);
+								item.setText(columnA.getName());
+								item.setText(1, columnA.eClass().getName());
+								item.setText(2, columnA.getType().getName());
+								item.setText(3, columnA.getSize() != null ? columnA.getSize()
+									: Messages.SemanticChangeSetRenderer_null);
+								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+									: Messages.SemanticChangeSetRenderer_null);
+								// item.setChecked(5, columnA.getUnique());
+								item.setChecked(5, columnA.getAutoIncrement());
+
+							}
+
 						} else if (set.getEditRName().equals("CREATE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
 
 							final Optional<Change> optional2 = set.getChanges().stream()
@@ -941,7 +1027,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 							}
 
 						} else if (set.getEditRName().equals("ADD_Constraint_(columns)_TGT_Column") //$NON-NLS-1$
-							|| set.getEditRName().equals("ADD_Column_(constraints)_TGT_Constraint")) { //$NON-NLS-1$
+							|| set.getEditRName().equals("ADD_Column_(constraints)_TGT_ColumnConstraint")) { //$NON-NLS-1$
 
 							final Optional<Change> optional2 = set.getChanges().stream()
 								.filter(n -> n instanceof AddReference).findFirst();
@@ -951,12 +1037,12 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 								final EObject eObject = addObject.getSrc();
 
-								Constraint constraint;
+								ColumnConstraint constraint;
 
 								if (eObject instanceof Constraint) {
-									constraint = (Constraint) eObject;
+									constraint = (ColumnConstraint) eObject;
 								} else {
-									constraint = (Constraint) addObject.getTgt();
+									constraint = (ColumnConstraint) addObject.getTgt();
 								}
 
 								final Composite area = new Composite(composite, SWT.NONE);
@@ -978,21 +1064,18 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 								final Grid grid = createGrid(area, 3, 1);
 
-								for (final ColumnConstraint columnConstraint : constraint.getColumns()) {
+								final Column columnA = constraint.getColumn();
 
-									final Column columnA = columnConstraint.getColumn();
-
-									final GridItem item = new GridItem(grid, SWT.NONE);
-									item.setText(columnA.getName());
-									item.setText(1, columnA.eClass().getName());
-									item.setText(2, columnA.getType().getName());
-									item.setText(3, columnA.getSize() != null ? columnA.getSize()
-										: Messages.SemanticChangeSetRenderer_null);
-									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-										: Messages.SemanticChangeSetRenderer_null);
-									// item.setChecked(5, columnA.getUnique());
-									item.setChecked(5, columnA.getAutoIncrement());
-								}
+								final GridItem item = new GridItem(grid, SWT.NONE);
+								item.setText(columnA.getName());
+								item.setText(1, columnA.eClass().getName());
+								item.setText(2, columnA.getType().getName());
+								item.setText(3, columnA.getSize() != null ? columnA.getSize()
+									: Messages.SemanticChangeSetRenderer_null);
+								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+									: Messages.SemanticChangeSetRenderer_null);
+								// item.setChecked(5, columnA.getUnique());
+								item.setChecked(5, columnA.getAutoIncrement());
 
 							}
 
@@ -1399,8 +1482,27 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final Table tableB = (Table) objB;
 			final EAttribute eAttribute = avc.getType();
 
-			createCompositeForTable(composite, tableA, "Old Value:", eAttribute, "Column in Model A:"); //$NON-NLS-1$ //$NON-NLS-2$
-			createCompositeForTable(composite, tableB, "New Value:", eAttribute, "Column in Model B:"); //$NON-NLS-1$ //$NON-NLS-2$
+			createCompositeForTable(composite, tableA, "Old Value:", eAttribute, "Table in Model A:"); //$NON-NLS-1$ //$NON-NLS-2$
+			createCompositeForTable(composite, tableB, "New Value:", eAttribute, "Table in Model B:"); //$NON-NLS-1$ //$NON-NLS-2$
+
+			// createDescription(composite, eAttribute, tableA, tableB);
+			// TODO Create Description
+
+		}
+
+		if (objA instanceof Constraint) {
+			final Constraint constraintA = (Constraint) objA;
+			final Constraint constraintB = (Constraint) objB;
+			final EAttribute eAttribute = avc.getType();
+
+			final Composite area = new Composite(composite, SWT.NONE);
+			GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+			GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+			createHyperlink(area, constraintB.getTable(), "Table " + constraintB.getTable().getName(), "Table:");
+			createCompositeForConstraint(composite, constraintA, "Old Value:", eAttribute, "Constraint in Model A:"); //$NON-NLS-1$ //$NON-NLS-2$
+			createCompositeForConstraint(composite, constraintB, "New Value:", eAttribute, "Constraint in Model B:"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			// createDescription(composite, eAttribute, tableA, tableB);
 			// TODO Create Description
@@ -1540,6 +1642,34 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).span(2, 1).applyTo(text);
+
+	}
+
+	private void createCompositeForConstraint(Composite composite, Constraint objA, String label, EStructuralFeature es,
+		String labeltext) {
+
+		final Composite area = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+		GridDataFactory.fillDefaults().grab(true, false)
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+		createHyperlink(area, objA, "Column " + objA.getName(), labeltext); //$NON-NLS-1$
+
+		if (es != null) {
+			final Label header = new Label(area, SWT.NONE);
+			header.setText(label);
+
+			GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.BEGINNING).applyTo(header);
+
+			final Object value = objA.eGet(es);
+			final Text text = new Text(area, getLabelStyleBits());
+			text.setEditable(false);
+			text.setText(value != null ? value.toString() : "null"); //$NON-NLS-1$
+
+			GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.BEGINNING).span(2, 1).applyTo(text);
+		}
 
 	}
 

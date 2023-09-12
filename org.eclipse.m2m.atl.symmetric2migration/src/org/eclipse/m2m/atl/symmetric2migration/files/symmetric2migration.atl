@@ -101,7 +101,8 @@ helper def: resolvableRules : Sequence(String) =
 			'SET_REFERENCE_ColumnConstraint_(column)_TGT_Column',
 			'CREATE_ColumnConstraint_IN_Constraint_(columns)',
 			'DELETE_ColumnConstraint_IN_Constraint_(columns)',
-			'ADD_Column_(constraints)_TGT_ColumnConstraint'
+			'ADD_Column_(constraints)_TGT_ColumnConstraint',
+			'SET_ATTRIBUTE_ColumnConstraint_Name'
 			
 			
 			
@@ -110,6 +111,7 @@ helper def: resolvableRules : Sequence(String) =
 helper def: resolvableEnumType : Map(String, Migration!ResolvableOperatorType) =  
 	Map{('CREATE_Table_IN_Database_Schema_(entites)', #CREATE_TABLE),
 		('SET_ATTRIBUTE_NamedElement_Name', #RENAME_TABLE),
+		('SET_ATTRIBUTE_ColumnConstraint_Name', #RENAME_TABLE),
 		('CREATE_Column_IN_Table_(columns)', #CREATE_COLUMN),
 		('CREATE_PrimaryKey_IN_Table_(columns)', #CREATE_PRIMARY_KEY),
 		('CREATE_ForeignKey_IN_Table_(columns)', #CREATE_FOREIGN_KEY),
