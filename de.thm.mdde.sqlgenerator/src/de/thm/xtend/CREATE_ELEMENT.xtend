@@ -57,23 +57,23 @@ class CREATE_ELEMENT {
 			if (primaryKeys.size > 0) {
 
 				content += '''
-					-- Create Table «entity.name»
-					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					-- Create Table `«entity.name»`
+					CREATE TABLE IF NOT EXISTS `«entity.name»`(
 					«FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»
-						«primaryKey.name» «primaryKey.type.getLiteral()»«ColumnUtil.getSizeString(primaryKey)» «primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""» «primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""»
+						`«primaryKey.name»` «primaryKey.type.getLiteral()»«ColumnUtil.getSizeString(primaryKey)» «primaryKey.notNull !== null && primaryKey.notNull ? "NOT NULL" : ""» «primaryKey.autoIncrement !== null && primaryKey.autoIncrement ? "AUTO_INCREMENT" : ""»
 					«ENDFOR»
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
 						«e.name» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
-						FOREIGN KEY («e.name») REFERENCES «e.referencedTable.name»(DB_ID)
+						FOREIGN KEY (`«e.name»`) REFERENCES `«e.referencedTable.name»`(`«e.referencedKeyColumn.name»`)
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
 					«FOR Column e : columns BEFORE ',' SEPARATOR ',' AFTER ','»
-						«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+						`«e.name»` «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
 					
-					PRIMARY KEY («FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»«primaryKey.name» «ENDFOR»)
+					PRIMARY KEY («FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»`«primaryKey.name»` «ENDFOR»)
 					
 					«createConstraintString(entity, true)»
 					);
@@ -83,7 +83,7 @@ class CREATE_ELEMENT {
 
 				content += '''
 					-- Create Table «entity.name»
-					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					CREATE TABLE IF NOT EXISTS `«entity.name»`  (
 					«FOR ForeignKey e : foreignKeys SEPARATOR ',' AFTER ','»
 						`«e.name»` «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»
 					«ENDFOR»
@@ -106,17 +106,23 @@ class CREATE_ELEMENT {
 				'''
 
 			} else {
+
+//				var List<UniqueConstraint> uniqueIndexes = entity.constraints.filter(UniqueConstraint).toList
+//				entity.constraints.removeAll(uniqueIndexes);
+//				«FOR UniqueConstraint u : uniqueIndexes»
+//						UNIQUE KEY `«u.name»` («FOR ColumnConstraint c : u.columns SEPARATOR ', '»`«c.column.name»`«ENDFOR»)
+//					«ENDFOR»
 				content += '''
 					-- Create Table «entity.name»
-					CREATE TABLE IF NOT EXISTS «entity.name»  (
+					CREATE TABLE IF NOT EXISTS `«entity.name»`  (
 					«FOR ForeignKey e : foreignKeys SEPARATOR ','»
-						«e.name» «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
-						FOREIGN KEY («e.name») REFERENCES «e.referencedTable.name»(DB_ID)
+						`«e.name»` «e.type»«ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""»,
+						FOREIGN KEY (`«e.name»`) REFERENCES `«e.referencedTable.name»`(`«e.referencedKeyColumn.name»`)
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
 					«FOR Column e : columns SEPARATOR ','»
-						«IF foreignKeys.size > 0»,«ENDIF»«e.name» «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
+						«IF foreignKeys.size > 0»,«ENDIF»`«e.name»` «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
 					«createConstraintString(entity, true)»
@@ -132,7 +138,7 @@ class CREATE_ELEMENT {
 
 		'''
 			«IF commaBefore»,«ENDIF»«FOR Constraint e : table.constraints SEPARATOR ','»
-							«IF e instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «e.name» ( «FOR ColumnConstraint c : e.columns SEPARATOR ', '»«c.column.name»«ENDFOR» )
+				«IF e instanceof UniqueConstraint»UNIQUE KEY «ELSE»«(e as Index).type» «ENDIF»«e.name» ( «FOR ColumnConstraint c : e.columns SEPARATOR ', '»«c.column.name»«IF c.length > 0»(«c.length»)«ENDIF»«IF c.constraint.sortSequence.literal.equals('D')» DESC«ENDIF»«ENDFOR»)
 			«ENDFOR»
 		'''
 	}
@@ -141,7 +147,7 @@ class CREATE_ELEMENT {
 
 		'''
 			«IF commaBefore»,«ENDIF»
-			ADD «IF constraint instanceof UniqueConstraint»UNIQUE «ENDIF»INDEX «constraint.name» ( «FOR ColumnConstraint c : constraint.columns SEPARATOR ', '»«c.column.name»«IF c.length > 0»(«c.length»)«ENDIF»«ENDFOR» )
+			ADD «IF constraint instanceof UniqueConstraint»UNIQUE KEY «ELSE»«(constraint as Index).type» «ENDIF»«constraint.name» ( «FOR ColumnConstraint c : constraint.columns SEPARATOR ', '»«c.column.name»«IF c.length > 0»(«c.length»)«ENDIF»«IF c.constraint.sortSequence.literal.equals('D')» DESC«ENDIF»«ENDFOR»)
 		'''
 	}
 

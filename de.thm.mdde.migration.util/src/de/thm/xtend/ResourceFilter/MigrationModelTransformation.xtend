@@ -312,7 +312,7 @@ class MigrationModelTransformation {
 			} else if (ad.objB instanceof Constraint) {
 				rO.displayName = ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME;
 
-			}else if (ad.objB instanceof ColumnConstraint){
+			} else if (ad.objB instanceof ColumnConstraint) {
 				migration.schemaModificationOperators.remove(rO);
 			}
 
@@ -329,6 +329,10 @@ class MigrationModelTransformation {
 			it.displayName.equals(ResolvableOperatorType.CREATE_TABLE)
 		].toList
 		resolvableOperators.removeAll(createTable);
+
+		var List<PartiallyResolvable> createUniqueIndex = migration.partiallyResovableSMO.filter [
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT)
+		].toList
 
 		for (ResolvableOperator rO : createTable) {
 
@@ -358,10 +362,58 @@ class MigrationModelTransformation {
 							}
 						}
 
+					} else if (a.obj instanceof Constraint) {
+						var Constraint c = a.obj as Constraint;
+						if (c.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					} else if (a.obj instanceof ColumnConstraint) {
+						var ColumnConstraint c = a.obj as ColumnConstraint;
+						if (c.constraint.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
 					}
+
 				}
 
 			// filter[it instanceof AddObject]
+			}
+
+			for (PartiallyResolvable resolvable : createUniqueIndex) {
+
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof AddObject]
+				]) {
+					var AddObject a = s.changes.findFirst[it instanceof AddObject] as AddObject
+					if (a.obj instanceof Constraint) {
+						var Constraint c = a.obj as Constraint;
+						if (c.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					} else if (a.obj instanceof ColumnConstraint) {
+						var ColumnConstraint c = a.obj as ColumnConstraint;
+						if (c.constraint.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					}
+				}
+
 			}
 
 		}

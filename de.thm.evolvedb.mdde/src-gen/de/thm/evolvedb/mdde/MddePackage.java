@@ -917,13 +917,22 @@ public interface MddePackage extends EPackage {
 	int INDEX__SORT_SEQUENCE = CONSTRAINT__SORT_SEQUENCE;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEX__TYPE = CONSTRAINT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Index</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INDEX_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 0;
+	int INDEX_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Constraint Name</em>' operation.
@@ -1038,6 +1047,16 @@ public interface MddePackage extends EPackage {
 	int SORT_SEQUENCE = 12;
 
 	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.mdde.IndexType <em>Index Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.mdde.IndexType
+	 * @see de.thm.evolvedb.mdde.impl.MddePackageImpl#getIndexType()
+	 * @generated
+	 */
+	int INDEX_TYPE = 13;
+
+	/**
 	 * The meta object id for the '<em>Column Size</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1045,7 +1064,7 @@ public interface MddePackage extends EPackage {
 	 * @see de.thm.evolvedb.mdde.impl.MddePackageImpl#getColumnSize()
 	 * @generated
 	 */
-	int COLUMN_SIZE = 13;
+	int COLUMN_SIZE = 14;
 
 
 
@@ -1508,6 +1527,17 @@ public interface MddePackage extends EPackage {
 	EClass getIndex();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.mdde.Index#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.thm.evolvedb.mdde.Index#getType()
+	 * @see #getIndex()
+	 * @generated
+	 */
+	EAttribute getIndex_Type();
+
+	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.mdde.ColumnConstraint <em>Column Constraint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1590,6 +1620,16 @@ public interface MddePackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getSortSequence();
+
+	/**
+	 * Returns the meta object for enum '{@link de.thm.evolvedb.mdde.IndexType <em>Index Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Index Type</em>'.
+	 * @see de.thm.evolvedb.mdde.IndexType
+	 * @generated
+	 */
+	EEnum getIndexType();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.String <em>Column Size</em>}'.
@@ -1988,6 +2028,14 @@ public interface MddePackage extends EPackage {
 		EClass INDEX = eINSTANCE.getIndex();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INDEX__TYPE = eINSTANCE.getIndex_Type();
+
+		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.mdde.impl.ColumnConstraintImpl <em>Column Constraint</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2058,6 +2106,16 @@ public interface MddePackage extends EPackage {
 		 * @generated
 		 */
 		EEnum SORT_SEQUENCE = eINSTANCE.getSortSequence();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.mdde.IndexType <em>Index Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.mdde.IndexType
+		 * @see de.thm.evolvedb.mdde.impl.MddePackageImpl#getIndexType()
+		 * @generated
+		 */
+		EEnum INDEX_TYPE = eINSTANCE.getIndexType();
 
 		/**
 		 * The meta object literal for the '<em>Column Size</em>' data type.

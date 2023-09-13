@@ -49,7 +49,7 @@ public class UniqueConstraintItemProvider extends ConstraintItemProvider {
 	 * This returns UniqueConstraint.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {

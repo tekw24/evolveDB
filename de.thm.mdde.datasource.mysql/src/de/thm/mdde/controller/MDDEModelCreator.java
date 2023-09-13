@@ -37,6 +37,7 @@ import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.Index;
+import de.thm.evolvedb.mdde.IndexType;
 import de.thm.evolvedb.mdde.MddeFactory;
 import de.thm.evolvedb.mdde.MddePackage;
 import de.thm.evolvedb.mdde.PrimaryKey;
@@ -96,11 +97,10 @@ public class MDDEModelCreator {
 					System.out.println(indices.getString("COLUMN_NAME"));
 					System.out.println(indices.getString("INDEX_NAME"));
 					System.out.println(indices.getString("TABLE_NAME"));
-					
-					if(indices.getString("INDEX_NAME").equals("PRIMARY")) {
+
+					if (indices.getString("INDEX_NAME").equals("PRIMARY")) {
 						continue;
 					}
-					
 
 					System.out.println(indices.getShort("TYPE"));
 					System.out.println(indices.getString("ASC_OR_DESC"));
@@ -149,10 +149,11 @@ public class MDDEModelCreator {
 
 					System.out.println(indexConstraints.getString("FILTER_CONDITION"));
 					System.out.println(indexConstraints.getShort("ORDINAL_POSITION"));
-					
+
 					String name = indexConstraints.getString("INDEX_NAME");
-					//The method returns all Index Constraints whether unique or not
-					if(uniqueIndex.containsKey(name))
+					// The method returns all Index Constraints whether unique or not
+
+					if (uniqueIndex.containsKey(name) || name.equals("PRIMARY"))
 						continue;
 
 					String asc_or_desc = indexConstraints.getString("ASC_OR_DESC");
@@ -184,7 +185,7 @@ public class MDDEModelCreator {
 						System.out.println("Stop");
 
 					IndexInfo indexInfo = new IndexInfo(indexConstraints.getString("COLUMN_NAME"), 0L, sortSequence);
-					
+
 					if (columnindex.containsKey(name)) {
 
 						columnindex.get(name).add(indexInfo);
@@ -201,24 +202,42 @@ public class MDDEModelCreator {
 					Connection con = dmd.getConnection();
 					Statement stm = con.createStatement();
 
-					String query = "SHOW INDEXES FROM " + tableName + " where Sub_part > 0";
+					String query = "SHOW INDEXES FROM " + tableName;
 					ResultSet set = stm.executeQuery(query);
+					
 
 					while (set.next()) {
 						System.out.println("SubPart " + set.getString("Key_name"));
 						System.out.println("SubPart " + set.getString("Column_name"));
 						System.out.println("SubPart " + set.getLong("Sub_part"));
+						
+						if(set.getString("Column_name").equals("si_title"))
+							System.out.println("Stop");
+						
 						Long subPart = set.getLong("Sub_part");
 
 						if (subPart != null && subPart > 0) {
 							String columnName = set.getString("Column_name");
 							String keyString = set.getString("Key_name");
 							List<IndexInfo> indexInfos = columnindex.get(keyString);
-							if(indexInfos == null)
+							if (indexInfos == null)
 								continue;
 							for (IndexInfo i : indexInfos) {
 								if (i.getColumnName().equals(columnName)) {
 									i.setLength(subPart);
+								}
+							}
+						}
+						String indexType = set.getString("Index_type");
+						if(indexType != null) {
+							String columnName = set.getString("Column_name");
+							String keyString = set.getString("Key_name");
+							List<IndexInfo> indexInfos = columnindex.get(keyString);
+							if (indexInfos == null)
+								continue;
+							for (IndexInfo i : indexInfos) {
+								if (i.getColumnName().equals(columnName)) {
+									i.setType(indexType);
 								}
 							}
 						}
@@ -296,7 +315,11 @@ public class MDDEModelCreator {
 						attribute.setName(rsAttributes.getString("COLUMN_NAME"));
 						attribute.setType(DataTypeUtil.findDataTypeByLiteral(rsAttributes.getString("TYPE_NAME")));
 						setColumnSize(attribute, rsAttributes);
-						attribute.setDefaultValue(rsAttributes.getString("COLUMN_DEF"));
+						String defaultValue = rsAttributes.getString("COLUMN_DEF");
+						if (defaultValue != null && defaultValue.isEmpty())
+							attribute.setDefaultValue("''");
+						else
+							attribute.setDefaultValue(rsAttributes.getString("COLUMN_DEF"));
 						// Method returns YES or NO
 						attribute.setAutoIncrement(rsAttributes.getString("IS_AUTOINCREMENT").equals("YES"));
 						// attribute.setPrimaryKey(false);
@@ -335,7 +358,8 @@ public class MDDEModelCreator {
 
 					for (String name : entry.getValue()) {
 						Column column = attributeMap.get(name);
-						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory.create(mddePackage.getColumnConstraint());
+						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory
+								.create(mddePackage.getColumnConstraint());
 						unique.getColumns().add(columnConstraint);
 						column.getConstraints().add(columnConstraint);
 						columnConstraint.setColumn(column);
@@ -349,16 +373,37 @@ public class MDDEModelCreator {
 					indexconstraint.setName(entry.getKey());
 					table.getConstraints().add(indexconstraint);
 					indexconstraint.setTable(table);
-
+					
+					String indexType = "";
 					for (IndexInfo indexInfo : entry.getValue()) {
 						Column column = attributeMap.get(indexInfo.getColumnName());
-						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory.create(mddePackage.getColumnConstraint());
+						ColumnConstraint columnConstraint = (ColumnConstraint) mddeFactory
+								.create(mddePackage.getColumnConstraint());
 						columnConstraint.setLength(indexInfo.getLength());
 						indexconstraint.getColumns().add(columnConstraint);
 						column.getConstraints().add(columnConstraint);
 						columnConstraint.setColumn(column);
 						columnConstraint.setConstraint(indexconstraint);
+						indexType = indexInfo.getType();
+						
+						
+						
 					}
+					if(indexType.equals("FULLTEXT")) {
+						System.out.println();
+					}
+					switch (indexType) {
+					case "FULLTEXT":
+						indexconstraint.setType(IndexType.FULLTEXT);
+						break;
+					case "SPATIAL":
+						indexconstraint.setType(IndexType.SPATIAL);
+						break;
+					default:
+						indexconstraint.setType(IndexType.INDEX);
+						break;
+					}
+					
 				}
 
 				for (String name : primaryKeyNames) {
@@ -447,15 +492,17 @@ public class MDDEModelCreator {
 		String columnName;
 		Long length;
 		SortSequence sortSequence;
+		String type;
 
 		/**
 		 * @param columnName
 		 * @param sortSequence
 		 */
-		public IndexInfo(String columnName, SortSequence sortSequence) {
+		public IndexInfo(String columnName, SortSequence sortSequence, String type) {
 			super();
 			this.columnName = columnName;
 			this.sortSequence = sortSequence;
+			this.type = type;
 		}
 
 		/**
@@ -463,11 +510,25 @@ public class MDDEModelCreator {
 		 * @param length
 		 * @param sortSequence
 		 */
-		public IndexInfo(String columnName, Long length, SortSequence sortSequence) {
+		public IndexInfo(String columnName, Long length, SortSequence sortSequence, String type) {
 			super();
 			this.columnName = columnName;
 			this.length = length;
 			this.sortSequence = sortSequence;
+			this.type = type;
+		}
+		
+		
+
+		/**
+		 * @param columnName
+		 * @param sortSequence
+		 */
+		public IndexInfo(String columnName,Long length, SortSequence sortSequence) {
+			super();
+			this.columnName = columnName;
+			this.sortSequence = sortSequence;
+			this.length = length;
 		}
 
 		public String getColumnName() {
@@ -493,6 +554,16 @@ public class MDDEModelCreator {
 		public void setSortSequence(SortSequence sortSequence) {
 			this.sortSequence = sortSequence;
 		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+		
+		
 
 	}
 

@@ -85,6 +85,8 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 				return createReferential_ActionFromString(eDataType, initialValue);
 			case MddePackage.SORT_SEQUENCE:
 				return createSortSequenceFromString(eDataType, initialValue);
+			case MddePackage.INDEX_TYPE:
+				return createIndexTypeFromString(eDataType, initialValue);
 			case MddePackage.COLUMN_SIZE:
 				return createColumnSizeFromString(eDataType, initialValue);
 			default:
@@ -106,6 +108,8 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 				return convertReferential_ActionToString(eDataType, instanceValue);
 			case MddePackage.SORT_SEQUENCE:
 				return convertSortSequenceToString(eDataType, instanceValue);
+			case MddePackage.INDEX_TYPE:
+				return convertIndexTypeToString(eDataType, instanceValue);
 			case MddePackage.COLUMN_SIZE:
 				return convertColumnSizeToString(eDataType, instanceValue);
 			default:
@@ -266,6 +270,26 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 	 * @generated
 	 */
 	public String convertSortSequenceToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IndexType createIndexTypeFromString(EDataType eDataType, String initialValue) {
+		IndexType result = IndexType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIndexTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

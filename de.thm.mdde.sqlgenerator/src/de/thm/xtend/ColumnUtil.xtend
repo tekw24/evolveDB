@@ -111,7 +111,7 @@ class ColumnUtil {
 
 		//Default Value can be an empty string
 		
-		if(column.defaultValue !== null && column.defaultValue.equals("") && ColumnUtil.textTypes.contains(column.type) || ColumnUtil.binaryTypes.contains(column.type))
+		if(column.defaultValue !== null && column.defaultValue.equals("''") && (ColumnUtil.textTypes.contains(column.type) || ColumnUtil.binaryTypes.contains(column.type)))
 			return "DEFAULT ''"
 		
 		if (column.defaultValue === null || column.defaultValue.equals("")) {

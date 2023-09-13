@@ -70,7 +70,6 @@ class SQLGenerator {
 	 */
 	var int generatedFiles = 0;
 
-
 	var long character = 0;
 
 	public static String HISTORY_TABLE_NAME = "mdde_history";
@@ -149,7 +148,6 @@ class SQLGenerator {
 			makeProgressAndCheckCanceled(progressMonitor);
 		}
 
-
 		var Migration migration = resourceDifference.allContents.findFirst[it instanceof Migration] as Migration
 		var SymmetricDifference difference = migration.symmetricDifference
 
@@ -158,15 +156,15 @@ class SQLGenerator {
 		// changes will be made in the schema described by the second model (modelB)
 		var Database_Schema databaseSchemaB = modelB.allContents.
 			findFirst[it instanceof Database_Schema] as Database_Schema
-			
-		var historyTable = migration.isHistoryTableRequired() 
+
+		var historyTable = migration.isHistoryTableRequired()
 
 		var String content = '''
 			USE «databaseSchemaB.name»;
 			
 			«IF historyTable»
-			-- Creates an history table for deleted and updated values
-			«ColumnUtil.createDataCleansingTable(HISTORY_TABLE_NAME, databaseSchemaB)»
+				-- Creates an history table for deleted and updated values
+				«ColumnUtil.createDataCleansingTable(HISTORY_TABLE_NAME, databaseSchemaB)»
 			«ENDIF»		
 		''';
 
@@ -180,7 +178,25 @@ class SQLGenerator {
 		// Solve NotAutomaticallyResolvable third
 		var List<NotAutomaticallyResolvable> notAutomaticallyResolvable = migration.notAutimaticallyResolvable
 
+		var List<ResolvableOperatorType> ordererd = Arrays.asList(ResolvableOperatorType.CREATE_TABLE,
+			ResolvableOperatorType.RENAME_TABLE, ResolvableOperatorType.CREATE_COLUMN,
+			ResolvableOperatorType.RENAME_COLUMN, ResolvableOperatorType.CREATE_FOREIGN_KEY,
+			ResolvableOperatorType.CREATE_PRIMARY_KEY);
+
+		for (ResolvableOperatorType type : ordererd) {
+			var operators = resolvableOperators.filter[displayName === type]
+			for (ResolvableOperator resolvable : operators) {
+
+				if (resolvable.processStatus == ProcessStatus.RESOLVED) {
+					var c = processResolvableOperator(resolvable);
+					content += c !== null ? c : "";
+				}
+			}
+			resolvableOperators.removeAll(operators);
+		}
+
 		for (ResolvableOperator resolvable : resolvableOperators) {
+
 			if (resolvable.processStatus == ProcessStatus.RESOLVED) {
 				var c = processResolvableOperator(resolvable);
 				content += c !== null ? c : "";
@@ -255,12 +271,11 @@ class SQLGenerator {
 				return CREATE_ELEMENT._CREATE_INDEX_IN_Table_constraints(resolvableOperator);
 			}
 			case ResolvableOperatorType.REMOVE_CONSTRAINT: {
-				return DELETE_ELEMENT.DELETE_CONSTRAINT_IN_Table(resolvableOperator);//TODO
+				return DELETE_ELEMENT.DELETE_CONSTRAINT_IN_Table(resolvableOperator); // TODO
 			}
 			case ResolvableOperatorType.SET_ATTRIBUTE_CONSTRAINT_NAME: {
-				return SET_ATTRIBUTE._SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(resolvableOperator);//TODO
+				return SET_ATTRIBUTE._SET_ATTRIBUTE_UNIQUE_CONSTRAINT_NAME(resolvableOperator); // TODO
 			}
-			
 			case ResolvableOperatorType.CHANGE_REFERENTIAL_ACTION: {
 				return SET_ATTRIBUTE._CHANGE_Literal_ForeignKey(resolvableOperator);
 			}
@@ -273,11 +288,9 @@ class SQLGenerator {
 			case ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
 			}
-			
 			case ResolvableOperatorType.ADD_COLUMN_TO_INDEX: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_AutoIncrement(resolvableOperator);
 			}
-			
 			default: {
 				println("Operator does not exists")
 			}
@@ -360,11 +373,9 @@ class SQLGenerator {
 			case NotAutomaticallyResolvableOperatorType.MOVE_PRIMARY_KEY: {
 				return MOVE_ELEMENT._MOVE_PrimaryKey_FROM_Table_columns_TO_Table_columns(notAutomaticallyResolvable);
 			}
-			
 			case NotAutomaticallyResolvableOperatorType.JOIN_TABLE: {
 				return ComplexChanges._JOIN_TABLE(notAutomaticallyResolvable);
 			}
-			
 			default: {
 				println("Operator does not exists")
 			}
@@ -387,14 +398,12 @@ class SQLGenerator {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_ForeignKey_PrimaryForeignKey(set);
 
 			}
-			
 		// MOVE 
 		}
 
 		return "";
 
 	}
-
 
 	def String javaToSQLType(String type) {
 		switch (type) {
@@ -441,28 +450,26 @@ class SQLGenerator {
 			checkCircleInDisplayNamePath(a.EReferenceType, start, path)
 		}
 	}
-	
-	
+
 	/**
 	 * @param migration The method checks if the migration contains 
 	 * operators with a possible breaking influence on existing data.
 	 */
-	
-	def boolean isHistoryTableRequired(Migration migration){
-		
+	def boolean isHistoryTableRequired(Migration migration) {
+
 		if (migration.notAutimaticallyResolvable.size > 0)
 			return true;
-			
-		for(PartiallyResolvable partiallyResolvable : migration.partiallyResovableSMO){
-			
-			if(partiallyResolvable.processStatus === ProcessStatus.RESOLVED){
-				if(partiallyResolvable.resolveOptions !== ColumnOptions.IGNORE)
+
+		for (PartiallyResolvable partiallyResolvable : migration.partiallyResovableSMO) {
+
+			if (partiallyResolvable.processStatus === ProcessStatus.RESOLVED) {
+				if (partiallyResolvable.resolveOptions !== ColumnOptions.IGNORE)
 					return true;
-				
+
 			}
-							
+
 		}
-		
+
 		return false;
 	}
 

@@ -151,6 +151,8 @@ public class MddeValidator extends EObjectValidator {
 				return validateReferential_Action((Referential_Action)value, diagnostics, context);
 			case MddePackage.SORT_SEQUENCE:
 				return validateSortSequence((SortSequence)value, diagnostics, context);
+			case MddePackage.INDEX_TYPE:
+				return validateIndexType((IndexType)value, diagnostics, context);
 			case MddePackage.COLUMN_SIZE:
 				return validateColumnSize((String)value, diagnostics, context);
 			default:
@@ -631,6 +633,15 @@ public class MddeValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateSortSequence(SortSequence sortSequence, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateIndexType(IndexType indexType, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

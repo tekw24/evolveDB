@@ -1152,7 +1152,7 @@ class SET_ATTRIBUTE {
 				}
 				content += '''
 					-- Change column type and size of «objB.name» 
-					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «ColumnUtil.getDefaultValueString(objB)» ;
+					ALTER TABLE `«objB.table.name»` CHANGE COLUMN `«objB.name»` `«objB.name»` «objB.type»«ColumnUtil.getSizeString(objB)» «IF objB.notNull»NOT NULL«ELSE»NULL«ENDIF» «objB.autoIncrement !== null && objB.autoIncrement ? "AUTO_INCREMENT" : ""» «ColumnUtil.getDefaultValueString(objB)» ;
 				'''
 
 			}

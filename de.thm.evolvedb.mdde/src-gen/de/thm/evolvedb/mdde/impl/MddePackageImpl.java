@@ -9,6 +9,7 @@ import de.thm.evolvedb.mdde.DataType;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.Index;
+import de.thm.evolvedb.mdde.IndexType;
 import de.thm.evolvedb.mdde.MddeFactory;
 import de.thm.evolvedb.mdde.MddePackage;
 import de.thm.evolvedb.mdde.NamedElement;
@@ -129,6 +130,13 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 	 * @generated
 	 */
 	private EEnum sortSequenceEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum indexTypeEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -599,6 +607,15 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getIndex_Type() {
+		return (EAttribute)indexEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getColumnConstraint() {
 		return columnConstraintEClass;
 	}
@@ -664,6 +681,15 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 	 */
 	public EEnum getSortSequence() {
 		return sortSequenceEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getIndexType() {
+		return indexTypeEEnum;
 	}
 
 	/**
@@ -754,6 +780,7 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		uniqueConstraintEClass = createEClass(UNIQUE_CONSTRAINT);
 
 		indexEClass = createEClass(INDEX);
+		createEAttribute(indexEClass, INDEX__TYPE);
 
 		columnConstraintEClass = createEClass(COLUMN_CONSTRAINT);
 		createEAttribute(columnConstraintEClass, COLUMN_CONSTRAINT__LENGTH);
@@ -765,6 +792,7 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		dataTypeEEnum = createEEnum(DATA_TYPE);
 		referential_ActionEEnum = createEEnum(REFERENTIAL_ACTION);
 		sortSequenceEEnum = createEEnum(SORT_SEQUENCE);
+		indexTypeEEnum = createEEnum(INDEX_TYPE);
 
 		// Create data types
 		columnSizeEDataType = createEDataType(COLUMN_SIZE);
@@ -904,6 +932,7 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		initEClass(uniqueConstraintEClass, UniqueConstraint.class, "UniqueConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(indexEClass, Index.class, "Index", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getIndex_Type(), this.getIndexType(), "type", null, 0, 1, Index.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(columnConstraintEClass, ColumnConstraint.class, "ColumnConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getColumnConstraint_Length(), ecorePackage.getELong(), "length", null, 0, 1, ColumnConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -965,6 +994,11 @@ public class MddePackageImpl extends EPackageImpl implements MddePackage {
 		initEEnum(sortSequenceEEnum, SortSequence.class, "SortSequence");
 		addEEnumLiteral(sortSequenceEEnum, SortSequence.ASCENDING);
 		addEEnumLiteral(sortSequenceEEnum, SortSequence.DESCENDING);
+
+		initEEnum(indexTypeEEnum, IndexType.class, "IndexType");
+		addEEnumLiteral(indexTypeEEnum, IndexType.INDEX);
+		addEEnumLiteral(indexTypeEEnum, IndexType.SPATIAL);
+		addEEnumLiteral(indexTypeEEnum, IndexType.FULLTEXT);
 
 		// Initialize data types
 		initEDataType(columnSizeEDataType, String.class, "ColumnSize", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

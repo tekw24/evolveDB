@@ -62,6 +62,11 @@
       <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//SortSequence/ASCENDING"/>
       <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//SortSequence/DESCENDING"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="mdde.ecore#//IndexType">
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//IndexType/INDEX"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//IndexType/SPATIAL"/>
+      <genEnumLiterals ecoreEnumLiteral="mdde.ecore#//IndexType/FULLTEXT"/>
+    </genEnums>
     <genDataTypes ecoreDataType="mdde.ecore#//ColumnSize"/>
     <genClasses ecoreClass="mdde.ecore#//Table">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference mdde.ecore#//Table/schema"/>
@@ -129,7 +134,9 @@
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="mdde.ecore#//UniqueConstraint"/>
-    <genClasses ecoreClass="mdde.ecore#//Index"/>
+    <genClasses ecoreClass="mdde.ecore#//Index">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//Index/type"/>
+    </genClasses>
     <genClasses ecoreClass="mdde.ecore#//ColumnConstraint">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mdde.ecore#//ColumnConstraint/length"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference mdde.ecore#//ColumnConstraint/constraint"/>
