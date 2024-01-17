@@ -16,7 +16,6 @@
  */
 package de.thm.mdde.differenceBuilderWizard;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,25 +50,24 @@ import org.sidiff.matching.model.Matching;
 
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.Database_Schema;
-import de.thm.evolvedb.mdde.Table;
 
-public class MddeDifferenceBuilderMatchingPage extends WizardPage {
+public class MddeDifferenceBuilderMatchingPage2 extends WizardPage {
 
 	private MddeDifferenceBuilderController controller;
-	private org.eclipse.swt.widgets.Table table;
+	private org.eclipse.swt.widgets.Table tableColumns;
 
 	private Button delCorrespondence;
-	private Button addCorrespondence;
 
+	private Button delCorrespondenceColumns;
+	private Button addCorrespondenceColumns;
 
 	private Matching matching;
-	private Text txtFilter;
-	private ModifyListener listener;
-	private org.eclipse.swt.widgets.Table tableUnmatched;
 
-	private SashForm sashFormA;
+	private Text txtFilterColumn;
+	private ModifyListener listenerFilter;
+	private org.eclipse.swt.widgets.Table tableUnmatchedColumns;
 
-	protected MddeDifferenceBuilderMatchingPage(String pageName, MddeDifferenceBuilderController controller) {
+	protected MddeDifferenceBuilderMatchingPage2(String pageName, MddeDifferenceBuilderController controller) {
 		super(pageName);
 		this.controller = controller;
 	}
@@ -91,77 +89,82 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			composite.setLayoutData(data);
 		}
 
-		// Header Label
-		Label headerTable = new Label(composite, SWT.NONE);
-		headerTable.setText("Table correspondences");
-		headerTable.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-
-		txtFilter = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
-		txtFilter.setTextLimit(200);
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gridData.minimumWidth = 150; // make enough space for both symbols within the field
-		txtFilter.setLayoutData(gridData);
 
-		listener = new ModifyListener() {
+		// Header Label
+		Label headerColumn = new Label(composite, SWT.NONE);
+		headerColumn.setText("Column correspondences");
+		headerColumn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+
+		// Filter
+		txtFilterColumn = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
+		txtFilterColumn.setTextLimit(200);
+		txtFilterColumn.setLayoutData(gridData);
+
+		listenerFilter = new ModifyListener() {
 
 			@Override
 			public void modifyText(ModifyEvent arg0) {
+				tableColumns.removeAll();
+				String match = txtFilterColumn.getText().toLowerCase();
 
 				Display display = PlatformUI.getWorkbench().getDisplay();
 				Color blue = display.getSystemColor(SWT.COLOR_BLUE);
-				table.removeAll();
-
-				String match = txtFilter.getText().toLowerCase();
 
 				EList<Correspondence> elist = matching.getCorrespondences();
-				List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
-						.collect(Collectors.toList());
+				List<Correspondence> columnCorrespondence = elist.stream()
+						.filter(e -> e.getMatchedA() instanceof Column).collect(Collectors.toList());
 
-				for (Correspondence correspondence : tableCorrespondence) {
+				for (Correspondence correspondence : columnCorrespondence) {
 
 					EObject objectA = correspondence.getMatchedA();
 					EObject objectB = correspondence.getMatchedB();
 					String nameA = objectA.toString();
 					String nameB = objectB.toString();
 
-					if (objectA instanceof Table) {
-						nameA = ((Table) objectA).getName();
-						nameB = ((Table) objectB).getName();
+					if (objectA instanceof Column) {
+						Column columnA = (Column) objectA;
+						Column columnB = (Column) objectB;
+
+						nameA = columnA.getName() + " (" + columnA.getTable().getName() + ")";
+						nameB = columnB.getName() + " (" + columnB.getTable().getName() + ")";
+
+						String d_text = nameA + nameB;
+
+						if (d_text.toLowerCase().matches(".*" + match + ".*")) {
+							TableItem item = new TableItem(tableColumns, SWT.BORDER);
+							item.setText(new String[] { nameA, nameB });
+
+							if (!nameA.equals(nameB))
+								item.setForeground(blue);
+
+							item.setData(item.getText(), correspondence);
+
+						}
+
 					} else if (objectA instanceof Database_Schema) {
 						continue;
 					}
 
-					String d_text = nameA + nameB;
-
-					if (d_text.toLowerCase().matches(".*" + match + ".*")) {
-						TableItem item = new TableItem(table, SWT.BORDER);
-						item.setText(new String[] { nameA, nameB });
-
-						if (!nameA.equals(nameB))
-							item.setForeground(blue);
-
-						item.setData(item.getText(), correspondence);
-
-					}
 				}
 
 			}
 		};
-		txtFilter.addModifyListener(listener);
+		txtFilterColumn.addModifyListener(listenerFilter);
 
 		// Buttons
 
-		// Optionally set layout fields.
-		addCorrespondence = createAddCorrespondenceButton(composite);
-		addCorrespondence.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		addCorrespondence.setText("Add Correspondence");
-		addCorrespondence.addSelectionListener(new SelectionAdapter() {
+		addCorrespondenceColumns = createAddCorrespondenceButton(composite);
+		addCorrespondenceColumns.setText("Add Correspondence");
+		addCorrespondenceColumns.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		addCorrespondenceColumns.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Table)
+				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Column)
 						.collect(Collectors.toList());
-				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Table)
+				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Column)
 						.collect(Collectors.toList());
 
 				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
@@ -179,13 +182,13 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			}
 		});
-		delCorrespondence = createdelCorrespondenceButton(composite);
-		delCorrespondence.addSelectionListener(new SelectionAdapter() {
+		delCorrespondenceColumns = createdelCorrespondenceButton(composite);
+		delCorrespondenceColumns.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (table.getSelectionCount() == 1) {
+				if (tableColumns.getSelectionCount() == 1) {
 
-					TableItem selection = table.getSelection()[0];
+					TableItem selection = tableColumns.getSelection()[0];
 
 					Correspondence correspondence = (Correspondence) selection.getData(selection.getText());
 					controller.removeCorrespondence(correspondence);
@@ -197,64 +200,48 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 		});
 
-		delCorrespondence.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		delCorrespondenceColumns.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
 		// SashForm
-		sashFormA = new SashForm(composite, SWT.HORIZONTAL);
-		sashFormA.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		sashFormA.addControlListener(new ControlListener() {
-			
-			@Override
-			public void controlResized(ControlEvent e) {
-				//sashFormA.setBounds(0, 0, (int)(composite.getBounds().width* 0.4), (int)( composite.getBounds().height* 0.9));
-				System.out.println(sashFormA.getBounds().height);
-				System.out.println(sashFormA.getParent().getBounds().height);
-			}
-			
-			@Override
-			public void controlMoved(ControlEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
+		SashForm sashForm = new SashForm(composite, SWT.HORIZONTAL);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		// Table
-		table = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
-		table.setToolTipText("Eine Tabelle");
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		table.addSelectionListener(new SelectionAdapter() {
+		tableColumns = new org.eclipse.swt.widgets.Table(sashForm, SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION);
+		tableColumns.setToolTipText("Eine Tabelle");
+		tableColumns.setLinesVisible(true);
+		tableColumns.setHeaderVisible(true);
+		tableColumns.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
+		tableColumns.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				TableItem[] items = table.getSelection();
+				TableItem[] items = tableColumns.getSelection();
 				if (items.length == 1) {
-					delCorrespondence.setEnabled(true);
+					delCorrespondenceColumns.setEnabled(true);
 				} else
-					delCorrespondence.setEnabled(false);
+					delCorrespondenceColumns.setEnabled(false);
 
 			}
 
 		});
 
-		TableColumn tc = new TableColumn(table, SWT.BORDER);
-		tc.setText("Object ResourceA");
-		tc.pack();
-		tc.setMoveable(true);
+		TableColumn tc3 = new TableColumn(tableColumns, SWT.BORDER);
+		tc3.setText("Object ResourceA");
+		tc3.pack();
+		tc3.setMoveable(true);
 
-		TableColumn tc2 = new TableColumn(table, SWT.BORDER);
-		tc2.setText("Object ResourceB");
-		tc2.pack();
-		tc2.setMoveable(true);
+		TableColumn tc4 = new TableColumn(tableColumns, SWT.BORDER);
+		tc4.setText("Object ResourceB");
+		tc4.pack();
+		tc4.setMoveable(true);
 
-		table.addControlListener(new ControlListener() {
+		tableColumns.addControlListener(new ControlListener() {
 
 			@Override
 			public void controlResized(ControlEvent arg0) {
-				resizeColumns(table);
+				resizeColumns(tableColumns);
 			}
 
 			@Override
@@ -265,16 +252,16 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		});
 
 		// Table unmatched
-		tableUnmatched = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
-		tableUnmatched.setToolTipText("Eine Tabelle");
-		tableUnmatched.setLinesVisible(true);
-		tableUnmatched.setHeaderVisible(true);
-		tableUnmatched.setLayoutData(new GridData(SWT.LEFT, GridData.FILL, true, true, 1, 1));
-		tableUnmatched.addControlListener(new ControlListener() {
+		tableUnmatchedColumns = new org.eclipse.swt.widgets.Table(sashForm, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION );
+		tableUnmatchedColumns.setToolTipText("Eine Tabelle");
+		tableUnmatchedColumns.setLinesVisible(true);
+		tableUnmatchedColumns.setHeaderVisible(true);
+		tableUnmatchedColumns.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+		tableUnmatchedColumns.addControlListener(new ControlListener() {
 
 			@Override
 			public void controlResized(ControlEvent arg0) {
-				resizeColumns(tableUnmatched);
+				resizeColumns(tableUnmatchedColumns);
 			}
 
 			@Override
@@ -284,20 +271,18 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			}
 		});
 
-		TableColumn tcUnmatched = new TableColumn(tableUnmatched, SWT.BORDER);
-		tcUnmatched.setText("Unmatched Tables");
-		tcUnmatched.pack();
-		tcUnmatched.setMoveable(true);
-
-		
+		TableColumn tcUnmatchedColumns = new TableColumn(tableUnmatchedColumns, SWT.BORDER);
+		tcUnmatchedColumns.setText("Unmatched Columns");
+		tcUnmatchedColumns.pack();
+		tcUnmatchedColumns.setMoveable(true);
 
 		setControl(composite);
 
 	}
 
 	protected void fillCorrespondence() {
-		table.removeAll();
-		tableUnmatched.removeAll();
+		tableColumns.removeAll();
+		tableUnmatchedColumns.removeAll();
 
 		Display display = PlatformUI.getWorkbench().getDisplay();
 		Color blue = display.getSystemColor(SWT.COLOR_BLUE);
@@ -306,42 +291,45 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			matching = controller.createMatching();
 
 			EList<Correspondence> elist = matching.getCorrespondences();
-			List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
+			List<Correspondence> columnCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Column)
 					.collect(Collectors.toList());
-			
-					
 
-			for (Correspondence correspondence : tableCorrespondence) {
+			
+
+			for (Correspondence correspondence : columnCorrespondence) {
 
 				EObject objectA = correspondence.getMatchedA();
 				EObject objectB = correspondence.getMatchedB();
 				String nameA = objectA.toString();
 				String nameB = objectB.toString();
 
-				if (objectA instanceof Table) {
-					nameA = ((Table) objectA).getName();
-					nameB = ((Table) objectB).getName();
+				if (objectA instanceof Column) {
+					Column columnA = (Column) objectA;
+					Column columnB = (Column) objectB;
+
+					nameA = columnA.getName() + " (" + columnA.getTable().getName() + ")";
+					nameB = columnB.getName() + " (" + columnB.getTable().getName() + ")";
+
+					TableItem item = new TableItem(tableColumns, SWT.BORDER);
+					item.setText(new String[] { nameA, nameB });
+
+					if (!nameA.equals(nameB))
+						item.setForeground(blue);
+
+					item.setData(item.getText(), correspondence);
+
 				} else if (objectA instanceof Database_Schema) {
 					continue;
 				}
 
-				TableItem item = new TableItem(table, SWT.BORDER);
-				item.setText(new String[] { nameA, nameB });
-
-				if (!nameA.equals(nameB))
-					item.setForeground(blue);
-
-				item.setData(item.getText(), correspondence);
 			}
 
-			
 			addUnmatchedElements(matching.getUnmatchedA());
 			addUnmatchedElements(matching.getUnmatchedB());
 
-			resizeColumns(table);
-			resizeColumns(tableUnmatched);
 			
-			
+			resizeColumns(tableColumns);
+			resizeColumns(tableUnmatchedColumns);
 
 		} catch (NoCorrespondencesException e) {
 			// TODO Auto-generated catch block
@@ -359,10 +347,11 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		Color green = display.getSystemColor(SWT.COLOR_DARK_GREEN);
 		for (EObject e : elistUnmatched) {
 			String name = e.toString();
-			if (e instanceof de.thm.evolvedb.mdde.Table) {
-				name = ((de.thm.evolvedb.mdde.Table) e).getName();
+			if (e instanceof Column) {
 
-				TableItem item = new TableItem(tableUnmatched, SWT.BORDER);
+				Column column = (Column) e;
+				name = column.getName() + " (" + column.getTable().getName() + ")";
+				TableItem item = new TableItem(tableUnmatchedColumns, SWT.BORDER);
 				item.setText(new String[] { name });
 				item.setData(item.getText(), e);
 

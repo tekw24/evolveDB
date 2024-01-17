@@ -1084,17 +1084,23 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 							final Optional<Change> optional2 = set.getChanges().stream()
 								.filter(n -> n instanceof RemoveObject).findFirst();
-							if (optional2.isPresent()) {
 
-								final RemoveObject removeObject = (RemoveObject) optional2.get();
+							final List<Change> removeObjects = set.getChanges().stream()
+								.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
 
-								final EObject eObject = removeObject.getObj();
+							if (removeObjects.size() > 0) {
 
-								Constraint constraint;
+								Constraint constraint = null;
 
-								if (eObject instanceof Constraint) {
-									constraint = (Constraint) eObject;
-								} else {
+								for (final Change rO : removeObjects) {
+									final RemoveObject remove = (RemoveObject) rO;
+									if (remove.getObj() instanceof Constraint) {
+										constraint = (Constraint) remove.getObj();
+									}
+								}
+
+								if (constraint == null) {
+
 									return composite;
 								}
 
@@ -1375,6 +1381,72 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 							item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
 								: false);
 
+						}
+
+					}
+
+				}
+
+				final Optional<SemanticChangeSet> optional3 = object.stream()
+					.filter(n -> n.getEditRName().equals("DELETE_UniqueConstraint_IN_Table_(constraints)") //$NON-NLS-1$
+						|| n.getEditRName().equals("DELETE_Index_IN_Table_(constraints)")) //$NON-NLS-1$
+					.findFirst();
+
+				if (optional3.isPresent()) {
+					final SemanticChangeSet set = optional3.get();
+
+					final List<Change> removeObjects = set.getChanges().stream()
+						.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
+
+					if (removeObjects.size() > 0) {
+
+						Constraint constraint = null;
+
+						for (final Change rO : removeObjects) {
+							final RemoveObject remove = (RemoveObject) rO;
+							if (remove.getObj() instanceof Constraint) {
+								constraint = (Constraint) remove.getObj();
+							}
+						}
+
+						if (constraint == null) {
+
+							return composite;
+						}
+
+						final Composite area = new Composite(composite, SWT.NONE);
+						GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+						GridDataFactory.fillDefaults().grab(true, false)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+						if (constraint instanceof Index) {
+							createHyperlink(area, constraint,
+								Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+								Messages.SemanticChangeSetRenderer_Removed_Elements);
+						} else {
+							createHyperlink(area, constraint,
+								Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+								Messages.SemanticChangeSetRenderer_Removed_Elements);
+						}
+
+						// createDescription(composite, eAttribute, columnA, columnB);
+
+						final Grid grid = createGrid(area, 3, 1);
+
+						for (final ColumnConstraint columnConstraint : constraint.getColumns()) {
+
+							final Column columnA = columnConstraint.getColumn();
+
+							final GridItem item = new GridItem(grid, SWT.NONE);
+							item.setText(columnA.getName());
+							item.setText(1, columnA.eClass().getName());
+							item.setText(2, columnA.getType().getName());
+							item.setText(3, columnA.getSize() != null ? columnA.getSize()
+								: Messages.SemanticChangeSetRenderer_null);
+							item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+								: Messages.SemanticChangeSetRenderer_null);
+							// item.setChecked(5, columnA.getUnique());
+							item.setChecked(5, columnA.getAutoIncrement());
 						}
 
 					}

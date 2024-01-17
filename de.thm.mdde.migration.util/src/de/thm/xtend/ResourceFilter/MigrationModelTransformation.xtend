@@ -46,6 +46,10 @@ import org.sidiff.difference.symmetric.RemoveObject
 import de.thm.evolvedb.mdde.ColumnConstraint
 import org.sidiff.difference.symmetric.RemoveReference
 import org.sidiff.difference.symmetric.Change
+import java.util.ArrayList
+import java.util.TreeMap
+import java.util.Map
+import java.util.Comparator
 
 class MigrationModelTransformation {
 
@@ -57,12 +61,14 @@ class MigrationModelTransformation {
 		var Migration migration = resXtendModelFile.allContents.findFirst[it instanceof Migration] as Migration
 		migration.transformNewTableOperator
 		migration.transformRenameOperator
+		migration.transformDeleteTableOperator
 		migration.setMigrationOptionFor1N_NM_Rule
 		migration.removeDatabaseSchemaChange
 		migration.transformConstraints
 		migration.transformIndexConstraints
 		migration.transformUniqueConstraints
 		migration.transformNewIndexOperator
+		migration.transformDeleteIndexOperator
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
 			it instanceof SymmetricDifference
@@ -319,6 +325,80 @@ class MigrationModelTransformation {
 		}
 
 	}
+	
+	
+		/**
+	 * 
+	 */
+	def transformDeleteTableOperator(Migration migration) {
+		var EList<PartiallyResolvable> partiallyResolvable = migration.partiallyResovableSMO;
+		var List<PartiallyResolvable> deleteTable = partiallyResolvable.filter [
+			it.displayName.equals(PartiallyResolvableOperatorType.DELETE_TABLE)
+		].toList
+		partiallyResolvable.removeAll(deleteTable);
+
+		var List<PartiallyResolvable> deleteColumns = migration.partiallyResovableSMO.filter [
+			it.displayName.equals(PartiallyResolvableOperatorType.DELETE_COLUMN)
+		].toList
+
+		for (PartiallyResolvable rO : deleteTable) {
+
+			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof RemoveObject] as RemoveObject;
+			var Table table = ad.obj as Table
+
+			for (PartiallyResolvable resolvable : partiallyResolvable) {
+
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof RemoveObject]
+				]) {
+					var RemoveObject a = s.changes.findFirst[it instanceof RemoveObject] as RemoveObject
+					if (a.obj instanceof Column) {
+						var Column c = a.obj as Column;
+						if (c.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+							// If it is a foreignKey a setReferenceOperator should exist
+//							if (c instanceof ForeignKey) {
+//								var PartiallyResolvable partiallyResolvable = findSetReferenceOperatorForForeignKey(
+//									migration, (c as ForeignKey))
+//								if (partiallyResolvable !== null) {
+//									rO.semanticChangeSets.addAll(partiallyResolvable.semanticChangeSets)
+//									migration.schemaModificationOperators.remove(partiallyResolvable)
+//								}
+//							}
+						}
+
+					} else if (a.obj instanceof Constraint) {
+						var Constraint c = a.obj as Constraint;
+						if (c.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					} else if (a.obj instanceof ColumnConstraint) {
+						var ColumnConstraint c = a.obj as ColumnConstraint;
+						if (c.constraint.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					}
+
+				}
+
+			// filter[it instanceof AddObject]
+			}
+
+		}
+
+	}
+	
+	
 
 	/**
 	 * 
@@ -461,6 +541,113 @@ class MigrationModelTransformation {
 			// filter[it instanceof AddObject]
 			}
 
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	def transformDeleteIndexOperator(Migration migration) {
+		var EList<ResolvableOperator> resolvableOperators = migration.resolvableSMO;
+		var List<ResolvableOperator> removeIndex = resolvableOperators.filter [
+			it.displayName.equals(ResolvableOperatorType.REMOVE_CONSTRAINT)
+		].toList
+
+		var List<ResolvableOperator> deleteIndex = new ArrayList
+		var Map<Constraint, ResolvableOperator> map = new TreeMap(new Comparator(){
+			
+			override compare(Object o1, Object o2) {
+				var Constraint constraint1 = o1 as Constraint
+				var Constraint constraint2 = o2 as Constraint
+				
+				if(constraint1.equals(constraint2))
+					return 0;
+				
+				return constraint1.toString.compareTo(constraint2.toString)
+				
+			}
+			
+		})
+		for (ResolvableOperator rO : removeIndex) {
+			var SemanticChangeSet defaultValue = rO.semanticChangeSets.get(0);
+			if (defaultValue.editRName.equals('DELETE_Index_IN_Table_(constraints)') ||
+				defaultValue.editRName.equals('DELETE_UniqueConstraint_IN_Table_(constraints)')) {
+				deleteIndex.add(rO);
+				var List<RemoveObject> changeColumnType = rO.semanticChangeSets.get(0).changes.filter(RemoveObject).
+					toList
+
+				if (changeColumnType.size > 0) {
+
+					for (RemoveObject a : changeColumnType) {
+
+						if (a.obj instanceof Constraint) {
+
+							var objA = a.obj as Constraint
+							map.put(objA, rO);
+							
+
+						}
+
+					}
+				}
+
+			}
+		}
+
+		removeIndex.removeAll(deleteIndex);
+
+		for (ResolvableOperator rO : removeIndex) {
+			var List<RemoveObject> changeColumnType = rO.semanticChangeSets.get(0).changes.filter(RemoveObject).toList
+
+			if (changeColumnType.size > 0) {
+
+				for (RemoveObject a : changeColumnType) {
+					if (a.obj instanceof ColumnConstraint) {
+
+						var objA = a.obj as ColumnConstraint
+						var constraint = objA.constraint
+
+						if(map.keySet.contains(constraint)){
+							var ResolvableOperator delete = map.get(constraint);
+							delete.semanticChangeSets.addAll(rO.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(rO);
+						}
+
+					}
+				}
+			}
+
+//		resolvableOperators.removeAll(createIndex);
+//
+//		for (ResolvableOperator rO : createIndex) {
+//
+//			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
+//			var Constraint constraint = ad.obj as Constraint
+//
+//			for (ResolvableOperator resolvable : addColumnIndex) {
+//
+//				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+//					it.changes.exists[it instanceof AddReference]
+//				]) {
+//					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
+//					if (a.src instanceof ColumnConstraint) {
+//
+//						var ColumnConstraint c = a.src as ColumnConstraint;
+//						if (c.constraint.equals(constraint)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						}
+//
+//					}
+//				}
+//
+//			// filter[it instanceof AddObject]
+//			}
+//
+//		}
 		}
 
 	}

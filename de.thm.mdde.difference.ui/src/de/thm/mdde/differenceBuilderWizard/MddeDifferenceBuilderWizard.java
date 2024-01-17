@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -63,6 +64,10 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 	private DifferenceType differenceType;
 
 	private MddeDifferenceBuilderMatchingPage matchingPage;
+
+	private MddeDifferenceBuilderMatchingPage3 matchingPage3;
+
+	private WizardPage matchingPage2;
 
 	private MddeDifferenceBuilderWizard() {
 		super();
@@ -218,6 +223,20 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 		matchingPage.setTitle(Language.WIZARD_MODEL_COMPARISON);
 		matchingPage.setDescription(Language.WIZARD_COMPARE_DIRECTION);
 		addPage(matchingPage);
+		
+		// third page
+		matchingPage2 = new MddeDifferenceBuilderMatchingPage2(Language.WIZARD_COMPARE_MODELS, controller);
+		matchingPage2.setTitle(Language.WIZARD_MODEL_COMPARISON);
+		matchingPage2.setDescription(Language.WIZARD_COMPARE_DIRECTION);
+		addPage(matchingPage2);
+
+		
+		// fourth page
+		matchingPage3 = new MddeDifferenceBuilderMatchingPage3(Language.WIZARD_COMPARE_MODELS, controller);
+		matchingPage3.setTitle(Language.WIZARD_MODEL_COMPARISON);
+		matchingPage3.setDescription(Language.WIZARD_COMPARE_DIRECTION);
+		addPage(matchingPage3);
+
 
 		// Third page
 		builderNewFilePage = new MddeDifferenceBuilderNewFilePage("Test", selection);

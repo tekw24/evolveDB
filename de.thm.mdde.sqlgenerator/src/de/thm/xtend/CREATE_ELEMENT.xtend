@@ -75,7 +75,7 @@ class CREATE_ELEMENT {
 					
 					PRIMARY KEY («FOR PrimaryKey primaryKey : primaryKeys SEPARATOR ','»`«primaryKey.name»` «ENDFOR»)
 					
-					«createConstraintString(entity, true)»
+					«IF entity.constraints.size > 0»«createConstraintString(entity, true)»«ENDIF»
 					);
 				'''
 
@@ -101,7 +101,7 @@ class CREATE_ELEMENT {
 						ON DELETE «e.onDelete.name()»
 						ON UPDATE «e.onUpdate.name()»
 					«ENDFOR»
-					«createConstraintString(entity, true)»
+					«IF entity.constraints.size > 0»«createConstraintString(entity, true)»«ENDIF»
 					);
 				'''
 
@@ -125,7 +125,7 @@ class CREATE_ELEMENT {
 						«IF foreignKeys.size > 0»,«ENDIF»`«e.name»` «e.type» «ColumnUtil.getSizeString(e)» «e.notNull !== null && e.notNull ? "NOT NULL" : ""» «e.autoIncrement !== null && e.autoIncrement ? "AUTO_INCREMENT" : ""» 
 						«ColumnUtil.getDefaultValueString(e)»
 					«ENDFOR»
-					«createConstraintString(entity, true)»
+					«IF entity.constraints.size > 0»«createConstraintString(entity, true)»«ENDIF»
 					);
 				'''
 			}

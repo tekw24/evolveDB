@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject
 import de.thm.evolvedb.mdde.Index
 import de.thm.evolvedb.mdde.UniqueConstraint
 import de.thm.evolvedb.mdde.ColumnConstraint
+import org.sidiff.difference.symmetric.Change
 
 class DELETE_ELEMENT {
 
@@ -24,8 +25,7 @@ class DELETE_ELEMENT {
 	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
 	 */
 	def static String _DELETE_Table_IN_Database_Schema_entites(PartiallyResolvable partiallyResolvableOperator) {
-		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED &&
-			partiallyResolvableOperator.semanticChangeSets.size == 1) {
+		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED ) {
 			var SemanticChangeSet removeElement = partiallyResolvableOperator.semanticChangeSets.get(0)
 			return _DELETE_Table_IN_Database_Schema_entites2(removeElement);
 		}
@@ -33,8 +33,11 @@ class DELETE_ELEMENT {
 	}
 
 	def static String _DELETE_Table_IN_Database_Schema_entites2(SemanticChangeSet set) {
-		var RemoveObject a = set.changes.findFirst[it instanceof RemoveObject] as RemoveObject
-		return _DELETE_Table_IN_Database_Schema_entites2(a)
+		var List<Change> a = set.changes.filter[it instanceof RemoveObject].toList
+		
+		var RemoveObject b = a.findFirst[(it as RemoveObject).obj instanceof Table] as RemoveObject;
+		
+		return _DELETE_Table_IN_Database_Schema_entites2(b)
 	}
 
 	def static String _DELETE_Table_IN_Database_Schema_entites2(RemoveObject a) {
@@ -82,9 +85,7 @@ class DELETE_ELEMENT {
 			content += '''
 				-- Drop primary key in «parent.name»			
 				ALTER TABLE `«parent.name»` 
-				DROP COLUMN `«key.name»`,
-				DROP PRIMARY KEY;
-				
+				DROP COLUMN `«key.name»`;	
 			'''
 
 		}
@@ -232,12 +233,27 @@ class DELETE_ELEMENT {
 	def static String DELETE_CONSTRAINT_IN_Table2(SemanticChangeSet set) {
 		var List<RemoveObject> changeColumnType = set.changes.filter(RemoveObject).toList
 		var content = ""
+		
+		
 
 		if (changeColumnType.size > 0) {
+			
+			if(changeColumnType.size > 1){
+				var RemoveObject remove = changeColumnType.findFirst[it.obj instanceof Constraint]
+				
+				var objA = remove.obj as Constraint
+					content += '''
+						-- Remove constraint «objA.name» 
+						ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
+						
+					'''
+
+					return content;
+				
+			}
 
 			for (RemoveObject a : changeColumnType) {
 				if (a.obj instanceof ColumnConstraint) {
-
 					var objA = a.obj as ColumnConstraint
 					var constraint = objA.constraint
 					constraint.columns.remove(objA);
@@ -286,8 +302,8 @@ class DELETE_ELEMENT {
 				}
 
 				content += '''
-					-- Remove column «column.name» from Index «constraint.name» 
-					ALTER TABLE «constraint.column.table.name» DROP INDEX `«constraint.name»`;
+					-- Remove column «column.name» from Index «constraint.constraint.name» 
+					ALTER TABLE «constraint.column.table.name» DROP INDEX `«constraint.constraint.name»`;
 					
 				'''
 				if (constraint.constraint instanceof Index) {

@@ -16,7 +16,6 @@
  */
 package de.thm.mdde.differenceBuilderWizard;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,13 +49,16 @@ import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
 
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.Database_Schema;
+import de.thm.evolvedb.mdde.Index;
 import de.thm.evolvedb.mdde.Table;
 
-public class MddeDifferenceBuilderMatchingPage extends WizardPage {
+public class MddeDifferenceBuilderMatchingPage3 extends WizardPage {
 
 	private MddeDifferenceBuilderController controller;
 	private org.eclipse.swt.widgets.Table table;
+	
 
 	private Button delCorrespondence;
 	private Button addCorrespondence;
@@ -66,10 +68,9 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 	private Text txtFilter;
 	private ModifyListener listener;
 	private org.eclipse.swt.widgets.Table tableUnmatched;
-
 	private SashForm sashFormA;
 
-	protected MddeDifferenceBuilderMatchingPage(String pageName, MddeDifferenceBuilderController controller) {
+	protected MddeDifferenceBuilderMatchingPage3(String pageName, MddeDifferenceBuilderController controller) {
 		super(pageName);
 		this.controller = controller;
 	}
@@ -93,7 +94,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 		// Header Label
 		Label headerTable = new Label(composite, SWT.NONE);
-		headerTable.setText("Table correspondences");
+		headerTable.setText("Constraint correspondences");
 		headerTable.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
 		txtFilter = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
@@ -159,9 +160,9 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Table)
+				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof Index)
 						.collect(Collectors.toList());
-				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Table)
+				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof Index)
 						.collect(Collectors.toList());
 
 				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
@@ -285,7 +286,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		});
 
 		TableColumn tcUnmatched = new TableColumn(tableUnmatched, SWT.BORDER);
-		tcUnmatched.setText("Unmatched Tables");
+		tcUnmatched.setText("Unmatched Constraints");
 		tcUnmatched.pack();
 		tcUnmatched.setMoveable(true);
 
@@ -306,10 +307,9 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			matching = controller.createMatching();
 
 			EList<Correspondence> elist = matching.getCorrespondences();
-			List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
+			List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Constraint)
 					.collect(Collectors.toList());
 			
-					
 
 			for (Correspondence correspondence : tableCorrespondence) {
 
@@ -317,13 +317,16 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 				EObject objectB = correspondence.getMatchedB();
 				String nameA = objectA.toString();
 				String nameB = objectB.toString();
-
-				if (objectA instanceof Table) {
-					nameA = ((Table) objectA).getName();
-					nameB = ((Table) objectB).getName();
-				} else if (objectA instanceof Database_Schema) {
+				
+				if (objectA instanceof Database_Schema) {
 					continue;
 				}
+				
+				Constraint columnA = (Constraint) objectA;
+				Constraint columnB = (Constraint) objectB;
+
+				nameA = columnA.getName() + " (" + columnA.getTable().getName() + ")";
+				nameB = columnB.getName() + " (" + columnB.getTable().getName() + ")";
 
 				TableItem item = new TableItem(table, SWT.BORDER);
 				item.setText(new String[] { nameA, nameB });
@@ -335,13 +338,12 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			}
 
 			
+
 			addUnmatchedElements(matching.getUnmatchedA());
 			addUnmatchedElements(matching.getUnmatchedB());
 
 			resizeColumns(table);
 			resizeColumns(tableUnmatched);
-			
-			
 
 		} catch (NoCorrespondencesException e) {
 			// TODO Auto-generated catch block
@@ -359,8 +361,8 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		Color green = display.getSystemColor(SWT.COLOR_DARK_GREEN);
 		for (EObject e : elistUnmatched) {
 			String name = e.toString();
-			if (e instanceof de.thm.evolvedb.mdde.Table) {
-				name = ((de.thm.evolvedb.mdde.Table) e).getName();
+			if (e instanceof de.thm.evolvedb.mdde.Constraint) {
+				name = ((de.thm.evolvedb.mdde.Constraint) e).getName();
 
 				TableItem item = new TableItem(tableUnmatched, SWT.BORDER);
 				item.setText(new String[] { name });
@@ -371,7 +373,7 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 				else
 					item.setForeground(green);
 
-			}
+			} 
 
 		}
 	}

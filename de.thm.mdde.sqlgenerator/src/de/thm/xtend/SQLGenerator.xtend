@@ -178,7 +178,7 @@ class SQLGenerator {
 		// Solve NotAutomaticallyResolvable third
 		var List<NotAutomaticallyResolvable> notAutomaticallyResolvable = migration.notAutimaticallyResolvable
 
-		var List<ResolvableOperatorType> ordererd = Arrays.asList(ResolvableOperatorType.CREATE_TABLE,
+		var List<ResolvableOperatorType> ordererd = Arrays.asList(ResolvableOperatorType.REMOVE_CONSTRAINT, ResolvableOperatorType.CREATE_TABLE,
 			ResolvableOperatorType.RENAME_TABLE, ResolvableOperatorType.CREATE_COLUMN,
 			ResolvableOperatorType.RENAME_COLUMN, ResolvableOperatorType.CREATE_FOREIGN_KEY,
 			ResolvableOperatorType.CREATE_PRIMARY_KEY);

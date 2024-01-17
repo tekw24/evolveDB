@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ui.EditorToolBar;
@@ -52,7 +53,22 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.difference.symmetric.AddReference;
+import org.sidiff.difference.symmetric.AttributeValueChange;
+import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.RemoveObject;
+import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.difference.symmetric.SemanticChangeSet;
+
+import de.thm.evolvedb.mdde.NamedElement;
+import de.thm.evolvedb.migration.Migration;
+import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
+import de.thm.evolvedb.migration.PartiallyResolvable;
+import de.thm.evolvedb.migration.ProcessStatus;
+import de.thm.evolvedb.migration.ResolvableOperator;
 import de.thm.evolvedb.migration.SchemaModificationOperator;
+import de.thm.evolvedb.migration.provider.SchemaModificationOperatorItemProvider;
 import de.thm.mdde.migration.view.editor.action.ResolvemasterDetailAction;
 import de.thm.mdde.migration.view.editor.action.UnresolvemasterDetailAction;
 import de.thm.mdde.migration.view.editor.toolbar.GenerateAction;
@@ -189,9 +205,16 @@ public class MigrationCustomEditor extends GenericEditor {
 				for(Object element : elements) {
 					if(element instanceof SchemaModificationOperator) {
 						SchemaModificationOperator t = (SchemaModificationOperator) element;
-						if(!t.getDescription().contains(filterText))
+						
+						
+						if(!getText(t).contains(filterText))
 							objects.remove(element);
 							
+					}else {
+//						if(element instanceof Migration)
+//							continue;
+//						if(!element.toString().contains(filterText))
+//							objects.remove(element);
 					}
 				}
 						
@@ -223,6 +246,128 @@ public class MigrationCustomEditor extends GenericEditor {
 		
 		return super.customizeTree(builder);
 	}
+	
+	
+	/**
+	 * This returns the label text for the adapted class. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String getText(SchemaModificationOperator o) {
+		EList<SemanticChangeSet> s = o.getSemanticChangeSets();
+
+		SemanticChangeSet semanticChangeSet = s.get(0);
+		EList<Change> changes = semanticChangeSet.getChanges();
+		Change change = null;
+
+		if (changes.size() == 1) {
+			change = changes.get(0);
+		} else {
+			change = changes.get(0);
+		}
+
+		String prefix = "";
+		if (change instanceof RemoveObject) {
+			prefix = getName((RemoveObject) change);
+		} else if (change instanceof AddObject) {
+			prefix = getName((AddObject) change);
+		} else if (change instanceof RemoveReference) {
+			prefix = getName((RemoveReference) change);
+		} else if (change instanceof AddReference) {
+			prefix = getName((AddReference) change);
+		} else if (change instanceof AttributeValueChange) {
+			prefix = getName((AttributeValueChange) change);
+		}
+		
+		
+		if (o instanceof ResolvableOperator)
+			return  "RO " + prefix + " " + ((ResolvableOperator) o).getDisplayName();
+		else if (o instanceof PartiallyResolvable)
+			return "PRO " + prefix + " " +((PartiallyResolvable) o).getDisplayName();
+		else if (o instanceof NotAutomaticallyResolvable)
+			return "NAR " + prefix + " " + ((NotAutomaticallyResolvable) o).getDisplayName();
+		
+		return "";
+		
+
+	}
+
+	/**
+	 * @param change
+	 * @return
+	 * @generated NOT
+	 */
+	private String getName(AttributeValueChange change) {
+		if (change.getObjA() instanceof NamedElement) {
+			NamedElement n = (NamedElement) change.getObjA();
+			return n.getName();
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @param removeObject
+	 * @return
+	 * @generated NOT
+	 */
+	public String getName(RemoveObject removeObject) {
+		if (removeObject.getObj() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getObj();
+			return n.getName();
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @param removeObject
+	 * @return
+	 * @generated NOT
+	 */
+	public String getName(AddObject removeObject) {
+		if (removeObject.getObj() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getObj();
+			return n.getName();
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @param removeObject
+	 * @return
+	 * @generated NOT
+	 */
+	public String getName(RemoveReference removeObject) {
+		if (removeObject.getSrc() != null && removeObject.getSrc() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getTgt();
+			return n.getName();
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @param removeObject
+	 * @return
+	 * @generated NOT
+	 */
+	public String getName(AddReference removeObject) {
+		if (removeObject.getSrc() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getSrc();
+			return n.getName();
+		}
+		return "";
+	}
+	
+	
+	
+	
 	
 	public void refreshTreeFilter(String filter) {
 		this.filterText = filter;
