@@ -116,11 +116,13 @@ public class PartiallyResolvableItemProvider extends SchemaModificationOperatorI
 	 */
 	@Override
 	public String getText(Object object) {
-		PartiallyResolvableOperatorType labelValue = ((PartiallyResolvable)object).getDisplayName();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_PartiallyResolvable_type") :
-			getString("_UI_PartiallyResolvable_type") + " " + label;
+//		PartiallyResolvableOperatorType labelValue = ((PartiallyResolvable)object).getDisplayName();
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_PartiallyResolvable_type") :
+//			getString("_UI_PartiallyResolvable_type") + " " + label;
+		
+		return super.getText(object);
 	}
 
 
