@@ -20,9 +20,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.ICoreRunnable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.window.Window.IExceptionHandler;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -40,6 +46,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
@@ -61,13 +68,14 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 	private Button delCorrespondence;
 	private Button addCorrespondence;
 
-
 	private Matching matching;
 	private Text txtFilter;
 	private ModifyListener listener;
 	private org.eclipse.swt.widgets.Table tableUnmatched;
 
 	private SashForm sashFormA;
+
+	private ProgressMonitorDialog dialog;
 
 	protected MddeDifferenceBuilderMatchingPage(String pageName, MddeDifferenceBuilderController controller) {
 		super(pageName);
@@ -203,24 +211,24 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		sashFormA = new SashForm(composite, SWT.HORIZONTAL);
 		sashFormA.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		sashFormA.addControlListener(new ControlListener() {
-			
+
 			@Override
 			public void controlResized(ControlEvent e) {
-				//sashFormA.setBounds(0, 0, (int)(composite.getBounds().width* 0.4), (int)( composite.getBounds().height* 0.9));
+				// sashFormA.setBounds(0, 0, (int)(composite.getBounds().width* 0.4), (int)(
+				// composite.getBounds().height* 0.9));
 				System.out.println(sashFormA.getBounds().height);
 				System.out.println(sashFormA.getParent().getBounds().height);
 			}
-			
+
 			@Override
 			public void controlMoved(ControlEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
 
 		// Table
-		table = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
+		table = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION);
 		table.setToolTipText("Eine Tabelle");
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
@@ -259,13 +267,12 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				
 
 			}
 		});
 
 		// Table unmatched
-		tableUnmatched = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE |SWT.FULL_SELECTION);
+		tableUnmatched = new org.eclipse.swt.widgets.Table(sashFormA, SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION);
 		tableUnmatched.setToolTipText("Eine Tabelle");
 		tableUnmatched.setLinesVisible(true);
 		tableUnmatched.setHeaderVisible(true);
@@ -279,7 +286,6 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 
 			@Override
 			public void controlMoved(ControlEvent arg0) {
-				
 
 			}
 		});
@@ -288,8 +294,6 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		tcUnmatched.setText("Unmatched Tables");
 		tcUnmatched.pack();
 		tcUnmatched.setMoveable(true);
-
-		
 
 		setControl(composite);
 
@@ -302,54 +306,85 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 		Display display = PlatformUI.getWorkbench().getDisplay();
 		Color blue = display.getSystemColor(SWT.COLOR_BLUE);
 
-		try {
-			matching = controller.createMatching();
+		Job job = Job.create("Create Matching...", (ICoreRunnable) monitor -> {
+			// do something long running
+			// ...
 
-			EList<Correspondence> elist = matching.getCorrespondences();
-			List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
-					.collect(Collectors.toList());
-			
-					
-
-			for (Correspondence correspondence : tableCorrespondence) {
-
-				EObject objectA = correspondence.getMatchedA();
-				EObject objectB = correspondence.getMatchedB();
-				String nameA = objectA.toString();
-				String nameB = objectB.toString();
-
-				if (objectA instanceof Table) {
-					nameA = ((Table) objectA).getName();
-					nameB = ((Table) objectB).getName();
-				} else if (objectA instanceof Database_Schema) {
-					continue;
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					dialog = new ProgressMonitorDialog(getShell());
+//					dialog.setCancelable(true);
+//					dialog.setExceptionHandler(new IExceptionHandler() {
+//						
+//						@Override
+//						public void handleException(Throwable t) {
+//							dialog.close();
+//							
+//						}
+//					});
+					dialog.open();
 				}
+			});
 
-				TableItem item = new TableItem(table, SWT.BORDER);
-				item.setText(new String[] { nameA, nameB });
+			try {
+				matching = controller.createMatching();
 
-				if (!nameA.equals(nameB))
-					item.setForeground(blue);
+				EList<Correspondence> elist = matching.getCorrespondences();
+				List<Correspondence> tableCorrespondence = elist.stream().filter(e -> e.getMatchedA() instanceof Table)
+						.collect(Collectors.toList());
 
-				item.setData(item.getText(), correspondence);
+//				MessageBox dialog =
+//					    new MessageBox(getShell(), SWT.ICON_QUESTION | SWT.CANCEL);
+//					dialog.setText("My info");
+//					dialog.setMessage("Do you really want to do this?");
+
+				// If you want to update the UI
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						for (Correspondence correspondence : tableCorrespondence) {
+
+							EObject objectA = correspondence.getMatchedA();
+							EObject objectB = correspondence.getMatchedB();
+							String nameA = objectA.toString();
+							String nameB = objectB.toString();
+
+							if (objectA instanceof Table) {
+								nameA = ((Table) objectA).getName();
+								nameB = ((Table) objectB).getName();
+							} else if (objectA instanceof Database_Schema) {
+								continue;
+							}
+
+							TableItem item = new TableItem(table, SWT.BORDER);
+							item.setText(new String[] { nameA, nameB });
+
+							if (!nameA.equals(nameB))
+								item.setForeground(blue);
+
+							item.setData(item.getText(), correspondence);
+						}
+
+						addUnmatchedElements(matching.getUnmatchedA());
+						addUnmatchedElements(matching.getUnmatchedB());
+
+						resizeColumns(table);
+						resizeColumns(tableUnmatched);
+
+						if (dialog != null)
+							dialog.close();
+					}
+				});
+
+			} catch (NoCorrespondencesException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidModelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
-			
-			addUnmatchedElements(matching.getUnmatchedA());
-			addUnmatchedElements(matching.getUnmatchedB());
-
-			resizeColumns(table);
-			resizeColumns(tableUnmatched);
-			
-			
-
-		} catch (NoCorrespondencesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		});
+		job.schedule();
 
 	}
 
@@ -401,9 +436,9 @@ public class MddeDifferenceBuilderMatchingPage extends WizardPage {
 			for (TableColumn tc : table.getColumns())
 				tc.setWidth(extraSpace);
 		}
-		
+
 		table.getParent().layout(true, true);
-		
+
 	}
 
 	@Override

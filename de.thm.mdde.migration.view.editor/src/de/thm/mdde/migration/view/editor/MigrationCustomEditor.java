@@ -38,6 +38,10 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.PasteMas
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -48,6 +52,8 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -185,6 +191,21 @@ public class MigrationCustomEditor extends GenericEditor {
 				((IEditingDomainAware) action).setEditingDomain(getEditingDomain());
 			}
 		}
+		ISelectionProvider provider = treeMasterDetail.getMasterDetailSelectionProvider();
+		provider.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = event.getStructuredSelection();
+				if(selection.isEmpty()) {
+					System.out.println("Selection is empty");
+				}else {
+					System.out.println("Current Size: " + selection.size());
+				}
+				
+			}
+		});
+		
 		return treeMasterDetail;
 	}
 	
@@ -282,11 +303,11 @@ public class MigrationCustomEditor extends GenericEditor {
 		
 		
 		if (o instanceof ResolvableOperator)
-			return  "RO " + prefix + " " + ((ResolvableOperator) o).getDisplayName();
+			return  "ResolvableOperator "  + ((ResolvableOperator) o).getDisplayName()+ " " + prefix;
 		else if (o instanceof PartiallyResolvable)
-			return "PRO " + prefix + " " +((PartiallyResolvable) o).getDisplayName();
+			return "PartiallyResolvable " +((PartiallyResolvable) o).getDisplayName() + " " + prefix;
 		else if (o instanceof NotAutomaticallyResolvable)
-			return "NAR " + prefix + " " + ((NotAutomaticallyResolvable) o).getDisplayName();
+			return "NotAutomaticallyResolvable " + ((NotAutomaticallyResolvable) o).getDisplayName() + " " + prefix;
 		
 		return "";
 		

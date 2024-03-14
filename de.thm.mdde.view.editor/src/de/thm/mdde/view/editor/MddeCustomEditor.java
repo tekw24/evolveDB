@@ -78,7 +78,7 @@ public class MddeCustomEditor extends GenericEditor {
 		List<Action> result = new LinkedList<Action>();
 
 		result.add(new ValidateModelAction(super.getResourceSet()));
-		
+
 		return result;
 	}
 
@@ -86,54 +86,55 @@ public class MddeCustomEditor extends GenericEditor {
 	protected TreeMasterDetailSWTBuilder customizeTree(TreeMasterDetailSWTBuilder builder) {
 		this.builder = builder;
 		ViewerFilter viewerFilter = new ViewerFilter() {
-			
+
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
 				return true;
 			}
-			
+
 			@Override
 			public Object[] filter(Viewer viewer, Object parent, Object[] elements) {
 				List<Object> objects = new ArrayList<>();
 				objects.addAll(Arrays.asList(elements));
-				for(Object element : elements) {
-					if(element instanceof Table) {
+				for (Object element : elements) {
+					if (element instanceof Table) {
 						Table t = (Table) element;
-						if(!t.getName().contains(filterText))
-							objects.remove(element);
-							
+						if (t.getName() != null) {
+							if (!t.getName().contains(filterText))
+								objects.remove(element);
+						}
+
 					}
 				}
-						
+
 				return super.filter(viewer, parent, objects.toArray());
 			}
 		};
-		ViewerFilter[] array = {viewerFilter};
+		ViewerFilter[] array = { viewerFilter };
 		builder.customizeViewerFilters(array);
 		return super.customizeTree(builder);
 	}
-	
+
 	public void refreshTreeFilter(String filter) {
 		this.filterText = filter;
 		customizeTree(builder);
 		super.refreshTreeAfterResourceChange();
-		
-		
+
 	}
-	
+
 	/**
 	 * Creates the top area of the editor.
 	 *
-	 * @param parent The parent {@link Composite}
-	 * @param editorTitle The title of the editor
-	 * @param editorInput the editor input
-	 * @param toolbarActions The actions shown on the top area
+	 * @param parent                The parent {@link Composite}
+	 * @param editorTitle           The title of the editor
+	 * @param editorInput           the editor input
+	 * @param toolbarActions        The actions shown on the top area
 	 * @param createElementCallback a call back if elements are created
 	 * @return a {@link TreeMasterDetailComposite}
 	 * @since 1.14
 	 */
 	protected TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
-		List<Action> toolbarActions, CreateElementCallback createElementCallback) {
+			List<Action> toolbarActions, CreateElementCallback createElementCallback) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 
 		composite.setLayout(new FormLayout());
@@ -144,24 +145,21 @@ public class MddeCustomEditor extends GenericEditor {
 		toolbarLayoutData.top = new FormAttachment(0);
 		final EditorToolBar toolbar = new EditorToolBar(composite, SWT.NONE, editorTitle, toolbarActions);
 		toolbar.setLayoutData(toolbarLayoutData);
-		
-		
+
 		final FormData filterLayoutData = new FormData();
 		filterLayoutData.left = new FormAttachment(1);
 		filterLayoutData.right = new FormAttachment(50);
-		filterLayoutData.top = new FormAttachment(toolbar,5);
+		filterLayoutData.top = new FormAttachment(toolbar, 5);
 		final Text filter = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
 		filter.addModifyListener(new ModifyListener() {
-			
+
 			@Override
 			public void modifyText(ModifyEvent e) {
 				refreshTreeFilter(filter.getText());
-				
+
 			}
 		});
 		filter.setLayoutData(filterLayoutData);
-		
-		
 
 		final FormData treeMasterDetailLayoutData = new FormData();
 		treeMasterDetailLayoutData.top = new FormAttachment(filter, 5);
@@ -169,8 +167,10 @@ public class MddeCustomEditor extends GenericEditor {
 		treeMasterDetailLayoutData.right = new FormAttachment(100);
 		treeMasterDetailLayoutData.bottom = new FormAttachment(100);
 		final TreeMasterDetailComposite treeMasterDetail = createTreeMasterDetail(composite, editorInput,
-			createElementCallback);
+				createElementCallback);
 		treeMasterDetail.setLayoutData(treeMasterDetailLayoutData);
+		
+		
 
 		for (final Action action : toolbarActions) {
 			if (action instanceof IEditingDomainAware) {
@@ -179,5 +179,7 @@ public class MddeCustomEditor extends GenericEditor {
 		}
 		return treeMasterDetail;
 	}
+	
+	
 
 }

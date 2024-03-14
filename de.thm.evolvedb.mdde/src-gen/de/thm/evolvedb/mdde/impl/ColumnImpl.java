@@ -38,13 +38,17 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getTable <em>Table</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getNotNull <em>Not Null</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getAutoIncrement <em>Auto Increment</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getSize <em>Size</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getConstraints <em>Constraints</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getTable <em>Table</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getDefaultValue <em>Default
+ * Value</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getNotNull <em>Not
+ * Null</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getAutoIncrement <em>Auto
+ * Increment</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getSize <em>Size</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getType <em>Type</em>}</li>
+ * <li>{@link de.thm.evolvedb.mdde.impl.ColumnImpl#getConstraints
+ * <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -76,20 +80,22 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	 * @generated NOT
 	 */
 	public static List<DataType> typesWithoutSize = Arrays.asList(DataType.TINYBLOB, DataType.TINYTEXT,
-			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, 
-			DataType.BOOL, DataType.BOOLEAN, DataType.DATE, DataType.YEAR);
-	
+			DataType.MEDIUMBLOB, DataType.MEDIUMTEXT, DataType.LONGBLOB, DataType.LONGTEXT, DataType.BOOL,
+			DataType.BOOLEAN, DataType.DATE, DataType.YEAR);
+
 	/**
-	 * The default value of the '{@link #getDefaultValue() <em>Default Value</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getDefaultValue() <em>Default Value</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDefaultValue()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String DEFAULT_VALUE_EDEFAULT = null;
 	/**
-	 * The cached value of the '{@link #getDefaultValue() <em>Default Value</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getDefaultValue() <em>Default Value</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDefaultValue()
 	 * @generated
 	 * @ordered
@@ -98,6 +104,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	/**
 	 * The default value of the '{@link #getNotNull() <em>Not Null</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getNotNull()
 	 * @generated
 	 * @ordered
@@ -106,22 +113,25 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	/**
 	 * The cached value of the '{@link #getNotNull() <em>Not Null</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getNotNull()
 	 * @generated
 	 * @ordered
 	 */
 	protected Boolean notNull = NOT_NULL_EDEFAULT;
 	/**
-	 * The default value of the '{@link #getAutoIncrement() <em>Auto Increment</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getAutoIncrement() <em>Auto
+	 * Increment</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAutoIncrement()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final Boolean AUTO_INCREMENT_EDEFAULT = Boolean.FALSE;
 	/**
-	 * The cached value of the '{@link #getAutoIncrement() <em>Auto Increment</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getAutoIncrement() <em>Auto Increment</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getAutoIncrement()
 	 * @generated
 	 * @ordered
@@ -167,9 +177,9 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	protected DataType type = TYPE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}'
+	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getConstraints()
 	 * @generated
 	 * @ordered
@@ -178,6 +188,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ColumnImpl() {
@@ -186,6 +197,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -195,46 +207,52 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Table getTable() {
-		if (eContainerFeatureID() != MddePackage.COLUMN__TABLE) return null;
-		return (Table)eInternalContainer();
+		if (eContainerFeatureID() != MddePackage.COLUMN__TABLE)
+			return null;
+		return (Table) eInternalContainer();
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetTable(Table newTable, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newTable, MddePackage.COLUMN__TABLE, msgs);
+		msgs = eBasicSetContainer((InternalEObject) newTable, MddePackage.COLUMN__TABLE, msgs);
 		return msgs;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setTable(Table newTable) {
-		if (newTable != eInternalContainer() || (eContainerFeatureID() != MddePackage.COLUMN__TABLE && newTable != null)) {
+		if (newTable != eInternalContainer()
+				|| (eContainerFeatureID() != MddePackage.COLUMN__TABLE && newTable != null)) {
 			if (EcoreUtil.isAncestor(this, newTable))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newTable != null)
-				msgs = ((InternalEObject)newTable).eInverseAdd(this, MddePackage.TABLE__COLUMNS, Table.class, msgs);
+				msgs = ((InternalEObject) newTable).eInverseAdd(this, MddePackage.TABLE__COLUMNS, Table.class, msgs);
 			msgs = basicSetTable(newTable, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__TABLE, newTable, newTable));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -244,6 +262,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -251,11 +270,13 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 		String oldDefaultValue = defaultValue;
 		defaultValue = newDefaultValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__DEFAULT_VALUE, oldDefaultValue, defaultValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__DEFAULT_VALUE, oldDefaultValue,
+					defaultValue));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -265,6 +286,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -277,6 +299,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -286,6 +309,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -293,11 +317,13 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 		Boolean oldAutoIncrement = autoIncrement;
 		autoIncrement = newAutoIncrement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__AUTO_INCREMENT, oldAutoIncrement, autoIncrement));
+			eNotify(new ENotificationImpl(this, Notification.SET, MddePackage.COLUMN__AUTO_INCREMENT, oldAutoIncrement,
+					autoIncrement));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -307,6 +333,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -319,6 +346,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -328,6 +356,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -339,13 +368,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<ColumnConstraint> getConstraints() {
 		if (constraints == null) {
-			constraints = new EObjectWithInverseResolvingEList<ColumnConstraint>(ColumnConstraint.class, this, MddePackage.COLUMN__CONSTRAINTS, MddePackage.COLUMN_CONSTRAINT__COLUMN);
+			constraints = new EObjectWithInverseResolvingEList<ColumnConstraint>(ColumnConstraint.class, this,
+					MddePackage.COLUMN__CONSTRAINTS, MddePackage.COLUMN_CONSTRAINT__COLUMN);
 		}
 		return constraints;
 	}
@@ -390,15 +420,21 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 					if (position.getIndex() == 0) {
 
-						if (chain != null) {
-							chain.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
-									MddeValidator.COLUMN__VALIDATE_DEFAULT_VALUE,
-									"Incompatible Default Value. The default value is not convertible into a DateTime or Timestamp! The default value for should have this \'"
-											+ dateformat + "\' format.",
-									new Object[] { this }));
+						if (defaultValue.equals("CURRENT_TIMESTAMP")) {
+							returnValue = true;
+						} else {
+
+							if (chain != null) {
+								chain.add(new BasicDiagnostic(Diagnostic.ERROR, MddeValidator.DIAGNOSTIC_SOURCE,
+										MddeValidator.COLUMN__VALIDATE_DEFAULT_VALUE,
+										"Incompatible Default Value. The default value is not convertible into a DateTime or Timestamp! The default value could be 'CURRENT_TIMESTAMP' or should have the format \'"
+												+ dateformat + "\'",
+										new Object[] { this }));
+							}
+
+							returnValue = false;
 						}
 
-						returnValue = false;
 					}
 
 				}
@@ -510,6 +546,7 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 		}
 		return true;
+
 	}
 
 	/**
@@ -525,14 +562,14 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 				int size = Integer.valueOf(getSize());
 				if (size > 0)
 					if (diagnostics != null) {
-						//TODO Necessary?
+						// TODO Necessary?
 //						diagnostics.add(new BasicDiagnostic(Diagnostic.WARNING, MddeValidator.DIAGNOSTIC_SOURCE,
 //								MddeValidator.COLUMN__VALIDATE_DEFAULT_VALUE,
 //								"The selected data type does not support a size or display witdh value.",
 //								new Object[] { this }));
 					}
 
-				//returnValue = false;
+				// returnValue = false;
 
 			} else if (dateTypesWithFraction.contains(getType())) {
 				int size = Integer.valueOf(getSize());
@@ -690,8 +727,8 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	public boolean validateUniqueConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -728,191 +765,203 @@ public class ColumnImpl extends NamedElementImpl implements Column {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetTable((Table)otherEnd, msgs);
-			case MddePackage.COLUMN__CONSTRAINTS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConstraints()).basicAdd(otherEnd, msgs);
+		case MddePackage.COLUMN__TABLE:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetTable((Table) otherEnd, msgs);
+		case MddePackage.COLUMN__CONSTRAINTS:
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getConstraints()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				return basicSetTable(null, msgs);
-			case MddePackage.COLUMN__CONSTRAINTS:
-				return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
+		case MddePackage.COLUMN__TABLE:
+			return basicSetTable(null, msgs);
+		case MddePackage.COLUMN__CONSTRAINTS:
+			return ((InternalEList<?>) getConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case MddePackage.COLUMN__TABLE:
-				return eInternalContainer().eInverseRemove(this, MddePackage.TABLE__COLUMNS, Table.class, msgs);
+		case MddePackage.COLUMN__TABLE:
+			return eInternalContainer().eInverseRemove(this, MddePackage.TABLE__COLUMNS, Table.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				return getTable();
-			case MddePackage.COLUMN__DEFAULT_VALUE:
-				return getDefaultValue();
-			case MddePackage.COLUMN__NOT_NULL:
-				return getNotNull();
-			case MddePackage.COLUMN__AUTO_INCREMENT:
-				return getAutoIncrement();
-			case MddePackage.COLUMN__SIZE:
-				return getSize();
-			case MddePackage.COLUMN__TYPE:
-				return getType();
-			case MddePackage.COLUMN__CONSTRAINTS:
-				return getConstraints();
+		case MddePackage.COLUMN__TABLE:
+			return getTable();
+		case MddePackage.COLUMN__DEFAULT_VALUE:
+			return getDefaultValue();
+		case MddePackage.COLUMN__NOT_NULL:
+			return getNotNull();
+		case MddePackage.COLUMN__AUTO_INCREMENT:
+			return getAutoIncrement();
+		case MddePackage.COLUMN__SIZE:
+			return getSize();
+		case MddePackage.COLUMN__TYPE:
+			return getType();
+		case MddePackage.COLUMN__CONSTRAINTS:
+			return getConstraints();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				setTable((Table)newValue);
-				return;
-			case MddePackage.COLUMN__DEFAULT_VALUE:
-				setDefaultValue((String)newValue);
-				return;
-			case MddePackage.COLUMN__NOT_NULL:
-				setNotNull((Boolean)newValue);
-				return;
-			case MddePackage.COLUMN__AUTO_INCREMENT:
-				setAutoIncrement((Boolean)newValue);
-				return;
-			case MddePackage.COLUMN__SIZE:
-				setSize((String)newValue);
-				return;
-			case MddePackage.COLUMN__TYPE:
-				setType((DataType)newValue);
-				return;
-			case MddePackage.COLUMN__CONSTRAINTS:
-				getConstraints().clear();
-				getConstraints().addAll((Collection<? extends ColumnConstraint>)newValue);
-				return;
+		case MddePackage.COLUMN__TABLE:
+			setTable((Table) newValue);
+			return;
+		case MddePackage.COLUMN__DEFAULT_VALUE:
+			setDefaultValue((String) newValue);
+			return;
+		case MddePackage.COLUMN__NOT_NULL:
+			setNotNull((Boolean) newValue);
+			return;
+		case MddePackage.COLUMN__AUTO_INCREMENT:
+			setAutoIncrement((Boolean) newValue);
+			return;
+		case MddePackage.COLUMN__SIZE:
+			setSize((String) newValue);
+			return;
+		case MddePackage.COLUMN__TYPE:
+			setType((DataType) newValue);
+			return;
+		case MddePackage.COLUMN__CONSTRAINTS:
+			getConstraints().clear();
+			getConstraints().addAll((Collection<? extends ColumnConstraint>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				setTable((Table)null);
-				return;
-			case MddePackage.COLUMN__DEFAULT_VALUE:
-				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
-				return;
-			case MddePackage.COLUMN__NOT_NULL:
-				setNotNull(NOT_NULL_EDEFAULT);
-				return;
-			case MddePackage.COLUMN__AUTO_INCREMENT:
-				setAutoIncrement(AUTO_INCREMENT_EDEFAULT);
-				return;
-			case MddePackage.COLUMN__SIZE:
-				setSize(SIZE_EDEFAULT);
-				return;
-			case MddePackage.COLUMN__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
-			case MddePackage.COLUMN__CONSTRAINTS:
-				getConstraints().clear();
-				return;
+		case MddePackage.COLUMN__TABLE:
+			setTable((Table) null);
+			return;
+		case MddePackage.COLUMN__DEFAULT_VALUE:
+			setDefaultValue(DEFAULT_VALUE_EDEFAULT);
+			return;
+		case MddePackage.COLUMN__NOT_NULL:
+			setNotNull(NOT_NULL_EDEFAULT);
+			return;
+		case MddePackage.COLUMN__AUTO_INCREMENT:
+			setAutoIncrement(AUTO_INCREMENT_EDEFAULT);
+			return;
+		case MddePackage.COLUMN__SIZE:
+			setSize(SIZE_EDEFAULT);
+			return;
+		case MddePackage.COLUMN__TYPE:
+			setType(TYPE_EDEFAULT);
+			return;
+		case MddePackage.COLUMN__CONSTRAINTS:
+			getConstraints().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MddePackage.COLUMN__TABLE:
-				return getTable() != null;
-			case MddePackage.COLUMN__DEFAULT_VALUE:
-				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
-			case MddePackage.COLUMN__NOT_NULL:
-				return NOT_NULL_EDEFAULT == null ? notNull != null : !NOT_NULL_EDEFAULT.equals(notNull);
-			case MddePackage.COLUMN__AUTO_INCREMENT:
-				return AUTO_INCREMENT_EDEFAULT == null ? autoIncrement != null : !AUTO_INCREMENT_EDEFAULT.equals(autoIncrement);
-			case MddePackage.COLUMN__SIZE:
-				return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
-			case MddePackage.COLUMN__TYPE:
-				return type != TYPE_EDEFAULT;
-			case MddePackage.COLUMN__CONSTRAINTS:
-				return constraints != null && !constraints.isEmpty();
+		case MddePackage.COLUMN__TABLE:
+			return getTable() != null;
+		case MddePackage.COLUMN__DEFAULT_VALUE:
+			return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
+		case MddePackage.COLUMN__NOT_NULL:
+			return NOT_NULL_EDEFAULT == null ? notNull != null : !NOT_NULL_EDEFAULT.equals(notNull);
+		case MddePackage.COLUMN__AUTO_INCREMENT:
+			return AUTO_INCREMENT_EDEFAULT == null ? autoIncrement != null
+					: !AUTO_INCREMENT_EDEFAULT.equals(autoIncrement);
+		case MddePackage.COLUMN__SIZE:
+			return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
+		case MddePackage.COLUMN__TYPE:
+			return type != TYPE_EDEFAULT;
+		case MddePackage.COLUMN__CONSTRAINTS:
+			return constraints != null && !constraints.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case MddePackage.COLUMN___VALIDATE_DEFAULT_VALUE__DIAGNOSTICCHAIN_MAP:
-				return validateDefaultValue((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case MddePackage.COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP:
-				return validateSizeValue((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case MddePackage.COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP:
-				return validateUniqueConstraintName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+		case MddePackage.COLUMN___VALIDATE_DEFAULT_VALUE__DIAGNOSTICCHAIN_MAP:
+			return validateDefaultValue((DiagnosticChain) arguments.get(0), (Map<Object, Object>) arguments.get(1));
+		case MddePackage.COLUMN___VALIDATE_SIZE_VALUE__DIAGNOSTICCHAIN_MAP:
+			return validateSizeValue((DiagnosticChain) arguments.get(0), (Map<Object, Object>) arguments.get(1));
+		case MddePackage.COLUMN___VALIDATE_UNIQUE_CONSTRAINT_NAME__DIAGNOSTICCHAIN_MAP:
+			return validateUniqueConstraintName((DiagnosticChain) arguments.get(0),
+					(Map<Object, Object>) arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (defaultValue: ");

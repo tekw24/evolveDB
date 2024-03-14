@@ -146,7 +146,7 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	 * This returns the label text for the adapted class. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
@@ -178,11 +178,11 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		
 		
 		if (o instanceof ResolvableOperator)
-			return  "RO " + prefix + " " + ((ResolvableOperator) object).getDisplayName();
+			return  "ResolvableOperator "  + ((ResolvableOperator) object).getDisplayName()+ " " + prefix;
 		else if (o instanceof PartiallyResolvable)
-			return "PRO " + prefix + " " +((PartiallyResolvable) object).getDisplayName();
+			return "PartiallyResolvable " +((PartiallyResolvable) object).getDisplayName() + " " + prefix;
 		else if (o instanceof NotAutomaticallyResolvable)
-			return "NAR " + prefix + " " + ((NotAutomaticallyResolvable) object).getDisplayName();
+			return "NotAutomaticallyResolvable " + ((NotAutomaticallyResolvable) object).getDisplayName() + " " + prefix;
 
 		
 

@@ -16,21 +16,27 @@
  */
 package de.thm.mdde.differenceBuilderWizard;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -69,6 +75,8 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 	private WizardPage matchingPage2;
 
+	private ProgressMonitorDialog dialog;
+
 	private MddeDifferenceBuilderWizard() {
 		super();
 	}
@@ -93,106 +101,168 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean performFinish() {
 
-		try {
-			// Remember the file.
-			//
-			// final IFile modelFile = getModelFile();
-			final IFile modelFile = builderNewFilePage.getModelContainer();
+		// Remember the file.
+		//
+		// final IFile modelFile = getModelFile();
+		final IFile modelFile = builderNewFilePage.getModelContainer();
+		boolean createMigrationFile = builderNewFilePage.isCreateModelSelected();
 
-			// Do the work within an operation.
-			//
-			WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
-				@Override
-				protected void execute(IProgressMonitor progressMonitor) {
-					try {
+		Job job = Job.create("Create Matching...", (ICoreRunnable) monitor -> {
 
-						// Get the URI of the model file.
-						//
-						URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+			getShell().getDisplay().asyncExec(new Runnable() {
 
-						SymmetricDifference symmetricDifference = null;
-
-						if (differenceType.equals(DifferenceType.TECHNICALDIFFERENCE)) {
-							symmetricDifference = controller.createTechnicalDifference();
-						} else if (differenceType.equals(DifferenceType.LIFTEDDIFFERENCE)) {
-							symmetricDifference = controller.createLiftedDifference();
-						}
-
-						// Add the initial model object to the contents.
-
-						if (symmetricDifference != null) {
-							controller.persistSymmetricDifference(symmetricDifference, fileURI,
-									builderNewFilePage.getFileName());
-						}
-
-					} catch (InvalidModelException | NoCorrespondencesException exception) {
-						MddeEditorPlugin.INSTANCE.log(exception);
-					} finally {
-						progressMonitor.done();
-					}
-
+				public void run() {
+					dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
+//						dialog.setCancelable(true);
+//						dialog.setExceptionHandler(new IExceptionHandler() {
+//							
+//							@Override
+//							public void handleException(Throwable t) {
+//								dialog.close();
+//								
+//							}
+//						});
+					dialog.open();
 				}
-			};
+			});
 
-			getContainer().run(false, false, operation);
+			try {
 
-			boolean createMigrationFile = builderNewFilePage.isCreateModelSelected();
-			if (createMigrationFile) {
-				WorkspaceModifyOperation operation2 = new WorkspaceModifyOperation() {
+				// Do the work within an operation.
+				//
+				WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
 					@Override
 					protected void execute(IProgressMonitor progressMonitor) {
 						try {
-							URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
-							MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
-									builderNewFilePage.getFileName(), builderNewFilePage.getMigrationFileName());
 
-						} catch (Exception e) {
-							ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
-									"An error occured while creating the model!", getShell(), "Error", e);
-							e.printStackTrace();
-							MddeEditorPlugin.INSTANCE.log(e);
+							// Get the URI of the model file.
+							//
+							URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+
+							SymmetricDifference symmetricDifference = null;
+
+							if (differenceType.equals(DifferenceType.TECHNICALDIFFERENCE)) {
+								symmetricDifference = controller.createTechnicalDifference();
+							} else if (differenceType.equals(DifferenceType.LIFTEDDIFFERENCE)) {
+								symmetricDifference = controller.createLiftedDifference();
+							}
+
+							// Add the initial model object to the contents.
+
+							if (symmetricDifference != null) {
+								controller.persistSymmetricDifference(symmetricDifference, fileURI,
+										builderNewFilePage.getFileName());
+							}
+
+						} catch (InvalidModelException | NoCorrespondencesException exception) {
+							MddeEditorPlugin.INSTANCE.log(exception);
 						} finally {
 							progressMonitor.done();
 						}
+
 					}
 				};
-				getContainer().run(false, false, operation2);
-			}
 
-			// Select the new file resource in the current view.
-			//
-			IWorkbenchWindow workbenchWindow = UIUtil.getActiveWindow();
-			IWorkbenchPage page = workbenchWindow.getActivePage();
-			final IWorkbenchPart activePart = page.getActivePart();
-			if (activePart instanceof ISetSelectionTarget) {
-				//Duplicate code because variable has to be final
-				if (builderNewFilePage.isCreateModelSelected()) {
-					final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getMigreationModelFile());
-					getShell().getDisplay().asyncExec(new Runnable() {
+				getShell().getDisplay().asyncExec(new Runnable() {
+
+					public void run() {
+						try {
+							getContainer().run(false, false, operation);
+						} catch (InvocationTargetException | InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+
+				
+				if (createMigrationFile) {
+					WorkspaceModifyOperation operation2 = new WorkspaceModifyOperation() {
 						@Override
+						protected void execute(IProgressMonitor progressMonitor) {
+							try {
+								URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+								MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
+										builderNewFilePage.getFileName(), builderNewFilePage.getMigrationFileName());
+
+							} catch (Exception e) {
+								ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
+										"An error occured while creating the model!", getShell(), "Error", e);
+								e.printStackTrace();
+								MddeEditorPlugin.INSTANCE.log(e);
+							} finally {
+								progressMonitor.done();
+							}
+						}
+					};
+					getShell().getDisplay().asyncExec(new Runnable() {
+
 						public void run() {
-							((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+							try {
+								getContainer().run(false, false, operation2);
+								
+								// Select the new file resource in the current view.
+								//
+								IWorkbenchWindow workbenchWindow = UIUtil.getActiveWindow();
+								IWorkbenchPage page = workbenchWindow.getActivePage();
+								final IWorkbenchPart activePart = page.getActivePart();
+								if (activePart instanceof ISetSelectionTarget) {
+									// Duplicate code because variable has to be final
+									if (builderNewFilePage.isCreateModelSelected()) {
+										final ISelection targetSelection = new StructuredSelection(
+												builderNewFilePage.getMigreationModelFile());
+										getShell().getDisplay().asyncExec(new Runnable() {
+											@Override
+											public void run() {
+												((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+											}
+										});
+									} else {
+										final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getModelFile());
+										getShell().getDisplay().asyncExec(new Runnable() {
+											@Override
+											public void run() {
+												((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+											}
+										});
+									}
+								}
+
+								// Refresh the project
+								modelFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+							
+							
+							} catch (InvocationTargetException | InterruptedException e) {
+								MddeEditorPlugin.INSTANCE.log(e);
+								e.printStackTrace();
+							} catch (CoreException e) {
+								MddeEditorPlugin.INSTANCE.log(e);
+								e.printStackTrace();
+							}
 						}
 					});
-				} else {
-					final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getModelFile());
-					getShell().getDisplay().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							((ISetSelectionTarget) activePart).selectReveal(targetSelection);
-						}
-					});
+
 				}
+
+				
+
+			} catch (Exception exception) {
+				MddeEditorPlugin.INSTANCE.log(exception);
+
 			}
 
-			// Refresh the project
-			modelFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			getShell().getDisplay().asyncExec(new Runnable() {
 
-			return true;
-		} catch (Exception exception) {
-			MddeEditorPlugin.INSTANCE.log(exception);
-			return false;
-		}
+				public void run() {
+					if (dialog != null)
+						dialog.close();
+				}
+			});
+
+		});
+		job.schedule();
+
+		return false;
 
 	}
 
@@ -223,20 +293,18 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 		matchingPage.setTitle(Language.WIZARD_MODEL_COMPARISON);
 		matchingPage.setDescription(Language.WIZARD_COMPARE_DIRECTION);
 		addPage(matchingPage);
-		
+
 		// third page
 		matchingPage2 = new MddeDifferenceBuilderMatchingPage2(Language.WIZARD_COMPARE_MODELS, controller);
 		matchingPage2.setTitle(Language.WIZARD_MODEL_COMPARISON);
 		matchingPage2.setDescription(Language.WIZARD_COMPARE_DIRECTION);
 		addPage(matchingPage2);
 
-		
 		// fourth page
 		matchingPage3 = new MddeDifferenceBuilderMatchingPage3(Language.WIZARD_COMPARE_MODELS, controller);
 		matchingPage3.setTitle(Language.WIZARD_MODEL_COMPARISON);
 		matchingPage3.setDescription(Language.WIZARD_COMPARE_DIRECTION);
 		addPage(matchingPage3);
-
 
 		// Third page
 		builderNewFilePage = new MddeDifferenceBuilderNewFilePage("Test", selection);

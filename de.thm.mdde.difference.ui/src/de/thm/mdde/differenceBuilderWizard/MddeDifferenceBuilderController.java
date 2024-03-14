@@ -24,9 +24,13 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.ICoreRunnable;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.access.Scope;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -56,6 +60,7 @@ public class MddeDifferenceBuilderController {
 	private IFile[] files;
 	private InputModels inputModels;
 	private Matching matching;
+	private ProgressMonitorDialog dialog;
 
 	public MddeDifferenceBuilderController(IFile[] files) {
 		this.files = files;
@@ -67,13 +72,12 @@ public class MddeDifferenceBuilderController {
 
 	public SymmetricDifference createTechnicalDifference() throws InvalidModelException, NoCorrespondencesException {
 
-		
 		DifferenceSettings settings = DifferenceSettings.defaultSettings();
 
 		ITechnicalDifferenceBuilder generichTechnicalDifferenceBuilder = TechnicalDifferenceUtils
 				.getTechnicalDifferenceBuilder("GenericTechnicalDifferenceBuilder");
 		settings.setTechBuilder(generichTechnicalDifferenceBuilder);
-		
+
 		return TechnicalDifferenceFacade.deriveTechnicalDifference(createMatching(), settings);
 
 	}
@@ -89,7 +93,8 @@ public class MddeDifferenceBuilderController {
 		LiftingSettings settings = LiftingSettings.defaultSettings();
 
 		// Get rulebase
-		//ILiftingRuleBase ruleBase = PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase5"); TODO
+		// ILiftingRuleBase ruleBase =
+		// PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase5"); TODO
 		ILiftingRuleBase ruleBase = PipelineUtils.getRulebase("de.thm.mdde.difference.sqlrulebase2");
 		settings.setRuleBases(Set.of(ruleBase));
 		settings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING);
@@ -104,10 +109,11 @@ public class MddeDifferenceBuilderController {
 
 		settings.setCalculateEditRuleMatch(false);
 		settings.setSerializeEditRuleMatch(false);
-		
+
 		SymmetricDifference technicalDifference = createTechnicalDifference();
 
 		return LiftingFacade.liftTechnicalDifference(technicalDifference, settings);
+
 	}
 
 	protected Matching createMatching() throws NoCorrespondencesException, InvalidModelException {
@@ -164,7 +170,7 @@ public class MddeDifferenceBuilderController {
 		matching.getUnmatchedA().add(correspondence.getMatchedA());
 		matching.getUnmatchedB().add(correspondence.getMatchedB());
 	}
-	
+
 	protected void addCorrespondence(EObject a, EObject b) {
 		Correspondence correspondence = MatchingModelUtil.createCorrespondence(a, b);
 		matching.getCorrespondences().add(correspondence);
