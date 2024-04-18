@@ -164,12 +164,12 @@ class CREATE_ELEMENT {
 	/**
 	 * Create a new primary key in a table. The resolvable operator has to contain an Add_Object element.
 	 */
-	def static String _CREATE_PrimaryKey_IN_Table_columns(ResolvableOperator set) {
+	def static String _CREATE_PrimaryKey_IN_Table_columns(PartiallyResolvable set) {
 		if (set.processStatus === ProcessStatus.RESOLVED) {
 			var SemanticChangeSet addObject = set.semanticChangeSets.findFirst [
 				editRName.equals('CREATE_PrimaryKey_IN_Table_(columns)')
 			]
-			return _CREATE_PrimaryKey_IN_Table_columns2(addObject);
+			return _CREATE_PrimaryKey_IN_Table_columns2(addObject, set.resolveOptions);
 		}
 
 		return ""
@@ -178,7 +178,7 @@ class CREATE_ELEMENT {
 	/**
 	 * Creates the sql string for adding am additional primary key in a table
 	 */
-	def static String _CREATE_PrimaryKey_IN_Table_columns2(SemanticChangeSet set) {
+	def static String _CREATE_PrimaryKey_IN_Table_columns2(SemanticChangeSet set, ColumnOptions option) {
 
 		var AddObject a = set.changes.findFirst[it instanceof AddObject] as AddObject
 		var content = ""
@@ -189,14 +189,40 @@ class CREATE_ELEMENT {
 			var parent = key.table
 			// A table can have more than one primary key.
 			var primaryKeys = parent.primaryKeys
-
+			
 			content += '''
 				-- Create primary key in «parent.name.toLowerCase» 
 				ALTER TABLE `«parent.name.toLowerCase»` 
-				ADD COLUMN `«key.name»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»,
-				DROP PRIMARY KEY,
-				ADD PRIMARY KEY («FOR p : primaryKeys SEPARATOR ', '»`«p.name»`«ENDFOR»);
+				ADD COLUMN `«key.name»` «key.type»«ColumnUtil.getSizeString(key)» «key.notNull !== null && key.notNull ? "NOT NULL" : ""» «key.autoIncrement !== null && key.autoIncrement ? "AUTO_INCREMENT" : ""» «key.defaultValue !== null ? "DEFAULT "+key.defaultValue : ""»;
+				
 			'''
+			
+			switch option{
+				case MIGRATE_DATA:{
+					content += '''
+					SET @rank:=0;
+					UPDATE `«parent.name»`
+					set `«key.name»`=@rank:=@rank+1;
+					
+					'''
+				}
+				case IGNORE:{
+					
+				}
+				case SPECIFY_CONDITION_MANUALLY:{
+					content += '''-- TODO set values for new Primary Key'''
+				}
+				default: {
+				}
+			}
+			
+			content += '''
+			ALTER TABLE `«parent.name.toLowerCase»`
+			DROP PRIMARY KEY,
+			ADD PRIMARY KEY («FOR p : primaryKeys SEPARATOR ', '»`«p.name»`«ENDFOR»);
+			'''
+
+			
 
 		}
 

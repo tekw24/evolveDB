@@ -591,7 +591,6 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CREATE_TABLE);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.RENAME_TABLE);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CREATE_COLUMN);
-		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CREATE_PRIMARY_KEY);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.CREATE_FOREIGN_KEY);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_COLUMN_DEFAULT_VALUE);
 		addEEnumLiteral(resolvableOperatorTypeEEnum, ResolvableOperatorType.SET_COLUMN_AUTO_INCREMENT);
@@ -620,6 +619,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.SET_COLUMN_TYPE_AND_SIZE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CHANGE_1N_INTO_NM_MOVE);
 		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.ADD_COLUMN_UNIQUE_INDEX);
+		addEEnumLiteral(partiallyResolvableOperatorTypeEEnum, PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY);
 
 		initEEnum(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.class, "NotAutomaticallyResolvableOperatorType");
 		addEEnumLiteral(notAutomaticallyResolvableOperatorTypeEEnum, NotAutomaticallyResolvableOperatorType.MOVE_PRIMARY_KEY);

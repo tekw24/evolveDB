@@ -112,7 +112,7 @@ public abstract class SchemaModificationOperatorImpl extends MinimalEObjectImpl.
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<SemanticChangeSet> getSemanticChangeSets() {

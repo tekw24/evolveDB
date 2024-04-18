@@ -50,6 +50,7 @@ import java.util.ArrayList
 import java.util.TreeMap
 import java.util.Map
 import java.util.Comparator
+import de.thm.evolvedb.mdde.PrimaryKey
 
 class MigrationModelTransformation {
 
@@ -411,7 +412,8 @@ class MigrationModelTransformation {
 		resolvableOperators.removeAll(createTable);
 
 		var List<PartiallyResolvable> createUniqueIndex = migration.partiallyResovableSMO.filter [
-			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT)
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) || 
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)
 		].toList
 
 		for (ResolvableOperator rO : createTable) {
@@ -489,6 +491,15 @@ class MigrationModelTransformation {
 							// Remove the Operator
 							migration.schemaModificationOperators.remove(resolvable)
 						// If it is a foreignKey a setReferenceOperator should exist
+						}
+
+					}
+					else if (a.obj instanceof PrimaryKey) {
+						var PrimaryKey c = a.obj as PrimaryKey;
+						if (c.table.equals(table)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
 						}
 
 					}

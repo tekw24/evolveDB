@@ -116,13 +116,11 @@ public class NotAutomaticallyResolvableItemProvider extends SchemaModificationOp
 	 */
 	@Override
 	public String getText(Object object) {
-//		NotAutomaticallyResolvableOperatorType labelValue = ((NotAutomaticallyResolvable)object).getDisplayName();
-//		String label = labelValue == null ? null : labelValue.toString();
-//		return label == null || label.length() == 0 ?
-//			getString("_UI_NotAutomaticallyResolvable_type") :
-//			getString("_UI_NotAutomaticallyResolvable_type") + " " + label;
-		
-		return super.getText(object);
+		NotAutomaticallyResolvableOperatorType labelValue = ((NotAutomaticallyResolvable)object).getDisplayName();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_NotAutomaticallyResolvable_type") :
+			getString("_UI_NotAutomaticallyResolvable_type") + " " + label;
 	}
 
 

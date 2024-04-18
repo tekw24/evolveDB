@@ -65,7 +65,6 @@ helper def: resolvableRules : Sequence(String) =
 			'CREATE_Column_IN_Table_(columns)', 
 			'CREATE_ForeignKey_IN_Table_(columns)',
 			'SET_ATTRIBUTE_NamedElement_Name',
-			'CREATE_PrimaryKey_IN_Table_(columns)',
 			'SET_ATTRIBUTE_Column_DefaultValue',
 			'SET_ATTRIBUTE_Column_AutoIncrement',
 			'CREATE_Table_IN_Database_Schema_(entites)',
@@ -113,7 +112,6 @@ helper def: resolvableEnumType : Map(String, Migration!ResolvableOperatorType) =
 		('SET_ATTRIBUTE_NamedElement_Name', #RENAME_TABLE),
 		('SET_ATTRIBUTE_ColumnConstraint_Name', #RENAME_TABLE),
 		('CREATE_Column_IN_Table_(columns)', #CREATE_COLUMN),
-		('CREATE_PrimaryKey_IN_Table_(columns)', #CREATE_PRIMARY_KEY),
 		('CREATE_ForeignKey_IN_Table_(columns)', #CREATE_FOREIGN_KEY),
 		('SET_ATTRIBUTE_Column_DefaultValue', #SET_COLUMN_DEFAULT_VALUE),
 		('SET_ATTRIBUTE_Column_AutoIncrement', #SET_COLUMN_AUTO_INCREMENT),
@@ -173,6 +171,7 @@ helper def: partiallyResolvableRules : Sequence(String) =
 			'CHANGE_NM_INTO_1N',
 			'CHANGE_NM_INTO_1N_PRESERVE',
 			'SET_ATTRIBUTE_Column_Size_and_Type',
+			'CREATE_PrimaryKey_IN_Table_(columns)',
 			'CREATE_UniqueConstraint_IN_Table_(constraints)'
 			
 			};
@@ -188,8 +187,7 @@ helper def: partiallyResolvableEnumType : Map(String, Migration!PartiallyResolva
 		('SET_ATTRIBUTE_Column_Type', #SET_COLUMN_TYPE),
 		('SET_ATTRIBUTE_Column_Size_and_Type', #SET_COLUMN_TYPE_AND_SIZE),
 		('CREATE_UniqueConstraint_IN_Table_(constraints)', #CREATE_UNIQUE_CONSTRAINT),
-		
-		
+		('CREATE_PrimaryKey_IN_Table_(columns)', #CREATE_PRIMARY_KEY),		
 		('SET_REFERENCE_ForeignKey_(referencedTable)_TGT_Table', #SET_FOREIGNKEYS_TARGET_TABLE),
 		('CHANGE_1N_INTO_NM', #CHANGE_1N_INTO_NM),
 		('CHANGE_1N_INTO_NM_MOVE', #CHANGE_1N_INTO_NM_MOVE),

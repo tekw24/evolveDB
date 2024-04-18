@@ -31,7 +31,6 @@ import de.thm.evolvedb.mdde.NamedElement;
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
 import de.thm.evolvedb.migration.PartiallyResolvable;
-import de.thm.evolvedb.migration.PartiallyResolvableOperatorType;
 import de.thm.evolvedb.migration.ProcessStatus;
 import de.thm.evolvedb.migration.ResolvableOperator;
 import de.thm.evolvedb.migration.SchemaModificationOperator;
@@ -80,14 +79,19 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	 * @generated
 	 */
 	protected void addSemanticChangeSetsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_SchemaModificationOperator_semanticChangeSets_feature"),
-						getString("_UI_PropertyDescriptor_description",
-								"_UI_SchemaModificationOperator_semanticChangeSets_feature",
-								"_UI_SchemaModificationOperator_type"),
-						MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__SEMANTIC_CHANGE_SETS, true, false, true,
-						null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SchemaModificationOperator_semanticChangeSets_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchemaModificationOperator_semanticChangeSets_feature", "_UI_SchemaModificationOperator_type"),
+				 MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__SEMANTIC_CHANGE_SETS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -97,13 +101,19 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	 * @generated
 	 */
 	protected void addProcessStatusPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SchemaModificationOperator_processStatus_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_SchemaModificationOperator_processStatus_feature",
-						"_UI_SchemaModificationOperator_type"),
-				MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SchemaModificationOperator_processStatus_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchemaModificationOperator_processStatus_feature", "_UI_SchemaModificationOperator_type"),
+				 MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -113,13 +123,19 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	 * @generated
 	 */
 	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(
-				((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SchemaModificationOperator_description_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_SchemaModificationOperator_description_feature",
-						"_UI_SchemaModificationOperator_type"),
-				MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SchemaModificationOperator_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchemaModificationOperator_description_feature", "_UI_SchemaModificationOperator_type"),
+				 MigrationPackage.Literals.SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -265,10 +281,9 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update
-	 * any cached children and by creating a viewer notification, which it passes to
-	 * {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -276,19 +291,19 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SchemaModificationOperator.class)) {
-		case MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS:
-		case MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
+			case MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS:
+			case MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing
-	 * the children that can be created under this object. <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

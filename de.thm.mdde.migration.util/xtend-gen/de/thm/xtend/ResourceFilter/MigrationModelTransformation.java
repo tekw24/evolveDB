@@ -23,6 +23,7 @@ import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.Database_Schema;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.Index;
+import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.UniqueConstraint;
 import de.thm.evolvedb.migration.ColumnOptions;
@@ -428,7 +429,8 @@ public class MigrationModelTransformation {
     List<ResolvableOperator> createTable = IterableExtensions.<ResolvableOperator>toList(IterableExtensions.<ResolvableOperator>filter(resolvableOperators, _function));
     resolvableOperators.removeAll(createTable);
     final Function1<PartiallyResolvable, Boolean> _function_1 = (PartiallyResolvable it) -> {
-      return Boolean.valueOf(it.getDisplayName().equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT));
+      return Boolean.valueOf((it.getDisplayName().equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) || 
+        it.getDisplayName().equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)));
     };
     List<PartiallyResolvable> createUniqueIndex = IterableExtensions.<PartiallyResolvable>toList(IterableExtensions.<PartiallyResolvable>filter(migration.getPartiallyResovableSMO(), _function_1));
     for (final ResolvableOperator rO : createTable) {
@@ -530,6 +532,17 @@ public class MigrationModelTransformation {
                   if (_equals_1) {
                     rO.getSemanticChangeSets().addAll(resolvable_1.getSemanticChangeSets());
                     migration.getSchemaModificationOperators().remove(resolvable_1);
+                  }
+                } else {
+                  EObject _obj_5 = a.getObj();
+                  if ((_obj_5 instanceof PrimaryKey)) {
+                    EObject _obj_6 = a.getObj();
+                    PrimaryKey c_2 = ((PrimaryKey) _obj_6);
+                    boolean _equals_2 = c_2.getTable().equals(table);
+                    if (_equals_2) {
+                      rO.getSemanticChangeSets().addAll(resolvable_1.getSemanticChangeSets());
+                      migration.getSchemaModificationOperators().remove(resolvable_1);
+                    }
                   }
                 }
               }

@@ -180,8 +180,8 @@ class SQLGenerator {
 
 		var List<ResolvableOperatorType> ordererd = Arrays.asList(ResolvableOperatorType.REMOVE_CONSTRAINT, ResolvableOperatorType.CREATE_TABLE,
 			ResolvableOperatorType.RENAME_TABLE, ResolvableOperatorType.CREATE_COLUMN,
-			ResolvableOperatorType.RENAME_COLUMN, ResolvableOperatorType.CREATE_FOREIGN_KEY,
-			ResolvableOperatorType.CREATE_PRIMARY_KEY);
+			ResolvableOperatorType.RENAME_COLUMN, ResolvableOperatorType.CREATE_FOREIGN_KEY
+			);
 
 		for (ResolvableOperatorType type : ordererd) {
 			var operators = resolvableOperators.filter[displayName === type]
@@ -195,18 +195,12 @@ class SQLGenerator {
 			resolvableOperators.removeAll(operators);
 		}
 
-		for (ResolvableOperator resolvable : resolvableOperators) {
-
-			if (resolvable.processStatus == ProcessStatus.RESOLVED) {
-				var c = processResolvableOperator(resolvable);
-				content += c !== null ? c : "";
-			}
-		}
+		
 
 		var filteredpartiallyResolvable = partiallyResolvable.filter[processStatus == ProcessStatus.RESOLVED].toList
 		// Execute changetype first
 		var changeType = filteredpartiallyResolvable.filter [
-			displayName === PartiallyResolvableOperatorType.SET_COLUMN_TYPE
+			displayName === PartiallyResolvableOperatorType.SET_COLUMN_TYPE || displayName === PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY
 		]
 		for (PartiallyResolvable presolvable : changeType) {
 			var c = processPartiallyResolvableOperator(presolvable);
@@ -217,6 +211,14 @@ class SQLGenerator {
 		for (PartiallyResolvable presolvable : filteredpartiallyResolvable) {
 			var c = processPartiallyResolvableOperator(presolvable);
 			content += c !== null ? c : "";
+		}
+		
+		for (ResolvableOperator resolvable : resolvableOperators) {
+
+			if (resolvable.processStatus == ProcessStatus.RESOLVED) {
+				var c = processResolvableOperator(resolvable);
+				content += c !== null ? c : "";
+			}
 		}
 
 		for (NotAutomaticallyResolvable naresolvable : notAutomaticallyResolvable) {
@@ -264,9 +266,7 @@ class SQLGenerator {
 			case ResolvableOperatorType.CREATE_FOREIGN_KEY: {
 				return CREATE_ELEMENT._CREATE_ForeignKey_IN_Table_columns(resolvableOperator);
 			}
-			case ResolvableOperatorType.CREATE_PRIMARY_KEY: {
-				return CREATE_ELEMENT._CREATE_PrimaryKey_IN_Table_columns(resolvableOperator);
-			}
+			
 			case ResolvableOperatorType.CREATE_INDEX_IN_TABLE: {
 				return CREATE_ELEMENT._CREATE_INDEX_IN_Table_constraints(resolvableOperator);
 			}
@@ -301,6 +301,11 @@ class SQLGenerator {
 	def String processPartiallyResolvableOperator(PartiallyResolvable partiallyResolvable) {
 
 		switch (partiallyResolvable.displayName) {
+			
+			case PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY: {
+				return CREATE_ELEMENT._CREATE_PrimaryKey_IN_Table_columns(partiallyResolvable);
+			}
+			
 			case PartiallyResolvableOperatorType.SET_COLUMN_SIZE: {
 				return SET_ATTRIBUTE._SET_ATTRIBUTE_Column_Size(partiallyResolvable);
 			}

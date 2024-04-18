@@ -476,6 +476,22 @@ public class ColumnOptionsRenderer extends AbstractControlSWTRenderer<VControl> 
 
 					break;
 				}
+				break;
+			}
+			case CREATE_PRIMARY_KEY: {
+
+				if (partiallyResolvable.getSemanticChangeSets().size() == 1) {
+
+					final List<ColumnOptions> compatibility = Arrays.asList(ColumnOptions.IGNORE,
+						ColumnOptions.MIGRATE_DATA, ColumnOptions.SPECIFY_CONDITION_MANUALLY);
+
+					createComboBoxComponent(composite, compatibility,
+						Messages.ColumnOptionsRenderer_DATA_MIGRATE);
+					return composite;
+
+				}
+
+				break;
 
 			}
 

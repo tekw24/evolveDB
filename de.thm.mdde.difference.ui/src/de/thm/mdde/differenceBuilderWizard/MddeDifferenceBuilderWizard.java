@@ -106,25 +106,27 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 		// final IFile modelFile = getModelFile();
 		final IFile modelFile = builderNewFilePage.getModelContainer();
 		boolean createMigrationFile = builderNewFilePage.isCreateModelSelected();
+		String filename = builderNewFilePage.getFileName();
+		String migrationFileName = builderNewFilePage.getMigrationFileName();
 
 		Job job = Job.create("Create Matching...", (ICoreRunnable) monitor -> {
 
-			getShell().getDisplay().asyncExec(new Runnable() {
-
-				public void run() {
-					dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
-//						dialog.setCancelable(true);
-//						dialog.setExceptionHandler(new IExceptionHandler() {
-//							
-//							@Override
-//							public void handleException(Throwable t) {
-//								dialog.close();
-//								
-//							}
-//						});
-					dialog.open();
-				}
-			});
+//			getShell().getDisplay().asyncExec(new Runnable() {
+//
+//				public void run() {
+//					dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
+////						dialog.setCancelable(true);
+////						dialog.setExceptionHandler(new IExceptionHandler() {
+////							
+////							@Override
+////							public void handleException(Throwable t) {
+////								dialog.close();
+////								
+////							}
+////						});
+//					dialog.open();
+//				}
+//			});
 
 			try {
 
@@ -151,7 +153,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 							if (symmetricDifference != null) {
 								controller.persistSymmetricDifference(symmetricDifference, fileURI,
-										builderNewFilePage.getFileName());
+										filename);
 							}
 
 						} catch (InvalidModelException | NoCorrespondencesException exception) {
@@ -167,7 +169,16 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 					public void run() {
 						try {
-							getContainer().run(false, false, operation);
+							
+							dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
+							dialog.open();
+							
+							
+							getContainer().run(true, true, operation);
+							
+							if(dialog != null)
+								dialog.close();
+							
 						} catch (InvocationTargetException | InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -183,7 +194,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 							try {
 								URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
 								MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
-										builderNewFilePage.getFileName(), builderNewFilePage.getMigrationFileName());
+										filename, migrationFileName);
 
 							} catch (Exception e) {
 								ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
@@ -199,7 +210,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 						public void run() {
 							try {
-								getContainer().run(false, false, operation2);
+								getContainer().run(true, true, operation2);
 								
 								// Select the new file resource in the current view.
 								//
@@ -239,7 +250,16 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 								MddeEditorPlugin.INSTANCE.log(e);
 								e.printStackTrace();
 							}
+							
+							if(dialog != null)
+								dialog.close();
+							
+							
 						}
+						
+						
+						
+						
 					});
 
 				}
@@ -251,17 +271,18 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 			}
 
-			getShell().getDisplay().asyncExec(new Runnable() {
-
-				public void run() {
-					if (dialog != null)
-						dialog.close();
-				}
-			});
+//			getShell().getDisplay().asyncExec(new Runnable() {
+//
+//				public void run() {
+//					if (dialog != null)
+//						dialog.close();
+//				}
+//			});
 
 		});
 		job.schedule();
 
+		
 		return false;
 
 	}

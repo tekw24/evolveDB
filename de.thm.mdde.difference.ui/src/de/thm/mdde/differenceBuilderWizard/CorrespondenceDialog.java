@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import de.thm.evolvedb.mdde.Column;
+import de.thm.evolvedb.mdde.Constraint;
 
 public class CorrespondenceDialog extends TitleAreaDialog {
 
@@ -116,6 +117,9 @@ public class CorrespondenceDialog extends TitleAreaDialog {
 			} else if (e instanceof Column) {
 				Column column = (Column) e;
 				name = column.getName() + " (" + column.getTable().getName() + ")";
+			} else if (e instanceof Constraint) {
+				Constraint constraint = (Constraint) e;
+				name = constraint.getName() + " (" + constraint.getTable().getName() + ")";
 			}
 
 			TableItem item = new TableItem(table, SWT.BORDER);

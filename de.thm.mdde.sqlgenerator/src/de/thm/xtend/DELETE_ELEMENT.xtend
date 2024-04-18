@@ -25,7 +25,7 @@ class DELETE_ELEMENT {
 	 * @param partiallyResolvableOperator The partially resolvable operator containing the necessary information.
 	 */
 	def static String _DELETE_Table_IN_Database_Schema_entites(PartiallyResolvable partiallyResolvableOperator) {
-		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED ) {
+		if (partiallyResolvableOperator.processStatus === ProcessStatus.RESOLVED) {
 			var SemanticChangeSet removeElement = partiallyResolvableOperator.semanticChangeSets.get(0)
 			return _DELETE_Table_IN_Database_Schema_entites2(removeElement);
 		}
@@ -34,9 +34,9 @@ class DELETE_ELEMENT {
 
 	def static String _DELETE_Table_IN_Database_Schema_entites2(SemanticChangeSet set) {
 		var List<Change> a = set.changes.filter[it instanceof RemoveObject].toList
-		
+
 		var RemoveObject b = a.findFirst[(it as RemoveObject).obj instanceof Table] as RemoveObject;
-		
+
 		return _DELETE_Table_IN_Database_Schema_entites2(b)
 	}
 
@@ -223,9 +223,17 @@ class DELETE_ELEMENT {
 	}
 
 	def static String DELETE_CONSTRAINT_IN_Table(ResolvableOperator operator) {
-		if (operator.processStatus === ProcessStatus.RESOLVED && operator.semanticChangeSets.size == 1) {
-			var SemanticChangeSet defaultValue = operator.semanticChangeSets.get(0)
-			return DELETE_CONSTRAINT_IN_Table2(defaultValue);
+		if (operator.processStatus === ProcessStatus.RESOLVED) {
+			if (operator.semanticChangeSets.size == 1) {
+				var SemanticChangeSet defaultValue = operator.semanticChangeSets.get(0)
+				return DELETE_CONSTRAINT_IN_Table2(defaultValue);
+
+			}else{
+				var List<SemanticChangeSet> removeIndex = operator.semanticChangeSets.filter[it.name.equals("DELETE_Index_IN_Table_(constraints)")
+					||it.name.equals( "DELETE_UniqueConstraint_IN_Table_(constraints)")
+				].toList
+				return DELETE_CONSTRAINT_IN_Table2(removeIndex.get(0));	
+			}
 		}
 		return ""
 	}
@@ -233,23 +241,21 @@ class DELETE_ELEMENT {
 	def static String DELETE_CONSTRAINT_IN_Table2(SemanticChangeSet set) {
 		var List<RemoveObject> changeColumnType = set.changes.filter(RemoveObject).toList
 		var content = ""
-		
-		
 
 		if (changeColumnType.size > 0) {
-			
-			if(changeColumnType.size > 1){
-				var RemoveObject remove = changeColumnType.findFirst[it.obj instanceof Constraint]
-				
-				var objA = remove.obj as Constraint
-					content += '''
-						-- Remove constraint «objA.name» 
-						ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
-						
-					'''
 
-					return content;
-				
+			if (changeColumnType.size > 1) {
+				var RemoveObject remove = changeColumnType.findFirst[it.obj instanceof Constraint]
+
+				var objA = remove.obj as Constraint
+				content += '''
+					-- Remove constraint «objA.name» 
+					ALTER TABLE «objA.table.name» DROP INDEX `«objA.name»`;
+					
+				'''
+
+				return content;
+
 			}
 
 			for (RemoveObject a : changeColumnType) {
@@ -257,7 +263,7 @@ class DELETE_ELEMENT {
 					var objA = a.obj as ColumnConstraint
 					var constraint = objA.constraint
 					constraint.columns.remove(objA);
-									
+
 					content += '''
 						-- Remove constraint «objA.column.name» from «constraint.name» 
 						ALTER TABLE «constraint.table.name» DROP INDEX `«constraint.name»`,
@@ -267,9 +273,8 @@ class DELETE_ELEMENT {
 					'''
 
 					return content;
-				}
-				else if(a.obj instanceof Constraint){
-					
+				} else if (a.obj instanceof Constraint) {
+
 					var objA = a.obj as Constraint
 					content += '''
 						-- Remove constraint «objA.name» 
@@ -278,7 +283,7 @@ class DELETE_ELEMENT {
 					'''
 
 					return content;
-					
+
 				}
 			}
 
@@ -307,8 +312,8 @@ class DELETE_ELEMENT {
 					
 				'''
 				if (constraint.constraint instanceof Index) {
-					var index = constraint.constraint  as Index
-					index.columns.remove(column);
+					var index = constraint.constraint as Index
+					index.columns.remove(constraint);
 					var Table owner = index.table
 					content += '''
 						ALTER TABLE `«index.table.name»` 
@@ -321,7 +326,7 @@ class DELETE_ELEMENT {
 
 					var index = constraint.constraint as UniqueConstraint
 					var Table owner = index.table
-					index.columns.remove(column);
+					index.columns.remove(constraint);
 					content += '''
 						ALTER TABLE `«index.table.name»` 
 						«CREATE_ELEMENT.createConstraintString(index, false)»

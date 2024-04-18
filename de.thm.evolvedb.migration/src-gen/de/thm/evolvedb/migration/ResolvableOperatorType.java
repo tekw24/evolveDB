@@ -49,16 +49,6 @@ public enum ResolvableOperatorType implements Enumerator {
 	CREATE_COLUMN(2, "CREATE_COLUMN", "CREATE_COLUMN"),
 
 	/**
-	 * The '<em><b>CREATE PRIMARY KEY</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #CREATE_PRIMARY_KEY_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	CREATE_PRIMARY_KEY(3, "CREATE_PRIMARY_KEY", "CREATE_PRIMARY_KEY"),
-
-	/**
 	 * The '<em><b>CREATE FOREIGN KEY</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -184,17 +174,6 @@ public enum ResolvableOperatorType implements Enumerator {
 	public static final int CREATE_COLUMN_VALUE = 2;
 
 	/**
-	 * The '<em><b>CREATE PRIMARY KEY</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #CREATE_PRIMARY_KEY
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int CREATE_PRIMARY_KEY_VALUE = 3;
-
-	/**
 	 * The '<em><b>CREATE FOREIGN KEY</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -315,7 +294,6 @@ public enum ResolvableOperatorType implements Enumerator {
 			CREATE_TABLE,
 			RENAME_TABLE,
 			CREATE_COLUMN,
-			CREATE_PRIMARY_KEY,
 			CREATE_FOREIGN_KEY,
 			SET_COLUMN_DEFAULT_VALUE,
 			SET_COLUMN_AUTO_INCREMENT,
@@ -385,7 +363,6 @@ public enum ResolvableOperatorType implements Enumerator {
 			case CREATE_TABLE_VALUE: return CREATE_TABLE;
 			case RENAME_TABLE_VALUE: return RENAME_TABLE;
 			case CREATE_COLUMN_VALUE: return CREATE_COLUMN;
-			case CREATE_PRIMARY_KEY_VALUE: return CREATE_PRIMARY_KEY;
 			case CREATE_FOREIGN_KEY_VALUE: return CREATE_FOREIGN_KEY;
 			case SET_COLUMN_DEFAULT_VALUE_VALUE: return SET_COLUMN_DEFAULT_VALUE;
 			case SET_COLUMN_AUTO_INCREMENT_VALUE: return SET_COLUMN_AUTO_INCREMENT;

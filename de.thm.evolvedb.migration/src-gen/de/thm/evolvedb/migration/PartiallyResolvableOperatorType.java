@@ -170,7 +170,15 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ADD_COLUMN_UNIQUE_INDEX(15, "ADD_COLUMN_UNIQUE_INDEX", "ADD_COLUMN_UNIQUE_INDEX");
+	ADD_COLUMN_UNIQUE_INDEX(15, "ADD_COLUMN_UNIQUE_INDEX", "ADD_COLUMN_UNIQUE_INDEX"), /**
+	 * The '<em><b>CREATE PRIMARY KEY</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_PRIMARY_KEY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CREATE_PRIMARY_KEY(16, "CREATE_PRIMARY_KEY", "CREATE_PRIMARY_KEY");
 
 	/**
 	 * The '<em><b>DELETE COLUMN</b></em>' literal value.
@@ -349,6 +357,17 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 	public static final int ADD_COLUMN_UNIQUE_INDEX_VALUE = 15;
 
 	/**
+	 * The '<em><b>CREATE PRIMARY KEY</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_PRIMARY_KEY
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CREATE_PRIMARY_KEY_VALUE = 16;
+
+	/**
 	 * An array of all the '<em><b>Partially Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -372,6 +391,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			SET_COLUMN_TYPE_AND_SIZE,
 			CHANGE_1N_INTO_NM_MOVE,
 			ADD_COLUMN_UNIQUE_INDEX,
+			CREATE_PRIMARY_KEY,
 		};
 
 	/**
@@ -444,6 +464,7 @@ public enum PartiallyResolvableOperatorType implements Enumerator {
 			case SET_COLUMN_TYPE_AND_SIZE_VALUE: return SET_COLUMN_TYPE_AND_SIZE;
 			case CHANGE_1N_INTO_NM_MOVE_VALUE: return CHANGE_1N_INTO_NM_MOVE;
 			case ADD_COLUMN_UNIQUE_INDEX_VALUE: return ADD_COLUMN_UNIQUE_INDEX;
+			case CREATE_PRIMARY_KEY_VALUE: return CREATE_PRIMARY_KEY;
 		}
 		return null;
 	}
