@@ -31,10 +31,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.menus.IWidget;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
@@ -80,12 +83,16 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 	private MddeDifferenceBuilderWizard() {
 		super();
 	}
+	
+
 
 	public MddeDifferenceBuilderWizard(InputModels inputModels, DifferenceType differenceType) {
 		this();
 		this.differenceType = differenceType;
 		controller = new MddeDifferenceBuilderController(inputModels);
 		setWindowTitle("New Symmetric Difference Wizard");
+		setHelpAvailable(false);
+		
 	}
 
 	@Override
@@ -95,6 +102,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
 				.getImageDescriptor(MddeEditorPlugin.INSTANCE.getImage("full/wizban/NewMdde")));
+		setHelpAvailable(false);
 
 	}
 
@@ -105,9 +113,13 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 		//
 		// final IFile modelFile = getModelFile();
 		final IFile modelFile = builderNewFilePage.getModelContainer();
+		final IFile migrationModelFile = builderNewFilePage.getMigreationModelFile();
 		boolean createMigrationFile = builderNewFilePage.isCreateModelSelected();
 		String filename = builderNewFilePage.getFileName();
 		String migrationFileName = builderNewFilePage.getMigrationFileName();
+		
+		
+		
 
 		Job job = Job.create("Create Matching...", (ICoreRunnable) monitor -> {
 
@@ -158,6 +170,13 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 						} catch (InvalidModelException | NoCorrespondencesException exception) {
 							MddeEditorPlugin.INSTANCE.log(exception);
+							ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
+									"An error occured while matching the models!", getShell(), "Error", exception);
+							exception.printStackTrace();
+							MddeEditorPlugin.INSTANCE.log(exception);
+							
+							
+							((WizardDialog) getContainer()).close();
 						} finally {
 							progressMonitor.done();
 						}
@@ -165,7 +184,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 					}
 				};
 
-				getShell().getDisplay().asyncExec(new Runnable() {
+				Display.getDefault().asyncExec(new Runnable() {
 
 					public void run() {
 						try {
@@ -174,14 +193,20 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 							dialog.open();
 							
 							
-							getContainer().run(true, true, operation);
+							dialog.run(true, true, operation);
 							
 							if(dialog != null)
 								dialog.close();
+							if(!createMigrationFile)
+								((WizardDialog) getContainer()).close();
 							
-						} catch (InvocationTargetException | InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (InvocationTargetException | InterruptedException exception) {
+							MddeEditorPlugin.INSTANCE.log(exception);
+							ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
+									"An error occured while matching the models!", getShell(), "Error", exception);
+							exception.printStackTrace();
+							MddeEditorPlugin.INSTANCE.log(exception);
+							((WizardDialog) getContainer()).close();
 						}
 					}
 				});
@@ -201,16 +226,17 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 										"An error occured while creating the model!", getShell(), "Error", e);
 								e.printStackTrace();
 								MddeEditorPlugin.INSTANCE.log(e);
+								((WizardDialog) getContainer()).close();
 							} finally {
 								progressMonitor.done();
 							}
 						}
 					};
-					getShell().getDisplay().asyncExec(new Runnable() {
+					Display.getDefault().asyncExec(new Runnable() {
 
 						public void run() {
 							try {
-								getContainer().run(true, true, operation2);
+								dialog.run(true, true, operation2);
 								
 								// Select the new file resource in the current view.
 								//
@@ -219,18 +245,18 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 								final IWorkbenchPart activePart = page.getActivePart();
 								if (activePart instanceof ISetSelectionTarget) {
 									// Duplicate code because variable has to be final
-									if (builderNewFilePage.isCreateModelSelected()) {
+									if (createMigrationFile) {
 										final ISelection targetSelection = new StructuredSelection(
-												builderNewFilePage.getMigreationModelFile());
-										getShell().getDisplay().asyncExec(new Runnable() {
+												migrationModelFile);
+										Display.getDefault().asyncExec(new Runnable() {
 											@Override
 											public void run() {
 												((ISetSelectionTarget) activePart).selectReveal(targetSelection);
 											}
 										});
 									} else {
-										final ISelection targetSelection = new StructuredSelection(builderNewFilePage.getModelFile());
-										getShell().getDisplay().asyncExec(new Runnable() {
+										final ISelection targetSelection = new StructuredSelection(modelFile);
+										Display.getDefault().asyncExec(new Runnable() {
 											@Override
 											public void run() {
 												((ISetSelectionTarget) activePart).selectReveal(targetSelection);
@@ -253,6 +279,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 							
 							if(dialog != null)
 								dialog.close();
+							//((WizardDialog) getContainer()).close();
 							
 							
 						}
@@ -267,6 +294,10 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 				
 
 			} catch (Exception exception) {
+				MddeEditorPlugin.INSTANCE.log(exception);
+				ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
+						"An error occured while creating the model!", getShell(), "Error", exception);
+				exception.printStackTrace();
 				MddeEditorPlugin.INSTANCE.log(exception);
 
 			}
@@ -283,7 +314,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 		job.schedule();
 
 		
-		return false;
+		return true;
 
 	}
 
@@ -335,5 +366,7 @@ public class MddeDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 		// builderNewFilePage.setPageComplete(false);
 	}
+	
+	
 
 }

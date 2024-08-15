@@ -72,6 +72,7 @@ import de.thm.evolvedb.mdde.Constraint;
 import de.thm.evolvedb.mdde.ForeignKey;
 import de.thm.evolvedb.mdde.Index;
 import de.thm.evolvedb.mdde.MddePackage;
+import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.impl.ColumnImpl;
 
@@ -518,7 +519,47 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 							}
 
-						} else if (set.getEditRName().equals("MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)")) { //$NON-NLS-1$
+						} else if (set.getEditRName().equals("DELETE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
+
+							final Optional<Change> optional2 = set.getChanges().stream()
+								.filter(n -> n instanceof RemoveObject).findFirst();
+							if (optional2.isPresent()) {
+
+								final RemoveObject addObject = (RemoveObject) optional2.get();
+
+								final PrimaryKey columnA = (PrimaryKey) addObject.getObj();
+
+								createCompositeForColumn(composite, columnA, null, null, "Remove Column:"); //$NON-NLS-1$
+
+								final Composite area = new Composite(composite, SWT.NONE);
+								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+								GridDataFactory.fillDefaults().grab(true, false)
+									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+								createHyperlink(area, columnA.getTable(),
+									Messages.SemanticChangeSetRenderer_Table + columnA.getTable().getName(),
+									Messages.SemanticChangeSetRenderer_Table);
+
+								// createDescription(composite, eAttribute, columnA, columnB);
+
+								final Grid grid = createGrid(area, 3, 1);
+
+								final GridItem item = new GridItem(grid, SWT.NONE);
+								item.setText(columnA.getName());
+								item.setText(1, columnA.eClass().getName());
+								item.setText(2, columnA.getType().getName());
+								item.setText(3, columnA.getSize() != null ? columnA.getSize()
+									: Messages.SemanticChangeSetRenderer_null);
+								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+									: Messages.SemanticChangeSetRenderer_null);
+								// item.setChecked(5, columnA.getUnique());
+								item.setChecked(5, columnA.getAutoIncrement());
+
+							}
+
+						}
+
+						else if (set.getEditRName().equals("MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)")) { //$NON-NLS-1$
 
 							final List<RemoveReference> removeReference = set.getChanges().stream()
 								.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
@@ -1082,9 +1123,6 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 						} else if (set.getEditRName().equals("DELETE_UniqueConstraint_IN_Table_(constraints)") //$NON-NLS-1$
 							|| set.getEditRName().equals("DELETE_Index_IN_Table_(constraints)")) { //$NON-NLS-1$
 
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).findFirst();
-
 							final List<Change> removeObjects = set.getChanges().stream()
 								.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
 
@@ -1272,7 +1310,67 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 				}
 
 			} else {
-				// Only create table should have more than one SemanticChangeSet
+
+				// All Create and delete operations could have mor than one semantic change set
+				final Optional<SemanticChangeSet> optional4 = object.stream()
+					.filter(n -> n.getEditRName().equals("DELETE_Table_IN_Database_Schema_(entites)")).findFirst(); //$NON-NLS-1$
+				if (optional4.isPresent()) {
+
+					final SemanticChangeSet set = optional4.get();
+					final List<Change> removeObjects = set.getChanges().stream()
+						.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
+
+					if (removeObjects.size() > 0) {
+
+						Table table = null;
+
+						for (final Change rO : removeObjects) {
+							final RemoveObject remove = (RemoveObject) rO;
+							if (remove.getObj() instanceof Table) {
+								table = (Table) remove.getObj();
+							}
+						}
+
+						if (table == null) {
+
+							return composite;
+						}
+
+						final Composite area = new Composite(composite, SWT.NONE);
+						GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+						GridDataFactory.fillDefaults().grab(true, false)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+						createHyperlink(area, table, Messages.SemanticChangeSetRenderer_Table + table.getName(),
+							Messages.SemanticChangeSetRenderer_Removed_Elements);
+
+						final Label label3 = new Label(area, SWT.NONE);
+						label3.setText(Messages.SemanticChangeSetRenderer_1);
+						GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(label3);
+
+						final Grid grid = createGrid(area, 3, 1);
+
+						for (final Column columnA : table.getColumns()) {
+
+							final GridItem item = new GridItem(grid, SWT.NONE);
+							item.setText(columnA.getName());
+							item.setText(1, columnA.eClass().getName());
+							item.setText(2, columnA.getType().getName());
+							item.setText(3, columnA.getSize() != null ? columnA.getSize()
+								: Messages.SemanticChangeSetRenderer_null);
+							item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+								: Messages.SemanticChangeSetRenderer_null);
+							// item.setChecked(5, columnA.getUnique());
+							item.setChecked(5, columnA.getAutoIncrement());
+						}
+
+					}
+
+					return composite;
+
+				}
+
 				final Optional<SemanticChangeSet> optional = object.stream()
 					.filter(n -> n.getEditRName().equals("CREATE_Table_IN_Database_Schema_(entites)")).findFirst(); //$NON-NLS-1$
 				if (optional.isPresent()) {
@@ -1298,6 +1396,11 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 						createHyperlink(area, newTable, Messages.SemanticChangeSetRenderer_Table + newTable.getName(),
 							Messages.SemanticChangeSetRenderer_newOBJ);
+
+						final Label label3 = new Label(area, SWT.NONE);
+						label3.setText(Messages.SemanticChangeSetRenderer_1);
+						GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(label3);
 
 						final Grid grid = createGrid(area, 3, 1);
 
@@ -1455,7 +1558,9 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 			}
 
-		} catch (final DatabindingFailedException ex) {
+		} catch (
+
+		final DatabindingFailedException ex) {
 			ex.printStackTrace();
 			// TODO Auto-generated catch block
 			// Do NOT catch all Exceptions ("catch (Exception e)")

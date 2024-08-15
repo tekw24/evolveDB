@@ -76,8 +76,10 @@ public class DifferenceBuilderHandler extends AbstractHandler {
 			Display.getDefault().asyncExec(() -> {
 				InputModels inputModels = InputModels.builder().addModels(selection).assertNumModels(2)
 						.assertSameDocumentType(true).build();
-				new WizardDialog(UIUtil.getActiveShell(),
-						new MddeDifferenceBuilderWizard(inputModels, DifferenceType.TECHNICALDIFFERENCE)).open();
+				WizardDialog wd = new WizardDialog(UIUtil.getActiveShell(),
+						new MddeDifferenceBuilderWizard(inputModels, DifferenceType.TECHNICALDIFFERENCE));
+				wd.setHelpAvailable(false);
+				wd.open();
 			});
 		} else {
 			ErrorHandler.openErrorDialog("The selected resources contain errors!", activeShell, "Validation error!");

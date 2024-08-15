@@ -27,6 +27,8 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
+
+import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.NamedElement;
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
@@ -194,11 +196,11 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		
 		
 		if (o instanceof ResolvableOperator)
-			return  "ResolvableOperator "  + ((ResolvableOperator) object).getDisplayName()+ " " + prefix;
+			return  "RO: "  + ((ResolvableOperator) object).getDisplayName()+ " " + prefix;
 		else if (o instanceof PartiallyResolvable)
-			return "PartiallyResolvable " +((PartiallyResolvable) object).getDisplayName() + " " + prefix;
+			return "PR: " +((PartiallyResolvable) object).getDisplayName() + " " + prefix;
 		else if (o instanceof NotAutomaticallyResolvable)
-			return "NotAutomaticallyResolvable " + ((NotAutomaticallyResolvable) object).getDisplayName() + " " + prefix;
+			return "NAR: " + ((NotAutomaticallyResolvable) object).getDisplayName() + " " + prefix;
 
 		
 
@@ -230,6 +232,9 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	public String getName(RemoveObject removeObject) {
 		if (removeObject.getObj() instanceof NamedElement) {
 			NamedElement n = (NamedElement) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof ColumnConstraint) {
+			ColumnConstraint n = (ColumnConstraint) removeObject.getObj();
 			return n.getName();
 		}
 		return "";

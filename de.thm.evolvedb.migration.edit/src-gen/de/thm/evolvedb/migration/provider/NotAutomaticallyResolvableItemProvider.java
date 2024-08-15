@@ -112,15 +112,16 @@ public class NotAutomaticallyResolvableItemProvider extends SchemaModificationOp
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		NotAutomaticallyResolvableOperatorType labelValue = ((NotAutomaticallyResolvable)object).getDisplayName();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_NotAutomaticallyResolvable_type") :
-			getString("_UI_NotAutomaticallyResolvable_type") + " " + label;
+//		NotAutomaticallyResolvableOperatorType labelValue = ((NotAutomaticallyResolvable)object).getDisplayName();
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_NotAutomaticallyResolvable_type") :
+//			getString("_UI_NotAutomaticallyResolvable_type") + " " + label;
+		return super.getText(object);
 	}
 
 
