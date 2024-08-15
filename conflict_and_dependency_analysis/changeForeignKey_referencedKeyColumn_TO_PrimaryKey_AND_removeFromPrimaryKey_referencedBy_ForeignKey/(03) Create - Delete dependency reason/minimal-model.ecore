@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="changeForeignKey_referencedKeyColumn_TO_PrimaryKey_removeFromPrimaryKey_referencedBy_ForeignKey"
+      nsURI="http://cdapackage/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/removeFromPrimaryKey_referencedBy_ForeignKey/SymmetricReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="NewTarget_Selected:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/0/Selected_OldTarget%3AForeignKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_OldTarget:ForeignKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_changeForeignKey_referencedKeyColumn_TO_PrimaryKey"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_Selected:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/1/Selected_NewTarget%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_NewTarget:PrimaryKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_changeForeignKey_referencedKeyColumn_TO_PrimaryKey"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_NewTarget:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/2/OldTarget_Selected%3AForeignKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_Selected:ForeignKey"/>
+  </ecore:EPackage>
+</xmi:XMI>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ezBYcMXBEe6Sa8uKM-k3fw" name="changeForeignKey_referencedKeyColumn_TO_PrimaryKey" description="Change the EReference referencedKeyColumn">
+  <parameters xmi:id="_ezBYccXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+  </parameters>
+  <parameters xmi:id="_ezBYcsXBEe6Sa8uKM-k3fw" name="OldTarget" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <parameters xmi:id="_ezBYc8XBEe6Sa8uKM-k3fw" name="NewTarget" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <lhs xmi:id="_ezBYdMXBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_ezBYdcXBEe6Sa8uKM-k3fw" name="Selected" incoming="_ezBYecXBEe6Sa8uKM-k3fw" outgoing="_ezBYeMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+    <nodes xmi:id="_ezBYdsXBEe6Sa8uKM-k3fw" name="OldTarget" incoming="_ezBYeMXBEe6Sa8uKM-k3fw" outgoing="_ezBYecXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_ezBYd8XBEe6Sa8uKM-k3fw" name="NewTarget">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <edges xmi:id="_ezBYeMXBEe6Sa8uKM-k3fw" source="_ezBYdcXBEe6Sa8uKM-k3fw" target="_ezBYdsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+    </edges>
+    <edges xmi:id="_ezBYecXBEe6Sa8uKM-k3fw" source="_ezBYdsXBEe6Sa8uKM-k3fw" target="_ezBYdcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_ezBYesXBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_ezBYe8XBEe6Sa8uKM-k3fw" name="Selected" incoming="_ezBYf8XBEe6Sa8uKM-k3fw" outgoing="_ezBYfsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+    <nodes xmi:id="_ezBYfMXBEe6Sa8uKM-k3fw" name="OldTarget">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_ezBYfcXBEe6Sa8uKM-k3fw" name="NewTarget" incoming="_ezBYfsXBEe6Sa8uKM-k3fw" outgoing="_ezBYf8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <edges xmi:id="_ezBYfsXBEe6Sa8uKM-k3fw" source="_ezBYe8XBEe6Sa8uKM-k3fw" target="_ezBYfcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+    </edges>
+    <edges xmi:id="_ezBYf8XBEe6Sa8uKM-k3fw" source="_ezBYfcXBEe6Sa8uKM-k3fw" target="_ezBYe8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_ezBYgMXBEe6Sa8uKM-k3fw" origin="_ezBYdcXBEe6Sa8uKM-k3fw" image="_ezBYe8XBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_ezBYgcXBEe6Sa8uKM-k3fw" origin="_ezBYdsXBEe6Sa8uKM-k3fw" image="_ezBYfMXBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_ezBYgsXBEe6Sa8uKM-k3fw" origin="_ezBYd8XBEe6Sa8uKM-k3fw" image="_ezBYfcXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

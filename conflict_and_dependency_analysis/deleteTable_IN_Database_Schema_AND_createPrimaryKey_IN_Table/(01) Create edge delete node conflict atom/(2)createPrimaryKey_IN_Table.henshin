@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_eyi3UMXBEe6Sa8uKM-k3fw" name="createPrimaryKey_IN_Table" description="creates one PrimaryKey in the context: Table">
+  <parameters xmi:id="_eyi3UcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_eyi3UsXBEe6Sa8uKM-k3fw" name="New" kind="OUT">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <parameters xmi:id="_eyi3U8XBEe6Sa8uKM-k3fw" name="Name" kind="OUT">
+    <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </parameters>
+  <lhs xmi:id="_eyi3VMXBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_eyi3VcXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_eyi3VsXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_eyi3V8XBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_eyi3WMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_eyi3XsXBEe6Sa8uKM-k3fw" outgoing="_eyi3XcXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_eyi3WcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_eyi3WsXBEe6Sa8uKM-k3fw" name="New" incoming="_eyi3XcXBEe6Sa8uKM-k3fw" outgoing="_eyi3XsXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_eyi3W8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+      <attributes xmi:id="_eyi3XMXBEe6Sa8uKM-k3fw" value="Name">
+        <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+      </attributes>
+    </nodes>
+    <edges xmi:id="_eyi3XcXBEe6Sa8uKM-k3fw" source="_eyi3WMXBEe6Sa8uKM-k3fw" target="_eyi3WsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/columns"/>
+    </edges>
+    <edges xmi:id="_eyi3XsXBEe6Sa8uKM-k3fw" source="_eyi3WsXBEe6Sa8uKM-k3fw" target="_eyi3WMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column/table"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_eyi3X8XBEe6Sa8uKM-k3fw" origin="_eyi3VcXBEe6Sa8uKM-k3fw" image="_eyi3WMXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

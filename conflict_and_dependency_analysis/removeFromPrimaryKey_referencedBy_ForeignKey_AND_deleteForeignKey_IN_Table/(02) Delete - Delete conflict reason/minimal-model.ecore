@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_deleteForeignKey_IN_Table"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/deleteForeignKey_IN_Table/SymmetricReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_ToBeDeleted:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/0/Selected_Existing%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Existing:PrimaryKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="deleteForeignKey_IN_Table_removeFromPrimaryKey_referencedBy_ForeignKey"
+      nsURI="http://cdapackage/deleteForeignKey_IN_Table/removeFromPrimaryKey_referencedBy_ForeignKey/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="#ToBeDeleted_OldTarget:ForeignKey#">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/1/Existing_Selected%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Existing_Selected:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/1/%23ToBeDeleted_OldTarget%3AForeignKey%23"/>
+    </eClassifiers>
+  </ecore:EPackage>
+</xmi:XMI>

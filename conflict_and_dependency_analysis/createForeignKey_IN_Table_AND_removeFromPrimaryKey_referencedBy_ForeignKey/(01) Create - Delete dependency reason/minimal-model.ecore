@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="createForeignKey_IN_Table_removeFromPrimaryKey_referencedBy_ForeignKey"
+      nsURI="http://cdapackage/createForeignKey_IN_Table/removeFromPrimaryKey_referencedBy_ForeignKey/SymmetricReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="#New_OldTarget:ForeignKey#">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name=Name _  -> " lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="OnUpdate=OnUpdate _  -> "
+          lowerBound="1" eType="ecore:EEnum http://www.thm.de/mdde#//Referential_Action"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="OnDelete=OnDelete _  -> "
+          lowerBound="1" eType="ecore:EEnum http://www.thm.de/mdde#//Referential_Action"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintName=ConstraintName _  -> "
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/0/Existing_Selected%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Existing_Selected:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/0/%23New_OldTarget%3AForeignKey%23"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_createForeignKey_IN_Table"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/createForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_New:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/1/Selected_Existing%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Existing:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/1/OldTarget_New%3AForeignKey"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_createForeignKey_IN_Table"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/createForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_New:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/2/Selected_Existing%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Existing:PrimaryKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="removeFromPrimaryKey_referencedBy_ForeignKey_createForeignKey_IN_Table"
+      nsURI="http://cdapackage/removeFromPrimaryKey_referencedBy_ForeignKey/createForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Existing:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/3/OldTarget_New%3AForeignKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_New:ForeignKey"/>
+  </ecore:EPackage>
+</xmi:XMI>

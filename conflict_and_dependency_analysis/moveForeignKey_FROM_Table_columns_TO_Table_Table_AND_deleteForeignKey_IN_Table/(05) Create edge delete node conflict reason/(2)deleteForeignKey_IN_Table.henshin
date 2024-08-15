@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ez130MXBEe6Sa8uKM-k3fw" name="deleteForeignKey_IN_Table" description="deletes one ForeignKey in the context: Table">
+  <parameters xmi:id="_ez130cXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_ez130sXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+  </parameters>
+  <parameters xmi:id="_ez1308XBEe6Sa8uKM-k3fw" name="Existing" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <parameters xmi:id="_ez131MXBEe6Sa8uKM-k3fw" name="Existing1" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <lhs xmi:id="_ez131cXBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_ez131sXBEe6Sa8uKM-k3fw" name="Selected" incoming="_ez133cXBEe6Sa8uKM-k3fw" outgoing="_ez133MXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ez1318XBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_ez132MXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_ez133MXBEe6Sa8uKM-k3fw _ez1338XBEe6Sa8uKM-k3fw" outgoing="_ez133cXBEe6Sa8uKM-k3fw _ez133sXBEe6Sa8uKM-k3fw _ez134MXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ez132cXBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+    <nodes xmi:id="_ez132sXBEe6Sa8uKM-k3fw" name="Existing" incoming="_ez133sXBEe6Sa8uKM-k3fw" outgoing="_ez1338XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_ez1328XBEe6Sa8uKM-k3fw" name="Existing1" incoming="_ez134MXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <edges xmi:id="_ez133MXBEe6Sa8uKM-k3fw" source="_ez131sXBEe6Sa8uKM-k3fw" target="_ez132MXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/columns"/>
+    </edges>
+    <edges xmi:id="_ez133cXBEe6Sa8uKM-k3fw" source="_ez132MXBEe6Sa8uKM-k3fw" target="_ez131sXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column/table"/>
+    </edges>
+    <edges xmi:id="_ez133sXBEe6Sa8uKM-k3fw" source="_ez132MXBEe6Sa8uKM-k3fw" target="_ez132sXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+    </edges>
+    <edges xmi:id="_ez1338XBEe6Sa8uKM-k3fw" source="_ez132sXBEe6Sa8uKM-k3fw" target="_ez132MXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+    </edges>
+    <edges xmi:id="_ez134MXBEe6Sa8uKM-k3fw" source="_ez132MXBEe6Sa8uKM-k3fw" target="_ez1328XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedTable"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_ez134cXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_ez134sXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_ez1348XBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_ez135MXBEe6Sa8uKM-k3fw" name="Existing">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_ez135cXBEe6Sa8uKM-k3fw" name="Existing1">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_ez135sXBEe6Sa8uKM-k3fw" origin="_ez131sXBEe6Sa8uKM-k3fw" image="_ez134sXBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_ez1358XBEe6Sa8uKM-k3fw" origin="_ez132sXBEe6Sa8uKM-k3fw" image="_ez135MXBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_ez136MXBEe6Sa8uKM-k3fw" origin="_ez1328XBEe6Sa8uKM-k3fw" image="_ez135cXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

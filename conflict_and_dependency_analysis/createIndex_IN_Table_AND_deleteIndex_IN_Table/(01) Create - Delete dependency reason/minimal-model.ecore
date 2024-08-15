@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="createIndex_IN_Table_deleteIndex_IN_Table" nsURI="http://cdapackage/createIndex_IN_Table/deleteIndex_IN_Table/SymmetricReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="#New_ToBeDeleted:Index#">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name=Name _  " lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#table#" eType="#/0/Selected_Selected%3ATable"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Selected:Table">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#constraints#" eType="#/0/%23New_ToBeDeleted%3AIndex%23"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="deleteIndex_IN_Table_createIndex_IN_Table" nsURI="http://cdapackage/deleteIndex_IN_Table/createIndex_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="#ToBeDeleted_New:Index#">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#table#" eType="#/1/Selected_Selected%3ATable"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_Selected:Table">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#constraints#" eType="#/1/%23ToBeDeleted_New%3AIndex%23"/>
+    </eClassifiers>
+  </ecore:EPackage>
+</xmi:XMI>

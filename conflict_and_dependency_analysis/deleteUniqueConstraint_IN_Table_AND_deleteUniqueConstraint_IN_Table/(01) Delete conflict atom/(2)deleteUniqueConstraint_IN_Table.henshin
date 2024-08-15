@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e2zFMMXBEe6Sa8uKM-k3fw" name="deleteUniqueConstraint_IN_Table" description="deletes one UniqueConstraint in the context: Table">
+  <parameters xmi:id="_e2zFMcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_e2zFMsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//UniqueConstraint"/>
+  </parameters>
+  <lhs xmi:id="_e2zFM8XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_e2zFNMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_e2zFOcXBEe6Sa8uKM-k3fw" outgoing="_e2zFOMXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e2zFNcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e2zFNsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_e2zFOMXBEe6Sa8uKM-k3fw" outgoing="_e2zFOcXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e2zFN8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//UniqueConstraint"/>
+    </nodes>
+    <edges xmi:id="_e2zFOMXBEe6Sa8uKM-k3fw" source="_e2zFNMXBEe6Sa8uKM-k3fw" target="_e2zFNsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/constraints"/>
+    </edges>
+    <edges xmi:id="_e2zFOcXBEe6Sa8uKM-k3fw" source="_e2zFNsXBEe6Sa8uKM-k3fw" target="_e2zFNMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Constraint/table"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_e2zFOsXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_e2zFO8XBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_e2zFPMXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_e2zFPcXBEe6Sa8uKM-k3fw" origin="_e2zFNMXBEe6Sa8uKM-k3fw" image="_e2zFO8XBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

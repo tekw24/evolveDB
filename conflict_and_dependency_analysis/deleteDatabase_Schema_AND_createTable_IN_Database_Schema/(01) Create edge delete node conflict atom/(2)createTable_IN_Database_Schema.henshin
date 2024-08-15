@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_eyEWMMXBEe6Sa8uKM-k3fw" name="createTable_IN_Database_Schema" description="creates one Table in the context: Database_Schema">
+  <parameters xmi:id="_eyEWMcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+  </parameters>
+  <parameters xmi:id="_eyEWMsXBEe6Sa8uKM-k3fw" name="New" kind="OUT">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_eyEWM8XBEe6Sa8uKM-k3fw" name="Name" kind="OUT">
+    <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </parameters>
+  <lhs xmi:id="_eyEWNMXBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_eyEWNcXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_eyEWNsXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Database_Schema"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_eyEWN8XBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_eyEWOMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_eyEWPsXBEe6Sa8uKM-k3fw" outgoing="_eyEWPcXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_eyEWOcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Database_Schema"/>
+    </nodes>
+    <nodes xmi:id="_eyEWOsXBEe6Sa8uKM-k3fw" name="New" incoming="_eyEWPcXBEe6Sa8uKM-k3fw" outgoing="_eyEWPsXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_eyEWO8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+      <attributes xmi:id="_eyEWPMXBEe6Sa8uKM-k3fw" value="Name">
+        <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+      </attributes>
+    </nodes>
+    <edges xmi:id="_eyEWPcXBEe6Sa8uKM-k3fw" source="_eyEWOMXBEe6Sa8uKM-k3fw" target="_eyEWOsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Database_Schema/entites"/>
+    </edges>
+    <edges xmi:id="_eyEWPsXBEe6Sa8uKM-k3fw" source="_eyEWOsXBEe6Sa8uKM-k3fw" target="_eyEWOMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/schema"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_eyEWP8XBEe6Sa8uKM-k3fw" origin="_eyEWNcXBEe6Sa8uKM-k3fw" image="_eyEWOMXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e1L7oMXBEe6Sa8uKM-k3fw" name="removeFromPrimaryKey_referencedBy_ForeignKey" description="Removes from PrimaryKey's reference referencedBy the target ForeignKey_Inv">
+  <parameters xmi:id="_e1L7ocXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <parameters xmi:id="_e1L7osXBEe6Sa8uKM-k3fw" name="OldTarget" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+  </parameters>
+  <lhs xmi:id="_e1L7o8XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_e1L7pMXBEe6Sa8uKM-k3fw" name="Selected">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_e1L7pcXBEe6Sa8uKM-k3fw" name="OldTarget">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_e1L7psXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_e1L7p8XBEe6Sa8uKM-k3fw" name="Selected" incoming="_e1L7qsXBEe6Sa8uKM-k3fw" outgoing="_e1L7qcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_e1L7qMXBEe6Sa8uKM-k3fw" name="OldTarget" incoming="_e1L7qcXBEe6Sa8uKM-k3fw" outgoing="_e1L7qsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+    <edges xmi:id="_e1L7qcXBEe6Sa8uKM-k3fw" source="_e1L7p8XBEe6Sa8uKM-k3fw" target="_e1L7qMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+    </edges>
+    <edges xmi:id="_e1L7qsXBEe6Sa8uKM-k3fw" source="_e1L7qMXBEe6Sa8uKM-k3fw" target="_e1L7p8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_e1L7q8XBEe6Sa8uKM-k3fw" origin="_e1L7pMXBEe6Sa8uKM-k3fw" image="_e1L7p8XBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_e1L7rMXBEe6Sa8uKM-k3fw" origin="_e1L7pcXBEe6Sa8uKM-k3fw" image="_e1L7qMXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e5kFUMXBEe6Sa8uKM-k3fw" name="deleteIndex_IN_Table" description="deletes one Index in the context: Table_Inv">
+  <parameters xmi:id="_e5kFUcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_e5kFUsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Index"/>
+  </parameters>
+  <lhs xmi:id="_e5kFU8XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_e5kFVMXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_e5kFVcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_e5kFVsXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_e5kFV8XBEe6Sa8uKM-k3fw" name="Selected" incoming="_e5kFXMXBEe6Sa8uKM-k3fw" outgoing="_e5kFW8XBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e5kFWMXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e5kFWcXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_e5kFW8XBEe6Sa8uKM-k3fw" outgoing="_e5kFXMXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e5kFWsXBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//Index"/>
+    </nodes>
+    <edges xmi:id="_e5kFW8XBEe6Sa8uKM-k3fw" source="_e5kFV8XBEe6Sa8uKM-k3fw" target="_e5kFWcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/constraints"/>
+    </edges>
+    <edges xmi:id="_e5kFXMXBEe6Sa8uKM-k3fw" source="_e5kFWcXBEe6Sa8uKM-k3fw" target="_e5kFV8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Constraint/table"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_e5kFXcXBEe6Sa8uKM-k3fw" origin="_e5kFVMXBEe6Sa8uKM-k3fw" image="_e5kFV8XBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

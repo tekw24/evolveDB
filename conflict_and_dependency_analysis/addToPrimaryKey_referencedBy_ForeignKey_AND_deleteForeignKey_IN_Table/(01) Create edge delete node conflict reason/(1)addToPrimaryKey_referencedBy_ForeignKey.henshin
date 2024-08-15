@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e9p7IMXBEe6Sa8uKM-k3fw" name="addToPrimaryKey_referencedBy_ForeignKey" description="Adds to PrimaryKey's reference referencedBy the target ForeignKey">
+  <parameters xmi:id="_e9p7IcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//PrimaryKey"/>
+  </parameters>
+  <parameters xmi:id="_e9p7IsXBEe6Sa8uKM-k3fw" name="NewTarget" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ForeignKey"/>
+  </parameters>
+  <lhs xmi:id="_e9p7I8XBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_e9p7JMXBEe6Sa8uKM-k3fw" name="Selected">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_e9p7JcXBEe6Sa8uKM-k3fw" name="NewTarget">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_e9p7JsXBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_e9p7J8XBEe6Sa8uKM-k3fw" name="Selected" incoming="_e9p7KsXBEe6Sa8uKM-k3fw" outgoing="_e9p7KcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey"/>
+    </nodes>
+    <nodes xmi:id="_e9p7KMXBEe6Sa8uKM-k3fw" name="NewTarget" incoming="_e9p7KcXBEe6Sa8uKM-k3fw" outgoing="_e9p7KsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey"/>
+    </nodes>
+    <edges xmi:id="_e9p7KcXBEe6Sa8uKM-k3fw" source="_e9p7J8XBEe6Sa8uKM-k3fw" target="_e9p7KMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//PrimaryKey/referencedBy"/>
+    </edges>
+    <edges xmi:id="_e9p7KsXBEe6Sa8uKM-k3fw" source="_e9p7KMXBEe6Sa8uKM-k3fw" target="_e9p7J8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ForeignKey/referencedKeyColumn"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_e9p7K8XBEe6Sa8uKM-k3fw" origin="_e9p7JMXBEe6Sa8uKM-k3fw" image="_e9p7J8XBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_e9p7LMXBEe6Sa8uKM-k3fw" origin="_e9p7JcXBEe6Sa8uKM-k3fw" image="_e9p7KMXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

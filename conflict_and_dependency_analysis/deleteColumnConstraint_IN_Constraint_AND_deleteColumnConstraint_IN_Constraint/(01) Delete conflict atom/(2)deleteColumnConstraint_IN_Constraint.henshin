@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ezf5kMXBEe6Sa8uKM-k3fw" name="deleteColumnConstraint_IN_Constraint" description="deletes one ColumnConstraint in the context: Constraint">
+  <parameters xmi:id="_ezf5kcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Constraint"/>
+  </parameters>
+  <parameters xmi:id="_ezf5ksXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//ColumnConstraint"/>
+  </parameters>
+  <lhs xmi:id="_ezf5k8XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_ezf5lMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_ezf5mcXBEe6Sa8uKM-k3fw" outgoing="_ezf5mMXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ezf5lcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Constraint"/>
+    </nodes>
+    <nodes xmi:id="_ezf5lsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_ezf5mMXBEe6Sa8uKM-k3fw" outgoing="_ezf5mcXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ezf5l8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//ColumnConstraint"/>
+    </nodes>
+    <edges xmi:id="_ezf5mMXBEe6Sa8uKM-k3fw" source="_ezf5lMXBEe6Sa8uKM-k3fw" target="_ezf5lsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Constraint/columns"/>
+    </edges>
+    <edges xmi:id="_ezf5mcXBEe6Sa8uKM-k3fw" source="_ezf5lsXBEe6Sa8uKM-k3fw" target="_ezf5lMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//ColumnConstraint/constraint"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_ezggoMXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_ezggocXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_ezggosXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Constraint"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_ezggo8XBEe6Sa8uKM-k3fw" origin="_ezf5lMXBEe6Sa8uKM-k3fw" image="_ezggocXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

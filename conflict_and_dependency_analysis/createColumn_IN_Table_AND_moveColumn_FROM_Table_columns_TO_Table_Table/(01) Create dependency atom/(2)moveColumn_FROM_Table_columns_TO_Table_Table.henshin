@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e5PVMMXBEe6Sa8uKM-k3fw" name="moveColumn_FROM_Table_columns_TO_Table_Table" description="Moves Column from Table(Reference:columns) toTable(Reference:Table)">
+  <parameters xmi:id="_e5PVMcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+  </parameters>
+  <parameters xmi:id="_e5PVMsXBEe6Sa8uKM-k3fw" name="OldSource" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_e5PVM8XBEe6Sa8uKM-k3fw" name="NewSource" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <lhs xmi:id="_e5PVNMXBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_e5PVNcXBEe6Sa8uKM-k3fw" name="Selected" incoming="_e5PVOMXBEe6Sa8uKM-k3fw" outgoing="_e5PVOcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column"/>
+    </nodes>
+    <nodes xmi:id="_e5PVNsXBEe6Sa8uKM-k3fw" name="OldSource" incoming="_e5PVOcXBEe6Sa8uKM-k3fw" outgoing="_e5PVOMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e5PVN8XBEe6Sa8uKM-k3fw" name="NewSource">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <edges xmi:id="_e5PVOMXBEe6Sa8uKM-k3fw" source="_e5PVNsXBEe6Sa8uKM-k3fw" target="_e5PVNcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/columns"/>
+    </edges>
+    <edges xmi:id="_e5PVOcXBEe6Sa8uKM-k3fw" source="_e5PVNcXBEe6Sa8uKM-k3fw" target="_e5PVNsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column/table"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_e5PVOsXBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_e5PVO8XBEe6Sa8uKM-k3fw" name="Selected" incoming="_e5PVPsXBEe6Sa8uKM-k3fw" outgoing="_e5PVP8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column"/>
+    </nodes>
+    <nodes xmi:id="_e5PVPMXBEe6Sa8uKM-k3fw" name="OldSource">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e5PVPcXBEe6Sa8uKM-k3fw" name="NewSource" incoming="_e5PVP8XBEe6Sa8uKM-k3fw" outgoing="_e5PVPsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <edges xmi:id="_e5PVPsXBEe6Sa8uKM-k3fw" source="_e5PVPcXBEe6Sa8uKM-k3fw" target="_e5PVO8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/columns"/>
+    </edges>
+    <edges xmi:id="_e5PVP8XBEe6Sa8uKM-k3fw" source="_e5PVO8XBEe6Sa8uKM-k3fw" target="_e5PVPcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column/table"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_e5PVQMXBEe6Sa8uKM-k3fw" origin="_e5PVNcXBEe6Sa8uKM-k3fw" image="_e5PVO8XBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_e5PVQcXBEe6Sa8uKM-k3fw" origin="_e5PVNsXBEe6Sa8uKM-k3fw" image="_e5PVPMXBEe6Sa8uKM-k3fw"/>
+  <mappings xmi:id="_e5PVQsXBEe6Sa8uKM-k3fw" origin="_e5PVN8XBEe6Sa8uKM-k3fw" image="_e5PVPcXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

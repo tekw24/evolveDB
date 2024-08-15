@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e3iFAMXBEe6Sa8uKM-k3fw" name="createIndex_IN_Table" description="creates one Index in the context: Table_Inv">
+  <parameters xmi:id="_e3iFAcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_e3iFAsXBEe6Sa8uKM-k3fw" name="New" kind="OUT">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Index"/>
+  </parameters>
+  <parameters xmi:id="_e3iFA8XBEe6Sa8uKM-k3fw" name="Name" kind="OUT">
+    <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </parameters>
+  <lhs xmi:id="_e3iFBMXBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_e3iFBcXBEe6Sa8uKM-k3fw" name="Selected" incoming="_e3iFC8XBEe6Sa8uKM-k3fw" outgoing="_e3iFCsXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e3iFBsXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e3iFB8XBEe6Sa8uKM-k3fw" name="New" incoming="_e3iFCsXBEe6Sa8uKM-k3fw" outgoing="_e3iFC8XBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e3iFCMXBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//Index"/>
+      <attributes xmi:id="_e3iFCcXBEe6Sa8uKM-k3fw" value="Name">
+        <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+      </attributes>
+    </nodes>
+    <edges xmi:id="_e3iFCsXBEe6Sa8uKM-k3fw" source="_e3iFBcXBEe6Sa8uKM-k3fw" target="_e3iFB8XBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/constraints"/>
+    </edges>
+    <edges xmi:id="_e3iFC8XBEe6Sa8uKM-k3fw" source="_e3iFB8XBEe6Sa8uKM-k3fw" target="_e3iFBcXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Constraint/table"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_e3iFDMXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_e3iFDcXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_e3iFDsXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_e3iFD8XBEe6Sa8uKM-k3fw" origin="_e3iFBcXBEe6Sa8uKM-k3fw" image="_e3iFDcXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

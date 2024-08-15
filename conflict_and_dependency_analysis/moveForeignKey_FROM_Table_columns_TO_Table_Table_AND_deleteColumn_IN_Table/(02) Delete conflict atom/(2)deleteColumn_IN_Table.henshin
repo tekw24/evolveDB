@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ezi84MXBEe6Sa8uKM-k3fw" name="deleteColumn_IN_Table" description="deletes one Column in the context: Table">
+  <parameters xmi:id="_ezi84cXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_ezi84sXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Column"/>
+  </parameters>
+  <lhs xmi:id="_ezi848XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_ezi85MXBEe6Sa8uKM-k3fw" name="Selected" incoming="_ezi86cXBEe6Sa8uKM-k3fw" outgoing="_ezi86MXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ezi85cXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_ezi85sXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_ezi86MXBEe6Sa8uKM-k3fw" outgoing="_ezi86cXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ezi858XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//Column"/>
+    </nodes>
+    <edges xmi:id="_ezi86MXBEe6Sa8uKM-k3fw" source="_ezi85MXBEe6Sa8uKM-k3fw" target="_ezi85sXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/columns"/>
+    </edges>
+    <edges xmi:id="_ezi86cXBEe6Sa8uKM-k3fw" source="_ezi85sXBEe6Sa8uKM-k3fw" target="_ezi85MXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Column/table"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_ezi86sXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_ezi868XBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_ezi87MXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_ezi87cXBEe6Sa8uKM-k3fw" origin="_ezi85MXBEe6Sa8uKM-k3fw" image="_ezi868XBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_e5tPQMXBEe6Sa8uKM-k3fw" name="createUniqueConstraint_IN_Table" description="creates one UniqueConstraint in the context: Table">
+  <parameters xmi:id="_e5tPQcXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <parameters xmi:id="_e5tPQsXBEe6Sa8uKM-k3fw" name="New" kind="OUT">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//UniqueConstraint"/>
+  </parameters>
+  <parameters xmi:id="_e5tPQ8XBEe6Sa8uKM-k3fw" name="Name" kind="OUT">
+    <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </parameters>
+  <lhs xmi:id="_e5tPRMXBEe6Sa8uKM-k3fw" name="Lhs">
+    <nodes xmi:id="_e5tPRcXBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_e5tPRsXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+  </lhs>
+  <rhs xmi:id="_e5tPR8XBEe6Sa8uKM-k3fw" name="Rhs">
+    <nodes xmi:id="_e5tPSMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_e5tPTsXBEe6Sa8uKM-k3fw" outgoing="_e5tPTcXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e5tPScXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <nodes xmi:id="_e5tPSsXBEe6Sa8uKM-k3fw" name="New" incoming="_e5tPTcXBEe6Sa8uKM-k3fw" outgoing="_e5tPTsXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_e5tPS8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//UniqueConstraint"/>
+      <attributes xmi:id="_e5tPTMXBEe6Sa8uKM-k3fw" value="Name">
+        <type href="http://www.thm.de/mdde#//NamedElement/name"/>
+      </attributes>
+    </nodes>
+    <edges xmi:id="_e5tPTcXBEe6Sa8uKM-k3fw" source="_e5tPSMXBEe6Sa8uKM-k3fw" target="_e5tPSsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/constraints"/>
+    </edges>
+    <edges xmi:id="_e5tPTsXBEe6Sa8uKM-k3fw" source="_e5tPSsXBEe6Sa8uKM-k3fw" target="_e5tPSMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Constraint/table"/>
+    </edges>
+  </rhs>
+  <mappings xmi:id="_e5tPT8XBEe6Sa8uKM-k3fw" origin="_e5tPRcXBEe6Sa8uKM-k3fw" image="_e5tPSMXBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Rule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ex9BcMXBEe6Sa8uKM-k3fw" name="deleteTable_IN_Database_Schema" description="deletes one Table in the context: Database_Schema">
+  <parameters xmi:id="_ex9BccXBEe6Sa8uKM-k3fw" name="Selected" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Database_Schema"/>
+  </parameters>
+  <parameters xmi:id="_ex9BcsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" kind="IN">
+    <type xsi:type="ecore:EClass" href="http://www.thm.de/mdde#//Table"/>
+  </parameters>
+  <lhs xmi:id="_ex9Bc8XBEe6Sa8uKM-k3fw" name="LHS">
+    <nodes xmi:id="_ex9BdMXBEe6Sa8uKM-k3fw" name="Selected" incoming="_ex9BecXBEe6Sa8uKM-k3fw" outgoing="_ex9BeMXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ex9BdcXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Database_Schema"/>
+    </nodes>
+    <nodes xmi:id="_ex9BdsXBEe6Sa8uKM-k3fw" name="ToBeDeleted" incoming="_ex9BeMXBEe6Sa8uKM-k3fw" outgoing="_ex9BecXBEe6Sa8uKM-k3fw">
+      <annotations xmi:id="_ex9Bd8XBEe6Sa8uKM-k3fw" key="SERGE_" value="FOCUS"/>
+      <type href="http://www.thm.de/mdde#//Table"/>
+    </nodes>
+    <edges xmi:id="_ex9BeMXBEe6Sa8uKM-k3fw" source="_ex9BdMXBEe6Sa8uKM-k3fw" target="_ex9BdsXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Database_Schema/entites"/>
+    </edges>
+    <edges xmi:id="_ex9BecXBEe6Sa8uKM-k3fw" source="_ex9BdsXBEe6Sa8uKM-k3fw" target="_ex9BdMXBEe6Sa8uKM-k3fw">
+      <type href="http://www.thm.de/mdde#//Table/schema"/>
+    </edges>
+  </lhs>
+  <rhs xmi:id="_ex9BesXBEe6Sa8uKM-k3fw" name="RHS">
+    <nodes xmi:id="_ex9Be8XBEe6Sa8uKM-k3fw" name="Selected">
+      <annotations xmi:id="_ex9BfMXBEe6Sa8uKM-k3fw" key="SERGE_" value="CONTEXT"/>
+      <type href="http://www.thm.de/mdde#//Database_Schema"/>
+    </nodes>
+  </rhs>
+  <mappings xmi:id="_ex9BfcXBEe6Sa8uKM-k3fw" origin="_ex9BdMXBEe6Sa8uKM-k3fw" image="_ex9Be8XBEe6Sa8uKM-k3fw"/>
+</henshin:Rule>

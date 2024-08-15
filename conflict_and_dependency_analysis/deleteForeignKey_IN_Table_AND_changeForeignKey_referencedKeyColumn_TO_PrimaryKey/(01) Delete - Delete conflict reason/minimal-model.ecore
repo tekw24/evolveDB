@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="deleteForeignKey_IN_Table_changeForeignKey_referencedKeyColumn_TO_PrimaryKey"
+      nsURI="http://cdapackage/deleteForeignKey_IN_Table/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/SymmetricReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="#ToBeDeleted_Selected:ForeignKey#">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/0/Existing_OldTarget%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Existing_OldTarget:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/0/%23ToBeDeleted_Selected%3AForeignKey%23"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="changeForeignKey_referencedKeyColumn_TO_PrimaryKey_deleteForeignKey_IN_Table"
+      nsURI="http://cdapackage/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/deleteForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_Existing:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/1/Selected_ToBeDeleted%3AForeignKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_ToBeDeleted:ForeignKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="changeForeignKey_referencedKeyColumn_TO_PrimaryKey_deleteForeignKey_IN_Table"
+      nsURI="http://cdapackage/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/deleteForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_ToBeDeleted:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/2/OldTarget_Existing%3APrimaryKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_Existing:PrimaryKey"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="changeForeignKey_referencedKeyColumn_TO_PrimaryKey_deleteForeignKey_IN_Table"
+      nsURI="http://cdapackage/changeForeignKey_referencedKeyColumn_TO_PrimaryKey/deleteForeignKey_IN_Table/DeleteConflictReason"
+      nsPrefix="CDAPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="OldTarget_Existing:PrimaryKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedBy#" eType="#/3/Selected_ToBeDeleted%3AForeignKey"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Selected_ToBeDeleted:ForeignKey">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="#referencedKeyColumn#"
+          eType="#/3/OldTarget_Existing%3APrimaryKey"/>
+    </eClassifiers>
+  </ecore:EPackage>
+</xmi:XMI>
