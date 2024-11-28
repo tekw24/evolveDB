@@ -520,7 +520,7 @@ class SET_ATTRIBUTE {
 						: ColumnUtil.getSizeValue(objB.size);
 
 				// if (sizeA > sizeB) {
-				if (compatibility) {
+				if (!compatibility) {
 
 					if (ColumnUtil.textTypes.contains(objB.type) || ColumnUtil.binaryTypes.contains(objB.type) ||
 						ColumnUtil.decimalTypes.contains(objB.type)) {
@@ -603,7 +603,7 @@ class SET_ATTRIBUTE {
 							case UPDATE_ROW_SET_TO_NULL: {
 
 								var key = objB.table.mainPrimaryKey;
-								var whereClause = '''WHERE LENGTH(«objB.name») > «sizeB»;''';
+								var whereClause = '''LENGTH(«objB.name») > «sizeB»;''';
 								var historyInsert = ColumnUtil.createInsertColumnHistoryScript(
 									SQLGenerator.HISTORY_TABLE_NAME, objB.table.schema, objB, key, whereClause)
 
