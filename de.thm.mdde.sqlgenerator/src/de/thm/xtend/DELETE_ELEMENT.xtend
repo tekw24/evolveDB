@@ -228,11 +228,12 @@ class DELETE_ELEMENT {
 				var SemanticChangeSet defaultValue = operator.semanticChangeSets.get(0)
 				return DELETE_CONSTRAINT_IN_Table2(defaultValue);
 
-			}else{
-				var List<SemanticChangeSet> removeIndex = operator.semanticChangeSets.filter[it.name.equals("DELETE_Index_IN_Table_(constraints)")
-					||it.name.equals( "DELETE_UniqueConstraint_IN_Table_(constraints)")
+			} else {
+				var List<SemanticChangeSet> removeIndex = operator.semanticChangeSets.filter [
+					it.name.equals("DELETE_Index_IN_Table_(constraints)") ||
+						it.name.equals("DELETE_UniqueConstraint_IN_Table_(constraints)")
 				].toList
-				return DELETE_CONSTRAINT_IN_Table2(removeIndex.get(0));	
+				return DELETE_CONSTRAINT_IN_Table2(removeIndex.get(0));
 			}
 		}
 		return ""
@@ -314,12 +315,15 @@ class DELETE_ELEMENT {
 				if (constraint.constraint instanceof Index) {
 					var index = constraint.constraint as Index
 					index.columns.remove(constraint);
-					var Table owner = index.table
-					content += '''
-						ALTER TABLE `«index.table.name»` 
-						«CREATE_ELEMENT.createConstraintString(index, false)»
-						 ;
-					'''
+					if (index.columns.size > 0) {
+						var Table owner = index.table
+						content += '''
+							ALTER TABLE `«index.table.name»` 
+							«CREATE_ELEMENT.createConstraintString(index, false)»
+							 ;
+						'''
+					}
+
 					return content;
 
 				} else if (constraint.constraint instanceof UniqueConstraint) {
@@ -327,11 +331,14 @@ class DELETE_ELEMENT {
 					var index = constraint.constraint as UniqueConstraint
 					var Table owner = index.table
 					index.columns.remove(constraint);
-					content += '''
-						ALTER TABLE `«index.table.name»` 
-						«CREATE_ELEMENT.createConstraintString(index, false)»
-						 ;
-					'''
+					if (index.columns.size > 0) {
+						content += '''
+							ALTER TABLE `«index.table.name»` 
+							«CREATE_ELEMENT.createConstraintString(index, false)»
+							 ;
+						'''
+
+					}
 					return content;
 				}
 
