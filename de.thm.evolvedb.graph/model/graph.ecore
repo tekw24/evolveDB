@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graph" nsURI="http://www.example.org/graph" nsPrefix="graph">
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyGraph">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="closed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="graphtype" eType="#//GraphType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//GraphItem" containment="true" eOpposite="#//GraphItem/graph"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphItem" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//PropertyGraph"
+        eOpposite="#//PropertyGraph/items"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GraphType">
+    <eLiterals name="multigraph"/>
+    <eLiterals name="directed_graph" value="1"/>
+    <eLiterals name="undirected_graph" value="2"/>
+    <eLiterals name="mixed_graph" value="3"/>
+    <eLiterals name="empty_graph" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeType" eSuperTypes="#//GraphItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-1"
+        eType="#//NodeLabel" eOpposite="#//NodeLabel/nodes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1"
+        eType="#//Edge" eOpposite="#//Edge/src"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
+        eType="#//Edge" eOpposite="#//Edge/tgt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//GraphItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="labels" upperBound="-1"
+        eType="#//EdgeLabel" eOpposite="#//EdgeLabel/edges"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="src" eType="#//NodeType"
+        eOpposite="#//NodeType/outgoing"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tgt" eType="#//NodeType"
+        eOpposite="#//NodeType/incoming"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SuperType" upperBound="-1"
+        eType="#//Label"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeLabel" eSuperTypes="#//Label">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+        eType="#//Edge" eOpposite="#//Edge/labels"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeLabel" eSuperTypes="#//Label">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//NodeType" eOpposite="#//NodeType/label"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Property">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//PropertyValueType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyValueType" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnionType" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//DynamicUnionTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericType" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//NumericDataTypes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="integralPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fractionalPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringType" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StringDataTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//BooleanDataTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryTypes" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//BinaryDataTypes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListType" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//PropertyValueType"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DynamicUnionTypes">
+    <eLiterals name="AnyType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BooleanDataTypes">
+    <eLiterals name="BOOLEAN"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TemporalDataTypes">
+    <eLiterals name="ZONED_DATETIME"/>
+    <eLiterals name="LOCAL_DATETIME" value="1"/>
+    <eLiterals name="DATE" value="2"/>
+    <eLiterals name="ZONED_TIME" value="3"/>
+    <eLiterals name="LOCAL_TIME" value="4"/>
+    <eLiterals name="YEAR" value="5"/>
+    <eLiterals name="MONTH" value="6"/>
+    <eLiterals name="DAY" value="7"/>
+    <eLiterals name="MINUTES" value="8"/>
+    <eLiterals name="SUBSECONDS" value="9"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="NumericDataTypes">
+    <eLiterals name="DECIMAL"/>
+    <eLiterals name="INT" value="1"/>
+    <eLiterals name="UINT" value="2"/>
+    <eLiterals name="FLOAT" value="3"/>
+    <eLiterals name="FLOAT128" value="4"/>
+    <eLiterals name="DOUBLE" value="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="StringDataTypes">
+    <eLiterals name="VARCHAR" value="1"/>
+    <eLiterals name="STRING" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BinaryDataTypes">
+    <eLiterals name="VARBINARY" value="3"/>
+    <eLiterals name="BYTES" value="4"/>
+  </eClassifiers>
+</ecore:EPackage>
