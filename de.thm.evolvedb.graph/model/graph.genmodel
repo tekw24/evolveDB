@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.thm.evolvedb.graph/src-gen" creationIcons="false"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/de.thm.evolvedb.graph/src-gen" creationIcons="false"
     editDirectory="/de.thm.evolvedb.graph.edit/src-gen" editorDirectory="/de.thm.evolvedb.graph.editor/src-gen"
     modelPluginID="de.thm.evolvedb.graph" modelName="Graph" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
@@ -8,5 +9,115 @@
   <foreignModel>graph.ecore</foreignModel>
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Graph" basePackage="de.thm.evolvedb" disposableProviderFactory="true"
-      ecorePackage="graph.ecore#/"/>
+      ecorePackage="graph.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//GraphType">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//GraphType/multigraph"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//GraphType/directed_graph"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//GraphType/undirected_graph"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//GraphType/mixed_graph"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//GraphType/empty_graph"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//DynamicUnionTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//DynamicUnionTypes/AnyType"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//BooleanDataTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BooleanDataTypes/BOOLEAN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//TemporalDataTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/ZONED_DATETIME"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/LOCAL_DATETIME"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/DATE"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/ZONED_TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/LOCAL_TIME"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/YEAR"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/MONTH"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/DAY"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/MINUTES"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//TemporalDataTypes/SUBSECONDS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//NumericDataTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/DECIMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/UINT"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/FLOAT128"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/DOUBLE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//StringDataTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//StringDataTypes/VARCHAR"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//StringDataTypes/STRING"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//BinaryDataTypes">
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BinaryDataTypes/VARBINARY"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BinaryDataTypes/BYTES"/>
+    </genEnums>
+    <genClasses ecoreClass="graph.ecore#//PropertyGraph">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyGraph/closed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyGraph/graphtype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//PropertyGraph/items"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyGraph/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyGraph/location"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graph.ecore#//GraphItem">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graph.ecore#//GraphItem/graph"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//NodeType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/properties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/outgoing"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/incoming"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//Edge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/labels"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/properties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/tgt"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graph.ecore#//Label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Label/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Label/properties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Label/SuperType"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//EdgeLabel">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeLabel/edges"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//NodeLabel">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeLabel/nodes"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/name"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Property/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/minCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/maxCount"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graph.ecore#//PropertyValueType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyValueType/nullable"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//UnionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//UnionType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//NumericType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//NumericType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//NumericType/integralPart"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//NumericType/fractionalPart"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//StringType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//StringType/minLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//StringType/maxLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//StringType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//BooleanType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//BooleanType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//BinaryTypes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//BinaryTypes/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//BinaryTypes/minLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//BinaryTypes/maxLength"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//ListType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//ListType/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//ListType/upperBound"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//ListType/type"/>
+    </genClasses>
+  </genPackages>
 </genmodel:GenModel>
