@@ -13,7 +13,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -57,8 +56,7 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 
 			addNamePropertyDescriptor(object);
 			addValuePropertyDescriptor(object);
-			addMinCountPropertyDescriptor(object);
-			addMaxCountPropertyDescriptor(object);
+			addMandatoryPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -91,39 +89,23 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 						getResourceLocator(), getString("_UI_Property_value_feature"),
 						getString("_UI_PropertyDescriptor_description", "_UI_Property_value_feature",
 								"_UI_Property_type"),
-						GraphPackage.Literals.PROPERTY__VALUE, true, false, true, null, null, null));
+						GraphPackage.Literals.PROPERTY__VALUE, false, false, false, null, null, null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Min Count feature.
+	 * This adds a property descriptor for the Mandatory feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addMinCountPropertyDescriptor(Object object) {
+	protected void addMandatoryPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_Property_minCount_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_Property_minCount_feature",
+						getResourceLocator(), getString("_UI_Property_mandatory_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_Property_mandatory_feature",
 								"_UI_Property_type"),
-						GraphPackage.Literals.PROPERTY__MIN_COUNT, true, false, false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Max Count feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addMaxCountPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_Property_maxCount_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_Property_maxCount_feature",
-								"_UI_Property_type"),
-						GraphPackage.Literals.PROPERTY__MAX_COUNT, true, false, false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+						GraphPackage.Literals.PROPERTY__MANDATORY, true, false, false,
+						ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -168,16 +150,6 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected boolean shouldComposeCreationImage() {
-		return true;
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,8 +175,7 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 
 		switch (notification.getFeatureID(Property.class)) {
 		case GraphPackage.PROPERTY__NAME:
-		case GraphPackage.PROPERTY__MIN_COUNT:
-		case GraphPackage.PROPERTY__MAX_COUNT:
+		case GraphPackage.PROPERTY__MANDATORY:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case GraphPackage.PROPERTY__VALUE:
@@ -242,6 +213,9 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 
 		newChildDescriptors.add(
 				createChildParameter(GraphPackage.Literals.PROPERTY__VALUE, GraphFactory.eINSTANCE.createListType()));
+
+		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.PROPERTY__VALUE,
+				GraphFactory.eINSTANCE.createTemporalTypes()));
 	}
 
 	/**

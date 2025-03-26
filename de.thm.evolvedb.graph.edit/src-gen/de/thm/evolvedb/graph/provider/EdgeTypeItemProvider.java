@@ -2,10 +2,10 @@
  */
 package de.thm.evolvedb.graph.provider;
 
-import de.thm.evolvedb.graph.Edge;
+import de.thm.evolvedb.graph.EdgeLabel;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphFactory;
 import de.thm.evolvedb.graph.GraphPackage;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -19,19 +19,19 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.thm.evolvedb.graph.Edge} object.
+ * This is the item provider adapter for a {@link de.thm.evolvedb.graph.EdgeType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EdgeItemProvider extends GraphItemItemProvider {
+public class EdgeTypeItemProvider extends GraphItemItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdgeItemProvider(AdapterFactory adapterFactory) {
+	public EdgeTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,9 +62,10 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	protected void addLabelsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_Edge_labels_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_Edge_labels_feature", "_UI_Edge_type"),
-						GraphPackage.Literals.EDGE__LABELS, true, false, true, null, null, null));
+						getResourceLocator(), getString("_UI_EdgeType_labels_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_EdgeType_labels_feature",
+								"_UI_EdgeType_type"),
+						GraphPackage.Literals.EDGE_TYPE__LABELS, true, false, true, null, null, null));
 	}
 
 	/**
@@ -76,9 +77,10 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	protected void addSrcPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_Edge_src_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_Edge_src_feature", "_UI_Edge_type"),
-						GraphPackage.Literals.EDGE__SRC, true, false, true, null, null, null));
+						getResourceLocator(), getString("_UI_EdgeType_src_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_EdgeType_src_feature",
+								"_UI_EdgeType_type"),
+						GraphPackage.Literals.EDGE_TYPE__SRC, true, false, true, null, null, null));
 	}
 
 	/**
@@ -90,9 +92,10 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	protected void addTgtPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-						getResourceLocator(), getString("_UI_Edge_tgt_feature"),
-						getString("_UI_PropertyDescriptor_description", "_UI_Edge_tgt_feature", "_UI_Edge_type"),
-						GraphPackage.Literals.EDGE__TGT, true, false, true, null, null, null));
+						getResourceLocator(), getString("_UI_EdgeType_tgt_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_EdgeType_tgt_feature",
+								"_UI_EdgeType_type"),
+						GraphPackage.Literals.EDGE_TYPE__TGT, true, false, true, null, null, null));
 	}
 
 	/**
@@ -107,7 +110,7 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphPackage.Literals.EDGE__PROPERTIES);
+			childrenFeatures.add(GraphPackage.Literals.EDGE_TYPE__PROPERTIES);
 		}
 		return childrenFeatures;
 	}
@@ -126,35 +129,33 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	}
 
 	/**
-	 * This returns Edge.gif.
+	 * This returns EdgeType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Edge"));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected boolean shouldComposeCreationImage() {
-		return true;
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EdgeType"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Edge_type");
+		if (object instanceof EdgeType) {
+			EdgeType type = (EdgeType) object;
+			String name = "";
+			for (EdgeLabel label : type.getLabels()) {
+				name += label.getName() != null ? ":" + label.getName() : "";
+			}
+			return getString("_UI_EdgeType_type") + " " + name;
+		}
+		return getString("_UI_EdgeType_type");
 	}
 
 	/**
@@ -168,8 +169,11 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Edge.class)) {
-		case GraphPackage.EDGE__PROPERTIES:
+		switch (notification.getFeatureID(EdgeType.class)) {
+		case GraphPackage.EDGE_TYPE__LABELS:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -187,8 +191,8 @@ public class EdgeItemProvider extends GraphItemItemProvider {
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(
-				createChildParameter(GraphPackage.Literals.EDGE__PROPERTIES, GraphFactory.eINSTANCE.createProperty()));
+		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.EDGE_TYPE__PROPERTIES,
+				GraphFactory.eINSTANCE.createProperty()));
 	}
 
 }

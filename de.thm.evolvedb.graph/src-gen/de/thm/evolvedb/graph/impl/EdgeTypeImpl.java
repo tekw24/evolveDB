@@ -2,8 +2,8 @@
  */
 package de.thm.evolvedb.graph.impl;
 
-import de.thm.evolvedb.graph.Edge;
 import de.thm.evolvedb.graph.EdgeLabel;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
@@ -26,21 +26,21 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Edge</b></em>'.
+ * An implementation of the model object '<em><b>Edge Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.thm.evolvedb.graph.impl.EdgeImpl#getLabels <em>Labels</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.EdgeImpl#getProperties <em>Properties</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.EdgeImpl#getSrc <em>Src</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.EdgeImpl#getTgt <em>Tgt</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getLabels <em>Labels</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getSrc <em>Src</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getTgt <em>Tgt</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class EdgeImpl extends GraphItemImpl implements Edge {
+public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 	/**
 	 * The cached value of the '{@link #getLabels() <em>Labels</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -86,7 +86,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EdgeImpl() {
+	protected EdgeTypeImpl() {
 		super();
 	}
 
@@ -97,7 +97,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphPackage.Literals.EDGE;
+		return GraphPackage.Literals.EDGE_TYPE;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	public EList<EdgeLabel> getLabels() {
 		if (labels == null) {
 			labels = new EObjectWithInverseResolvingEList.ManyInverse<EdgeLabel>(EdgeLabel.class, this,
-					GraphPackage.EDGE__LABELS, GraphPackage.EDGE_LABEL__EDGES);
+					GraphPackage.EDGE_TYPE__LABELS, GraphPackage.EDGE_LABEL__EDGES);
 		}
 		return labels;
 	}
@@ -120,7 +120,8 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	 */
 	public EList<Property> getProperties() {
 		if (properties == null) {
-			properties = new EObjectContainmentEList<Property>(Property.class, this, GraphPackage.EDGE__PROPERTIES);
+			properties = new EObjectContainmentEList<Property>(Property.class, this,
+					GraphPackage.EDGE_TYPE__PROPERTIES);
 		}
 		return properties;
 	}
@@ -136,7 +137,8 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 			src = (NodeType) eResolveProxy(oldSrc);
 			if (src != oldSrc) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.EDGE__SRC, oldSrc, src));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.EDGE_TYPE__SRC, oldSrc,
+							src));
 			}
 		}
 		return src;
@@ -160,7 +162,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 		NodeType oldSrc = src;
 		src = newSrc;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE__SRC,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE_TYPE__SRC,
 					oldSrc, newSrc);
 			if (msgs == null)
 				msgs = notification;
@@ -188,7 +190,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE__SRC, newSrc, newSrc));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE_TYPE__SRC, newSrc, newSrc));
 	}
 
 	/**
@@ -202,7 +204,8 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 			tgt = (NodeType) eResolveProxy(oldTgt);
 			if (tgt != oldTgt) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.EDGE__TGT, oldTgt, tgt));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.EDGE_TYPE__TGT, oldTgt,
+							tgt));
 			}
 		}
 		return tgt;
@@ -226,7 +229,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 		NodeType oldTgt = tgt;
 		tgt = newTgt;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE__TGT,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE_TYPE__TGT,
 					oldTgt, newTgt);
 			if (msgs == null)
 				msgs = notification;
@@ -254,7 +257,7 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE__TGT, newTgt, newTgt));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE_TYPE__TGT, newTgt, newTgt));
 	}
 
 	/**
@@ -266,14 +269,14 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			return ((InternalEList<InternalEObject>) (InternalEList<?>) getLabels()).basicAdd(otherEnd, msgs);
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			if (src != null)
 				msgs = ((InternalEObject) src).eInverseRemove(this, GraphPackage.NODE_TYPE__OUTGOING, NodeType.class,
 						msgs);
 			return basicSetSrc((NodeType) otherEnd, msgs);
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			if (tgt != null)
 				msgs = ((InternalEObject) tgt).eInverseRemove(this, GraphPackage.NODE_TYPE__INCOMING, NodeType.class,
 						msgs);
@@ -290,13 +293,13 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			return ((InternalEList<?>) getLabels()).basicRemove(otherEnd, msgs);
-		case GraphPackage.EDGE__PROPERTIES:
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			return ((InternalEList<?>) getProperties()).basicRemove(otherEnd, msgs);
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			return basicSetSrc(null, msgs);
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			return basicSetTgt(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -310,15 +313,15 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			return getLabels();
-		case GraphPackage.EDGE__PROPERTIES:
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			return getProperties();
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			if (resolve)
 				return getSrc();
 			return basicGetSrc();
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			if (resolve)
 				return getTgt();
 			return basicGetTgt();
@@ -335,18 +338,18 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			getLabels().clear();
 			getLabels().addAll((Collection<? extends EdgeLabel>) newValue);
 			return;
-		case GraphPackage.EDGE__PROPERTIES:
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			getProperties().clear();
 			getProperties().addAll((Collection<? extends Property>) newValue);
 			return;
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			setSrc((NodeType) newValue);
 			return;
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			setTgt((NodeType) newValue);
 			return;
 		}
@@ -361,16 +364,16 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			getLabels().clear();
 			return;
-		case GraphPackage.EDGE__PROPERTIES:
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			getProperties().clear();
 			return;
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			setSrc((NodeType) null);
 			return;
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			setTgt((NodeType) null);
 			return;
 		}
@@ -385,16 +388,16 @@ public class EdgeImpl extends GraphItemImpl implements Edge {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case GraphPackage.EDGE__LABELS:
+		case GraphPackage.EDGE_TYPE__LABELS:
 			return labels != null && !labels.isEmpty();
-		case GraphPackage.EDGE__PROPERTIES:
+		case GraphPackage.EDGE_TYPE__PROPERTIES:
 			return properties != null && !properties.isEmpty();
-		case GraphPackage.EDGE__SRC:
+		case GraphPackage.EDGE_TYPE__SRC:
 			return src != null;
-		case GraphPackage.EDGE__TGT:
+		case GraphPackage.EDGE_TYPE__TGT:
 			return tgt != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //EdgeImpl
+} //EdgeTypeImpl

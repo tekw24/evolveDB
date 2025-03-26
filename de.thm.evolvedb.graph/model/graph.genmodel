@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
-    modelDirectory="/de.thm.evolvedb.graph/src-gen" creationIcons="false"
-    editDirectory="/de.thm.evolvedb.graph.edit/src-gen" editorDirectory="/de.thm.evolvedb.graph.editor/src-gen"
-    modelPluginID="de.thm.evolvedb.graph" modelName="Graph" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    modelDirectory="/de.thm.evolvedb.graph/src-gen" editDirectory="/de.thm.evolvedb.graph.edit/src-gen"
+    editorDirectory="/de.thm.evolvedb.graph.editor/src-gen" modelPluginID="de.thm.evolvedb.graph"
+    modelName="Graph" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
     copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>graph.ecore</foreignModel>
@@ -62,21 +62,21 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graph.ecore#//GraphItem/graph"/>
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//NodeType">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/label"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/properties"/>
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/label"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/outgoing"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/incoming"/>
     </genClasses>
-    <genClasses ecoreClass="graph.ecore#//Edge">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/labels"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/properties"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/src"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Edge/tgt"/>
+    <genClasses ecoreClass="graph.ecore#//EdgeType">
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/labels"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/properties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/tgt"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graph.ecore#//Label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Label/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Label/properties"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Label/properties"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Label/SuperType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//Label/constraints"/>
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//EdgeLabel">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeLabel/edges"/>
@@ -86,9 +86,8 @@
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//Property">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/name"/>
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//Property/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/minCount"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/maxCount"/>
+      <genFeatures property="Readonly" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//Property/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/mandatory"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graph.ecore#//PropertyValueType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyValueType/nullable"/>
@@ -118,6 +117,26 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//ListType/lowerBound"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//ListType/upperBound"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//ListType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//TemporalTypes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//TemporalTypes/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graph.ecore#//Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Constraint/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graph.ecore#//Constraint/Label"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//UniqueConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//UniqueConstraint/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//PropertyTypeConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//PropertyTypeConstraint/properties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//PropertyTypeConstraint/type"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//PropertyExistenceConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//PropertyExistenceConstraint/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="graph.ecore#//KeyConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//KeyConstraint/properties"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

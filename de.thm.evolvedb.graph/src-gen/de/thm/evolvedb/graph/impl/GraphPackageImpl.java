@@ -6,13 +6,15 @@ import de.thm.evolvedb.graph.BinaryDataTypes;
 import de.thm.evolvedb.graph.BinaryTypes;
 import de.thm.evolvedb.graph.BooleanDataTypes;
 import de.thm.evolvedb.graph.BooleanType;
+import de.thm.evolvedb.graph.Constraint;
 import de.thm.evolvedb.graph.DynamicUnionTypes;
-import de.thm.evolvedb.graph.Edge;
 import de.thm.evolvedb.graph.EdgeLabel;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphFactory;
 import de.thm.evolvedb.graph.GraphItem;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.GraphType;
+import de.thm.evolvedb.graph.KeyConstraint;
 import de.thm.evolvedb.graph.Label;
 import de.thm.evolvedb.graph.ListType;
 import de.thm.evolvedb.graph.NodeLabel;
@@ -20,13 +22,17 @@ import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.NumericDataTypes;
 import de.thm.evolvedb.graph.NumericType;
 import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyExistenceConstraint;
 import de.thm.evolvedb.graph.PropertyGraph;
+import de.thm.evolvedb.graph.PropertyTypeConstraint;
 import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.graph.StringDataTypes;
 import de.thm.evolvedb.graph.StringType;
 import de.thm.evolvedb.graph.TemporalDataTypes;
+import de.thm.evolvedb.graph.TemporalTypes;
 import de.thm.evolvedb.graph.UnionType;
 
+import de.thm.evolvedb.graph.UniqueConstraint;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -68,7 +74,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass edgeEClass = null;
+	private EClass edgeTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -146,6 +152,48 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * @generated
 	 */
 	private EClass listTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass temporalTypesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass constraintEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass uniqueConstraintEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass propertyTypeConstraintEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass propertyExistenceConstraintEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass keyConstraintEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -355,7 +403,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNodeType_Properties() {
+	public EReference getNodeType_Outgoing() {
 		return (EReference) nodeTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -364,7 +412,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNodeType_Outgoing() {
+	public EReference getNodeType_Incoming() {
 		return (EReference) nodeTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -373,8 +421,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNodeType_Incoming() {
-		return (EReference) nodeTypeEClass.getEStructuralFeatures().get(3);
+	public EClass getEdgeType() {
+		return edgeTypeEClass;
 	}
 
 	/**
@@ -382,8 +430,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getEdge() {
-		return edgeEClass;
+	public EReference getEdgeType_Labels() {
+		return (EReference) edgeTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -391,8 +439,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEdge_Labels() {
-		return (EReference) edgeEClass.getEStructuralFeatures().get(0);
+	public EReference getEdgeType_Properties() {
+		return (EReference) edgeTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -400,8 +448,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEdge_Properties() {
-		return (EReference) edgeEClass.getEStructuralFeatures().get(1);
+	public EReference getEdgeType_Src() {
+		return (EReference) edgeTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -409,17 +457,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEdge_Src() {
-		return (EReference) edgeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEdge_Tgt() {
-		return (EReference) edgeEClass.getEStructuralFeatures().get(3);
+	public EReference getEdgeType_Tgt() {
+		return (EReference) edgeTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -456,6 +495,15 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 */
 	public EReference getLabel_SuperType() {
 		return (EReference) labelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLabel_Constraints() {
+		return (EReference) labelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -526,17 +574,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProperty_MinCount() {
+	public EAttribute getProperty_Mandatory() {
 		return (EAttribute) propertyEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getProperty_MaxCount() {
-		return (EAttribute) propertyEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -742,6 +781,132 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTemporalTypes() {
+		return temporalTypesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTemporalTypes_Type() {
+		return (EAttribute) temporalTypesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConstraint() {
+		return constraintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConstraint_Name() {
+		return (EAttribute) constraintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConstraint_Label() {
+		return (EReference) constraintEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUniqueConstraint() {
+		return uniqueConstraintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUniqueConstraint_Properties() {
+		return (EReference) uniqueConstraintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPropertyTypeConstraint() {
+		return propertyTypeConstraintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropertyTypeConstraint_Properties() {
+		return (EReference) propertyTypeConstraintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropertyTypeConstraint_Type() {
+		return (EReference) propertyTypeConstraintEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPropertyExistenceConstraint() {
+		return propertyExistenceConstraintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropertyExistenceConstraint_Properties() {
+		return (EReference) propertyExistenceConstraintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getKeyConstraint() {
+		return keyConstraintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getKeyConstraint_Properties() {
+		return (EReference) keyConstraintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getGraphType() {
 		return graphTypeEEnum;
 	}
@@ -841,20 +1006,20 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
 		nodeTypeEClass = createEClass(NODE_TYPE);
 		createEReference(nodeTypeEClass, NODE_TYPE__LABEL);
-		createEReference(nodeTypeEClass, NODE_TYPE__PROPERTIES);
 		createEReference(nodeTypeEClass, NODE_TYPE__OUTGOING);
 		createEReference(nodeTypeEClass, NODE_TYPE__INCOMING);
 
-		edgeEClass = createEClass(EDGE);
-		createEReference(edgeEClass, EDGE__LABELS);
-		createEReference(edgeEClass, EDGE__PROPERTIES);
-		createEReference(edgeEClass, EDGE__SRC);
-		createEReference(edgeEClass, EDGE__TGT);
+		edgeTypeEClass = createEClass(EDGE_TYPE);
+		createEReference(edgeTypeEClass, EDGE_TYPE__LABELS);
+		createEReference(edgeTypeEClass, EDGE_TYPE__PROPERTIES);
+		createEReference(edgeTypeEClass, EDGE_TYPE__SRC);
+		createEReference(edgeTypeEClass, EDGE_TYPE__TGT);
 
 		labelEClass = createEClass(LABEL);
 		createEAttribute(labelEClass, LABEL__NAME);
 		createEReference(labelEClass, LABEL__PROPERTIES);
 		createEReference(labelEClass, LABEL__SUPER_TYPE);
+		createEReference(labelEClass, LABEL__CONSTRAINTS);
 
 		edgeLabelEClass = createEClass(EDGE_LABEL);
 		createEReference(edgeLabelEClass, EDGE_LABEL__EDGES);
@@ -865,8 +1030,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		propertyEClass = createEClass(PROPERTY);
 		createEAttribute(propertyEClass, PROPERTY__NAME);
 		createEReference(propertyEClass, PROPERTY__VALUE);
-		createEAttribute(propertyEClass, PROPERTY__MIN_COUNT);
-		createEAttribute(propertyEClass, PROPERTY__MAX_COUNT);
+		createEAttribute(propertyEClass, PROPERTY__MANDATORY);
 
 		propertyValueTypeEClass = createEClass(PROPERTY_VALUE_TYPE);
 		createEAttribute(propertyValueTypeEClass, PROPERTY_VALUE_TYPE__NULLABLE);
@@ -896,6 +1060,26 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		createEAttribute(listTypeEClass, LIST_TYPE__LOWER_BOUND);
 		createEAttribute(listTypeEClass, LIST_TYPE__UPPER_BOUND);
 		createEReference(listTypeEClass, LIST_TYPE__TYPE);
+
+		temporalTypesEClass = createEClass(TEMPORAL_TYPES);
+		createEAttribute(temporalTypesEClass, TEMPORAL_TYPES__TYPE);
+
+		constraintEClass = createEClass(CONSTRAINT);
+		createEAttribute(constraintEClass, CONSTRAINT__NAME);
+		createEReference(constraintEClass, CONSTRAINT__LABEL);
+
+		uniqueConstraintEClass = createEClass(UNIQUE_CONSTRAINT);
+		createEReference(uniqueConstraintEClass, UNIQUE_CONSTRAINT__PROPERTIES);
+
+		propertyTypeConstraintEClass = createEClass(PROPERTY_TYPE_CONSTRAINT);
+		createEReference(propertyTypeConstraintEClass, PROPERTY_TYPE_CONSTRAINT__PROPERTIES);
+		createEReference(propertyTypeConstraintEClass, PROPERTY_TYPE_CONSTRAINT__TYPE);
+
+		propertyExistenceConstraintEClass = createEClass(PROPERTY_EXISTENCE_CONSTRAINT);
+		createEReference(propertyExistenceConstraintEClass, PROPERTY_EXISTENCE_CONSTRAINT__PROPERTIES);
+
+		keyConstraintEClass = createEClass(KEY_CONSTRAINT);
+		createEReference(keyConstraintEClass, KEY_CONSTRAINT__PROPERTIES);
 
 		// Create enums
 		graphTypeEEnum = createEEnum(GRAPH_TYPE);
@@ -937,7 +1121,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
 		// Add supertypes to classes
 		nodeTypeEClass.getESuperTypes().add(this.getGraphItem());
-		edgeEClass.getESuperTypes().add(this.getGraphItem());
+		edgeTypeEClass.getESuperTypes().add(this.getGraphItem());
 		labelEClass.getESuperTypes().add(this.getGraphItem());
 		edgeLabelEClass.getESuperTypes().add(this.getLabel());
 		nodeLabelEClass.getESuperTypes().add(this.getLabel());
@@ -947,6 +1131,11 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		booleanTypeEClass.getESuperTypes().add(this.getPropertyValueType());
 		binaryTypesEClass.getESuperTypes().add(this.getPropertyValueType());
 		listTypeEClass.getESuperTypes().add(this.getPropertyValueType());
+		temporalTypesEClass.getESuperTypes().add(this.getPropertyValueType());
+		uniqueConstraintEClass.getESuperTypes().add(this.getConstraint());
+		propertyTypeConstraintEClass.getESuperTypes().add(this.getConstraint());
+		propertyExistenceConstraintEClass.getESuperTypes().add(this.getConstraint());
+		keyConstraintEClass.getESuperTypes().add(this.getConstraint());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(propertyGraphEClass, PropertyGraph.class, "PropertyGraph", !IS_ABSTRACT, !IS_INTERFACE,
@@ -976,43 +1165,44 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEReference(getNodeType_Label(), this.getNodeLabel(), this.getNodeLabel_Nodes(), "label", null, 0, -1,
 				NodeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNodeType_Properties(), this.getProperty(), null, "properties", null, 0, -1, NodeType.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNodeType_Outgoing(), this.getEdge(), this.getEdge_Src(), "outgoing", null, 0, -1,
+		initEReference(getNodeType_Outgoing(), this.getEdgeType(), this.getEdgeType_Src(), "outgoing", null, 0, -1,
 				NodeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNodeType_Incoming(), this.getEdge(), this.getEdge_Tgt(), "incoming", null, 0, -1,
+		initEReference(getNodeType_Incoming(), this.getEdgeType(), this.getEdgeType_Tgt(), "incoming", null, 0, -1,
 				NodeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(edgeEClass, Edge.class, "Edge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEdge_Labels(), this.getEdgeLabel(), this.getEdgeLabel_Edges(), "labels", null, 0, -1,
-				Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+		initEClass(edgeTypeEClass, EdgeType.class, "EdgeType", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getEdgeType_Labels(), this.getEdgeLabel(), this.getEdgeLabel_Edges(), "labels", null, 0, -1,
+				EdgeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEdge_Properties(), this.getProperty(), null, "properties", null, 0, -1, Edge.class,
+		initEReference(getEdgeType_Properties(), this.getProperty(), null, "properties", null, 0, -1, EdgeType.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEdge_Src(), this.getNodeType(), this.getNodeType_Outgoing(), "src", null, 0, 1, Edge.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEdge_Tgt(), this.getNodeType(), this.getNodeType_Incoming(), "tgt", null, 0, 1, Edge.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEdgeType_Src(), this.getNodeType(), this.getNodeType_Outgoing(), "src", null, 0, 1,
+				EdgeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEdgeType_Tgt(), this.getNodeType(), this.getNodeType_Incoming(), "tgt", null, 0, 1,
+				EdgeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(labelEClass, Label.class, "Label", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 1, 1, Label.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLabel_Properties(), this.getProperty(), null, "properties", null, 0, -1, Label.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLabel_SuperType(), this.getLabel(), null, "SuperType", null, 0, -1, Label.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLabel_Constraints(), this.getConstraint(), this.getConstraint_Label(), "constraints", null, 0,
+				-1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(edgeLabelEClass, EdgeLabel.class, "EdgeLabel", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEdgeLabel_Edges(), this.getEdge(), this.getEdge_Labels(), "edges", null, 0, -1,
+		initEReference(getEdgeLabel_Edges(), this.getEdgeType(), this.getEdgeType_Labels(), "edges", null, 0, -1,
 				EdgeLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1029,9 +1219,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEReference(getProperty_Value(), this.getPropertyValueType(), null, "value", null, 1, 1, Property.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProperty_MinCount(), ecorePackage.getEInt(), "minCount", null, 0, 1, Property.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getProperty_MaxCount(), ecorePackage.getEInt(), "maxCount", null, 0, 1, Property.class,
+		initEAttribute(getProperty_Mandatory(), ecorePackage.getEBoolean(), "mandatory", "false", 0, 1, Property.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(propertyValueTypeEClass, PropertyValueType.class, "PropertyValueType", IS_ABSTRACT, !IS_INTERFACE,
@@ -1088,6 +1276,46 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEReference(getListType_Type(), this.getPropertyValueType(), null, "type", null, 1, 1, ListType.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(temporalTypesEClass, TemporalTypes.class, "TemporalTypes", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTemporalTypes_Type(), this.getTemporalDataTypes(), "type", null, 1, 1, TemporalTypes.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(constraintEClass, Constraint.class, "Constraint", IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConstraint_Name(), ecorePackage.getEString(), "name", null, 1, 1, Constraint.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConstraint_Label(), this.getLabel(), this.getLabel_Constraints(), "Label", null, 0, 1,
+				Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(uniqueConstraintEClass, UniqueConstraint.class, "UniqueConstraint", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUniqueConstraint_Properties(), this.getProperty(), null, "properties", null, 0, -1,
+				UniqueConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(propertyTypeConstraintEClass, PropertyTypeConstraint.class, "PropertyTypeConstraint", !IS_ABSTRACT,
+				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPropertyTypeConstraint_Properties(), this.getProperty(), null, "properties", null, 0, 1,
+				PropertyTypeConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+				IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPropertyTypeConstraint_Type(), this.getPropertyValueType(), null, "type", null, 0, 1,
+				PropertyTypeConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+				IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(propertyExistenceConstraintEClass, PropertyExistenceConstraint.class, "PropertyExistenceConstraint",
+				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPropertyExistenceConstraint_Properties(), this.getProperty(), null, "properties", null, 0, 1,
+				PropertyExistenceConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+				IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(keyConstraintEClass, KeyConstraint.class, "KeyConstraint", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getKeyConstraint_Properties(), this.getProperty(), null, "properties", null, 0, -1,
+				KeyConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(graphTypeEEnum, GraphType.class, "GraphType");

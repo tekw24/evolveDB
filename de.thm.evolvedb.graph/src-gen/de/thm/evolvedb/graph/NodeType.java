@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getLabel <em>Label</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.NodeType#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getIncoming <em>Incoming</em>}</li>
  * </ul>
@@ -39,43 +38,31 @@ public interface NodeType extends GraphItem {
 	EList<NodeLabel> getLabel();
 
 	/**
-	 * Returns the value of the '<em><b>Properties</b></em>' containment reference list.
-	 * The list contents are of type {@link de.thm.evolvedb.graph.Property}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Properties</em>' containment reference list.
-	 * @see de.thm.evolvedb.graph.GraphPackage#getNodeType_Properties()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Property> getProperties();
-
-	/**
 	 * Returns the value of the '<em><b>Outgoing</b></em>' reference list.
-	 * The list contents are of type {@link de.thm.evolvedb.graph.Edge}.
-	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.Edge#getSrc <em>Src</em>}'.
+	 * The list contents are of type {@link de.thm.evolvedb.graph.EdgeType}.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.EdgeType#getSrc <em>Src</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Outgoing</em>' reference list.
 	 * @see de.thm.evolvedb.graph.GraphPackage#getNodeType_Outgoing()
-	 * @see de.thm.evolvedb.graph.Edge#getSrc
+	 * @see de.thm.evolvedb.graph.EdgeType#getSrc
 	 * @model opposite="src"
 	 * @generated
 	 */
-	EList<Edge> getOutgoing();
+	EList<EdgeType> getOutgoing();
 
 	/**
 	 * Returns the value of the '<em><b>Incoming</b></em>' reference list.
-	 * The list contents are of type {@link de.thm.evolvedb.graph.Edge}.
-	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.Edge#getTgt <em>Tgt</em>}'.
+	 * The list contents are of type {@link de.thm.evolvedb.graph.EdgeType}.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.EdgeType#getTgt <em>Tgt</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Incoming</em>' reference list.
 	 * @see de.thm.evolvedb.graph.GraphPackage#getNodeType_Incoming()
-	 * @see de.thm.evolvedb.graph.Edge#getTgt
+	 * @see de.thm.evolvedb.graph.EdgeType#getTgt
 	 * @model opposite="tgt"
 	 * @generated
 	 */
-	EList<Edge> getIncoming();
+	EList<EdgeType> getIncoming();
 
 } // NodeType

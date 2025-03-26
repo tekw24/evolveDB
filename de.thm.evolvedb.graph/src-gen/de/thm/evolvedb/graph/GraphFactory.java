@@ -40,13 +40,13 @@ public interface GraphFactory extends EFactory {
 	NodeType createNodeType();
 
 	/**
-	 * Returns a new object of class '<em>Edge</em>'.
+	 * Returns a new object of class '<em>Edge Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Edge</em>'.
+	 * @return a new object of class '<em>Edge Type</em>'.
 	 * @generated
 	 */
-	Edge createEdge();
+	EdgeType createEdgeType();
 
 	/**
 	 * Returns a new object of class '<em>Edge Label</em>'.
@@ -128,6 +128,51 @@ public interface GraphFactory extends EFactory {
 	 * @generated
 	 */
 	ListType createListType();
+
+	/**
+	 * Returns a new object of class '<em>Temporal Types</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Temporal Types</em>'.
+	 * @generated
+	 */
+	TemporalTypes createTemporalTypes();
+
+	/**
+	 * Returns a new object of class '<em>Unique Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Unique Constraint</em>'.
+	 * @generated
+	 */
+	UniqueConstraint createUniqueConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Property Type Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Property Type Constraint</em>'.
+	 * @generated
+	 */
+	PropertyTypeConstraint createPropertyTypeConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Property Existence Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Property Existence Constraint</em>'.
+	 * @generated
+	 */
+	PropertyExistenceConstraint createPropertyExistenceConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Key Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Key Constraint</em>'.
+	 * @generated
+	 */
+	KeyConstraint createKeyConstraint();
 
 	/**
 	 * Returns the package supported by this factory.

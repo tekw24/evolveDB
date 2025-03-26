@@ -119,26 +119,26 @@ public class GraphItemProviderAdapterFactory extends GraphAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.Edge} instances.
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.EdgeType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EdgeItemProvider edgeItemProvider;
+	protected EdgeTypeItemProvider edgeTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link de.thm.evolvedb.graph.Edge}.
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.EdgeType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createEdgeAdapter() {
-		if (edgeItemProvider == null) {
-			edgeItemProvider = new EdgeItemProvider(this);
+	public Adapter createEdgeTypeAdapter() {
+		if (edgeTypeItemProvider == null) {
+			edgeTypeItemProvider = new EdgeTypeItemProvider(this);
 		}
 
-		return edgeItemProvider;
+		return edgeTypeItemProvider;
 	}
 
 	/**
@@ -349,6 +349,121 @@ public class GraphItemProviderAdapterFactory extends GraphAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.TemporalTypes} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TemporalTypesItemProvider temporalTypesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.TemporalTypes}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTemporalTypesAdapter() {
+		if (temporalTypesItemProvider == null) {
+			temporalTypesItemProvider = new TemporalTypesItemProvider(this);
+		}
+
+		return temporalTypesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.UniqueConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected UniqueConstraintItemProvider uniqueConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.UniqueConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createUniqueConstraintAdapter() {
+		if (uniqueConstraintItemProvider == null) {
+			uniqueConstraintItemProvider = new UniqueConstraintItemProvider(this);
+		}
+
+		return uniqueConstraintItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.PropertyTypeConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PropertyTypeConstraintItemProvider propertyTypeConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.PropertyTypeConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPropertyTypeConstraintAdapter() {
+		if (propertyTypeConstraintItemProvider == null) {
+			propertyTypeConstraintItemProvider = new PropertyTypeConstraintItemProvider(this);
+		}
+
+		return propertyTypeConstraintItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.PropertyExistenceConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PropertyExistenceConstraintItemProvider propertyExistenceConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.PropertyExistenceConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPropertyExistenceConstraintAdapter() {
+		if (propertyExistenceConstraintItemProvider == null) {
+			propertyExistenceConstraintItemProvider = new PropertyExistenceConstraintItemProvider(this);
+		}
+
+		return propertyExistenceConstraintItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.graph.KeyConstraint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected KeyConstraintItemProvider keyConstraintItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.graph.KeyConstraint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createKeyConstraintAdapter() {
+		if (keyConstraintItemProvider == null) {
+			keyConstraintItemProvider = new KeyConstraintItemProvider(this);
+		}
+
+		return keyConstraintItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -451,8 +566,8 @@ public class GraphItemProviderAdapterFactory extends GraphAdapterFactory
 			propertyGraphItemProvider.dispose();
 		if (nodeTypeItemProvider != null)
 			nodeTypeItemProvider.dispose();
-		if (edgeItemProvider != null)
-			edgeItemProvider.dispose();
+		if (edgeTypeItemProvider != null)
+			edgeTypeItemProvider.dispose();
 		if (edgeLabelItemProvider != null)
 			edgeLabelItemProvider.dispose();
 		if (nodeLabelItemProvider != null)
@@ -471,6 +586,16 @@ public class GraphItemProviderAdapterFactory extends GraphAdapterFactory
 			binaryTypesItemProvider.dispose();
 		if (listTypeItemProvider != null)
 			listTypeItemProvider.dispose();
+		if (temporalTypesItemProvider != null)
+			temporalTypesItemProvider.dispose();
+		if (uniqueConstraintItemProvider != null)
+			uniqueConstraintItemProvider.dispose();
+		if (propertyTypeConstraintItemProvider != null)
+			propertyTypeConstraintItemProvider.dispose();
+		if (propertyExistenceConstraintItemProvider != null)
+			propertyExistenceConstraintItemProvider.dispose();
+		if (keyConstraintItemProvider != null)
+			keyConstraintItemProvider.dispose();
 	}
 
 }

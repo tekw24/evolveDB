@@ -127,16 +127,6 @@ public class ListTypeItemProvider extends PropertyValueTypeItemProvider {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected boolean shouldComposeCreationImage() {
-		return true;
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -199,6 +189,9 @@ public class ListTypeItemProvider extends PropertyValueTypeItemProvider {
 
 		newChildDescriptors.add(
 				createChildParameter(GraphPackage.Literals.LIST_TYPE__TYPE, GraphFactory.eINSTANCE.createListType()));
+
+		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.LIST_TYPE__TYPE,
+				GraphFactory.eINSTANCE.createTemporalTypes()));
 	}
 
 }

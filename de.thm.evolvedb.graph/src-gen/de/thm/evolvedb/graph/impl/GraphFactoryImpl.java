@@ -60,8 +60,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 			return createPropertyGraph();
 		case GraphPackage.NODE_TYPE:
 			return createNodeType();
-		case GraphPackage.EDGE:
-			return createEdge();
+		case GraphPackage.EDGE_TYPE:
+			return createEdgeType();
 		case GraphPackage.EDGE_LABEL:
 			return createEdgeLabel();
 		case GraphPackage.NODE_LABEL:
@@ -80,6 +80,16 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 			return createBinaryTypes();
 		case GraphPackage.LIST_TYPE:
 			return createListType();
+		case GraphPackage.TEMPORAL_TYPES:
+			return createTemporalTypes();
+		case GraphPackage.UNIQUE_CONSTRAINT:
+			return createUniqueConstraint();
+		case GraphPackage.PROPERTY_TYPE_CONSTRAINT:
+			return createPropertyTypeConstraint();
+		case GraphPackage.PROPERTY_EXISTENCE_CONSTRAINT:
+			return createPropertyExistenceConstraint();
+		case GraphPackage.KEY_CONSTRAINT:
+			return createKeyConstraint();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -164,9 +174,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Edge createEdge() {
-		EdgeImpl edge = new EdgeImpl();
-		return edge;
+	public EdgeType createEdgeType() {
+		EdgeTypeImpl edgeType = new EdgeTypeImpl();
+		return edgeType;
 	}
 
 	/**
@@ -257,6 +267,56 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	public ListType createListType() {
 		ListTypeImpl listType = new ListTypeImpl();
 		return listType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemporalTypes createTemporalTypes() {
+		TemporalTypesImpl temporalTypes = new TemporalTypesImpl();
+		return temporalTypes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UniqueConstraint createUniqueConstraint() {
+		UniqueConstraintImpl uniqueConstraint = new UniqueConstraintImpl();
+		return uniqueConstraint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PropertyTypeConstraint createPropertyTypeConstraint() {
+		PropertyTypeConstraintImpl propertyTypeConstraint = new PropertyTypeConstraintImpl();
+		return propertyTypeConstraint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PropertyExistenceConstraint createPropertyExistenceConstraint() {
+		PropertyExistenceConstraintImpl propertyExistenceConstraint = new PropertyExistenceConstraintImpl();
+		return propertyExistenceConstraint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public KeyConstraint createKeyConstraint() {
+		KeyConstraintImpl keyConstraint = new KeyConstraintImpl();
+		return keyConstraint;
 	}
 
 	/**

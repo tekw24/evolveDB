@@ -39,7 +39,7 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.example.org/graph";
+	String eNS_URI = "http://www.thm.de/graph";
 
 	/**
 	 * The package namespace name.
@@ -196,22 +196,13 @@ public interface GraphPackage extends EPackage {
 	int NODE_TYPE__LABEL = GRAPH_ITEM_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Outgoing</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__OUTGOING = GRAPH_ITEM_FEATURE_COUNT + 2;
+	int NODE_TYPE__OUTGOING = GRAPH_ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -220,7 +211,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__INCOMING = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int NODE_TYPE__INCOMING = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Node Type</em>' class.
@@ -229,7 +220,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
+	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Node Type</em>' class.
@@ -241,14 +232,14 @@ public interface GraphPackage extends EPackage {
 	int NODE_TYPE_OPERATION_COUNT = GRAPH_ITEM_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.EdgeImpl <em>Edge</em>}' class.
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl <em>Edge Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.thm.evolvedb.graph.impl.EdgeImpl
-	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getEdge()
+	 * @see de.thm.evolvedb.graph.impl.EdgeTypeImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getEdgeType()
 	 * @generated
 	 */
-	int EDGE = 3;
+	int EDGE_TYPE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -257,7 +248,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__GRAPH = GRAPH_ITEM__GRAPH;
+	int EDGE_TYPE__GRAPH = GRAPH_ITEM__GRAPH;
 
 	/**
 	 * The feature id for the '<em><b>Labels</b></em>' reference list.
@@ -266,7 +257,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__LABELS = GRAPH_ITEM_FEATURE_COUNT + 0;
+	int EDGE_TYPE__LABELS = GRAPH_ITEM_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -275,7 +266,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 1;
+	int EDGE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Src</b></em>' reference.
@@ -284,7 +275,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__SRC = GRAPH_ITEM_FEATURE_COUNT + 2;
+	int EDGE_TYPE__SRC = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Tgt</b></em>' reference.
@@ -293,25 +284,25 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__TGT = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int EDGE_TYPE__TGT = GRAPH_ITEM_FEATURE_COUNT + 3;
 
 	/**
-	 * The number of structural features of the '<em>Edge</em>' class.
+	 * The number of structural features of the '<em>Edge Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
+	int EDGE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
 
 	/**
-	 * The number of operations of the '<em>Edge</em>' class.
+	 * The number of operations of the '<em>Edge Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_OPERATION_COUNT = GRAPH_ITEM_OPERATION_COUNT + 0;
+	int EDGE_TYPE_OPERATION_COUNT = GRAPH_ITEM_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.LabelImpl <em>Label</em>}' class.
@@ -342,7 +333,7 @@ public interface GraphPackage extends EPackage {
 	int LABEL__NAME = GRAPH_ITEM_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Properties</b></em>' reference list.
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -360,13 +351,22 @@ public interface GraphPackage extends EPackage {
 	int LABEL__SUPER_TYPE = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LABEL__CONSTRAINTS = GRAPH_ITEM_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Label</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int LABEL_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Label</em>' class.
@@ -406,7 +406,7 @@ public interface GraphPackage extends EPackage {
 	int EDGE_LABEL__NAME = LABEL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Properties</b></em>' reference list.
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -422,6 +422,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int EDGE_LABEL__SUPER_TYPE = LABEL__SUPER_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_LABEL__CONSTRAINTS = LABEL__CONSTRAINTS;
 
 	/**
 	 * The feature id for the '<em><b>Edges</b></em>' reference list.
@@ -479,7 +488,7 @@ public interface GraphPackage extends EPackage {
 	int NODE_LABEL__NAME = LABEL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Properties</b></em>' reference list.
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -495,6 +504,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int NODE_LABEL__SUPER_TYPE = LABEL__SUPER_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_LABEL__CONSTRAINTS = LABEL__CONSTRAINTS;
 
 	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' reference list.
@@ -552,22 +570,13 @@ public interface GraphPackage extends EPackage {
 	int PROPERTY__VALUE = 1;
 
 	/**
-	 * The feature id for the '<em><b>Min Count</b></em>' attribute.
+	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY__MIN_COUNT = 2;
-
-	/**
-	 * The feature id for the '<em><b>Max Count</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__MAX_COUNT = 3;
+	int PROPERTY__MANDATORY = 2;
 
 	/**
 	 * The number of structural features of the '<em>Property</em>' class.
@@ -576,7 +585,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_FEATURE_COUNT = 4;
+	int PROPERTY_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Property</em>' class.
@@ -973,6 +982,327 @@ public interface GraphPackage extends EPackage {
 	int LIST_TYPE_OPERATION_COUNT = PROPERTY_VALUE_TYPE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.TemporalTypesImpl <em>Temporal Types</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.TemporalTypesImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getTemporalTypes()
+	 * @generated
+	 */
+	int TEMPORAL_TYPES = 15;
+
+	/**
+	 * The feature id for the '<em><b>Nullable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPORAL_TYPES__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPORAL_TYPES__TYPE = PROPERTY_VALUE_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Temporal Types</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPORAL_TYPES_FEATURE_COUNT = PROPERTY_VALUE_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Temporal Types</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPORAL_TYPES_OPERATION_COUNT = PROPERTY_VALUE_TYPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.ConstraintImpl <em>Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.ConstraintImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getConstraint()
+	 * @generated
+	 */
+	int CONSTRAINT = 16;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__LABEL = 1;
+
+	/**
+	 * The number of structural features of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.UniqueConstraintImpl <em>Unique Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.UniqueConstraintImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getUniqueConstraint()
+	 * @generated
+	 */
+	int UNIQUE_CONSTRAINT = 17;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIQUE_CONSTRAINT__NAME = CONSTRAINT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIQUE_CONSTRAINT__LABEL = CONSTRAINT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIQUE_CONSTRAINT__PROPERTIES = CONSTRAINT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Unique Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIQUE_CONSTRAINT_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Unique Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIQUE_CONSTRAINT_OPERATION_COUNT = CONSTRAINT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.PropertyTypeConstraintImpl <em>Property Type Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.PropertyTypeConstraintImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getPropertyTypeConstraint()
+	 * @generated
+	 */
+	int PROPERTY_TYPE_CONSTRAINT = 18;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT__NAME = CONSTRAINT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT__LABEL = CONSTRAINT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT__PROPERTIES = CONSTRAINT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT__TYPE = CONSTRAINT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Property Type Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Property Type Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_TYPE_CONSTRAINT_OPERATION_COUNT = CONSTRAINT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.PropertyExistenceConstraintImpl <em>Property Existence Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.PropertyExistenceConstraintImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getPropertyExistenceConstraint()
+	 * @generated
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT = 19;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT__NAME = CONSTRAINT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT__LABEL = CONSTRAINT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT__PROPERTIES = CONSTRAINT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Property Existence Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Property Existence Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_EXISTENCE_CONSTRAINT_OPERATION_COUNT = CONSTRAINT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.KeyConstraintImpl <em>Key Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.graph.impl.KeyConstraintImpl
+	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getKeyConstraint()
+	 * @generated
+	 */
+	int KEY_CONSTRAINT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_CONSTRAINT__NAME = CONSTRAINT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_CONSTRAINT__LABEL = CONSTRAINT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_CONSTRAINT__PROPERTIES = CONSTRAINT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Key Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_CONSTRAINT_FEATURE_COUNT = CONSTRAINT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Key Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_CONSTRAINT_OPERATION_COUNT = CONSTRAINT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.GraphType <em>Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -980,7 +1310,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getGraphType()
 	 * @generated
 	 */
-	int GRAPH_TYPE = 15;
+	int GRAPH_TYPE = 21;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.DynamicUnionTypes <em>Dynamic Union Types</em>}' enum.
@@ -990,7 +1320,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getDynamicUnionTypes()
 	 * @generated
 	 */
-	int DYNAMIC_UNION_TYPES = 16;
+	int DYNAMIC_UNION_TYPES = 22;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.BooleanDataTypes <em>Boolean Data Types</em>}' enum.
@@ -1000,7 +1330,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getBooleanDataTypes()
 	 * @generated
 	 */
-	int BOOLEAN_DATA_TYPES = 17;
+	int BOOLEAN_DATA_TYPES = 23;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.TemporalDataTypes <em>Temporal Data Types</em>}' enum.
@@ -1010,7 +1340,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getTemporalDataTypes()
 	 * @generated
 	 */
-	int TEMPORAL_DATA_TYPES = 18;
+	int TEMPORAL_DATA_TYPES = 24;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.NumericDataTypes <em>Numeric Data Types</em>}' enum.
@@ -1020,7 +1350,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getNumericDataTypes()
 	 * @generated
 	 */
-	int NUMERIC_DATA_TYPES = 19;
+	int NUMERIC_DATA_TYPES = 25;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.StringDataTypes <em>String Data Types</em>}' enum.
@@ -1030,7 +1360,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getStringDataTypes()
 	 * @generated
 	 */
-	int STRING_DATA_TYPES = 20;
+	int STRING_DATA_TYPES = 26;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.BinaryDataTypes <em>Binary Data Types</em>}' enum.
@@ -1040,7 +1370,7 @@ public interface GraphPackage extends EPackage {
 	 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getBinaryDataTypes()
 	 * @generated
 	 */
-	int BINARY_DATA_TYPES = 21;
+	int BINARY_DATA_TYPES = 27;
 
 	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.PropertyGraph <em>Property Graph</em>}'.
@@ -1150,17 +1480,6 @@ public interface GraphPackage extends EPackage {
 	EReference getNodeType_Label();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.NodeType#getProperties <em>Properties</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Properties</em>'.
-	 * @see de.thm.evolvedb.graph.NodeType#getProperties()
-	 * @see #getNodeType()
-	 * @generated
-	 */
-	EReference getNodeType_Properties();
-
-	/**
 	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.NodeType#getOutgoing <em>Outgoing</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1183,58 +1502,58 @@ public interface GraphPackage extends EPackage {
 	EReference getNodeType_Incoming();
 
 	/**
-	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.Edge <em>Edge</em>}'.
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.EdgeType <em>Edge Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Edge</em>'.
-	 * @see de.thm.evolvedb.graph.Edge
+	 * @return the meta object for class '<em>Edge Type</em>'.
+	 * @see de.thm.evolvedb.graph.EdgeType
 	 * @generated
 	 */
-	EClass getEdge();
+	EClass getEdgeType();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.Edge#getLabels <em>Labels</em>}'.
+	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.EdgeType#getLabels <em>Labels</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Labels</em>'.
-	 * @see de.thm.evolvedb.graph.Edge#getLabels()
-	 * @see #getEdge()
+	 * @see de.thm.evolvedb.graph.EdgeType#getLabels()
+	 * @see #getEdgeType()
 	 * @generated
 	 */
-	EReference getEdge_Labels();
+	EReference getEdgeType_Labels();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.Edge#getProperties <em>Properties</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.EdgeType#getProperties <em>Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Properties</em>'.
-	 * @see de.thm.evolvedb.graph.Edge#getProperties()
-	 * @see #getEdge()
+	 * @see de.thm.evolvedb.graph.EdgeType#getProperties()
+	 * @see #getEdgeType()
 	 * @generated
 	 */
-	EReference getEdge_Properties();
+	EReference getEdgeType_Properties();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.Edge#getSrc <em>Src</em>}'.
+	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.EdgeType#getSrc <em>Src</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Src</em>'.
-	 * @see de.thm.evolvedb.graph.Edge#getSrc()
-	 * @see #getEdge()
+	 * @see de.thm.evolvedb.graph.EdgeType#getSrc()
+	 * @see #getEdgeType()
 	 * @generated
 	 */
-	EReference getEdge_Src();
+	EReference getEdgeType_Src();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.Edge#getTgt <em>Tgt</em>}'.
+	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.EdgeType#getTgt <em>Tgt</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Tgt</em>'.
-	 * @see de.thm.evolvedb.graph.Edge#getTgt()
-	 * @see #getEdge()
+	 * @see de.thm.evolvedb.graph.EdgeType#getTgt()
+	 * @see #getEdgeType()
 	 * @generated
 	 */
-	EReference getEdge_Tgt();
+	EReference getEdgeType_Tgt();
 
 	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.Label <em>Label</em>}'.
@@ -1258,10 +1577,10 @@ public interface GraphPackage extends EPackage {
 	EAttribute getLabel_Name();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.Label#getProperties <em>Properties</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.Label#getProperties <em>Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Properties</em>'.
+	 * @return the meta object for the containment reference list '<em>Properties</em>'.
 	 * @see de.thm.evolvedb.graph.Label#getProperties()
 	 * @see #getLabel()
 	 * @generated
@@ -1278,6 +1597,17 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLabel_SuperType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.Label#getConstraints <em>Constraints</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Constraints</em>'.
+	 * @see de.thm.evolvedb.graph.Label#getConstraints()
+	 * @see #getLabel()
+	 * @generated
+	 */
+	EReference getLabel_Constraints();
 
 	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.EdgeLabel <em>Edge Label</em>}'.
@@ -1354,26 +1684,15 @@ public interface GraphPackage extends EPackage {
 	EReference getProperty_Value();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.Property#getMinCount <em>Min Count</em>}'.
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.Property#isMandatory <em>Mandatory</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Min Count</em>'.
-	 * @see de.thm.evolvedb.graph.Property#getMinCount()
+	 * @return the meta object for the attribute '<em>Mandatory</em>'.
+	 * @see de.thm.evolvedb.graph.Property#isMandatory()
 	 * @see #getProperty()
 	 * @generated
 	 */
-	EAttribute getProperty_MinCount();
-
-	/**
-	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.Property#getMaxCount <em>Max Count</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Max Count</em>'.
-	 * @see de.thm.evolvedb.graph.Property#getMaxCount()
-	 * @see #getProperty()
-	 * @generated
-	 */
-	EAttribute getProperty_MaxCount();
+	EAttribute getProperty_Mandatory();
 
 	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.PropertyValueType <em>Property Value Type</em>}'.
@@ -1611,6 +1930,154 @@ public interface GraphPackage extends EPackage {
 	EReference getListType_Type();
 
 	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.TemporalTypes <em>Temporal Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Temporal Types</em>'.
+	 * @see de.thm.evolvedb.graph.TemporalTypes
+	 * @generated
+	 */
+	EClass getTemporalTypes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.TemporalTypes#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.thm.evolvedb.graph.TemporalTypes#getType()
+	 * @see #getTemporalTypes()
+	 * @generated
+	 */
+	EAttribute getTemporalTypes_Type();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Constraint</em>'.
+	 * @see de.thm.evolvedb.graph.Constraint
+	 * @generated
+	 */
+	EClass getConstraint();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.Constraint#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.thm.evolvedb.graph.Constraint#getName()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EAttribute getConstraint_Name();
+
+	/**
+	 * Returns the meta object for the container reference '{@link de.thm.evolvedb.graph.Constraint#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Label</em>'.
+	 * @see de.thm.evolvedb.graph.Constraint#getLabel()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EReference getConstraint_Label();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.UniqueConstraint <em>Unique Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unique Constraint</em>'.
+	 * @see de.thm.evolvedb.graph.UniqueConstraint
+	 * @generated
+	 */
+	EClass getUniqueConstraint();
+
+	/**
+	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.UniqueConstraint#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Properties</em>'.
+	 * @see de.thm.evolvedb.graph.UniqueConstraint#getProperties()
+	 * @see #getUniqueConstraint()
+	 * @generated
+	 */
+	EReference getUniqueConstraint_Properties();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.PropertyTypeConstraint <em>Property Type Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Property Type Constraint</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyTypeConstraint
+	 * @generated
+	 */
+	EClass getPropertyTypeConstraint();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.PropertyTypeConstraint#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Properties</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyTypeConstraint#getProperties()
+	 * @see #getPropertyTypeConstraint()
+	 * @generated
+	 */
+	EReference getPropertyTypeConstraint_Properties();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.PropertyTypeConstraint#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyTypeConstraint#getType()
+	 * @see #getPropertyTypeConstraint()
+	 * @generated
+	 */
+	EReference getPropertyTypeConstraint_Type();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.PropertyExistenceConstraint <em>Property Existence Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Property Existence Constraint</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyExistenceConstraint
+	 * @generated
+	 */
+	EClass getPropertyExistenceConstraint();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.thm.evolvedb.graph.PropertyExistenceConstraint#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Properties</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyExistenceConstraint#getProperties()
+	 * @see #getPropertyExistenceConstraint()
+	 * @generated
+	 */
+	EReference getPropertyExistenceConstraint_Properties();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.KeyConstraint <em>Key Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Key Constraint</em>'.
+	 * @see de.thm.evolvedb.graph.KeyConstraint
+	 * @generated
+	 */
+	EClass getKeyConstraint();
+
+	/**
+	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.KeyConstraint#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Properties</em>'.
+	 * @see de.thm.evolvedb.graph.KeyConstraint#getProperties()
+	 * @see #getKeyConstraint()
+	 * @generated
+	 */
+	EReference getKeyConstraint_Properties();
+
+	/**
 	 * Returns the meta object for enum '{@link de.thm.evolvedb.graph.GraphType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1790,14 +2257,6 @@ public interface GraphPackage extends EPackage {
 		EReference NODE_TYPE__LABEL = eINSTANCE.getNodeType_Label();
 
 		/**
-		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NODE_TYPE__PROPERTIES = eINSTANCE.getNodeType_Properties();
-
-		/**
 		 * The meta object literal for the '<em><b>Outgoing</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1814,14 +2273,14 @@ public interface GraphPackage extends EPackage {
 		EReference NODE_TYPE__INCOMING = eINSTANCE.getNodeType_Incoming();
 
 		/**
-		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.EdgeImpl <em>Edge</em>}' class.
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl <em>Edge Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.thm.evolvedb.graph.impl.EdgeImpl
-		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getEdge()
+		 * @see de.thm.evolvedb.graph.impl.EdgeTypeImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getEdgeType()
 		 * @generated
 		 */
-		EClass EDGE = eINSTANCE.getEdge();
+		EClass EDGE_TYPE = eINSTANCE.getEdgeType();
 
 		/**
 		 * The meta object literal for the '<em><b>Labels</b></em>' reference list feature.
@@ -1829,7 +2288,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EDGE__LABELS = eINSTANCE.getEdge_Labels();
+		EReference EDGE_TYPE__LABELS = eINSTANCE.getEdgeType_Labels();
 
 		/**
 		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
@@ -1837,7 +2296,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EDGE__PROPERTIES = eINSTANCE.getEdge_Properties();
+		EReference EDGE_TYPE__PROPERTIES = eINSTANCE.getEdgeType_Properties();
 
 		/**
 		 * The meta object literal for the '<em><b>Src</b></em>' reference feature.
@@ -1845,7 +2304,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EDGE__SRC = eINSTANCE.getEdge_Src();
+		EReference EDGE_TYPE__SRC = eINSTANCE.getEdgeType_Src();
 
 		/**
 		 * The meta object literal for the '<em><b>Tgt</b></em>' reference feature.
@@ -1853,7 +2312,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EDGE__TGT = eINSTANCE.getEdge_Tgt();
+		EReference EDGE_TYPE__TGT = eINSTANCE.getEdgeType_Tgt();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.LabelImpl <em>Label</em>}' class.
@@ -1874,7 +2333,7 @@ public interface GraphPackage extends EPackage {
 		EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Properties</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1888,6 +2347,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LABEL__SUPER_TYPE = eINSTANCE.getLabel_SuperType();
+
+		/**
+		 * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LABEL__CONSTRAINTS = eINSTANCE.getLabel_Constraints();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.EdgeLabelImpl <em>Edge Label</em>}' class.
@@ -1952,20 +2419,12 @@ public interface GraphPackage extends EPackage {
 		EReference PROPERTY__VALUE = eINSTANCE.getProperty_Value();
 
 		/**
-		 * The meta object literal for the '<em><b>Min Count</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROPERTY__MIN_COUNT = eINSTANCE.getProperty_MinCount();
-
-		/**
-		 * The meta object literal for the '<em><b>Max Count</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PROPERTY__MAX_COUNT = eINSTANCE.getProperty_MaxCount();
+		EAttribute PROPERTY__MANDATORY = eINSTANCE.getProperty_Mandatory();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.PropertyValueTypeImpl <em>Property Value Type</em>}' class.
@@ -2156,6 +2615,130 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LIST_TYPE__TYPE = eINSTANCE.getListType_Type();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.TemporalTypesImpl <em>Temporal Types</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.TemporalTypesImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getTemporalTypes()
+		 * @generated
+		 */
+		EClass TEMPORAL_TYPES = eINSTANCE.getTemporalTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEMPORAL_TYPES__TYPE = eINSTANCE.getTemporalTypes_Type();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.ConstraintImpl <em>Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.ConstraintImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getConstraint()
+		 * @generated
+		 */
+		EClass CONSTRAINT = eINSTANCE.getConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTRAINT__NAME = eINSTANCE.getConstraint_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONSTRAINT__LABEL = eINSTANCE.getConstraint_Label();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.UniqueConstraintImpl <em>Unique Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.UniqueConstraintImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getUniqueConstraint()
+		 * @generated
+		 */
+		EClass UNIQUE_CONSTRAINT = eINSTANCE.getUniqueConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNIQUE_CONSTRAINT__PROPERTIES = eINSTANCE.getUniqueConstraint_Properties();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.PropertyTypeConstraintImpl <em>Property Type Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.PropertyTypeConstraintImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getPropertyTypeConstraint()
+		 * @generated
+		 */
+		EClass PROPERTY_TYPE_CONSTRAINT = eINSTANCE.getPropertyTypeConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPERTY_TYPE_CONSTRAINT__PROPERTIES = eINSTANCE.getPropertyTypeConstraint_Properties();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPERTY_TYPE_CONSTRAINT__TYPE = eINSTANCE.getPropertyTypeConstraint_Type();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.PropertyExistenceConstraintImpl <em>Property Existence Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.PropertyExistenceConstraintImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getPropertyExistenceConstraint()
+		 * @generated
+		 */
+		EClass PROPERTY_EXISTENCE_CONSTRAINT = eINSTANCE.getPropertyExistenceConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPERTY_EXISTENCE_CONSTRAINT__PROPERTIES = eINSTANCE.getPropertyExistenceConstraint_Properties();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.KeyConstraintImpl <em>Key Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.graph.impl.KeyConstraintImpl
+		 * @see de.thm.evolvedb.graph.impl.GraphPackageImpl#getKeyConstraint()
+		 * @generated
+		 */
+		EClass KEY_CONSTRAINT = eINSTANCE.getKeyConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference KEY_CONSTRAINT__PROPERTIES = eINSTANCE.getKeyConstraint_Properties();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.GraphType <em>Type</em>}' enum.

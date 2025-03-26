@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.thm.evolvedb.graph.Label#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.Label#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.Label#getSuperType <em>Super Type</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.Label#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @see de.thm.evolvedb.graph.GraphPackage#getLabel()
@@ -46,13 +47,13 @@ public interface Label extends GraphItem {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Properties</b></em>' reference list.
+	 * Returns the value of the '<em><b>Properties</b></em>' containment reference list.
 	 * The list contents are of type {@link de.thm.evolvedb.graph.Property}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Properties</em>' reference list.
+	 * @return the value of the '<em>Properties</em>' containment reference list.
 	 * @see de.thm.evolvedb.graph.GraphPackage#getLabel_Properties()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Property> getProperties();
@@ -68,5 +69,19 @@ public interface Label extends GraphItem {
 	 * @generated
 	 */
 	EList<Label> getSuperType();
+
+	/**
+	 * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
+	 * The list contents are of type {@link de.thm.evolvedb.graph.Constraint}.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.Constraint#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Constraints</em>' containment reference list.
+	 * @see de.thm.evolvedb.graph.GraphPackage#getLabel_Constraints()
+	 * @see de.thm.evolvedb.graph.Constraint#getLabel
+	 * @model opposite="Label" containment="true"
+	 * @generated
+	 */
+	EList<Constraint> getConstraints();
 
 } // Label

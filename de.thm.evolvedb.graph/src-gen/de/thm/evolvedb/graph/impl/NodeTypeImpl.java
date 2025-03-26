@@ -2,12 +2,10 @@
  */
 package de.thm.evolvedb.graph.impl;
 
-import de.thm.evolvedb.graph.Edge;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
-import de.thm.evolvedb.graph.Property;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -16,8 +14,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -30,7 +26,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getIncoming <em>Incoming</em>}</li>
  * </ul>
@@ -49,16 +44,6 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	protected EList<NodeLabel> label;
 
 	/**
-	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProperties()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Property> properties;
-
-	/**
 	 * The cached value of the '{@link #getOutgoing() <em>Outgoing</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -66,7 +51,7 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Edge> outgoing;
+	protected EList<EdgeType> outgoing;
 
 	/**
 	 * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
@@ -76,7 +61,7 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Edge> incoming;
+	protected EList<EdgeType> incoming;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,23 +100,10 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Property> getProperties() {
-		if (properties == null) {
-			properties = new EObjectContainmentEList<Property>(Property.class, this,
-					GraphPackage.NODE_TYPE__PROPERTIES);
-		}
-		return properties;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Edge> getOutgoing() {
+	public EList<EdgeType> getOutgoing() {
 		if (outgoing == null) {
-			outgoing = new EObjectWithInverseResolvingEList<Edge>(Edge.class, this, GraphPackage.NODE_TYPE__OUTGOING,
-					GraphPackage.EDGE__SRC);
+			outgoing = new EObjectWithInverseResolvingEList<EdgeType>(EdgeType.class, this,
+					GraphPackage.NODE_TYPE__OUTGOING, GraphPackage.EDGE_TYPE__SRC);
 		}
 		return outgoing;
 	}
@@ -141,10 +113,10 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Edge> getIncoming() {
+	public EList<EdgeType> getIncoming() {
 		if (incoming == null) {
-			incoming = new EObjectWithInverseResolvingEList<Edge>(Edge.class, this, GraphPackage.NODE_TYPE__INCOMING,
-					GraphPackage.EDGE__TGT);
+			incoming = new EObjectWithInverseResolvingEList<EdgeType>(EdgeType.class, this,
+					GraphPackage.NODE_TYPE__INCOMING, GraphPackage.EDGE_TYPE__TGT);
 		}
 		return incoming;
 	}
@@ -178,8 +150,6 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 		switch (featureID) {
 		case GraphPackage.NODE_TYPE__LABEL:
 			return ((InternalEList<?>) getLabel()).basicRemove(otherEnd, msgs);
-		case GraphPackage.NODE_TYPE__PROPERTIES:
-			return ((InternalEList<?>) getProperties()).basicRemove(otherEnd, msgs);
 		case GraphPackage.NODE_TYPE__OUTGOING:
 			return ((InternalEList<?>) getOutgoing()).basicRemove(otherEnd, msgs);
 		case GraphPackage.NODE_TYPE__INCOMING:
@@ -198,8 +168,6 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 		switch (featureID) {
 		case GraphPackage.NODE_TYPE__LABEL:
 			return getLabel();
-		case GraphPackage.NODE_TYPE__PROPERTIES:
-			return getProperties();
 		case GraphPackage.NODE_TYPE__OUTGOING:
 			return getOutgoing();
 		case GraphPackage.NODE_TYPE__INCOMING:
@@ -221,17 +189,13 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			getLabel().clear();
 			getLabel().addAll((Collection<? extends NodeLabel>) newValue);
 			return;
-		case GraphPackage.NODE_TYPE__PROPERTIES:
-			getProperties().clear();
-			getProperties().addAll((Collection<? extends Property>) newValue);
-			return;
 		case GraphPackage.NODE_TYPE__OUTGOING:
 			getOutgoing().clear();
-			getOutgoing().addAll((Collection<? extends Edge>) newValue);
+			getOutgoing().addAll((Collection<? extends EdgeType>) newValue);
 			return;
 		case GraphPackage.NODE_TYPE__INCOMING:
 			getIncoming().clear();
-			getIncoming().addAll((Collection<? extends Edge>) newValue);
+			getIncoming().addAll((Collection<? extends EdgeType>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -247,9 +211,6 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 		switch (featureID) {
 		case GraphPackage.NODE_TYPE__LABEL:
 			getLabel().clear();
-			return;
-		case GraphPackage.NODE_TYPE__PROPERTIES:
-			getProperties().clear();
 			return;
 		case GraphPackage.NODE_TYPE__OUTGOING:
 			getOutgoing().clear();
@@ -271,8 +232,6 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 		switch (featureID) {
 		case GraphPackage.NODE_TYPE__LABEL:
 			return label != null && !label.isEmpty();
-		case GraphPackage.NODE_TYPE__PROPERTIES:
-			return properties != null && !properties.isEmpty();
 		case GraphPackage.NODE_TYPE__OUTGOING:
 			return outgoing != null && !outgoing.isEmpty();
 		case GraphPackage.NODE_TYPE__INCOMING:

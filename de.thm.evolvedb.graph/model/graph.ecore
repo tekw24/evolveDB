@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graph" nsURI="http://www.example.org/graph" nsPrefix="graph">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graph" nsURI="http://www.thm.de/graph" nsPrefix="graph">
   <eClassifiers xsi:type="ecore:EClass" name="PropertyGraph">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="closed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
@@ -24,14 +24,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="NodeType" eSuperTypes="#//GraphItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-1"
         eType="#//NodeLabel" eOpposite="#//NodeLabel/nodes"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-        eType="#//Property" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1"
-        eType="#//Edge" eOpposite="#//Edge/src"/>
+        eType="#//EdgeType" eOpposite="#//EdgeType/src"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
-        eType="#//Edge" eOpposite="#//Edge/tgt"/>
+        eType="#//EdgeType" eOpposite="#//EdgeType/tgt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//GraphItem">
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeType" eSuperTypes="#//GraphItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="labels" upperBound="-1"
         eType="#//EdgeLabel" eOpposite="#//EdgeLabel/edges"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
@@ -44,13 +42,15 @@
   <eClassifiers xsi:type="ecore:EClass" name="Label" abstract="true" eSuperTypes="#//GraphItem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-        eType="#//Property"/>
+        eType="#//Property" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SuperType" upperBound="-1"
         eType="#//Label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//Constraint" containment="true" eOpposite="#//Constraint/Label"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgeLabel" eSuperTypes="#//Label">
     <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
-        eType="#//Edge" eOpposite="#//Edge/labels"/>
+        eType="#//EdgeType" eOpposite="#//EdgeType/labels"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeLabel" eSuperTypes="#//Label">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
@@ -60,8 +60,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//PropertyValueType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyValueType" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -95,6 +95,29 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//PropertyValueType"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemporalTypes" eSuperTypes="#//PropertyValueType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//TemporalDataTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constraint" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Label" eType="#//Label"
+        eOpposite="#//Label/constraints"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UniqueConstraint" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyTypeConstraint" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PropertyValueType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyExistenceConstraint" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="#//Property"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyConstraint" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DynamicUnionTypes">
     <eLiterals name="AnyType"/>

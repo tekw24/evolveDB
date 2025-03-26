@@ -15,8 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.thm.evolvedb.graph.Property#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.Property#getValue <em>Value</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.Property#getMinCount <em>Min Count</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.Property#getMaxCount <em>Max Count</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.Property#isMandatory <em>Mandatory</em>}</li>
  * </ul>
  *
  * @see de.thm.evolvedb.graph.GraphPackage#getProperty()
@@ -69,47 +68,26 @@ public interface Property extends EObject {
 	void setValue(PropertyValueType value);
 
 	/**
-	 * Returns the value of the '<em><b>Min Count</b></em>' attribute.
+	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Min Count</em>' attribute.
-	 * @see #setMinCount(int)
-	 * @see de.thm.evolvedb.graph.GraphPackage#getProperty_MinCount()
-	 * @model
+	 * @return the value of the '<em>Mandatory</em>' attribute.
+	 * @see #setMandatory(boolean)
+	 * @see de.thm.evolvedb.graph.GraphPackage#getProperty_Mandatory()
+	 * @model default="false"
 	 * @generated
 	 */
-	int getMinCount();
+	boolean isMandatory();
 
 	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.graph.Property#getMinCount <em>Min Count</em>}' attribute.
+	 * Sets the value of the '{@link de.thm.evolvedb.graph.Property#isMandatory <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Min Count</em>' attribute.
-	 * @see #getMinCount()
+	 * @param value the new value of the '<em>Mandatory</em>' attribute.
+	 * @see #isMandatory()
 	 * @generated
 	 */
-	void setMinCount(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Max Count</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Max Count</em>' attribute.
-	 * @see #setMaxCount(int)
-	 * @see de.thm.evolvedb.graph.GraphPackage#getProperty_MaxCount()
-	 * @model
-	 * @generated
-	 */
-	int getMaxCount();
-
-	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.graph.Property#getMaxCount <em>Max Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Max Count</em>' attribute.
-	 * @see #getMaxCount()
-	 * @generated
-	 */
-	void setMaxCount(int value);
+	void setMandatory(boolean value);
 
 } // Property

@@ -23,16 +23,16 @@ import org.eclipse.emf.common.util.EList;
 public interface EdgeLabel extends Label {
 	/**
 	 * Returns the value of the '<em><b>Edges</b></em>' reference list.
-	 * The list contents are of type {@link de.thm.evolvedb.graph.Edge}.
-	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.Edge#getLabels <em>Labels</em>}'.
+	 * The list contents are of type {@link de.thm.evolvedb.graph.EdgeType}.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.EdgeType#getLabels <em>Labels</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Edges</em>' reference list.
 	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeLabel_Edges()
-	 * @see de.thm.evolvedb.graph.Edge#getLabels
+	 * @see de.thm.evolvedb.graph.EdgeType#getLabels
 	 * @model opposite="labels"
 	 * @generated
 	 */
-	EList<Edge> getEdges();
+	EList<EdgeType> getEdges();
 
 } // EdgeLabel

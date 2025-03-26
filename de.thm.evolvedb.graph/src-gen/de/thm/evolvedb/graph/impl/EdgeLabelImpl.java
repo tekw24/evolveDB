@@ -2,8 +2,8 @@
  */
 package de.thm.evolvedb.graph.impl;
 
-import de.thm.evolvedb.graph.Edge;
 import de.thm.evolvedb.graph.EdgeLabel;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 
 import java.util.Collection;
@@ -40,7 +40,7 @@ public class EdgeLabelImpl extends LabelImpl implements EdgeLabel {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Edge> edges;
+	protected EList<EdgeType> edges;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -66,10 +66,10 @@ public class EdgeLabelImpl extends LabelImpl implements EdgeLabel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Edge> getEdges() {
+	public EList<EdgeType> getEdges() {
 		if (edges == null) {
-			edges = new EObjectWithInverseResolvingEList.ManyInverse<Edge>(Edge.class, this,
-					GraphPackage.EDGE_LABEL__EDGES, GraphPackage.EDGE__LABELS);
+			edges = new EObjectWithInverseResolvingEList.ManyInverse<EdgeType>(EdgeType.class, this,
+					GraphPackage.EDGE_LABEL__EDGES, GraphPackage.EDGE_TYPE__LABELS);
 		}
 		return edges;
 	}
@@ -128,7 +128,7 @@ public class EdgeLabelImpl extends LabelImpl implements EdgeLabel {
 		switch (featureID) {
 		case GraphPackage.EDGE_LABEL__EDGES:
 			getEdges().clear();
-			getEdges().addAll((Collection<? extends Edge>) newValue);
+			getEdges().addAll((Collection<? extends EdgeType>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);

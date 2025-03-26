@@ -170,16 +170,6 @@ public class PropertyGraphItemProvider extends ItemProviderAdapter implements IE
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected boolean shouldComposeCreationImage() {
-		return true;
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,8 +221,8 @@ public class PropertyGraphItemProvider extends ItemProviderAdapter implements IE
 		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.PROPERTY_GRAPH__ITEMS,
 				GraphFactory.eINSTANCE.createNodeType()));
 
-		newChildDescriptors.add(
-				createChildParameter(GraphPackage.Literals.PROPERTY_GRAPH__ITEMS, GraphFactory.eINSTANCE.createEdge()));
+		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.PROPERTY_GRAPH__ITEMS,
+				GraphFactory.eINSTANCE.createEdgeType()));
 
 		newChildDescriptors.add(createChildParameter(GraphPackage.Literals.PROPERTY_GRAPH__ITEMS,
 				GraphFactory.eINSTANCE.createEdgeLabel()));

@@ -89,11 +89,11 @@ public class GraphSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case GraphPackage.EDGE: {
-			Edge edge = (Edge) theEObject;
-			T result = caseEdge(edge);
+		case GraphPackage.EDGE_TYPE: {
+			EdgeType edgeType = (EdgeType) theEObject;
+			T result = caseEdgeType(edgeType);
 			if (result == null)
-				result = caseGraphItem(edge);
+				result = caseGraphItem(edgeType);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -197,6 +197,58 @@ public class GraphSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case GraphPackage.TEMPORAL_TYPES: {
+			TemporalTypes temporalTypes = (TemporalTypes) theEObject;
+			T result = caseTemporalTypes(temporalTypes);
+			if (result == null)
+				result = casePropertyValueType(temporalTypes);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case GraphPackage.CONSTRAINT: {
+			Constraint constraint = (Constraint) theEObject;
+			T result = caseConstraint(constraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case GraphPackage.UNIQUE_CONSTRAINT: {
+			UniqueConstraint uniqueConstraint = (UniqueConstraint) theEObject;
+			T result = caseUniqueConstraint(uniqueConstraint);
+			if (result == null)
+				result = caseConstraint(uniqueConstraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case GraphPackage.PROPERTY_TYPE_CONSTRAINT: {
+			PropertyTypeConstraint propertyTypeConstraint = (PropertyTypeConstraint) theEObject;
+			T result = casePropertyTypeConstraint(propertyTypeConstraint);
+			if (result == null)
+				result = caseConstraint(propertyTypeConstraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case GraphPackage.PROPERTY_EXISTENCE_CONSTRAINT: {
+			PropertyExistenceConstraint propertyExistenceConstraint = (PropertyExistenceConstraint) theEObject;
+			T result = casePropertyExistenceConstraint(propertyExistenceConstraint);
+			if (result == null)
+				result = caseConstraint(propertyExistenceConstraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case GraphPackage.KEY_CONSTRAINT: {
+			KeyConstraint keyConstraint = (KeyConstraint) theEObject;
+			T result = caseKeyConstraint(keyConstraint);
+			if (result == null)
+				result = caseConstraint(keyConstraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -248,17 +300,17 @@ public class GraphSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Edge Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Edge Type</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEdge(Edge object) {
+	public T caseEdgeType(EdgeType object) {
 		return null;
 	}
 
@@ -424,6 +476,96 @@ public class GraphSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseListType(ListType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Temporal Types</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Temporal Types</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTemporalTypes(TemporalTypes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConstraint(Constraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unique Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unique Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUniqueConstraint(UniqueConstraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Property Type Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Property Type Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePropertyTypeConstraint(PropertyTypeConstraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Property Existence Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Property Existence Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePropertyExistenceConstraint(PropertyExistenceConstraint object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Key Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Key Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseKeyConstraint(KeyConstraint object) {
 		return null;
 	}
 

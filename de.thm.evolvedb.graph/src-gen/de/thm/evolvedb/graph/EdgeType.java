@@ -6,24 +6,24 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Edge</b></em>'.
+ * A representation of the model object '<em><b>Edge Type</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.thm.evolvedb.graph.Edge#getLabels <em>Labels</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.Edge#getProperties <em>Properties</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.Edge#getSrc <em>Src</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.Edge#getTgt <em>Tgt</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.EdgeType#getLabels <em>Labels</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.EdgeType#getProperties <em>Properties</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.EdgeType#getSrc <em>Src</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.EdgeType#getTgt <em>Tgt</em>}</li>
  * </ul>
  *
- * @see de.thm.evolvedb.graph.GraphPackage#getEdge()
+ * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType()
  * @model
  * @generated
  */
-public interface Edge extends GraphItem {
+public interface EdgeType extends GraphItem {
 	/**
 	 * Returns the value of the '<em><b>Labels</b></em>' reference list.
 	 * The list contents are of type {@link de.thm.evolvedb.graph.EdgeLabel}.
@@ -31,7 +31,7 @@ public interface Edge extends GraphItem {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Labels</em>' reference list.
-	 * @see de.thm.evolvedb.graph.GraphPackage#getEdge_Labels()
+	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType_Labels()
 	 * @see de.thm.evolvedb.graph.EdgeLabel#getEdges
 	 * @model opposite="edges"
 	 * @generated
@@ -44,7 +44,7 @@ public interface Edge extends GraphItem {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Properties</em>' containment reference list.
-	 * @see de.thm.evolvedb.graph.GraphPackage#getEdge_Properties()
+	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType_Properties()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -57,7 +57,7 @@ public interface Edge extends GraphItem {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Src</em>' reference.
 	 * @see #setSrc(NodeType)
-	 * @see de.thm.evolvedb.graph.GraphPackage#getEdge_Src()
+	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType_Src()
 	 * @see de.thm.evolvedb.graph.NodeType#getOutgoing
 	 * @model opposite="outgoing"
 	 * @generated
@@ -65,7 +65,7 @@ public interface Edge extends GraphItem {
 	NodeType getSrc();
 
 	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.graph.Edge#getSrc <em>Src</em>}' reference.
+	 * Sets the value of the '{@link de.thm.evolvedb.graph.EdgeType#getSrc <em>Src</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Src</em>' reference.
@@ -81,7 +81,7 @@ public interface Edge extends GraphItem {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tgt</em>' reference.
 	 * @see #setTgt(NodeType)
-	 * @see de.thm.evolvedb.graph.GraphPackage#getEdge_Tgt()
+	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType_Tgt()
 	 * @see de.thm.evolvedb.graph.NodeType#getIncoming
 	 * @model opposite="incoming"
 	 * @generated
@@ -89,7 +89,7 @@ public interface Edge extends GraphItem {
 	NodeType getTgt();
 
 	/**
-	 * Sets the value of the '{@link de.thm.evolvedb.graph.Edge#getTgt <em>Tgt</em>}' reference.
+	 * Sets the value of the '{@link de.thm.evolvedb.graph.EdgeType#getTgt <em>Tgt</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Tgt</em>' reference.
@@ -98,4 +98,4 @@ public interface Edge extends GraphItem {
 	 */
 	void setTgt(NodeType value);
 
-} // Edge
+} // EdgeType

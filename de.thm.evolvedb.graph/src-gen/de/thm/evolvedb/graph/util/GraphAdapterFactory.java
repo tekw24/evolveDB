@@ -82,8 +82,8 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseEdge(Edge object) {
-			return createEdgeAdapter();
+		public Adapter caseEdgeType(EdgeType object) {
+			return createEdgeTypeAdapter();
 		}
 
 		@Override
@@ -139,6 +139,36 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseListType(ListType object) {
 			return createListTypeAdapter();
+		}
+
+		@Override
+		public Adapter caseTemporalTypes(TemporalTypes object) {
+			return createTemporalTypesAdapter();
+		}
+
+		@Override
+		public Adapter caseConstraint(Constraint object) {
+			return createConstraintAdapter();
+		}
+
+		@Override
+		public Adapter caseUniqueConstraint(UniqueConstraint object) {
+			return createUniqueConstraintAdapter();
+		}
+
+		@Override
+		public Adapter casePropertyTypeConstraint(PropertyTypeConstraint object) {
+			return createPropertyTypeConstraintAdapter();
+		}
+
+		@Override
+		public Adapter casePropertyExistenceConstraint(PropertyExistenceConstraint object) {
+			return createPropertyExistenceConstraintAdapter();
+		}
+
+		@Override
+		public Adapter caseKeyConstraint(KeyConstraint object) {
+			return createKeyConstraintAdapter();
 		}
 
 		@Override
@@ -203,16 +233,16 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.Edge <em>Edge</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.EdgeType <em>Edge Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.thm.evolvedb.graph.Edge
+	 * @see de.thm.evolvedb.graph.EdgeType
 	 * @generated
 	 */
-	public Adapter createEdgeAdapter() {
+	public Adapter createEdgeTypeAdapter() {
 		return null;
 	}
 
@@ -367,6 +397,90 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createListTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.TemporalTypes <em>Temporal Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.TemporalTypes
+	 * @generated
+	 */
+	public Adapter createTemporalTypesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.Constraint
+	 * @generated
+	 */
+	public Adapter createConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.UniqueConstraint <em>Unique Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.UniqueConstraint
+	 * @generated
+	 */
+	public Adapter createUniqueConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.PropertyTypeConstraint <em>Property Type Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.PropertyTypeConstraint
+	 * @generated
+	 */
+	public Adapter createPropertyTypeConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.PropertyExistenceConstraint <em>Property Existence Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.PropertyExistenceConstraint
+	 * @generated
+	 */
+	public Adapter createPropertyExistenceConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.graph.KeyConstraint <em>Key Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.graph.KeyConstraint
+	 * @generated
+	 */
+	public Adapter createKeyConstraintAdapter() {
 		return null;
 	}
 

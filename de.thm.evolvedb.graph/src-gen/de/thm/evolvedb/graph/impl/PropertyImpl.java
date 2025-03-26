@@ -25,8 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.thm.evolvedb.graph.impl.PropertyImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.PropertyImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.PropertyImpl#getMinCount <em>Min Count</em>}</li>
- *   <li>{@link de.thm.evolvedb.graph.impl.PropertyImpl#getMaxCount <em>Max Count</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.PropertyImpl#isMandatory <em>Mandatory</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,44 +62,24 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	protected PropertyValueType value;
 
 	/**
-	 * The default value of the '{@link #getMinCount() <em>Min Count</em>}' attribute.
+	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMinCount()
+	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int MIN_COUNT_EDEFAULT = 0;
+	protected static final boolean MANDATORY_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getMinCount() <em>Min Count</em>}' attribute.
+	 * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMinCount()
+	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
 	 */
-	protected int minCount = MIN_COUNT_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getMaxCount() <em>Max Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMaxCount()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int MAX_COUNT_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getMaxCount() <em>Max Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMaxCount()
-	 * @generated
-	 * @ordered
-	 */
-	protected int maxCount = MAX_COUNT_EDEFAULT;
+	protected boolean mandatory = MANDATORY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,8 +175,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getMinCount() {
-		return minCount;
+	public boolean isMandatory() {
+		return mandatory;
 	}
 
 	/**
@@ -205,34 +184,12 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setMinCount(int newMinCount) {
-		int oldMinCount = minCount;
-		minCount = newMinCount;
+	public void setMandatory(boolean newMandatory) {
+		boolean oldMandatory = mandatory;
+		mandatory = newMandatory;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PROPERTY__MIN_COUNT, oldMinCount,
-					minCount));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getMaxCount() {
-		return maxCount;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMaxCount(int newMaxCount) {
-		int oldMaxCount = maxCount;
-		maxCount = newMaxCount;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PROPERTY__MAX_COUNT, oldMaxCount,
-					maxCount));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PROPERTY__MANDATORY, oldMandatory,
+					mandatory));
 	}
 
 	/**
@@ -261,10 +218,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 			return getName();
 		case GraphPackage.PROPERTY__VALUE:
 			return getValue();
-		case GraphPackage.PROPERTY__MIN_COUNT:
-			return getMinCount();
-		case GraphPackage.PROPERTY__MAX_COUNT:
-			return getMaxCount();
+		case GraphPackage.PROPERTY__MANDATORY:
+			return isMandatory();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -283,11 +238,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 		case GraphPackage.PROPERTY__VALUE:
 			setValue((PropertyValueType) newValue);
 			return;
-		case GraphPackage.PROPERTY__MIN_COUNT:
-			setMinCount((Integer) newValue);
-			return;
-		case GraphPackage.PROPERTY__MAX_COUNT:
-			setMaxCount((Integer) newValue);
+		case GraphPackage.PROPERTY__MANDATORY:
+			setMandatory((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -307,11 +259,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 		case GraphPackage.PROPERTY__VALUE:
 			setValue((PropertyValueType) null);
 			return;
-		case GraphPackage.PROPERTY__MIN_COUNT:
-			setMinCount(MIN_COUNT_EDEFAULT);
-			return;
-		case GraphPackage.PROPERTY__MAX_COUNT:
-			setMaxCount(MAX_COUNT_EDEFAULT);
+		case GraphPackage.PROPERTY__MANDATORY:
+			setMandatory(MANDATORY_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -329,10 +278,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case GraphPackage.PROPERTY__VALUE:
 			return value != null;
-		case GraphPackage.PROPERTY__MIN_COUNT:
-			return minCount != MIN_COUNT_EDEFAULT;
-		case GraphPackage.PROPERTY__MAX_COUNT:
-			return maxCount != MAX_COUNT_EDEFAULT;
+		case GraphPackage.PROPERTY__MANDATORY:
+			return mandatory != MANDATORY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -350,10 +297,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", minCount: ");
-		result.append(minCount);
-		result.append(", maxCount: ");
-		result.append(maxCount);
+		result.append(", mandatory: ");
+		result.append(mandatory);
 		result.append(')');
 		return result.toString();
 	}
