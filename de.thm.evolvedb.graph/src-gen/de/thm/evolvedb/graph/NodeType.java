@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getLabel <em>Label</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getIncoming <em>Incoming</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.NodeType#getProperties <em>Properties</em>}</li>
  * </ul>
  *
  * @see de.thm.evolvedb.graph.GraphPackage#getNodeType()
@@ -64,5 +65,17 @@ public interface NodeType extends GraphItem {
 	 * @generated
 	 */
 	EList<EdgeType> getIncoming();
+
+	/**
+	 * Returns the value of the '<em><b>Properties</b></em>' containment reference list.
+	 * The list contents are of type {@link de.thm.evolvedb.graph.Property}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Properties</em>' containment reference list.
+	 * @see de.thm.evolvedb.graph.GraphPackage#getNodeType_Properties()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Property> getProperties();
 
 } // NodeType

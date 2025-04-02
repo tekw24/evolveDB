@@ -170,6 +170,9 @@ public class DBIcon implements DBPImage
     
     public static final DBIcon MYSQL_DATABASE = new DBIcon("mysql_icon", "tree/mysql_icon.png"); //$NON-NLS-1$ //$NON-NLS-2$
     
+    public static final DBIcon NEO4J_DATABASE = new DBIcon("neo4j_icon", "tree/neo4j_icon.png"); //$NON-NLS-1$ //$NON-NLS-2$
+    
+    
 
     private static final boolean VALIDATE_ICON_FILE = false;
 

@@ -421,6 +421,15 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getNodeType_Properties() {
+		return (EReference) nodeTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEdgeType() {
 		return edgeTypeEClass;
 	}
@@ -1008,6 +1017,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		createEReference(nodeTypeEClass, NODE_TYPE__LABEL);
 		createEReference(nodeTypeEClass, NODE_TYPE__OUTGOING);
 		createEReference(nodeTypeEClass, NODE_TYPE__INCOMING);
+		createEReference(nodeTypeEClass, NODE_TYPE__PROPERTIES);
 
 		edgeTypeEClass = createEClass(EDGE_TYPE);
 		createEReference(edgeTypeEClass, EDGE_TYPE__LABELS);
@@ -1171,6 +1181,9 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEReference(getNodeType_Incoming(), this.getEdgeType(), this.getEdgeType_Tgt(), "incoming", null, 0, -1,
 				NodeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNodeType_Properties(), this.getProperty(), null, "properties", null, 0, -1, NodeType.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(edgeTypeEClass, EdgeType.class, "EdgeType", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);

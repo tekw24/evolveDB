@@ -6,6 +6,7 @@ import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
+import de.thm.evolvedb.graph.Property;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -14,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getIncoming <em>Incoming</em>}</li>
+ *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,6 +65,16 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * @ordered
 	 */
 	protected EList<EdgeType> incoming;
+
+	/**
+	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Property> properties;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -126,6 +139,19 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Property> getProperties() {
+		if (properties == null) {
+			properties = new EObjectContainmentEList<Property>(Property.class, this,
+					GraphPackage.NODE_TYPE__PROPERTIES);
+		}
+		return properties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -154,6 +180,8 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			return ((InternalEList<?>) getOutgoing()).basicRemove(otherEnd, msgs);
 		case GraphPackage.NODE_TYPE__INCOMING:
 			return ((InternalEList<?>) getIncoming()).basicRemove(otherEnd, msgs);
+		case GraphPackage.NODE_TYPE__PROPERTIES:
+			return ((InternalEList<?>) getProperties()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -172,6 +200,8 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			return getOutgoing();
 		case GraphPackage.NODE_TYPE__INCOMING:
 			return getIncoming();
+		case GraphPackage.NODE_TYPE__PROPERTIES:
+			return getProperties();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -197,6 +227,10 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			getIncoming().clear();
 			getIncoming().addAll((Collection<? extends EdgeType>) newValue);
 			return;
+		case GraphPackage.NODE_TYPE__PROPERTIES:
+			getProperties().clear();
+			getProperties().addAll((Collection<? extends Property>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -218,6 +252,9 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 		case GraphPackage.NODE_TYPE__INCOMING:
 			getIncoming().clear();
 			return;
+		case GraphPackage.NODE_TYPE__PROPERTIES:
+			getProperties().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -236,6 +273,8 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			return outgoing != null && !outgoing.isEmpty();
 		case GraphPackage.NODE_TYPE__INCOMING:
 			return incoming != null && !incoming.isEmpty();
+		case GraphPackage.NODE_TYPE__PROPERTIES:
+			return properties != null && !properties.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

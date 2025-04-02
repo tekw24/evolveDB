@@ -214,13 +214,22 @@ public interface GraphPackage extends EPackage {
 	int NODE_TYPE__INCOMING = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Node Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Node Type</em>' class.
@@ -1502,6 +1511,17 @@ public interface GraphPackage extends EPackage {
 	EReference getNodeType_Incoming();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link de.thm.evolvedb.graph.NodeType#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Properties</em>'.
+	 * @see de.thm.evolvedb.graph.NodeType#getProperties()
+	 * @see #getNodeType()
+	 * @generated
+	 */
+	EReference getNodeType_Properties();
+
+	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.EdgeType <em>Edge Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2271,6 +2291,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NODE_TYPE__INCOMING = eINSTANCE.getNodeType_Incoming();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE_TYPE__PROPERTIES = eINSTANCE.getNodeType_Properties();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl <em>Edge Type</em>}' class.
