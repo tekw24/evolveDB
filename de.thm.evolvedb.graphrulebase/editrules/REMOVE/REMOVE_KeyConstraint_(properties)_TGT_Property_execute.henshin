@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VP3KsBuOEfCiO5YsU3IcKQ" name="REMOVE_KeyConstraint_(properties)_TGT_Property" description="Removes KeyConstraint's reference properties the target Property">
+  <annotations xmi:id="_VP3KsRuOEfCiO5YsU3IcKQ" key="INVERSE" value="ADD_KeyConstraint_(properties)_TGT_Property"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VP3KshuOEfCiO5YsU3IcKQ" name="removeFromKeyConstraint_properties_Property" description="Removes from KeyConstraint's reference properties the target Property">
+    <parameters xmi:id="_VP3KsxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//KeyConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VP3KtBuOEfCiO5YsU3IcKQ" name="OldTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VP3KtRuOEfCiO5YsU3IcKQ" name="LHS">
+      <nodes xmi:id="_VP3KthuOEfCiO5YsU3IcKQ" name="Selected" outgoing="_VP3KuBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//KeyConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VP3KtxuOEfCiO5YsU3IcKQ" name="OldTarget" incoming="_VP3KuBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_VP3KuBuOEfCiO5YsU3IcKQ" source="_VP3KthuOEfCiO5YsU3IcKQ" target="_VP3KtxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//KeyConstraint/properties"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VP3KuRuOEfCiO5YsU3IcKQ" name="RHS">
+      <nodes xmi:id="_VP3KuhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//KeyConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VP3KuxuOEfCiO5YsU3IcKQ" name="OldTarget">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VP3KvBuOEfCiO5YsU3IcKQ" origin="_VP3KthuOEfCiO5YsU3IcKQ" image="_VP3KuhuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VP3KvRuOEfCiO5YsU3IcKQ" origin="_VP3KtxuOEfCiO5YsU3IcKQ" image="_VP3KuxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VP3KvhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VP3KshuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VP3KvxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VP3KwBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//KeyConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VP3KwRuOEfCiO5YsU3IcKQ" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameterMappings xmi:id="_VP3KwhuOEfCiO5YsU3IcKQ" source="_VP3KvxuOEfCiO5YsU3IcKQ" target="_VP3KsxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VP3KwxuOEfCiO5YsU3IcKQ" source="_VP3KwRuOEfCiO5YsU3IcKQ" target="_VP3KtBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOLvsBuOEfCiO5YsU3IcKQ" name="REMOVE_Label_(SuperType)_TGT_Label" description="Removes Label's reference SuperType the target Label">
+  <annotations xmi:id="_VOLvsRuOEfCiO5YsU3IcKQ" key="INVERSE" value="ADD_Label_(SuperType)_TGT_Label"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOLvshuOEfCiO5YsU3IcKQ" name="removeFromLabel_SuperType_Label" description="Removes from Label's reference SuperType the target Label">
+    <parameters xmi:id="_VOLvsxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VOLvtBuOEfCiO5YsU3IcKQ" name="OldTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <lhs xmi:id="_VOLvtRuOEfCiO5YsU3IcKQ" name="LHS">
+      <nodes xmi:id="_VOLvthuOEfCiO5YsU3IcKQ" name="Selected" outgoing="_VOLvuBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VOLvtxuOEfCiO5YsU3IcKQ" name="OldTarget" incoming="_VOLvuBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <edges xmi:id="_VOLvuBuOEfCiO5YsU3IcKQ" source="_VOLvthuOEfCiO5YsU3IcKQ" target="_VOLvtxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/SuperType"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VOMWwBuOEfCiO5YsU3IcKQ" name="RHS">
+      <nodes xmi:id="_VOMWwRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VOMWwhuOEfCiO5YsU3IcKQ" name="OldTarget">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOMWwxuOEfCiO5YsU3IcKQ" origin="_VOLvthuOEfCiO5YsU3IcKQ" image="_VOMWwRuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VOMWxBuOEfCiO5YsU3IcKQ" origin="_VOLvtxuOEfCiO5YsU3IcKQ" image="_VOMWwhuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOMWxRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOLvshuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOMWxhuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VOMWxxuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VOMWyBuOEfCiO5YsU3IcKQ" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOMWyRuOEfCiO5YsU3IcKQ" source="_VOMWxhuOEfCiO5YsU3IcKQ" target="_VOLvsxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOMWyhuOEfCiO5YsU3IcKQ" source="_VOMWyBuOEfCiO5YsU3IcKQ" target="_VOLvtBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -173,7 +173,7 @@ public abstract class ConstraintImpl extends NamedElementImpl implements Constra
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public boolean validateUniqueConstraintName(DiagnosticChain diagnostics, Map<Object, Object> context) {
 		// TODO: implement this method

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VNkrsBuOEfCiO5YsU3IcKQ" name="CREATE_KeyConstraint_IN_Label_(constraints)" description="Creates one KeyConstraint in Label">
+  <annotations xmi:id="_VNkrsRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_KeyConstraint_IN_Label_(constraints)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VNkrshuOEfCiO5YsU3IcKQ" name="createKeyConstraint_IN_Label" description="creates one KeyConstraint in the context: Label">
+    <parameters xmi:id="_VNkrsxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VNkrtBuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//KeyConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VNkrtRuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VNkrthuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VNkrtxuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VNkruBuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VNkruRuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VNkruhuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VNkrwBuOEfCiO5YsU3IcKQ" outgoing="_VNkrvxuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VNkruxuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VNkrvBuOEfCiO5YsU3IcKQ" name="New" incoming="_VNkrvxuOEfCiO5YsU3IcKQ" outgoing="_VNkrwBuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VNkrvRuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//KeyConstraint"/>
+        <attributes xmi:id="_VNkrvhuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Constraint/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_VNkrvxuOEfCiO5YsU3IcKQ" source="_VNkruhuOEfCiO5YsU3IcKQ" target="_VNkrvBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VNkrwBuOEfCiO5YsU3IcKQ" source="_VNkrvBuOEfCiO5YsU3IcKQ" target="_VNkruhuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VNkrwRuOEfCiO5YsU3IcKQ" origin="_VNkrtxuOEfCiO5YsU3IcKQ" image="_VNkruhuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VNkrwhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VNkrshuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VNkrwxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VNkrxBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VNkrxRuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VNkrxhuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//KeyConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VNkrxxuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VNkryBuOEfCiO5YsU3IcKQ" source="_VNkrwxuOEfCiO5YsU3IcKQ" target="_VNkrsxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNkryRuOEfCiO5YsU3IcKQ" source="_VNkrtBuOEfCiO5YsU3IcKQ" target="_VNkrxRuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNkryhuOEfCiO5YsU3IcKQ" source="_VNkrxxuOEfCiO5YsU3IcKQ" target="_VNkrtRuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

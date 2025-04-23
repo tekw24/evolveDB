@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQCw4BuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_UnionType_Type" description="Sets UnionType Type">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQCw4RuOEfCiO5YsU3IcKQ" name="setUnionTypeType" description="Sets the EAttribute type">
+    <parameters xmi:id="_VQCw4huOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UnionType"/>
+    </parameters>
+    <parameters xmi:id="_VQCw4xuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
+    </parameters>
+    <lhs xmi:id="_VQCw5BuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQCw5RuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VQCw5huOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQCw5xuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+        <attributes xmi:id="_VQCw6BuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//UnionType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VQCw6RuOEfCiO5YsU3IcKQ" origin="_VQCw5RuOEfCiO5YsU3IcKQ" image="_VQCw5xuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQCw6huOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQCw4RuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQCw6xuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UnionType"/>
+    </parameters>
+    <parameters xmi:id="_VQCw7BuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQCw7RuOEfCiO5YsU3IcKQ" source="_VQCw6xuOEfCiO5YsU3IcKQ" target="_VQCw4huOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQCw7huOEfCiO5YsU3IcKQ" source="_VQCw7BuOEfCiO5YsU3IcKQ" target="_VQCw4xuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

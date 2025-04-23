@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPEggBuOEfCiO5YsU3IcKQ" name="SET_REFERENCE_PropertyExistenceConstraint_(properties)_TGT_Property" description="Sets PropertyExistenceConstraint's reference properties the target Property">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPEggRuOEfCiO5YsU3IcKQ" name="setPropertyExistenceConstraint_properties_TO_Property" description="SetPropertyExistenceConstraintRefpropertiesToProperty">
+    <parameters xmi:id="_VPEgghuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VPEggxuOEfCiO5YsU3IcKQ" name="NewTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VPEghBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VPEghRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VPEghhuOEfCiO5YsU3IcKQ" name="NewTarget">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPEghxuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPEgiBuOEfCiO5YsU3IcKQ" name="Selected" outgoing="_VPEgihuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VPEgiRuOEfCiO5YsU3IcKQ" name="NewTarget" incoming="_VPEgihuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_VPEgihuOEfCiO5YsU3IcKQ" source="_VPEgiBuOEfCiO5YsU3IcKQ" target="_VPEgiRuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//PropertyExistenceConstraint/properties"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VPEgixuOEfCiO5YsU3IcKQ" origin="_VPEghRuOEfCiO5YsU3IcKQ" image="_VPEgiBuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VPEgjBuOEfCiO5YsU3IcKQ" origin="_VPEghhuOEfCiO5YsU3IcKQ" image="_VPEgiRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPEgjRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPEggRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPEgjhuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VPEgjxuOEfCiO5YsU3IcKQ" name="NewTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPEgkBuOEfCiO5YsU3IcKQ" source="_VPEgjhuOEfCiO5YsU3IcKQ" target="_VPEgghuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPEgkRuOEfCiO5YsU3IcKQ" source="_VPEgjxuOEfCiO5YsU3IcKQ" target="_VPEggxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

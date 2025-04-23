@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOX88BuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_Property_Mandatory" description="Sets Property Mandatory">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOX88RuOEfCiO5YsU3IcKQ" name="setPropertyMandatory" description="Sets the EAttribute mandatory">
+    <parameters xmi:id="_VOX88huOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameters xmi:id="_VOX88xuOEfCiO5YsU3IcKQ" name="Mandatory" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </parameters>
+    <lhs xmi:id="_VOX89BuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOX89RuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOX89huOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOX89xuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Property"/>
+        <attributes xmi:id="_VOX8-BuOEfCiO5YsU3IcKQ" value="Mandatory">
+          <type href="http://www.thm.de/graph#//Property/mandatory"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOX8-RuOEfCiO5YsU3IcKQ" origin="_VOX89RuOEfCiO5YsU3IcKQ" image="_VOX89xuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOX8-huOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOX88RuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOX8-xuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameters xmi:id="_VOX8_BuOEfCiO5YsU3IcKQ" name="Mandatory">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOX8_RuOEfCiO5YsU3IcKQ" source="_VOX8-xuOEfCiO5YsU3IcKQ" target="_VOX88huOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOX8_huOEfCiO5YsU3IcKQ" source="_VOX8_BuOEfCiO5YsU3IcKQ" target="_VOX88xuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

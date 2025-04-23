@@ -141,7 +141,7 @@ public class ColumnConstraintItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ColumnConstraint.png"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ColumnConstraint"));
 	}
 
 	/**

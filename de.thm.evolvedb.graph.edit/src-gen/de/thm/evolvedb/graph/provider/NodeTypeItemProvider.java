@@ -153,13 +153,13 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 			for (NodeLabel label : type.getLabel()) {
 				name += label.getName() != null ? ":" + label.getName() : "";
 			}
-			
-			if(name.equals("") && type.getProperties().size() > 0) {
-				for(Property p : type.getProperties()) {
+
+			if (name.equals("") && type.getProperties().size() > 0) {
+				for (Property p : type.getProperties()) {
 					name += p.getName() != null ? ":" + p.getName() : "";
 				}
 			}
-			
+
 			return getString("_UI_NodeType_type") + " " + name;
 		}
 		return getString("_UI_NodeType_type");

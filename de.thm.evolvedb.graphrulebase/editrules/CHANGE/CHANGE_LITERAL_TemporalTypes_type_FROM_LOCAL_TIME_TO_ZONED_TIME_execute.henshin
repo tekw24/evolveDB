@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQA7sBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_ZONED_TIME" description="Changes the attribute value of type_FROM_LOCAL_TIME_TO_ZONED_TIME">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQA7sRuOEfCiO5YsU3IcKQ" name="changeTemporalTypesType_FROM_LOCAL_TIME_TO_ZONED_TIME" description="Changes the attribute value of type_FROM_LOCAL_TIME_TO_ZONED_TIME">
+    <parameters xmi:id="_VQA7shuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VQA7sxuOEfCiO5YsU3IcKQ" name="&quot;LOCAL_TIME&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VQA7tBuOEfCiO5YsU3IcKQ" name="&quot;ZONED_TIME&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VQA7tRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQA7thuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VQA7txuOEfCiO5YsU3IcKQ" value="&quot;LOCAL_TIME&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VQA7uBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQA7uRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VQA7uhuOEfCiO5YsU3IcKQ" value="&quot;ZONED_TIME&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VQA7uxuOEfCiO5YsU3IcKQ" origin="_VQA7thuOEfCiO5YsU3IcKQ" image="_VQA7uRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQA7vBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQA7sRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQA7vRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VQA7vhuOEfCiO5YsU3IcKQ" name="&quot;LOCAL_TIME&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQA7vxuOEfCiO5YsU3IcKQ" source="_VQA7vRuOEfCiO5YsU3IcKQ" target="_VQA7shuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQA7wBuOEfCiO5YsU3IcKQ" source="_VQA7vhuOEfCiO5YsU3IcKQ" target="_VQA7sxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

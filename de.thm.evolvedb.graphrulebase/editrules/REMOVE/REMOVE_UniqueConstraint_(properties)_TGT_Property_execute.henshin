@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPzgUBuOEfCiO5YsU3IcKQ" name="REMOVE_UniqueConstraint_(properties)_TGT_Property" description="Removes UniqueConstraint's reference properties the target Property">
+  <annotations xmi:id="_VPzgURuOEfCiO5YsU3IcKQ" key="INVERSE" value="ADD_UniqueConstraint_(properties)_TGT_Property"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPzgUhuOEfCiO5YsU3IcKQ" name="removeFromUniqueConstraint_properties_Property" description="Removes from UniqueConstraint's reference properties the target Property">
+    <parameters xmi:id="_VPzgUxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VPzgVBuOEfCiO5YsU3IcKQ" name="OldTarget" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VPzgVRuOEfCiO5YsU3IcKQ" name="LHS">
+      <nodes xmi:id="_VPzgVhuOEfCiO5YsU3IcKQ" name="Selected" outgoing="_VPzgWBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VPzgVxuOEfCiO5YsU3IcKQ" name="OldTarget" incoming="_VPzgWBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_VPzgWBuOEfCiO5YsU3IcKQ" source="_VPzgVhuOEfCiO5YsU3IcKQ" target="_VPzgVxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//UniqueConstraint/properties"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VPzgWRuOEfCiO5YsU3IcKQ" name="RHS">
+      <nodes xmi:id="_VPzgWhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VPzgWxuOEfCiO5YsU3IcKQ" name="OldTarget">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPzgXBuOEfCiO5YsU3IcKQ" origin="_VPzgVhuOEfCiO5YsU3IcKQ" image="_VPzgWhuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VPzgXRuOEfCiO5YsU3IcKQ" origin="_VPzgVxuOEfCiO5YsU3IcKQ" image="_VPzgWxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPzgXhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPzgUhuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPzgXxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VPzgYBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VPzgYRuOEfCiO5YsU3IcKQ" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPzgYhuOEfCiO5YsU3IcKQ" source="_VPzgXxuOEfCiO5YsU3IcKQ" target="_VPzgUxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPzgYxuOEfCiO5YsU3IcKQ" source="_VPzgYRuOEfCiO5YsU3IcKQ" target="_VPzgVBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

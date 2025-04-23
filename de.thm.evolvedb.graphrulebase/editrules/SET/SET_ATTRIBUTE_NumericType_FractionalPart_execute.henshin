@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOzawBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_NumericType_FractionalPart" description="Sets NumericType FractionalPart">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOzawRuOEfCiO5YsU3IcKQ" name="setNumericTypeFractionalPart" description="Sets the EAttribute fractionalPart">
+    <parameters xmi:id="_VOzawhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VOzawxuOEfCiO5YsU3IcKQ" name="FractionalPart" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <lhs xmi:id="_VOzaxBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOzaxRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOzaxhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOzaxxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VOzayBuOEfCiO5YsU3IcKQ" value="FractionalPart">
+          <type href="http://www.thm.de/graph#//NumericType/fractionalPart"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOzayRuOEfCiO5YsU3IcKQ" origin="_VOzaxRuOEfCiO5YsU3IcKQ" image="_VOzaxxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOzayhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOzawRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOzayxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VOzazBuOEfCiO5YsU3IcKQ" name="FractionalPart">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOzazRuOEfCiO5YsU3IcKQ" source="_VOzayxuOEfCiO5YsU3IcKQ" target="_VOzawhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOzazhuOEfCiO5YsU3IcKQ" source="_VOzazBuOEfCiO5YsU3IcKQ" target="_VOzawxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

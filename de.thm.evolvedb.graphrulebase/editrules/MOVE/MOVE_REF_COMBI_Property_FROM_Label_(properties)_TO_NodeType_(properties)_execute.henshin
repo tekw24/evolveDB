@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQakUBuOEfCiO5YsU3IcKQ" name="MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_NodeType_(properties)" description="MOVEs Property from Label(Reference:properties) to NodeType(Reference:properties">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQakURuOEfCiO5YsU3IcKQ" name="moveProperty_FROM_Label_properties_TO_NodeType_NodeType" description="Moves Property from Label(Reference:properties) toNodeType(Reference:NodeType)">
+    <parameters xmi:id="_VQakUhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameters xmi:id="_VQakUxuOEfCiO5YsU3IcKQ" name="OldSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQakVBuOEfCiO5YsU3IcKQ" name="NewSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NodeType"/>
+    </parameters>
+    <lhs xmi:id="_VQakVRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQakVhuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VQakWRuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_VQakVxuOEfCiO5YsU3IcKQ" name="OldSource" outgoing="_VQakWRuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VQakWBuOEfCiO5YsU3IcKQ" name="NewSource">
+        <type href="http://www.thm.de/graph#//NodeType"/>
+      </nodes>
+      <edges xmi:id="_VQakWRuOEfCiO5YsU3IcKQ" source="_VQakVxuOEfCiO5YsU3IcKQ" target="_VQakVhuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/properties"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VQakWhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQakWxuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VQakXhuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_VQakXBuOEfCiO5YsU3IcKQ" name="OldSource">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VQakXRuOEfCiO5YsU3IcKQ" name="NewSource" outgoing="_VQakXhuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//NodeType"/>
+      </nodes>
+      <edges xmi:id="_VQakXhuOEfCiO5YsU3IcKQ" source="_VQakXRuOEfCiO5YsU3IcKQ" target="_VQakWxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//NodeType/properties"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VQakXxuOEfCiO5YsU3IcKQ" origin="_VQakVhuOEfCiO5YsU3IcKQ" image="_VQakWxuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VQakYBuOEfCiO5YsU3IcKQ" origin="_VQakVxuOEfCiO5YsU3IcKQ" image="_VQakXBuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VQakYRuOEfCiO5YsU3IcKQ" origin="_VQakWBuOEfCiO5YsU3IcKQ" image="_VQakXRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQakYhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQakURuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQakYxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameters xmi:id="_VQakZBuOEfCiO5YsU3IcKQ" name="OldSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQakZRuOEfCiO5YsU3IcKQ" name="NewSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NodeType"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQakZhuOEfCiO5YsU3IcKQ" source="_VQakYxuOEfCiO5YsU3IcKQ" target="_VQakUhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQakZxuOEfCiO5YsU3IcKQ" source="_VQakZBuOEfCiO5YsU3IcKQ" target="_VQakUxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQakaBuOEfCiO5YsU3IcKQ" source="_VQakZRuOEfCiO5YsU3IcKQ" target="_VQakVBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

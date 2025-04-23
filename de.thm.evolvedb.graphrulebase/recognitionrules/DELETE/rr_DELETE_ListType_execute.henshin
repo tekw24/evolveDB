@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DXG0wx0gEfCxl5Usko-ozg" name="RR: DELETE_ListType" description="Recognize: Deletes one ListType">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_DXG0xB0gEfCxl5Usko-ozg" name="rr:deleteListType" description="Recognize: deletes one ListType">
+    <parameters xmi:id="_DXG0xR0gEfCxl5Usko-ozg" name="ToBeDeleted">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//ListType"/>
+    </parameters>
+    <parameters xmi:id="_DXG0xh0gEfCxl5Usko-ozg" name="Child">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <lhs xmi:id="_DXG0xx0gEfCxl5Usko-ozg" name="Lhs">
+      <nodes xmi:id="_DXG0yB0gEfCxl5Usko-ozg" name="" outgoing="_DXG00B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject"/>
+      </nodes>
+      <nodes xmi:id="_DXG0yR0gEfCxl5Usko-ozg" name="A.ToBeDeleted" incoming="_DXG00B0gEfCxl5Usko-ozg _DXG00h0gEfCxl5Usko-ozg" outgoing="_DXG01R0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//ListType"/>
+      </nodes>
+      <nodes xmi:id="_DXG0yh0gEfCxl5Usko-ozg" name="" outgoing="_DXG00R0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject"/>
+      </nodes>
+      <nodes xmi:id="_DXG0yx0gEfCxl5Usko-ozg" name="A.Child" incoming="_DXG00R0gEfCxl5Usko-ozg _DXG00x0gEfCxl5Usko-ozg _DXG01R0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//PropertyValueType"/>
+      </nodes>
+      <nodes xmi:id="_DXG0zB0gEfCxl5Usko-ozg" name="" outgoing="_DXG00h0gEfCxl5Usko-ozg _DXG00x0gEfCxl5Usko-ozg _DXG01B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_DXG0zR0gEfCxl5Usko-ozg" name="" incoming="_DXG01B0gEfCxl5Usko-ozg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_DXG0zh0gEfCxl5Usko-ozg" value="&quot;type&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DXG0zx0gEfCxl5Usko-ozg" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DXG00B0gEfCxl5Usko-ozg" source="_DXG0yB0gEfCxl5Usko-ozg" target="_DXG0yR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+      </edges>
+      <edges xmi:id="_DXG00R0gEfCxl5Usko-ozg" source="_DXG0yh0gEfCxl5Usko-ozg" target="_DXG0yx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+      </edges>
+      <edges xmi:id="_DXG00h0gEfCxl5Usko-ozg" source="_DXG0zB0gEfCxl5Usko-ozg" target="_DXG0yR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_DXG00x0gEfCxl5Usko-ozg" source="_DXG0zB0gEfCxl5Usko-ozg" target="_DXG0yx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_DXG01B0gEfCxl5Usko-ozg" source="_DXG0zB0gEfCxl5Usko-ozg" target="_DXG0zR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_DXG01R0gEfCxl5Usko-ozg" source="_DXG0yR0gEfCxl5Usko-ozg" target="_DXG0yx0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//ListType/type"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_DXG01h0gEfCxl5Usko-ozg" name="Rhs">
+      <nodes xmi:id="_DXG01x0gEfCxl5Usko-ozg" name="" incoming="_DXG07R0gEfCxl5Usko-ozg" outgoing="_DXG05x0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject"/>
+      </nodes>
+      <nodes xmi:id="_DXG02B0gEfCxl5Usko-ozg" name="A.ToBeDeleted" incoming="_DXG05x0gEfCxl5Usko-ozg _DXG06R0gEfCxl5Usko-ozg" outgoing="_DXG07B0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//ListType"/>
+      </nodes>
+      <nodes xmi:id="_DXG02R0gEfCxl5Usko-ozg" name="" incoming="_DXG07h0gEfCxl5Usko-ozg" outgoing="_DXG06B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject"/>
+      </nodes>
+      <nodes xmi:id="_DXG02h0gEfCxl5Usko-ozg" name="A.Child" incoming="_DXG06B0gEfCxl5Usko-ozg _DXG06h0gEfCxl5Usko-ozg _DXG07B0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//PropertyValueType"/>
+      </nodes>
+      <nodes xmi:id="_DXG02x0gEfCxl5Usko-ozg" name="" incoming="_DXG07x0gEfCxl5Usko-ozg" outgoing="_DXG06R0gEfCxl5Usko-ozg _DXG06h0gEfCxl5Usko-ozg _DXG06x0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_DXG03B0gEfCxl5Usko-ozg" name="" incoming="_DXG06x0gEfCxl5Usko-ozg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_DXG03R0gEfCxl5Usko-ozg" name="ChangeSet" incoming="_DXG08B0gEfCxl5Usko-ozg" outgoing="_DXG07R0gEfCxl5Usko-ozg _DXG07h0gEfCxl5Usko-ozg _DXG07x0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_DXG03h0gEfCxl5Usko-ozg" value="&quot;DELETE_ListType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_DXG03x0gEfCxl5Usko-ozg" value="&quot;Deletes one ListType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_DXG04B0gEfCxl5Usko-ozg" value="&quot;DELETE_ListType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_DXG04R0gEfCxl5Usko-ozg" value="&quot;RR: DELETE_ListType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_DXG04h0gEfCxl5Usko-ozg" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_DXG04x0gEfCxl5Usko-ozg" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_DXG05B0gEfCxl5Usko-ozg" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_DXG05R0gEfCxl5Usko-ozg" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DXG05h0gEfCxl5Usko-ozg" name="" outgoing="_DXG08B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DXG05x0gEfCxl5Usko-ozg" source="_DXG01x0gEfCxl5Usko-ozg" target="_DXG02B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+      </edges>
+      <edges xmi:id="_DXG06B0gEfCxl5Usko-ozg" source="_DXG02R0gEfCxl5Usko-ozg" target="_DXG02h0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+      </edges>
+      <edges xmi:id="_DXG06R0gEfCxl5Usko-ozg" source="_DXG02x0gEfCxl5Usko-ozg" target="_DXG02B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_DXG06h0gEfCxl5Usko-ozg" source="_DXG02x0gEfCxl5Usko-ozg" target="_DXG02h0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_DXG06x0gEfCxl5Usko-ozg" source="_DXG02x0gEfCxl5Usko-ozg" target="_DXG03B0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_DXG07B0gEfCxl5Usko-ozg" source="_DXG02B0gEfCxl5Usko-ozg" target="_DXG02h0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//ListType/type"/>
+      </edges>
+      <edges xmi:id="_DXG07R0gEfCxl5Usko-ozg" source="_DXG03R0gEfCxl5Usko-ozg" target="_DXG01x0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_DXG07h0gEfCxl5Usko-ozg" source="_DXG03R0gEfCxl5Usko-ozg" target="_DXG02R0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_DXG07x0gEfCxl5Usko-ozg" source="_DXG03R0gEfCxl5Usko-ozg" target="_DXG02x0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_DXG08B0gEfCxl5Usko-ozg" source="_DXG05h0gEfCxl5Usko-ozg" target="_DXG03R0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_DXG08R0gEfCxl5Usko-ozg" origin="_DXG0yB0gEfCxl5Usko-ozg" image="_DXG01x0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG08h0gEfCxl5Usko-ozg" origin="_DXG0yR0gEfCxl5Usko-ozg" image="_DXG02B0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG08x0gEfCxl5Usko-ozg" origin="_DXG0yh0gEfCxl5Usko-ozg" image="_DXG02R0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG09B0gEfCxl5Usko-ozg" origin="_DXG0yx0gEfCxl5Usko-ozg" image="_DXG02h0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG09R0gEfCxl5Usko-ozg" origin="_DXG0zB0gEfCxl5Usko-ozg" image="_DXG02x0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG09h0gEfCxl5Usko-ozg" origin="_DXG0zR0gEfCxl5Usko-ozg" image="_DXG03B0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DXG09x0gEfCxl5Usko-ozg" origin="_DXG0zx0gEfCxl5Usko-ozg" image="_DXG05h0gEfCxl5Usko-ozg"/>
+  </units>
+</henshin:Module>

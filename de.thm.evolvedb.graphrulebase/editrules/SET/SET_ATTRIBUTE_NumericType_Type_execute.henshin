@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPjosBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_NumericType_Type" description="Sets NumericType Type">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPjosRuOEfCiO5YsU3IcKQ" name="setNumericTypeType" description="Sets the EAttribute type">
+    <parameters xmi:id="_VPjoshuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VPjosxuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VPjotBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VPjotRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPjothuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPjotxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VPjouBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//NumericType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPjouRuOEfCiO5YsU3IcKQ" origin="_VPjotRuOEfCiO5YsU3IcKQ" image="_VPjotxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPjouhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPjosRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPjouxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VPjovBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPjovRuOEfCiO5YsU3IcKQ" source="_VPjouxuOEfCiO5YsU3IcKQ" target="_VPjoshuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPjovhuOEfCiO5YsU3IcKQ" source="_VPjovBuOEfCiO5YsU3IcKQ" target="_VPjosxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

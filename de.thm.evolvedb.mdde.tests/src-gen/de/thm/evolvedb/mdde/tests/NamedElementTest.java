@@ -2,12 +2,9 @@
  */
 package de.thm.evolvedb.mdde.tests;
 
-import de.thm.evolvedb.mdde.MddeFactory;
 import de.thm.evolvedb.mdde.NamedElement;
 
 import junit.framework.TestCase;
-
-import junit.textui.TestRunner;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +12,7 @@ import junit.textui.TestRunner;
  * <!-- end-user-doc -->
  * @generated
  */
-public class NamedElementTest extends TestCase {
+public abstract class NamedElementTest extends TestCase {
 
 	/**
 	 * The fixture for this Named Element test case.
@@ -24,15 +21,6 @@ public class NamedElementTest extends TestCase {
 	 * @generated
 	 */
 	protected NamedElement fixture = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static void main(String[] args) {
-		TestRunner.run(NamedElementTest.class);
-	}
 
 	/**
 	 * Constructs a new Named Element test case with the given name.
@@ -62,28 +50,6 @@ public class NamedElementTest extends TestCase {
 	 */
 	protected NamedElement getFixture() {
 		return fixture;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see junit.framework.TestCase#setUp()
-	 * @generated
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		setFixture(MddeFactory.eINSTANCE.createNamedElement());
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see junit.framework.TestCase#tearDown()
-	 * @generated
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		setFixture(null);
 	}
 
 } //NamedElementTest

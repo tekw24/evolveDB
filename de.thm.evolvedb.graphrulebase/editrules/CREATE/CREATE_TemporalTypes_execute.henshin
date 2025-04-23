@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VP18kBuOEfCiO5YsU3IcKQ" name="CREATE_TemporalTypes" description="Creates one TemporalTypes">
+  <annotations xmi:id="_VP18kRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_TemporalTypes"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VP18khuOEfCiO5YsU3IcKQ" name="createTemporalTypes" description="creates one TemporalTypes">
+    <parameters xmi:id="_VP18kxuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VP18lBuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VP18lRuOEfCiO5YsU3IcKQ" name="Lhs"/>
+    <rhs xmi:id="_VP18lhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VP18lxuOEfCiO5YsU3IcKQ" name="New">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VP18mBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VP18mRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VP18khuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VP18mhuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VP18mxuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VP18nBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VP18nRuOEfCiO5YsU3IcKQ" source="_VP18kxuOEfCiO5YsU3IcKQ" target="_VP18mhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VP18nhuOEfCiO5YsU3IcKQ" source="_VP18nBuOEfCiO5YsU3IcKQ" target="_VP18lBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

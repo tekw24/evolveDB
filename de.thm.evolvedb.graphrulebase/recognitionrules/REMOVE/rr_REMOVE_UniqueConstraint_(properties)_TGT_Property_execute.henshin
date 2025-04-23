@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DZpLYx0gEfCxl5Usko-ozg" name="RR: REMOVE_UniqueConstraint_(properties)_TGT_Property" description="Recognize: Removes UniqueConstraint's reference properties the target Property">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_DZpLZB0gEfCxl5Usko-ozg" name="rr:removeFromUniqueConstraint_properties_Property" description="Recognize: Removes from UniqueConstraint's reference properties the target Property">
+    <parameters xmi:id="_DZpLZR0gEfCxl5Usko-ozg" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_DZpLZh0gEfCxl5Usko-ozg" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_DZpLZx0gEfCxl5Usko-ozg" name="Lhs">
+      <nodes xmi:id="_DZpLaB0gEfCxl5Usko-ozg" name="A.Selected" incoming="_DZpLbh0gEfCxl5Usko-ozg" outgoing="_DZpLcR0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_DZpLaR0gEfCxl5Usko-ozg" name="A.OldTarget" incoming="_DZpLbx0gEfCxl5Usko-ozg _DZpLcR0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_DZpLah0gEfCxl5Usko-ozg" name="" outgoing="_DZpLbh0gEfCxl5Usko-ozg _DZpLbx0gEfCxl5Usko-ozg _DZpLcB0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_DZpLax0gEfCxl5Usko-ozg" name="" incoming="_DZpLcB0gEfCxl5Usko-ozg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_DZpLbB0gEfCxl5Usko-ozg" value="&quot;properties&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DZpLbR0gEfCxl5Usko-ozg" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DZpLbh0gEfCxl5Usko-ozg" source="_DZpLah0gEfCxl5Usko-ozg" target="_DZpLaB0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_DZpLbx0gEfCxl5Usko-ozg" source="_DZpLah0gEfCxl5Usko-ozg" target="_DZpLaR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_DZpLcB0gEfCxl5Usko-ozg" source="_DZpLah0gEfCxl5Usko-ozg" target="_DZpLax0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_DZpLcR0gEfCxl5Usko-ozg" source="_DZpLaB0gEfCxl5Usko-ozg" target="_DZpLaR0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UniqueConstraint/properties"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_DZpLch0gEfCxl5Usko-ozg" name="Rhs">
+      <nodes xmi:id="_DZpLcx0gEfCxl5Usko-ozg" name="A.Selected" incoming="_DZpLgR0gEfCxl5Usko-ozg" outgoing="_DZpLhB0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_DZpLdB0gEfCxl5Usko-ozg" name="A.OldTarget" incoming="_DZpLgh0gEfCxl5Usko-ozg _DZpLhB0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_DZpLdR0gEfCxl5Usko-ozg" name="" incoming="_DZpLhR0gEfCxl5Usko-ozg" outgoing="_DZpLgR0gEfCxl5Usko-ozg _DZpLgh0gEfCxl5Usko-ozg _DZpLgx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_DZpLdh0gEfCxl5Usko-ozg" name="" incoming="_DZpLgx0gEfCxl5Usko-ozg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_DZpLdx0gEfCxl5Usko-ozg" name="ChangeSet" incoming="_DZpLhh0gEfCxl5Usko-ozg" outgoing="_DZpLhR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_DZpLeB0gEfCxl5Usko-ozg" value="&quot;REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_DZpLeR0gEfCxl5Usko-ozg" value="&quot;Removes UniqueConstraint's reference properties the target Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_DZpLeh0gEfCxl5Usko-ozg" value="&quot;REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_DZpLex0gEfCxl5Usko-ozg" value="&quot;RR: REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_DZpLfB0gEfCxl5Usko-ozg" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_DZpLfR0gEfCxl5Usko-ozg" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_DZpLfh0gEfCxl5Usko-ozg" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_DZpLfx0gEfCxl5Usko-ozg" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DZpLgB0gEfCxl5Usko-ozg" name="" outgoing="_DZpLhh0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DZpLgR0gEfCxl5Usko-ozg" source="_DZpLdR0gEfCxl5Usko-ozg" target="_DZpLcx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_DZpLgh0gEfCxl5Usko-ozg" source="_DZpLdR0gEfCxl5Usko-ozg" target="_DZpLdB0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_DZpLgx0gEfCxl5Usko-ozg" source="_DZpLdR0gEfCxl5Usko-ozg" target="_DZpLdh0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_DZpLhB0gEfCxl5Usko-ozg" source="_DZpLcx0gEfCxl5Usko-ozg" target="_DZpLdB0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UniqueConstraint/properties"/>
+      </edges>
+      <edges xmi:id="_DZpLhR0gEfCxl5Usko-ozg" source="_DZpLdx0gEfCxl5Usko-ozg" target="_DZpLdR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_DZpLhh0gEfCxl5Usko-ozg" source="_DZpLgB0gEfCxl5Usko-ozg" target="_DZpLdx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_DZpLhx0gEfCxl5Usko-ozg" origin="_DZpLaB0gEfCxl5Usko-ozg" image="_DZpLcx0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DZpLiB0gEfCxl5Usko-ozg" origin="_DZpLaR0gEfCxl5Usko-ozg" image="_DZpLdB0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DZpLiR0gEfCxl5Usko-ozg" origin="_DZpLah0gEfCxl5Usko-ozg" image="_DZpLdR0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DZpLih0gEfCxl5Usko-ozg" origin="_DZpLax0gEfCxl5Usko-ozg" image="_DZpLdh0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DZpLix0gEfCxl5Usko-ozg" origin="_DZpLbR0gEfCxl5Usko-ozg" image="_DZpLgB0gEfCxl5Usko-ozg"/>
+  </units>
+</henshin:Module>

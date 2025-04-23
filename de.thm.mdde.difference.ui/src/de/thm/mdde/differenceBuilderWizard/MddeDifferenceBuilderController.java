@@ -101,14 +101,14 @@ public class MddeDifferenceBuilderController {
 
 		settings.setScope(Scope.RESOURCE);
 		settings.setValidate(true);
-		settings.setCandidatesService(null);
-		settings.setCorrespondencesService(null);
+//		settings.setCandidatesService(null);
+//		settings.setCorrespondencesService(null);
 
 		Optional<IRecognitionRuleSorter> sorter = IRecognitionRuleSorter.MANAGER.getDefaultExtension();
 		settings.setRrSorter(sorter.get());
 
-		settings.setCalculateEditRuleMatch(false);
-		settings.setSerializeEditRuleMatch(false);
+//		settings.setCalculateEditRuleMatch(false);
+//		settings.setSerializeEditRuleMatch(false);
 
 		SymmetricDifference technicalDifference = createTechnicalDifference();
 

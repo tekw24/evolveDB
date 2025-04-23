@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DWr-BR0gEfCxl5Usko-ozg" name="RR: CREATE_UnionType" description="Recognize: Creates one UnionType">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_DWr-Bh0gEfCxl5Usko-ozg" name="rr:createUnionType" description="Recognize: creates one UnionType">
+    <parameters xmi:id="_DWr-Bx0gEfCxl5Usko-ozg" name="New">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UnionType"/>
+    </parameters>
+    <parameters xmi:id="_DWr-CB0gEfCxl5Usko-ozg" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
+    </parameters>
+    <lhs xmi:id="_DWr-CR0gEfCxl5Usko-ozg" name="Lhs">
+      <nodes xmi:id="_DWr-Ch0gEfCxl5Usko-ozg" name="" outgoing="_DWr-Dh0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+      </nodes>
+      <nodes xmi:id="_DWr-Cx0gEfCxl5Usko-ozg" name="B.New" incoming="_DWr-Dh0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+        <attributes xmi:id="_DWr-DB0gEfCxl5Usko-ozg" value="Type">
+          <type href="http://www.thm.de/graph#//UnionType/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DWr-DR0gEfCxl5Usko-ozg" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DWr-Dh0gEfCxl5Usko-ozg" source="_DWr-Ch0gEfCxl5Usko-ozg" target="_DWr-Cx0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_DWr-Dx0gEfCxl5Usko-ozg" name="Rhs">
+      <nodes xmi:id="_DWr-EB0gEfCxl5Usko-ozg" name="" incoming="_DWr-HR0gEfCxl5Usko-ozg" outgoing="_DWr-HB0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+      </nodes>
+      <nodes xmi:id="_DWr-ER0gEfCxl5Usko-ozg" name="B.New" incoming="_DWr-HB0gEfCxl5Usko-ozg">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+      </nodes>
+      <nodes xmi:id="_DWr-Eh0gEfCxl5Usko-ozg" name="ChangeSet" incoming="_DWr-Hh0gEfCxl5Usko-ozg" outgoing="_DWr-HR0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_DWr-Ex0gEfCxl5Usko-ozg" value="&quot;CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_DWr-FB0gEfCxl5Usko-ozg" value="&quot;Creates one UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_DWr-FR0gEfCxl5Usko-ozg" value="&quot;CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_DWr-Fh0gEfCxl5Usko-ozg" value="&quot;RR: CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_DWr-Fx0gEfCxl5Usko-ozg" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_DWr-GB0gEfCxl5Usko-ozg" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_DWr-GR0gEfCxl5Usko-ozg" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_DWr-Gh0gEfCxl5Usko-ozg" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DWr-Gx0gEfCxl5Usko-ozg" name="" outgoing="_DWr-Hh0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_DWr-HB0gEfCxl5Usko-ozg" source="_DWr-EB0gEfCxl5Usko-ozg" target="_DWr-ER0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+      </edges>
+      <edges xmi:id="_DWr-HR0gEfCxl5Usko-ozg" source="_DWr-Eh0gEfCxl5Usko-ozg" target="_DWr-EB0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_DWr-Hh0gEfCxl5Usko-ozg" source="_DWr-Gx0gEfCxl5Usko-ozg" target="_DWr-Eh0gEfCxl5Usko-ozg">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_DWr-Hx0gEfCxl5Usko-ozg" origin="_DWr-Ch0gEfCxl5Usko-ozg" image="_DWr-EB0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DWr-IB0gEfCxl5Usko-ozg" origin="_DWr-Cx0gEfCxl5Usko-ozg" image="_DWr-ER0gEfCxl5Usko-ozg"/>
+    <mappings xmi:id="_DWr-IR0gEfCxl5Usko-ozg" origin="_DWr-DR0gEfCxl5Usko-ozg" image="_DWr-Gx0gEfCxl5Usko-ozg"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPKnIBuOEfCiO5YsU3IcKQ" name="DELETE_PropertyTypeConstraint_IN_Label_(constraints)" description="Deletes one PropertyTypeConstraint in Label">
+  <annotations xmi:id="_VPKnIRuOEfCiO5YsU3IcKQ" key="INVERSE" value="CREATE_PropertyTypeConstraint_IN_Label_(constraints)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPKnIhuOEfCiO5YsU3IcKQ" name="deletePropertyTypeConstraint_IN_Label" description="deletes one PropertyTypeConstraint in the context: Label">
+    <parameters xmi:id="_VPKnIxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VPKnJBuOEfCiO5YsU3IcKQ" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+    </parameters>
+    <lhs xmi:id="_VPKnJRuOEfCiO5YsU3IcKQ" name="LHS">
+      <nodes xmi:id="_VPKnJhuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VPKnKxuOEfCiO5YsU3IcKQ" outgoing="_VPKnKhuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VPKnJxuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VPKnKBuOEfCiO5YsU3IcKQ" name="ToBeDeleted" incoming="_VPKnKhuOEfCiO5YsU3IcKQ" outgoing="_VPKnKxuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VPKnKRuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+      </nodes>
+      <edges xmi:id="_VPKnKhuOEfCiO5YsU3IcKQ" source="_VPKnJhuOEfCiO5YsU3IcKQ" target="_VPKnKBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VPKnKxuOEfCiO5YsU3IcKQ" source="_VPKnKBuOEfCiO5YsU3IcKQ" target="_VPKnJhuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VPKnLBuOEfCiO5YsU3IcKQ" name="RHS">
+      <nodes xmi:id="_VPKnLRuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VPKnLhuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPKnLxuOEfCiO5YsU3IcKQ" origin="_VPKnJhuOEfCiO5YsU3IcKQ" image="_VPKnLRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPKnMBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPKnIhuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPKnMRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VPKnMhuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VPKnMxuOEfCiO5YsU3IcKQ" name="ToBeDeleted">
+      <annotations xmi:id="_VPKnNBuOEfCiO5YsU3IcKQ" key="INVERSE" value="New"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPKnNRuOEfCiO5YsU3IcKQ" source="_VPKnMRuOEfCiO5YsU3IcKQ" target="_VPKnIxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPKnNhuOEfCiO5YsU3IcKQ" source="_VPKnMxuOEfCiO5YsU3IcKQ" target="_VPKnJBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

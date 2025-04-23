@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPsyoBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_UINT" description="Changes the attribute value of type_FROM_DECIMAL_TO_UINT">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPsyoRuOEfCiO5YsU3IcKQ" name="changeNumericTypeType_FROM_DECIMAL_TO_UINT" description="Changes the attribute value of type_FROM_DECIMAL_TO_UINT">
+    <parameters xmi:id="_VPsyohuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VPsyoxuOEfCiO5YsU3IcKQ" name="&quot;DECIMAL&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPsypBuOEfCiO5YsU3IcKQ" name="&quot;UINT&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VPsypRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VPsyphuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VPsypxuOEfCiO5YsU3IcKQ" value="&quot;DECIMAL&quot;">
+          <type href="http://www.thm.de/graph#//NumericType/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPsyqBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPsyqRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VPsyqhuOEfCiO5YsU3IcKQ" value="&quot;UINT&quot;">
+          <type href="http://www.thm.de/graph#//NumericType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPsyqxuOEfCiO5YsU3IcKQ" origin="_VPsyphuOEfCiO5YsU3IcKQ" image="_VPsyqRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPsyrBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPsyoRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPsyrRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VPsyrhuOEfCiO5YsU3IcKQ" name="&quot;DECIMAL&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPsyrxuOEfCiO5YsU3IcKQ" source="_VPsyrRuOEfCiO5YsU3IcKQ" target="_VPsyohuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPsysBuOEfCiO5YsU3IcKQ" source="_VPsyrhuOEfCiO5YsU3IcKQ" target="_VPsyoxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

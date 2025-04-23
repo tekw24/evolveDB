@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQbLYBuOEfCiO5YsU3IcKQ" name="CREATE_PropertyExistenceConstraint_IN_Label_(constraints)" description="Creates one PropertyExistenceConstraint in Label">
+  <annotations xmi:id="_VQbLYRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_PropertyExistenceConstraint_IN_Label_(constraints)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQbLYhuOEfCiO5YsU3IcKQ" name="createPropertyExistenceConstraint_IN_Label" description="creates one PropertyExistenceConstraint in the context: Label">
+    <parameters xmi:id="_VQbLYxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQbLZBuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VQbLZRuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VQbLZhuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQbLZxuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VQbLaBuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VQbLaRuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQbLahuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VQbLcBuOEfCiO5YsU3IcKQ" outgoing="_VQbLbxuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VQbLaxuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VQbLbBuOEfCiO5YsU3IcKQ" name="New" incoming="_VQbLbxuOEfCiO5YsU3IcKQ" outgoing="_VQbLcBuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VQbLbRuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+        <attributes xmi:id="_VQbLbhuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Constraint/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_VQbLbxuOEfCiO5YsU3IcKQ" source="_VQbLahuOEfCiO5YsU3IcKQ" target="_VQbLbBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VQbLcBuOEfCiO5YsU3IcKQ" source="_VQbLbBuOEfCiO5YsU3IcKQ" target="_VQbLahuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VQbLcRuOEfCiO5YsU3IcKQ" origin="_VQbLZxuOEfCiO5YsU3IcKQ" image="_VQbLahuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQbLchuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQbLYhuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQbLcxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VQbLdBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQbLdRuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VQbLdhuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyExistenceConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VQbLdxuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQbLeBuOEfCiO5YsU3IcKQ" source="_VQbLcxuOEfCiO5YsU3IcKQ" target="_VQbLYxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQbLeRuOEfCiO5YsU3IcKQ" source="_VQbLZBuOEfCiO5YsU3IcKQ" target="_VQbLdRuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQbLehuOEfCiO5YsU3IcKQ" source="_VQbLdxuOEfCiO5YsU3IcKQ" target="_VQbLZRuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

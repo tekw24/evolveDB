@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VNnvABuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_BinaryTypes_Type" description="Sets BinaryTypes Type">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VNnvARuOEfCiO5YsU3IcKQ" name="setBinaryTypesType" description="Sets the EAttribute type">
+    <parameters xmi:id="_VNnvAhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//BinaryTypes"/>
+    </parameters>
+    <parameters xmi:id="_VNnvAxuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//BinaryDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VNnvBBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VNnvBRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//BinaryTypes"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VNnvBhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VNnvBxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//BinaryTypes"/>
+        <attributes xmi:id="_VNnvCBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//BinaryTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VNnvCRuOEfCiO5YsU3IcKQ" origin="_VNnvBRuOEfCiO5YsU3IcKQ" image="_VNnvBxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VNnvChuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VNnvARuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VNnvCxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//BinaryTypes"/>
+    </parameters>
+    <parameters xmi:id="_VNnvDBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//BinaryDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VNnvDRuOEfCiO5YsU3IcKQ" source="_VNnvCxuOEfCiO5YsU3IcKQ" target="_VNnvAhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNnvDhuOEfCiO5YsU3IcKQ" source="_VNnvDBuOEfCiO5YsU3IcKQ" target="_VNnvAxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

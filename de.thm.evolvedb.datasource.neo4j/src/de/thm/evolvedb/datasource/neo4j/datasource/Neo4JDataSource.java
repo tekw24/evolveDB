@@ -29,6 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Driver;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.eclipse.emf.ecore.EObject;
@@ -36,6 +39,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
+import de.thm.evolvedb.datasource.neo4j.connection.Neo4JDatabaseConnectionController;
+import de.thm.evolvedb.graph.presentation.GraphEditorPlugin;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
 import de.thm.mdde.connection.model.DBPDriverLibrary;
@@ -49,6 +54,7 @@ public class Neo4JDataSource implements EDBDataSource {
 
 	private Neo4JDriverDB driver;
 	private Neo4jDriverDependencies dependencies;
+	private Neo4JDatabaseConnectionController connectionController;
 
 	public Neo4JDataSource() {
 		driver = new Neo4JDriverDB();
@@ -80,19 +86,21 @@ public class Neo4JDataSource implements EDBDataSource {
 	public void openConnectionUi() {
 		Driver driver = loadDriverClass();
 		if (driver != null) {
-			MessageDialog.openError(Display.getCurrent().getActiveShell(), "The driver class could be loaded",
-					"EvolveDB was able to load the driver class from the file system. ");
-		} else{
-			MessageDialog.openError(Display.getCurrent().getActiveShell(), "The driver class could not be loaded",
-					"EvolveDB was not able to load the driver class from the file system. ");
+			connectionController = new Neo4JDatabaseConnectionController(driver);
+			connectionController.openConnectionUi();
+		} else {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "The driver class could not be loaded", "EvolveDB was not able to load the driver class from the file system. ");
 		}
 
 	}
+	
 
 	@Override
 	public EObject getRootObject() {
-		return null;
+		return connectionController.createModel();
 	}
+	
+
 	
 	private Driver loadDriverClass() {
 		DBPDriverLibrary library = getDriver().getDriverLibraries().get(0);
@@ -170,8 +178,14 @@ public class Neo4JDataSource implements EDBDataSource {
 
 	@Override
 	public boolean isCanceled() {
-		// TODO Auto-generated method stub
-		return false;
+		return connectionController.isCanceled();
 	}
+
+	@Override
+	public List<String> getFileExtensions() {
+		return Collections.unmodifiableList(
+				Arrays.asList(GraphEditorPlugin.INSTANCE.getString("_UI_GraphEditorFilenameExtensions").split("\\s*,\\s*")));
+	}
+
 
 }
