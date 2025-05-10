@@ -135,7 +135,7 @@ public class ListTypeItemProvider extends PropertyValueTypeItemProvider {
 	@Override
 	public String getText(Object object) {
 		ListType listType = (ListType) object;
-		return getString("_UI_ListType_type") + " " + listType.isNullable();
+		return "List of" + getString("_UI_ListType_type");
 	}
 
 	/**

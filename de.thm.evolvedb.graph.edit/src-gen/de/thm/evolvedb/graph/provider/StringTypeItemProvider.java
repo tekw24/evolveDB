@@ -114,12 +114,12 @@ public class StringTypeItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		StringType stringType = (StringType) object;
-		return getString("_UI_StringType_type") + " " + stringType.isNullable();
+		return getString("_UI_StringType_type") + " " + stringType.getType().name();
 	}
 
 	/**

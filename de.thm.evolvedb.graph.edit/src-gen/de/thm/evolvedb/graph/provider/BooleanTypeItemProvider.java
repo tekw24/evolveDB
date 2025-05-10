@@ -80,12 +80,12 @@ public class BooleanTypeItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		BooleanType booleanType = (BooleanType) object;
-		return getString("_UI_BooleanType_type") + " " + booleanType.isNullable();
+		return getString("_UI_BooleanType_type") + " " + booleanType.getType().name();
 	}
 
 	/**

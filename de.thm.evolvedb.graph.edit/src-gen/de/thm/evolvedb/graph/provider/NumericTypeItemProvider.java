@@ -114,12 +114,12 @@ public class NumericTypeItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		NumericType numericType = (NumericType) object;
-		return getString("_UI_NumericType_type") + " " + numericType.isNullable();
+		return getString("_UI_NumericType_type") + " " + numericType.getType().name();
 	}
 
 	/**

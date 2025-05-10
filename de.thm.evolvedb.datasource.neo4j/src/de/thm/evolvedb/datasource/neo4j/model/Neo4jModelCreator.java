@@ -14,19 +14,33 @@ import java.util.TreeMap;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
+import de.thm.evolvedb.datasource.neo4j.ui.Neo4JResolveMultiLabelWizard;
+import de.thm.evolvedb.datasource.neo4j.ui.Neo4jDatabaseConnectionWizard;
+import de.thm.evolvedb.graph.BooleanDataTypes;
+import de.thm.evolvedb.graph.BooleanType;
 import de.thm.evolvedb.graph.Constraint;
+import de.thm.evolvedb.graph.DynamicUnionTypes;
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphFactory;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.KeyConstraint;
+import de.thm.evolvedb.graph.ListType;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
+import de.thm.evolvedb.graph.NumericDataTypes;
+import de.thm.evolvedb.graph.NumericType;
 import de.thm.evolvedb.graph.PropertyGraph;
 import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.graph.StringDataTypes;
 import de.thm.evolvedb.graph.StringType;
+import de.thm.evolvedb.graph.TemporalDataTypes;
+import de.thm.evolvedb.graph.TemporalTypes;
+import de.thm.evolvedb.graph.UnionType;
 import de.thm.evolvedb.graph.UniqueConstraint;
 import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.graph.PropertyExistenceConstraint;
@@ -47,8 +61,36 @@ public class Neo4jModelCreator {
 		try {
 			stmt = con.createStatement();
 
-			System.out.println("== Knoten-Labels ==");
-			ResultSet rs = stmt.executeQuery("CALL db.labels()");
+			String getMultiLabels = "MATCH (n) WHERE size(labels(n)) > 1 " + "UNWIND labels(n) AS lbl "
+					+ "UNWIND keys(n) AS prop " + "RETURN DISTINCT lbl AS label, prop " + "ORDER BY label, prop;";
+
+			System.out.println("== Multi-Labels ==");
+
+			// Find all labels that are in a multilabel relationship
+			ResultSet rs_7 = stmt.executeQuery(getMultiLabels);
+			Map<String, ArrayList<String>> labelKombos = new TreeMap<String, ArrayList<String>>();
+			while (rs_7.next()) {
+				String labelName = rs_7.getString("label");
+				String propName = rs_7.getString("prop");
+				if (labelKombos.containsKey(labelName)) {
+					labelKombos.get(labelName).add(propName);
+				} else {
+					ArrayList<String> props = new ArrayList<String>();
+					props.add(propName);
+					labelKombos.put(labelName, props);
+				}
+			}
+
+			List<NodeLabel> nodeLabelList = createLabelWithProperties(labelKombos, stmt);
+			graph.getItems().addAll(nodeLabelList);
+
+			for (NodeLabel nodeLabel : nodeLabelList) {
+				nodeLabels.put(nodeLabel.getName(), nodeLabel);
+			}
+
+			System.out.println("== Single-Labels ==");
+			ResultSet rs = stmt.executeQuery("MATCH (n) WHERE size(labels(n)) = 1 " + "UNWIND labels(n) AS lbl "
+					+ "RETURN DISTINCT lbl AS label");
 			ArrayList<String> labels = new ArrayList<String>();
 			while (rs.next()) {
 				System.out.println(rs.getString("label"));
@@ -56,6 +98,10 @@ public class Neo4jModelCreator {
 			}
 
 			for (String label : labels) {
+				if (nodeLabels.containsKey(label)) {
+					// TODO
+					continue;
+				}
 				NodeLabel nodeLabel = createLabelWithProperties(label, stmt);
 				nodeLabels.put(label, nodeLabel);
 				graph.getItems().add(nodeLabel);
@@ -180,12 +226,11 @@ public class Neo4jModelCreator {
 
 		for (ConstraintModel constraintModel : models) {
 
-
 			switch (constraintModel.type) {
 			case "UNIQUENESS": {
 
 				UniqueConstraint uniqueConstraint = graphFactory.createUniqueConstraint();
-				uniqueConstraint.setName("constraint_1");
+				uniqueConstraint.setName(constraintModel.getName());
 
 				if (constraintModel.getEntityType().equals("NODE")) {
 					if (constraintModel.getLabelsOrTypes().size() == 1) {
@@ -223,7 +268,7 @@ public class Neo4jModelCreator {
 			case "NODE_KEY": {
 
 				KeyConstraint keyConstraint = graphFactory.createKeyConstraint();
-				keyConstraint.setName("constraint_1");
+				keyConstraint.setName(constraintModel.getName());
 
 				if (constraintModel.getEntityType().equals("NODE")) {
 					if (constraintModel.getLabelsOrTypes().size() == 1) {
@@ -262,6 +307,7 @@ public class Neo4jModelCreator {
 
 				PropertyExistenceConstraint propertyExistenceConstraint = graphFactory
 						.createPropertyExistenceConstraint();
+				propertyExistenceConstraint.setName(constraintModel.getName());
 
 				if (constraintModel.getLabelsOrTypes().size() == 1) {
 					NodeLabel nodeLabel = nodeLabels.get(constraintModel.getLabelsOrTypes().get(0));
@@ -285,6 +331,7 @@ public class Neo4jModelCreator {
 			case "RELATIONSHIP_PROPERTY_EXISTENCE": {
 				PropertyExistenceConstraint propertyExistenceConstraint = graphFactory
 						.createPropertyExistenceConstraint();
+				propertyExistenceConstraint.setName(constraintModel.getName());
 
 				if (constraintModel.getLabelsOrTypes().size() == 1) {
 					EdgeLabel edgeLabel = edgeLabels.get(constraintModel.getLabelsOrTypes().get(0));
@@ -386,6 +433,84 @@ public class Neo4jModelCreator {
 
 	}
 
+	private List<NodeLabel> createLabelWithProperties(Map<String, ArrayList<String>> labelKombos, Statement stmt)
+			throws SQLException {
+		List<NodeLabel> nodeLabels = new ArrayList<NodeLabel>();
+
+		if (labelKombos.size() > 0) {
+
+			Shell activeShell = Display.getCurrent().getActiveShell();
+			Neo4JResolveMultiLabelWizard wizard = new Neo4JResolveMultiLabelWizard(this, labelKombos);
+			WizardDialog dialog = new WizardDialog(activeShell, wizard);
+			dialog.setBlockOnOpen(true);
+			dialog.open();
+
+			Map<String, ArrayList<String>> map = wizard.getSelectedValues();
+
+			for (Entry<String, ArrayList<String>> entry : map.entrySet()) {
+				NodeLabel label = (NodeLabel) graphFactory.create(graphPackage.getNodeLabel());
+				label.setName(entry.getKey());
+				for (String prop : entry.getValue()) {
+					Property property = createProperty(prop, entry.getKey(), stmt);
+					label.getProperties().add(property);
+				}
+				nodeLabels.add(label);
+			}
+
+		}
+
+		return nodeLabels;
+	}
+
+	protected Property createProperty(String propertyName, String name, Statement stmt) throws SQLException {
+
+		System.out.println(propertyName.toString());
+		String query2 = "MATCH (p:" + name + ") RETURN apoc.meta.cypher.type(p." + propertyName.toString()
+				+ ") AS typeInfo, count(*) AS occurrences ORDER BY occurrences DESC;";
+		ResultSet rs1 = stmt.executeQuery(query2);
+
+		Map<String, Integer> types = new TreeMap<String, Integer>();
+
+		while (rs1.next()) {
+			types.put(rs1.getString("typeInfo"), rs1.getInt("occurrences"));
+		}
+
+		Property property = (Property) graphFactory.create(graphPackage.getProperty());
+		property.setName(propertyName.toString());
+
+		if (types.size() == 1) {
+			for (Entry<String, Integer> type : types.entrySet()) {
+
+				String key = type.getKey();
+				if (type.getKey().startsWith("LIST")) {
+
+					String[] split = key.split(" ");
+
+					key = split[split.length - 1];
+
+					ListType listType = graphFactory.createListType();
+					listType.setType(getPropertyValueTypeForDataType(key));
+
+				} else {
+
+					property.setValue(getPropertyValueTypeForDataType(key));
+
+				}
+
+			}
+		} else if (types.size() > 1) {
+			// TODO
+//			StringType propertyValueType = (StringType) graphFactory.create(graphPackage.());
+//			propertyValueType.setType(StringDataTypes.STRING);
+//
+//			property.setValue(propertyValueType);
+//			label.getProperties().add(property);
+		}
+
+		return property;
+
+	}
+
 	/**
 	 * Creates and Returns a new Label with its properties
 	 * 
@@ -428,17 +553,133 @@ public class Neo4jModelCreator {
 				Property property = (Property) graphFactory.create(graphPackage.getProperty());
 				property.setName(propertyName.toString());
 
-				// TODO
-				StringType propertyValueType = (StringType) graphFactory.create(graphPackage.getStringType());
-				propertyValueType.setType(StringDataTypes.STRING);
+				if (types.size() == 1) {
+					for (Entry<String, Integer> type : types.entrySet()) {
 
-				property.setValue(propertyValueType);
+						String key = type.getKey().toUpperCase();
+						if (type.getKey().startsWith("LIST")) {
+
+							String[] split = key.split(" ");
+
+							key = split[split.length - 1];
+
+							ListType listType = graphFactory.createListType();
+							listType.setType(getPropertyValueTypeForDataType(key));
+
+						} else {
+
+							property.setValue(getPropertyValueTypeForDataType(key));
+
+						}
+
+					}
+				} else if (types.size() > 1) {
+					// TODO
+//					StringType propertyValueType = (StringType) graphFactory.create(graphPackage.());
+//					propertyValueType.setType(StringDataTypes.STRING);
+//
+//					property.setValue(propertyValueType);
+//					label.getProperties().add(property);
+				}
 				label.getProperties().add(property);
 
 			}
 		}
 
 		return label;
+	}
+
+	private PropertyValueType getPropertyValueTypeForDataType(String key) {
+		switch (key) {
+
+		case "STRING": {
+
+			StringType propertyValueType = (StringType) graphFactory.create(graphPackage.getStringType());
+			propertyValueType.setType(StringDataTypes.STRING);
+
+			return propertyValueType;
+
+		}
+		case "INTEGER": {
+			NumericType propertyValueType = graphFactory.createNumericType();
+			propertyValueType.setFractionalPart(0);
+			propertyValueType.setType(NumericDataTypes.INT);
+			return propertyValueType;
+
+		}
+		case "LONG": {
+			NumericType propertyValueType = graphFactory.createNumericType();
+			propertyValueType.setFractionalPart(0);
+			propertyValueType.setType(NumericDataTypes.INT);
+			//TODO LONG
+			return propertyValueType;
+
+		}
+		case "FLOAT": {
+			NumericType propertyValueType = graphFactory.createNumericType();
+			propertyValueType.setFractionalPart(0);
+			propertyValueType.setType(NumericDataTypes.FLOAT);
+			return propertyValueType;
+
+		}
+		case "BOOLEAN": {
+			BooleanType propertyValueType = graphFactory.createBooleanType();
+			propertyValueType.setType(BooleanDataTypes.BOOLEAN);
+			return propertyValueType;
+
+		}
+		case "NULL": {
+			UnionType propertyValueType = graphFactory.createUnionType();
+			propertyValueType.setType(DynamicUnionTypes.ANY_TYPE);
+			return propertyValueType;
+
+		}
+		case "ANY": {
+			UnionType propertyValueType = graphFactory.createUnionType();
+			propertyValueType.setType(DynamicUnionTypes.ANY_TYPE);
+			return propertyValueType;
+
+		}
+		case "DATE_TIME": {
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.ZONED_DATETIME);
+			return propertyValueType;
+
+		}
+		case "DATE": {
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.DATE);
+			return propertyValueType;
+
+		}
+		case "TIME": {
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.ZONED_TIME);
+			return propertyValueType;
+
+		}
+		case "LOCAL_TIME": {
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.LOCAL_TIME);
+			return propertyValueType;
+
+		}
+		case "LOCAL_DATE_TIME": {
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.LOCAL_DATETIME);
+			return propertyValueType;
+
+		}
+		case "DURATION": {
+			// TODO DURATION als Datentyp!
+			TemporalTypes propertyValueType = graphFactory.createTemporalTypes();
+			propertyValueType.setType(TemporalDataTypes.LOCAL_DATETIME);
+			return propertyValueType;
+
+		}
+
+		}
+		return null;
 	}
 
 	protected Map<String, EdgeLabel> createRelationshipLabels(Map<String, Map<String, List>> relTypesAndProperties,
@@ -456,13 +697,33 @@ public class Neo4jModelCreator {
 				List datatype = entry2.getValue();
 
 				if (datatype.size() == 1) {
-					StringType propertyValueType = graphFactory.createStringType();
-					propertyValueType.setType(StringDataTypes.STRING);
-					property.setValue(propertyValueType);
-				} else {
-					// TODO
-				}
 
+					String key = datatype.get(0).toString().toUpperCase();
+					if (key.startsWith("LIST")) {
+
+						String[] split = key.split(" ");
+
+						key = split[split.length - 1];
+
+						ListType listType = graphFactory.createListType();
+						listType.setType(getPropertyValueTypeForDataType(key));
+						
+						property.setValue(listType);
+
+					} else {
+
+						property.setValue(getPropertyValueTypeForDataType(key));
+
+					}
+
+				} else if (datatype.size() > 1) {
+					// TODO
+//					StringType propertyValueType = (StringType) graphFactory.create(graphPackage.());
+//					propertyValueType.setType(StringDataTypes.STRING);
+//
+//					property.setValue(propertyValueType);
+//					label.getProperties().add(property);
+				}
 				edgeLabel.getProperties().add(property);
 
 			}

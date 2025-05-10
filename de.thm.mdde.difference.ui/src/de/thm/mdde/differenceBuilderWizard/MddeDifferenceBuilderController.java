@@ -39,6 +39,8 @@ import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
 import org.sidiff.difference.lifting.api.settings.RecognitionEngineMode;
 import org.sidiff.difference.lifting.api.util.PipelineUtils;
+import org.sidiff.difference.lifting.recognitionengine.RecognitionEngineSetup;
+import org.sidiff.difference.lifting.recognitionengine.util.RecognitionEngineUtil;
 import org.sidiff.difference.lifting.recognitionrulesorter.IRecognitionRuleSorter;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -109,7 +111,14 @@ public class MddeDifferenceBuilderController {
 
 //		settings.setCalculateEditRuleMatch(false);
 //		settings.setSerializeEditRuleMatch(false);
-
+		
+		RecognitionEngineSetup setup = PipelineUtils.createRecognitionEngineSetup(settings);
+		//TODO Try to prevent Deadlock
+		setup.setUseThreadPool(true);
+		
+		settings.setRecognitionEngine(RecognitionEngineUtil.getDefaultRecognitionEngine(
+						setup));
+		
 		SymmetricDifference technicalDifference = createTechnicalDifference();
 
 		return LiftingFacade.liftTechnicalDifference(technicalDifference, settings);

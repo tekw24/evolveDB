@@ -292,17 +292,17 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 
 	}
 
-	protected void setHost(String host) {
+	public void setHost(String host) {
 		hostname.setText(host);
 
 	}
 
-	protected void setPort(String port) {
+	public void setPort(String port) {
 		portSpinner.setSelection(Integer.valueOf(port));
 
 	}
 
-	protected void setUser(String user) {
+	public void setUser(String user) {
 		usernameText.setText(user);
 
 	}
@@ -329,6 +329,12 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 		btnSaveConfiguration.setEnabled(enable);
 			
 	}
+	
+	
+	
+	
+	
+	
 
 //	/**
 //	 * Returns whether the user has preselected a schema.
