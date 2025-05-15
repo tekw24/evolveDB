@@ -9,15 +9,29 @@
     <parameters xmi:id="_VObARBuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
       <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
     </parameters>
-    <lhs xmi:id="_VObARRuOEfCiO5YsU3IcKQ" name="Lhs"/>
+    <parameters xmi:id="_JmiBMDG1EfCg2YAAzmjXgQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VObARRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_NmAugDG1EfCg2YAAzmjXgQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </lhs>
     <rhs xmi:id="_VObARhuOEfCiO5YsU3IcKQ" name="Rhs">
-      <nodes xmi:id="_VObARxuOEfCiO5YsU3IcKQ" name="New">
+      <nodes xmi:id="_VObARxuOEfCiO5YsU3IcKQ" name="New" incoming="_OoJg8TG1EfCg2YAAzmjXgQ">
         <type href="http://www.thm.de/graph#//UnionType"/>
         <attributes xmi:id="_VObASBuOEfCiO5YsU3IcKQ" value="Type">
           <type href="http://www.thm.de/graph#//UnionType/type"/>
         </attributes>
       </nodes>
+      <nodes xmi:id="_OoJg8DG1EfCg2YAAzmjXgQ" name="Selected" outgoing="_OoJg8TG1EfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_OoJg8TG1EfCg2YAAzmjXgQ" source="_OoJg8DG1EfCg2YAAzmjXgQ" target="_VObARxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
     </rhs>
+    <mappings xmi:id="_P2sXsDG1EfCg2YAAzmjXgQ" origin="_NmAugDG1EfCg2YAAzmjXgQ" image="_OoJg8DG1EfCg2YAAzmjXgQ"/>
   </units>
   <units xsi:type="henshin:PriorityUnit" xmi:id="_VObASRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VObAQhuOEfCiO5YsU3IcKQ">
     <parameters xmi:id="_VObAShuOEfCiO5YsU3IcKQ" name="New">
@@ -27,7 +41,11 @@
     <parameters xmi:id="_VObATBuOEfCiO5YsU3IcKQ" name="Type">
       <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
     </parameters>
+    <parameters xmi:id="_atpTIDG1EfCg2YAAzmjXgQ" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
     <parameterMappings xmi:id="_VObATRuOEfCiO5YsU3IcKQ" source="_VObAQxuOEfCiO5YsU3IcKQ" target="_VObAShuOEfCiO5YsU3IcKQ"/>
     <parameterMappings xmi:id="_VObAThuOEfCiO5YsU3IcKQ" source="_VObATBuOEfCiO5YsU3IcKQ" target="_VObARBuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_ci8A0DG1EfCg2YAAzmjXgQ" source="_atpTIDG1EfCg2YAAzmjXgQ" target="_JmiBMDG1EfCg2YAAzmjXgQ"/>
   </units>
 </henshin:Module>

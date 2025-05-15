@@ -156,6 +156,12 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 	public String getEncoding() {
 		return encodingField.getText();
 	}
+	
+	
+
+	public String getFormatted_file_extensions() {
+		return formatted_file_extensions;
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->

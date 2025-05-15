@@ -123,7 +123,7 @@ public class CorrespondenceDialog extends TitleAreaDialog {
 				name = column.getName();
 			} else if (e instanceof Property) {
 				Property constraint = (Property) e;
-				name = constraint.getName() + " (" + constraint.eContainingFeature() != null ? constraint.eContainingFeature().getName() +")": ")";
+				name = constraint.getName() + " (" + getParentName(constraint)+")";
 			} else if (e instanceof EdgeType) {
 				EdgeType column = (EdgeType) e;
 				name = getEdgeTypeName(column);
@@ -143,11 +143,22 @@ public class CorrespondenceDialog extends TitleAreaDialog {
 		return table;
 	}
 	
+	private String getParentName(Property property) {
+		String nameParent = "";
+		if(property.eContainingFeature() != null) {
+			EObject eObject = property.eContainer();
+			if(eObject instanceof de.thm.evolvedb.graph.Label)
+				nameParent = ((de.thm.evolvedb.graph.Label) eObject).getName();
+		}
+		return nameParent;
+	}
+	
 	private String getEdgeTypeName(EdgeType edgeType) {
 
 		String name = "";
 		for (EdgeLabel label : edgeType.getLabels()) {
 			name += label.getName() != null ? ":" + label.getName() : "";
+			name += "(" + getNodeTypeName(edgeType.getSrc())+ ", " + getNodeTypeName(edgeType.getTgt())+")";
 		}
 
 		return name;

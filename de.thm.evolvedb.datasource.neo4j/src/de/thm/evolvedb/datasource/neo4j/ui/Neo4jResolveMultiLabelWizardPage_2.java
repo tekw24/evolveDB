@@ -2,6 +2,7 @@ package de.thm.evolvedb.datasource.neo4j.ui;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
@@ -30,6 +31,12 @@ public class Neo4jResolveMultiLabelWizardPage_2 extends WizardPage {
 		super(pageName);
 		this.dataMap = dataMap;
 		setPageComplete(false);
+		
+		//adds all labels without selection
+		for(Entry<String, ArrayList<String>> entry : dataMap.entrySet()) {
+			selectedValues.put(entry.getKey(), new ArrayList<String>());
+		}
+		
 	}
 
 	@Override

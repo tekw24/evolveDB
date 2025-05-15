@@ -18,6 +18,8 @@ package de.thm.evolvedb.graph.difference.wizard;
 
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.NodeLabel;
+import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.PropertyGraph;
 
 import java.util.Comparator;
@@ -415,6 +417,18 @@ public class MddeDifferenceBuilderMatchingPageEdgeType extends WizardPage {
 
 		String name = "";
 		for (EdgeLabel label : edgeType.getLabels()) {
+			name += label.getName() != null ? ":" + label.getName() : "";
+			name += "(" + getNodeTypeName(edgeType.getSrc())+ ", " + getNodeTypeName(edgeType.getTgt())+")";
+		}
+
+		return name;
+	}
+	
+	
+	private String getNodeTypeName(NodeType nodeType) {
+
+		String name = "";
+		for (NodeLabel label : nodeType.getLabel()) {
 			name += label.getName() != null ? ":" + label.getName() : "";
 		}
 

@@ -1,81 +1,135 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_xEUm1Sv6EfC2TMV-xhBWoA" name="RR: CREATE_UnionType" description="Recognize: Creates one UnionType">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_7_stPDG2EfCg2YAAzmjXgQ" name="RR: CREATE_UnionType" description="Recognize: Creates one UnionType">
   <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
   <imports href="http://www.sidiff.org/matching/model#/"/>
   <imports href="http://www.thm.de/graph#/"/>
-  <units xsi:type="henshin:Rule" xmi:id="_xEUm1iv6EfC2TMV-xhBWoA" name="rr:createUnionType" description="Recognize: creates one UnionType">
-    <parameters xmi:id="_xEUm1yv6EfC2TMV-xhBWoA" name="New">
+  <units xsi:type="henshin:Rule" xmi:id="_7_stPTG2EfCg2YAAzmjXgQ" name="rr:createUnionType" description="Recognize: creates one UnionType">
+    <parameters xmi:id="_7_stPjG2EfCg2YAAzmjXgQ" name="New">
       <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UnionType"/>
     </parameters>
-    <parameters xmi:id="_xEUm2Cv6EfC2TMV-xhBWoA" name="Type">
+    <parameters xmi:id="_7_stPzG2EfCg2YAAzmjXgQ" name="Type">
       <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
     </parameters>
-    <lhs xmi:id="_xEUm2Sv6EfC2TMV-xhBWoA" name="Lhs">
-      <nodes xmi:id="_xEUm2iv6EfC2TMV-xhBWoA" name="" outgoing="_xEUm3iv6EfC2TMV-xhBWoA">
+    <parameters xmi:id="_7_stQDG2EfCg2YAAzmjXgQ" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_7_stQTG2EfCg2YAAzmjXgQ" name="Lhs">
+      <nodes xmi:id="_7_stQjG2EfCg2YAAzmjXgQ" name="B.Selected" incoming="_7_stSzG2EfCg2YAAzmjXgQ" outgoing="_7_stTjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_7_stQzG2EfCg2YAAzmjXgQ" name="" outgoing="_7_stSjG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
       </nodes>
-      <nodes xmi:id="_xEUm2yv6EfC2TMV-xhBWoA" name="B.New" incoming="_xEUm3iv6EfC2TMV-xhBWoA">
+      <nodes xmi:id="_7_stRDG2EfCg2YAAzmjXgQ" name="B.New" incoming="_7_stSjG2EfCg2YAAzmjXgQ _7_stTDG2EfCg2YAAzmjXgQ _7_stTjG2EfCg2YAAzmjXgQ">
         <type href="http://www.thm.de/graph#//UnionType"/>
-        <attributes xmi:id="_xEUm3Cv6EfC2TMV-xhBWoA" value="Type">
+        <attributes xmi:id="_7_stRTG2EfCg2YAAzmjXgQ" value="Type">
           <type href="http://www.thm.de/graph#//UnionType/type"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_xEUm3Sv6EfC2TMV-xhBWoA" name="">
+      <nodes xmi:id="_7_stRjG2EfCg2YAAzmjXgQ" name="" outgoing="_7_stSzG2EfCg2YAAzmjXgQ _7_stTDG2EfCg2YAAzmjXgQ _7_stTTG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+      </nodes>
+      <nodes xmi:id="_7_stRzG2EfCg2YAAzmjXgQ" name="" incoming="_7_stTTG2EfCg2YAAzmjXgQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_7_stSDG2EfCg2YAAzmjXgQ" value="&quot;value&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_7_stSTG2EfCg2YAAzmjXgQ" name="">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
       </nodes>
-      <edges xmi:id="_xEUm3iv6EfC2TMV-xhBWoA" source="_xEUm2iv6EfC2TMV-xhBWoA" target="_xEUm2yv6EfC2TMV-xhBWoA">
+      <edges xmi:id="_7_stSjG2EfCg2YAAzmjXgQ" source="_7_stQzG2EfCg2YAAzmjXgQ" target="_7_stRDG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
       </edges>
+      <edges xmi:id="_7_stSzG2EfCg2YAAzmjXgQ" source="_7_stRjG2EfCg2YAAzmjXgQ" target="_7_stQjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+      </edges>
+      <edges xmi:id="_7_stTDG2EfCg2YAAzmjXgQ" source="_7_stRjG2EfCg2YAAzmjXgQ" target="_7_stRDG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+      </edges>
+      <edges xmi:id="_7_stTTG2EfCg2YAAzmjXgQ" source="_7_stRjG2EfCg2YAAzmjXgQ" target="_7_stRzG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+      </edges>
+      <edges xmi:id="_7_stTjG2EfCg2YAAzmjXgQ" source="_7_stQjG2EfCg2YAAzmjXgQ" target="_7_stRDG2EfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
     </lhs>
-    <rhs xmi:id="_xEUm3yv6EfC2TMV-xhBWoA" name="Rhs">
-      <nodes xmi:id="_xEUm4Cv6EfC2TMV-xhBWoA" name="" incoming="_xEUm7Sv6EfC2TMV-xhBWoA" outgoing="_xEUm7Cv6EfC2TMV-xhBWoA">
+    <rhs xmi:id="_7_stTzG2EfCg2YAAzmjXgQ" name="Rhs">
+      <nodes xmi:id="_7_stUDG2EfCg2YAAzmjXgQ" name="B.Selected" incoming="_7_stYDG2EfCg2YAAzmjXgQ" outgoing="_7_stYzG2EfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_7_stUTG2EfCg2YAAzmjXgQ" name="" incoming="_7_stZDG2EfCg2YAAzmjXgQ" outgoing="_7_stXzG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
       </nodes>
-      <nodes xmi:id="_xEUm4Sv6EfC2TMV-xhBWoA" name="B.New" incoming="_xEUm7Cv6EfC2TMV-xhBWoA">
+      <nodes xmi:id="_7_stUjG2EfCg2YAAzmjXgQ" name="B.New" incoming="_7_stXzG2EfCg2YAAzmjXgQ _7_stYTG2EfCg2YAAzmjXgQ _7_stYzG2EfCg2YAAzmjXgQ">
         <type href="http://www.thm.de/graph#//UnionType"/>
       </nodes>
-      <nodes xmi:id="_xEUm4iv6EfC2TMV-xhBWoA" name="ChangeSet" incoming="_xEUm7iv6EfC2TMV-xhBWoA" outgoing="_xEUm7Sv6EfC2TMV-xhBWoA">
+      <nodes xmi:id="_7_stUzG2EfCg2YAAzmjXgQ" name="" incoming="_7_stZTG2EfCg2YAAzmjXgQ" outgoing="_7_stYDG2EfCg2YAAzmjXgQ _7_stYTG2EfCg2YAAzmjXgQ _7_stYjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+      </nodes>
+      <nodes xmi:id="_7_stVDG2EfCg2YAAzmjXgQ" name="" incoming="_7_stYjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_7_stVTG2EfCg2YAAzmjXgQ" name="ChangeSet" incoming="_7_stZjG2EfCg2YAAzmjXgQ" outgoing="_7_stZDG2EfCg2YAAzmjXgQ _7_stZTG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
-        <attributes xmi:id="_xEUm4yv6EfC2TMV-xhBWoA" value="&quot;CREATE_UnionType&quot;">
+        <attributes xmi:id="_7_stVjG2EfCg2YAAzmjXgQ" value="&quot;CREATE_UnionType&quot;">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
         </attributes>
-        <attributes xmi:id="_xEUm5Cv6EfC2TMV-xhBWoA" value="&quot;Creates one UnionType&quot;">
+        <attributes xmi:id="_7_stVzG2EfCg2YAAzmjXgQ" value="&quot;Creates one UnionType&quot;">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
         </attributes>
-        <attributes xmi:id="_xEUm5Sv6EfC2TMV-xhBWoA" value="&quot;CREATE_UnionType&quot;">
+        <attributes xmi:id="_7_stWDG2EfCg2YAAzmjXgQ" value="&quot;CREATE_UnionType&quot;">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
         </attributes>
-        <attributes xmi:id="_xEUm5iv6EfC2TMV-xhBWoA" value="&quot;RR: CREATE_UnionType&quot;">
+        <attributes xmi:id="_7_stWTG2EfCg2YAAzmjXgQ" value="&quot;RR: CREATE_UnionType&quot;">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
         </attributes>
-        <attributes xmi:id="_xEUm5yv6EfC2TMV-xhBWoA" value="1">
+        <attributes xmi:id="_7_stWjG2EfCg2YAAzmjXgQ" value="1">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
         </attributes>
-        <attributes xmi:id="_xEUm6Cv6EfC2TMV-xhBWoA" value="0">
+        <attributes xmi:id="_7_stWzG2EfCg2YAAzmjXgQ" value="0">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
         </attributes>
-        <attributes xmi:id="_xEUm6Sv6EfC2TMV-xhBWoA" value="2">
+        <attributes xmi:id="_7_stXDG2EfCg2YAAzmjXgQ" value="3">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
         </attributes>
-        <attributes xmi:id="_xEUm6iv6EfC2TMV-xhBWoA" value="2">
+        <attributes xmi:id="_7_stXTG2EfCg2YAAzmjXgQ" value="3">
           <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_xEUm6yv6EfC2TMV-xhBWoA" name="" outgoing="_xEUm7iv6EfC2TMV-xhBWoA">
+      <nodes xmi:id="_7_stXjG2EfCg2YAAzmjXgQ" name="" outgoing="_7_stZjG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
       </nodes>
-      <edges xmi:id="_xEUm7Cv6EfC2TMV-xhBWoA" source="_xEUm4Cv6EfC2TMV-xhBWoA" target="_xEUm4Sv6EfC2TMV-xhBWoA">
+      <edges xmi:id="_7_stXzG2EfCg2YAAzmjXgQ" source="_7_stUTG2EfCg2YAAzmjXgQ" target="_7_stUjG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
       </edges>
-      <edges xmi:id="_xEUm7Sv6EfC2TMV-xhBWoA" source="_xEUm4iv6EfC2TMV-xhBWoA" target="_xEUm4Cv6EfC2TMV-xhBWoA">
+      <edges xmi:id="_7_stYDG2EfCg2YAAzmjXgQ" source="_7_stUzG2EfCg2YAAzmjXgQ" target="_7_stUDG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+      </edges>
+      <edges xmi:id="_7_stYTG2EfCg2YAAzmjXgQ" source="_7_stUzG2EfCg2YAAzmjXgQ" target="_7_stUjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+      </edges>
+      <edges xmi:id="_7_stYjG2EfCg2YAAzmjXgQ" source="_7_stUzG2EfCg2YAAzmjXgQ" target="_7_stVDG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+      </edges>
+      <edges xmi:id="_7_stYzG2EfCg2YAAzmjXgQ" source="_7_stUDG2EfCg2YAAzmjXgQ" target="_7_stUjG2EfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+      <edges xmi:id="_7_stZDG2EfCg2YAAzmjXgQ" source="_7_stVTG2EfCg2YAAzmjXgQ" target="_7_stUTG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
       </edges>
-      <edges xmi:id="_xEUm7iv6EfC2TMV-xhBWoA" source="_xEUm6yv6EfC2TMV-xhBWoA" target="_xEUm4iv6EfC2TMV-xhBWoA">
+      <edges xmi:id="_7_stZTG2EfCg2YAAzmjXgQ" source="_7_stVTG2EfCg2YAAzmjXgQ" target="_7_stUzG2EfCg2YAAzmjXgQ">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_7_stZjG2EfCg2YAAzmjXgQ" source="_7_stXjG2EfCg2YAAzmjXgQ" target="_7_stVTG2EfCg2YAAzmjXgQ">
         <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_xEUm7yv6EfC2TMV-xhBWoA" origin="_xEUm2iv6EfC2TMV-xhBWoA" image="_xEUm4Cv6EfC2TMV-xhBWoA"/>
-    <mappings xmi:id="_xEUm8Cv6EfC2TMV-xhBWoA" origin="_xEUm2yv6EfC2TMV-xhBWoA" image="_xEUm4Sv6EfC2TMV-xhBWoA"/>
-    <mappings xmi:id="_xEUm8Sv6EfC2TMV-xhBWoA" origin="_xEUm3Sv6EfC2TMV-xhBWoA" image="_xEUm6yv6EfC2TMV-xhBWoA"/>
+    <mappings xmi:id="_7_stZzG2EfCg2YAAzmjXgQ" origin="_7_stQjG2EfCg2YAAzmjXgQ" image="_7_stUDG2EfCg2YAAzmjXgQ"/>
+    <mappings xmi:id="_7_staDG2EfCg2YAAzmjXgQ" origin="_7_stQzG2EfCg2YAAzmjXgQ" image="_7_stUTG2EfCg2YAAzmjXgQ"/>
+    <mappings xmi:id="_7_staTG2EfCg2YAAzmjXgQ" origin="_7_stRDG2EfCg2YAAzmjXgQ" image="_7_stUjG2EfCg2YAAzmjXgQ"/>
+    <mappings xmi:id="_7_stajG2EfCg2YAAzmjXgQ" origin="_7_stRjG2EfCg2YAAzmjXgQ" image="_7_stUzG2EfCg2YAAzmjXgQ"/>
+    <mappings xmi:id="_7_stazG2EfCg2YAAzmjXgQ" origin="_7_stRzG2EfCg2YAAzmjXgQ" image="_7_stVDG2EfCg2YAAzmjXgQ"/>
+    <mappings xmi:id="_7_stbDG2EfCg2YAAzmjXgQ" origin="_7_stSTG2EfCg2YAAzmjXgQ" image="_7_stXjG2EfCg2YAAzmjXgQ"/>
   </units>
 </henshin:Module>

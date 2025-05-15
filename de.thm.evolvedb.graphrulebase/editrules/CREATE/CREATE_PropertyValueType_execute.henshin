@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPO4kBuOEfCiO5YsU3IcKQ" name="CREATE_PropertyValueType_execute" description="Creates one StringType">
+  <annotations xmi:id="_VPO4kRuOEfCiO5YsU3IcKQ" key="INVERSE" value=""/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPO4khuOEfCiO5YsU3IcKQ" name="createStringType" description="creates one StringType">
+    <parameters xmi:id="_VPO4kxuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VPO4lBuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_9FumUDGkEfCg2YAAzmjXgQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VPO4lRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_AP3nEDGlEfCg2YAAzmjXgQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPO4lhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPO4lxuOEfCiO5YsU3IcKQ" name="New" incoming="_HLO2sDGlEfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//StringType"/>
+        <attributes xmi:id="_VPO4mBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//StringType/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_ClKDcDGlEfCg2YAAzmjXgQ" name="Selected" outgoing="_HLO2sDGlEfCg2YAAzmjXgQ">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_HLO2sDGlEfCg2YAAzmjXgQ" source="_ClKDcDGlEfCg2YAAzmjXgQ" target="_VPO4lxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Fx_y4DGlEfCg2YAAzmjXgQ" origin="_AP3nEDGlEfCg2YAAzmjXgQ" image="_ClKDcDGlEfCg2YAAzmjXgQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPO4mRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPO4khuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPO4mhuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <annotations xmi:id="_VPO4mxuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VPO4nBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_LFOnEDGlEfCg2YAAzmjXgQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPO4nRuOEfCiO5YsU3IcKQ" source="_VPO4kxuOEfCiO5YsU3IcKQ" target="_VPO4mhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPO4nhuOEfCiO5YsU3IcKQ" source="_VPO4nBuOEfCiO5YsU3IcKQ" target="_VPO4lBuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_RKlbwDGlEfCg2YAAzmjXgQ" source="_LFOnEDGlEfCg2YAAzmjXgQ" target="_9FumUDGkEfCg2YAAzmjXgQ"/>
+  </units>
+</henshin:Module>

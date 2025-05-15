@@ -477,6 +477,10 @@ public class Neo4jModelCreator {
 
 		Property property = (Property) graphFactory.create(graphPackage.getProperty());
 		property.setName(propertyName.toString());
+		
+		if(types.size() > 1 && types.containsKey("NULL")) {
+			types.remove("NULL"); //TODO Algorithm
+		}
 
 		if (types.size() == 1) {
 			for (Entry<String, Integer> type : types.entrySet()) {
@@ -552,6 +556,11 @@ public class Neo4jModelCreator {
 
 				Property property = (Property) graphFactory.create(graphPackage.getProperty());
 				property.setName(propertyName.toString());
+				
+				if(types.size() > 1 && types.containsKey("NULL")) {
+					types.remove("NULL"); //TODO Algorithm
+				}
+					
 
 				if (types.size() == 1) {
 					for (Entry<String, Integer> type : types.entrySet()) {
@@ -565,7 +574,7 @@ public class Neo4jModelCreator {
 
 							ListType listType = graphFactory.createListType();
 							listType.setType(getPropertyValueTypeForDataType(key));
-
+							property.setValue(listType);
 						} else {
 
 							property.setValue(getPropertyValueTypeForDataType(key));

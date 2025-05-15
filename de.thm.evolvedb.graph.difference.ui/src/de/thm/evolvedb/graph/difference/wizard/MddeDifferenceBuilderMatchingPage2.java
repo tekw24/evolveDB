@@ -375,9 +375,9 @@ public class MddeDifferenceBuilderMatchingPage2 extends WizardPage {
 	private String getParentName(Property property) {
 		String nameParent = "";
 		if(property.eContainingFeature() != null) {
-			EObject e = property.eContainingFeature().eContainer();
-			if(e instanceof de.thm.evolvedb.graph.Label)
-				nameParent = ((de.thm.evolvedb.graph.Label) e).getName();
+			EObject eObject = property.eContainer();
+			if(eObject instanceof de.thm.evolvedb.graph.Label)
+				nameParent = ((de.thm.evolvedb.graph.Label) eObject).getName();
 		}
 		return nameParent;
 	}
