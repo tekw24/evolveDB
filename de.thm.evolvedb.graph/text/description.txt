@@ -18,12 +18,14 @@ Package graph <http://www.thm.de/graph>
     Reference graph : PropertyGraph
 
   Class NodeType -> GraphItem
+    Attribute /name : EString
     Reference label : NodeLabel<<0..*>>
     Reference outgoing : EdgeType<<0..*>>
     Reference incoming : EdgeType<<0..*>>
     Reference properties : Property<<0..*>>
 
   Class EdgeType -> GraphItem
+    Attribute /name : EString
     Reference labels : EdgeLabel<<0..*>>
     Reference properties : Property<<0..*>>
     Reference src : NodeType
@@ -127,6 +129,7 @@ Package graph <http://www.thm.de/graph>
     Literal FLOAT = 3
     Literal FLOAT128 = 4
     Literal DOUBLE = 5
+    Literal LONG = 0
 
   Enum StringDataTypes
     Literal VARCHAR = 1

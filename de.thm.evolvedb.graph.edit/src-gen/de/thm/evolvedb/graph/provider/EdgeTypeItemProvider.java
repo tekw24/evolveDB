@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -46,11 +47,28 @@ public class EdgeTypeItemProvider extends GraphItemItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNamePropertyDescriptor(object);
 			addLabelsPropertyDescriptor(object);
 			addSrcPropertyDescriptor(object);
 			addTgtPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(), getString("_UI_EdgeType_name_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_EdgeType_name_feature",
+								"_UI_EdgeType_type"),
+						GraphPackage.Literals.EDGE_TYPE__NAME, true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -149,11 +167,12 @@ public class EdgeTypeItemProvider extends GraphItemItemProvider {
 	public String getText(Object object) {
 		if (object instanceof EdgeType) {
 			EdgeType type = (EdgeType) object;
-			String name = "";
-			for (EdgeLabel label : type.getLabels()) {
-				name += label.getName() != null ? ":" + label.getName() : "";
-			}
-			return getString("_UI_EdgeType_type") + " " + name;
+//			String name = "";
+//			for (EdgeLabel label : type.getLabels()) {
+//				name += label.getName() != null ? ":" + label.getName() : "";
+//			}
+//			return getString("_UI_EdgeType_type") + " " + name;
+			return getString("_UI_EdgeType_type") + " " +type.getName();
 		}
 		return getString("_UI_EdgeType_type");
 	}
@@ -170,6 +189,7 @@ public class EdgeTypeItemProvider extends GraphItemItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EdgeType.class)) {
+		case GraphPackage.EDGE_TYPE__NAME:
 		case GraphPackage.EDGE_TYPE__LABELS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

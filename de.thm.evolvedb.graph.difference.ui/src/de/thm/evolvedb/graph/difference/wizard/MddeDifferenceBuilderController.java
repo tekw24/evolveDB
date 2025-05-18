@@ -140,6 +140,11 @@ public class MddeDifferenceBuilderController {
 			// MatchingUtils.getMatcherByKey("org.sidiff.matcher.id.xmiid.XMIIDMatcher");
 			IMatcher namedElementMatcher = MatchingUtils
 					.getMatcherByKey("org.sidiff.matcher.signature.name.NamedElementMatcher");
+			
+			IMatcher referenceMatcher = MatchingUtils
+					.getMatcherByKey("de.thm.evolvedb.graph.reference.matcher.ReferenceMatcher");
+			IMatcher referenceMatcher2 = MatchingUtils
+					.getMatcherByKey("ReferenceMatcher");
 
 			// IMatcher annotatedSignatureMatcher =
 			// MatchingUtils.getMatcherByKey("AnnotatedSignatureMatcher");
@@ -149,7 +154,7 @@ public class MddeDifferenceBuilderController {
 			LiftingSettings settings = LiftingSettings.defaultSettings();
 
 			List<IMatcher> matchers = new ArrayList<IMatcher>();
-			matchers.addAll(Arrays.asList(emfCompareMatcher, namedElementMatcher, uriFragmentMatcher));
+			matchers.addAll(Arrays.asList(emfCompareMatcher, namedElementMatcher, uriFragmentMatcher, referenceMatcher));
 
 			IncrementalMatcher matcher = new IncrementalMatcher(matchers);
 			settings.setMatcher(matcher);

@@ -187,13 +187,22 @@ public interface GraphPackage extends EPackage {
 	int NODE_TYPE__GRAPH = GRAPH_ITEM__GRAPH;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_TYPE__NAME = GRAPH_ITEM_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Label</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__LABEL = GRAPH_ITEM_FEATURE_COUNT + 0;
+	int NODE_TYPE__LABEL = GRAPH_ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing</b></em>' reference list.
@@ -202,7 +211,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__OUTGOING = GRAPH_ITEM_FEATURE_COUNT + 1;
+	int NODE_TYPE__OUTGOING = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -211,7 +220,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__INCOMING = GRAPH_ITEM_FEATURE_COUNT + 2;
+	int NODE_TYPE__INCOMING = GRAPH_ITEM_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -220,7 +229,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int NODE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Node Type</em>' class.
@@ -229,7 +238,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
+	int NODE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Node Type</em>' class.
@@ -260,13 +269,22 @@ public interface GraphPackage extends EPackage {
 	int EDGE_TYPE__GRAPH = GRAPH_ITEM__GRAPH;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TYPE__NAME = GRAPH_ITEM_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Labels</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_TYPE__LABELS = GRAPH_ITEM_FEATURE_COUNT + 0;
+	int EDGE_TYPE__LABELS = GRAPH_ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -275,7 +293,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 1;
+	int EDGE_TYPE__PROPERTIES = GRAPH_ITEM_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Src</b></em>' reference.
@@ -284,7 +302,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_TYPE__SRC = GRAPH_ITEM_FEATURE_COUNT + 2;
+	int EDGE_TYPE__SRC = GRAPH_ITEM_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Tgt</b></em>' reference.
@@ -293,7 +311,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_TYPE__TGT = GRAPH_ITEM_FEATURE_COUNT + 3;
+	int EDGE_TYPE__TGT = GRAPH_ITEM_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Edge Type</em>' class.
@@ -302,7 +320,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 4;
+	int EDGE_TYPE_FEATURE_COUNT = GRAPH_ITEM_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Edge Type</em>' class.
@@ -1478,6 +1496,17 @@ public interface GraphPackage extends EPackage {
 	EClass getNodeType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.NodeType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.thm.evolvedb.graph.NodeType#getName()
+	 * @see #getNodeType()
+	 * @generated
+	 */
+	EAttribute getNodeType_Name();
+
+	/**
 	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.NodeType#getLabel <em>Label</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1530,6 +1559,17 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getEdgeType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.graph.EdgeType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.thm.evolvedb.graph.EdgeType#getName()
+	 * @see #getEdgeType()
+	 * @generated
+	 */
+	EAttribute getEdgeType_Name();
 
 	/**
 	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.graph.EdgeType#getLabels <em>Labels</em>}'.
@@ -2269,6 +2309,14 @@ public interface GraphPackage extends EPackage {
 		EClass NODE_TYPE = eINSTANCE.getNodeType();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE_TYPE__NAME = eINSTANCE.getNodeType_Name();
+
+		/**
 		 * The meta object literal for the '<em><b>Label</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2309,6 +2357,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EClass EDGE_TYPE = eINSTANCE.getEdgeType();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EDGE_TYPE__NAME = eINSTANCE.getEdgeType_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Labels</b></em>' reference list feature.

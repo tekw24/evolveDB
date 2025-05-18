@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.thm.evolvedb.graph.EdgeType#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.EdgeType#getLabels <em>Labels</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.EdgeType#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.EdgeType#getSrc <em>Src</em>}</li>
@@ -24,6 +25,17 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface EdgeType extends GraphItem {
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see de.thm.evolvedb.graph.GraphPackage#getEdgeType_Name()
+	 * @model changeable="false" derived="true"
+	 * @generated
+	 */
+	String getName();
+
 	/**
 	 * Returns the value of the '<em><b>Labels</b></em>' reference list.
 	 * The list contents are of type {@link de.thm.evolvedb.graph.EdgeLabel}.

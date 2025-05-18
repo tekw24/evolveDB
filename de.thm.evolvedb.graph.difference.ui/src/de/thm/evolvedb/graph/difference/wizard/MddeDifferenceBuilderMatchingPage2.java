@@ -131,7 +131,7 @@ public class MddeDifferenceBuilderMatchingPage2 extends WizardPage {
 						Property columnB = (Property) objectB;
 
 						nameA = columnA.getName() + " ("+ getParentName(columnA)+ ")";
-						nameB = columnB.getName() + " ("+ getParentName(columnA)+ ")";
+						nameB = columnB.getName() + " ("+ getParentName(columnB)+ ")";
 
 						String d_text = nameA + nameB;
 
@@ -312,7 +312,7 @@ public class MddeDifferenceBuilderMatchingPage2 extends WizardPage {
 					
 
 					nameA = columnA.getName() + " ("+ getParentName(columnA)+ ")";
-					nameB = columnB.getName() + " ("+ getParentName(columnA)+ ")";
+					nameB = columnB.getName() + " ("+ getParentName(columnB)+ ")";
 					
 					
 					

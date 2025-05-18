@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
 public interface EdgeTypeValidator {
 	boolean validate();
 
+	boolean validateName(String value);
+
 	boolean validateLabels(EList<EdgeLabel> value);
 
 	boolean validateProperties(EList<Property> value);

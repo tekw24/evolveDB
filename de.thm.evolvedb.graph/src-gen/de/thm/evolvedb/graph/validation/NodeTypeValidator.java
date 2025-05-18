@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
 public interface NodeTypeValidator {
 	boolean validate();
 
+	boolean validateName(String value);
+
 	boolean validateLabel(EList<NodeLabel> value);
 
 	boolean validateOutgoing(EList<EdgeType> value);
