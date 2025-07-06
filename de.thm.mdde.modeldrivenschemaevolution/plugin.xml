@@ -59,6 +59,25 @@
                   label="Generate SQL Migrations"
                   style="push">
             </command>
+            <separator
+                  name="de.thm.mdde.modeldrivenschemaevolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.count.correspondences"
+                  label="Count Correspondences"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.count.intersections"
+                  label="Count Intersections"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.countStructuralElements"
+                  label="Count Structural Elements"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -117,6 +136,25 @@
                   label="Generate SQL Migrations"
                   style="push">
             </command>
+            <separator
+                  name="de.thm.mdde.modeldrivenschemaevolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.count.correspondences"
+                  label="Count Correspondences"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.count.intersections"
+                  label="Count Intersections"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.countStructuralElements"
+                  label="Count Structural Elements"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -160,6 +198,21 @@
             description="Create a technical graph difference with silift"
             id="de.thm.graph.createTechnicalDifference"
             name="CreateTechnicalGraphDifference">
+      </command>
+      <command
+            description="Count Correspondences"
+            id="de.thm.mdde.count.correspondences"
+            name="Count Correspondences">
+      </command>
+      <command
+            description="Count Intersections"
+            id="de.thm.mdde.count.intersections"
+            name="Count Intersections">
+      </command>
+      <command
+            description="Count Structural Elements"
+            id="de.thm.mdde.countStructuralElements"
+            name="Count Structural Elements">
       </command>
    </extension>
    <extension
@@ -263,6 +316,72 @@
                   definitionId="de.thm.difference.lifting.ui.definition.graphFiles">
             </reference>
          </activeWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CreateStatisticsHandler"
+            commandId="de.thm.mdde.count.correspondences">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CreateIntersectionStatisticsHandler"
+            commandId="de.thm.mdde.count.intersections">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CountStructuralElements"
+            commandId="de.thm.mdde.countStructuralElements">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="mdde">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension

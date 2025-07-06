@@ -16,6 +16,8 @@
  */
 package de.thm.mdde.differenceBuilderWizard;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -111,14 +113,13 @@ public class MddeDifferenceBuilderController {
 
 //		settings.setCalculateEditRuleMatch(false);
 //		settings.setSerializeEditRuleMatch(false);
-		
+
 		RecognitionEngineSetup setup = PipelineUtils.createRecognitionEngineSetup(settings);
-		//TODO Try to prevent Deadlock
+		// TODO Try to prevent Deadlock
 		setup.setUseThreadPool(true);
-		
-		settings.setRecognitionEngine(RecognitionEngineUtil.getDefaultRecognitionEngine(
-						setup));
-		
+
+		settings.setRecognitionEngine(RecognitionEngineUtil.getDefaultRecognitionEngine(setup));
+
 		SymmetricDifference technicalDifference = createTechnicalDifference();
 
 		return LiftingFacade.liftTechnicalDifference(technicalDifference, settings);
@@ -160,7 +161,21 @@ public class MddeDifferenceBuilderController {
 			settings.setCorrespondencesService(null);
 			settings.setUnmergeImports(false);
 
+			//TODO Remove 
+			Instant start = Instant.now();
+
 			matching = MatchingFacade.match(Arrays.asList(resourceA, resourceB), settings);
+
+			// Zeit nach der Aktion
+			Instant end = Instant.now();
+
+			// Differenz berechnen
+			Duration duration = Duration.between(start, end);
+			long seconds = duration.getSeconds();
+			long millis = duration.toMillis();
+
+			System.out.println("Dauer: " + seconds + " Sekunden");
+			System.out.println("Dauer (genauer): " + millis + " Millisekunden");
 
 		}
 		return matching;
