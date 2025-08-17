@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOOzABuOEfCiO5YsU3IcKQ" name="CREATE_NodeLabel_IN_PropertyGraph_(items)" description="Creates one NodeLabel in PropertyGraph">
+  <annotations xmi:id="_VOOzARuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_NodeLabel_IN_PropertyGraph_(items)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOOzAhuOEfCiO5YsU3IcKQ" name="createNodeLabel_IN_PropertyGraph" description="creates one NodeLabel in the context: PropertyGraph">
+    <parameters xmi:id="_VOOzAxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VOOzBBuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NodeLabel"/>
+    </parameters>
+    <parameters xmi:id="_VOOzBRuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VOOzBhuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOOzBxuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VOOzCBuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOOzCRuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOOzChuOEfCiO5YsU3IcKQ" name="Selected" incoming="_04mHoDG2EfCg2YAAzmjXgQ" outgoing="_wHl2wDG2EfCg2YAAzmjXgQ">
+        <annotations xmi:id="_VOOzCxuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+      </nodes>
+      <nodes xmi:id="_VOOzDBuOEfCiO5YsU3IcKQ" name="New" incoming="_wHl2wDG2EfCg2YAAzmjXgQ" outgoing="_04mHoDG2EfCg2YAAzmjXgQ">
+        <annotations xmi:id="_VOOzDRuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//NodeLabel"/>
+        <attributes xmi:id="_VOOzDhuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Label/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_wHl2wDG2EfCg2YAAzmjXgQ" source="_VOOzChuOEfCiO5YsU3IcKQ" target="_VOOzDBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//PropertyGraph/items"/>
+      </edges>
+      <edges xmi:id="_04mHoDG2EfCg2YAAzmjXgQ" source="_VOOzDBuOEfCiO5YsU3IcKQ" target="_VOOzChuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//GraphItem/graph"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VOOzERuOEfCiO5YsU3IcKQ" origin="_VOOzBxuOEfCiO5YsU3IcKQ" image="_VOOzChuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOOzEhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOOzAhuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOOzExuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VOOzFBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VOOzFRuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VOOzFhuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NodeLabel"/>
+    </parameters>
+    <parameters xmi:id="_VOOzFxuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOOzGBuOEfCiO5YsU3IcKQ" source="_VOOzExuOEfCiO5YsU3IcKQ" target="_VOOzAxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOOzGRuOEfCiO5YsU3IcKQ" source="_VOOzBBuOEfCiO5YsU3IcKQ" target="_VOOzFRuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOOzGhuOEfCiO5YsU3IcKQ" source="_VOOzFxuOEfCiO5YsU3IcKQ" target="_VOOzBRuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

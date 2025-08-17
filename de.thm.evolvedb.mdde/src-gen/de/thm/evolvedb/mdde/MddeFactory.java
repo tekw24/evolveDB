@@ -49,15 +49,6 @@ public interface MddeFactory extends EFactory {
 	ForeignKey createForeignKey();
 
 	/**
-	 * Returns a new object of class '<em>Named Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Named Element</em>'.
-	 * @generated
-	 */
-	NamedElement createNamedElement();
-
-	/**
 	 * Returns a new object of class '<em>Database Schema</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

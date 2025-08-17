@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VO7WkBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_PropertyGraph_Location" description="Sets PropertyGraph Location">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VO7WkRuOEfCiO5YsU3IcKQ" name="setPropertyGraphLocation" description="Sets the EAttribute location">
+    <parameters xmi:id="_VO7WkhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VO7WkxuOEfCiO5YsU3IcKQ" name="Location" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VO7WlBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VO7WlRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VO7WlhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VO7WlxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+        <attributes xmi:id="_VO7WmBuOEfCiO5YsU3IcKQ" value="Location">
+          <type href="http://www.thm.de/graph#//PropertyGraph/location"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VO7WmRuOEfCiO5YsU3IcKQ" origin="_VO7WlRuOEfCiO5YsU3IcKQ" image="_VO7WlxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VO7WmhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VO7WkRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VO7WmxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VO7WnBuOEfCiO5YsU3IcKQ" name="Location">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VO7WnRuOEfCiO5YsU3IcKQ" source="_VO7WmxuOEfCiO5YsU3IcKQ" target="_VO7WkhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VO7WnhuOEfCiO5YsU3IcKQ" source="_VO7WnBuOEfCiO5YsU3IcKQ" target="_VO7WkxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

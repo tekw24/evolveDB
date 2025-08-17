@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -46,11 +47,28 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNamePropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 			addOutgoingPropertyDescriptor(object);
 			addIncomingPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+						getResourceLocator(), getString("_UI_NodeType_name_feature"),
+						getString("_UI_PropertyDescriptor_description", "_UI_NodeType_name_feature",
+								"_UI_NodeType_type"),
+						GraphPackage.Literals.NODE_TYPE__NAME, true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -150,17 +168,19 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 		if (object instanceof NodeType) {
 			NodeType type = (NodeType) object;
 			String name = "";
-			for (NodeLabel label : type.getLabel()) {
-				name += label.getName() != null ? ":" + label.getName() : "";
-			}
+//			for (NodeLabel label : type.getLabel()) {
+//				name += label.getName() != null ? ":" + label.getName() : "";
+//			}
 			
-			if(name.equals("") && type.getProperties().size() > 0) {
-				for(Property p : type.getProperties()) {
+			name = type.getName();
+
+			if (name.equals("") && type.getProperties().size() > 0) {
+				for (Property p : type.getProperties()) {
 					name += p.getName() != null ? ":" + p.getName() : "";
 				}
 			}
-			
-			return getString("_UI_NodeType_type") + " " + name;
+
+			return getString("_UI_NodeType_type") + " " +name;
 		}
 		return getString("_UI_NodeType_type");
 	}
@@ -177,6 +197,7 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(NodeType.class)) {
+		case GraphPackage.NODE_TYPE__NAME:
 		case GraphPackage.NODE_TYPE__LABEL:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

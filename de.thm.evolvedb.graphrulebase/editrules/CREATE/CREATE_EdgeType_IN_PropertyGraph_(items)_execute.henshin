@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VNqLQBuOEfCiO5YsU3IcKQ" name="CREATE_EdgeType_IN_PropertyGraph_(items)" description="Creates one EdgeType in PropertyGraph">
+  <annotations xmi:id="_VNqLQRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_EdgeType_IN_PropertyGraph_(items)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VNqLQhuOEfCiO5YsU3IcKQ" name="createEdgeType_IN_PropertyGraph" description="creates one EdgeType in the context: PropertyGraph">
+    <parameters xmi:id="_VNqLQxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VNqLRBuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//EdgeType"/>
+    </parameters>
+    <lhs xmi:id="_VNqLRRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VNqLRhuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VNqLRxuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VNqLSBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VNqLSRuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VNqLThuOEfCiO5YsU3IcKQ" outgoing="_VNqLTRuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VNqLShuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//PropertyGraph"/>
+      </nodes>
+      <nodes xmi:id="_VNqLSxuOEfCiO5YsU3IcKQ" name="New" incoming="_VNqLTRuOEfCiO5YsU3IcKQ" outgoing="_VNqLThuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VNqLTBuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//EdgeType"/>
+      </nodes>
+      <edges xmi:id="_VNqLTRuOEfCiO5YsU3IcKQ" source="_VNqLSRuOEfCiO5YsU3IcKQ" target="_VNqLSxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//PropertyGraph/items"/>
+      </edges>
+      <edges xmi:id="_VNqLThuOEfCiO5YsU3IcKQ" source="_VNqLSxuOEfCiO5YsU3IcKQ" target="_VNqLSRuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//GraphItem/graph"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VNqLTxuOEfCiO5YsU3IcKQ" origin="_VNqLRhuOEfCiO5YsU3IcKQ" image="_VNqLSRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VNqLUBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VNqLQhuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VNqLURuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VNqLUhuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyGraph"/>
+    </parameters>
+    <parameters xmi:id="_VNqLUxuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VNqLVBuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//EdgeType"/>
+    </parameters>
+    <parameterMappings xmi:id="_VNqLVRuOEfCiO5YsU3IcKQ" source="_VNqLURuOEfCiO5YsU3IcKQ" target="_VNqLQxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNqLVhuOEfCiO5YsU3IcKQ" source="_VNqLRBuOEfCiO5YsU3IcKQ" target="_VNqLUxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

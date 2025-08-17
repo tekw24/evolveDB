@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOwXcBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_Constraint_Name" description="Sets Constraint Name">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOwXcRuOEfCiO5YsU3IcKQ" name="setConstraintName" description="Sets the EAttribute name">
+    <parameters xmi:id="_VOwXchuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Constraint"/>
+    </parameters>
+    <parameters xmi:id="_VOwXcxuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VOwXdBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOwXdRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Constraint"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOwXdhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOwXdxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Constraint"/>
+        <attributes xmi:id="_VOwXeBuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Constraint/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOwXeRuOEfCiO5YsU3IcKQ" origin="_VOwXdRuOEfCiO5YsU3IcKQ" image="_VOwXdxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOwXehuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOwXcRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOwXexuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Constraint"/>
+    </parameters>
+    <parameters xmi:id="_VOwXfBuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOwXfRuOEfCiO5YsU3IcKQ" source="_VOwXexuOEfCiO5YsU3IcKQ" target="_VOwXchuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOwXfhuOEfCiO5YsU3IcKQ" source="_VOwXfBuOEfCiO5YsU3IcKQ" target="_VOwXcxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

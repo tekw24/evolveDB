@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VODM0BuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_ZONED_TIME" description="Changes the attribute value of type_FROM_MINUTES_TO_ZONED_TIME">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VODM0RuOEfCiO5YsU3IcKQ" name="changeTemporalTypesType_FROM_MINUTES_TO_ZONED_TIME" description="Changes the attribute value of type_FROM_MINUTES_TO_ZONED_TIME">
+    <parameters xmi:id="_VODM0huOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VODM0xuOEfCiO5YsU3IcKQ" name="&quot;MINUTES&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VODM1BuOEfCiO5YsU3IcKQ" name="&quot;ZONED_TIME&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VODM1RuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VODM1huOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VODM1xuOEfCiO5YsU3IcKQ" value="&quot;MINUTES&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VODM2BuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VODM2RuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VODM2huOEfCiO5YsU3IcKQ" value="&quot;ZONED_TIME&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VODM2xuOEfCiO5YsU3IcKQ" origin="_VODM1huOEfCiO5YsU3IcKQ" image="_VODM2RuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VODM3BuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VODM0RuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VODM3RuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VODM3huOEfCiO5YsU3IcKQ" name="&quot;MINUTES&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VODM3xuOEfCiO5YsU3IcKQ" source="_VODM3RuOEfCiO5YsU3IcKQ" target="_VODM0huOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VODM4BuOEfCiO5YsU3IcKQ" source="_VODM3huOEfCiO5YsU3IcKQ" target="_VODM0xuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

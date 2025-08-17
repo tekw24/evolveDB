@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_J66-x0hcEfCmlOepJcslnw" name="RR: CREATE_UnionType" description="Recognize: Creates one UnionType">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_J66-yEhcEfCmlOepJcslnw" name="rr:createUnionType" description="Recognize: creates one UnionType">
+    <parameters xmi:id="_J66-yUhcEfCmlOepJcslnw" name="New">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UnionType"/>
+    </parameters>
+    <parameters xmi:id="_J66-ykhcEfCmlOepJcslnw" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//DynamicUnionTypes"/>
+    </parameters>
+    <parameters xmi:id="_J66-y0hcEfCmlOepJcslnw" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_J66-zEhcEfCmlOepJcslnw" name="Lhs">
+      <nodes xmi:id="_J66-zUhcEfCmlOepJcslnw" name="B.Selected" incoming="_J66-1khcEfCmlOepJcslnw" outgoing="_J66-2UhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_J66-zkhcEfCmlOepJcslnw" name="" outgoing="_J66-1UhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+      </nodes>
+      <nodes xmi:id="_J66-z0hcEfCmlOepJcslnw" name="B.New" incoming="_J66-1UhcEfCmlOepJcslnw _J66-10hcEfCmlOepJcslnw _J66-2UhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+        <attributes xmi:id="_J66-0EhcEfCmlOepJcslnw" value="Type">
+          <type href="http://www.thm.de/graph#//UnionType/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J66-0UhcEfCmlOepJcslnw" name="" outgoing="_J66-1khcEfCmlOepJcslnw _J66-10hcEfCmlOepJcslnw _J66-2EhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+      </nodes>
+      <nodes xmi:id="_J66-0khcEfCmlOepJcslnw" name="" incoming="_J66-2EhcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_J66-00hcEfCmlOepJcslnw" value="&quot;value&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J66-1EhcEfCmlOepJcslnw" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J66-1UhcEfCmlOepJcslnw" source="_J66-zkhcEfCmlOepJcslnw" target="_J66-z0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+      </edges>
+      <edges xmi:id="_J66-1khcEfCmlOepJcslnw" source="_J66-0UhcEfCmlOepJcslnw" target="_J66-zUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+      </edges>
+      <edges xmi:id="_J66-10hcEfCmlOepJcslnw" source="_J66-0UhcEfCmlOepJcslnw" target="_J66-z0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+      </edges>
+      <edges xmi:id="_J66-2EhcEfCmlOepJcslnw" source="_J66-0UhcEfCmlOepJcslnw" target="_J66-0khcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+      </edges>
+      <edges xmi:id="_J66-2UhcEfCmlOepJcslnw" source="_J66-zUhcEfCmlOepJcslnw" target="_J66-z0hcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_J66-2khcEfCmlOepJcslnw" name="Rhs">
+      <nodes xmi:id="_J66-20hcEfCmlOepJcslnw" name="B.Selected" incoming="_J66-60hcEfCmlOepJcslnw" outgoing="_J66-7khcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_J66-3EhcEfCmlOepJcslnw" name="" incoming="_J66-70hcEfCmlOepJcslnw" outgoing="_J66-6khcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+      </nodes>
+      <nodes xmi:id="_J66-3UhcEfCmlOepJcslnw" name="B.New" incoming="_J66-6khcEfCmlOepJcslnw _J66-7EhcEfCmlOepJcslnw _J66-7khcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UnionType"/>
+      </nodes>
+      <nodes xmi:id="_J66-3khcEfCmlOepJcslnw" name="" incoming="_J66-8EhcEfCmlOepJcslnw" outgoing="_J66-60hcEfCmlOepJcslnw _J66-7EhcEfCmlOepJcslnw _J66-7UhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+      </nodes>
+      <nodes xmi:id="_J66-30hcEfCmlOepJcslnw" name="" incoming="_J66-7UhcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_J66-4EhcEfCmlOepJcslnw" name="ChangeSet" incoming="_J66-8UhcEfCmlOepJcslnw" outgoing="_J66-70hcEfCmlOepJcslnw _J66-8EhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_J66-4UhcEfCmlOepJcslnw" value="&quot;CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_J66-4khcEfCmlOepJcslnw" value="&quot;Creates one UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_J66-40hcEfCmlOepJcslnw" value="&quot;CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_J66-5EhcEfCmlOepJcslnw" value="&quot;RR: CREATE_UnionType&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_J66-5UhcEfCmlOepJcslnw" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_J66-5khcEfCmlOepJcslnw" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_J66-50hcEfCmlOepJcslnw" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_J66-6EhcEfCmlOepJcslnw" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J66-6UhcEfCmlOepJcslnw" name="" outgoing="_J66-8UhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J66-6khcEfCmlOepJcslnw" source="_J66-3EhcEfCmlOepJcslnw" target="_J66-3UhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+      </edges>
+      <edges xmi:id="_J66-60hcEfCmlOepJcslnw" source="_J66-3khcEfCmlOepJcslnw" target="_J66-20hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+      </edges>
+      <edges xmi:id="_J66-7EhcEfCmlOepJcslnw" source="_J66-3khcEfCmlOepJcslnw" target="_J66-3UhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+      </edges>
+      <edges xmi:id="_J66-7UhcEfCmlOepJcslnw" source="_J66-3khcEfCmlOepJcslnw" target="_J66-30hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+      </edges>
+      <edges xmi:id="_J66-7khcEfCmlOepJcslnw" source="_J66-20hcEfCmlOepJcslnw" target="_J66-3UhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+      <edges xmi:id="_J66-70hcEfCmlOepJcslnw" source="_J66-4EhcEfCmlOepJcslnw" target="_J66-3EhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_J66-8EhcEfCmlOepJcslnw" source="_J66-4EhcEfCmlOepJcslnw" target="_J66-3khcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_J66-8UhcEfCmlOepJcslnw" source="_J66-6UhcEfCmlOepJcslnw" target="_J66-4EhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_J66-8khcEfCmlOepJcslnw" origin="_J66-zUhcEfCmlOepJcslnw" image="_J66-20hcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J66-80hcEfCmlOepJcslnw" origin="_J66-zkhcEfCmlOepJcslnw" image="_J66-3EhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J66-9EhcEfCmlOepJcslnw" origin="_J66-z0hcEfCmlOepJcslnw" image="_J66-3UhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J66-9UhcEfCmlOepJcslnw" origin="_J66-0UhcEfCmlOepJcslnw" image="_J66-3khcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J66-9khcEfCmlOepJcslnw" origin="_J66-0khcEfCmlOepJcslnw" image="_J66-30hcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J66-90hcEfCmlOepJcslnw" origin="_J66-1EhcEfCmlOepJcslnw" image="_J66-6UhcEfCmlOepJcslnw"/>
+  </units>
+</henshin:Module>

@@ -141,29 +141,6 @@ public class MddeItemProviderAdapterFactory extends MddeAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.mdde.NamedElement} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NamedElementItemProvider namedElementItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link de.thm.evolvedb.mdde.NamedElement}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNamedElementAdapter() {
-		if (namedElementItemProvider == null) {
-			namedElementItemProvider = new NamedElementItemProvider(this);
-		}
-
-		return namedElementItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.mdde.Database_Schema} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -386,7 +363,6 @@ public class MddeItemProviderAdapterFactory extends MddeAdapterFactory
 		if (tableItemProvider != null) tableItemProvider.dispose();
 		if (primaryKeyItemProvider != null) primaryKeyItemProvider.dispose();
 		if (foreignKeyItemProvider != null) foreignKeyItemProvider.dispose();
-		if (namedElementItemProvider != null) namedElementItemProvider.dispose();
 		if (database_SchemaItemProvider != null) database_SchemaItemProvider.dispose();
 		if (columnItemProvider != null) columnItemProvider.dispose();
 		if (uniqueConstraintItemProvider != null) uniqueConstraintItemProvider.dispose();

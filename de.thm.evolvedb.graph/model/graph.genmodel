@@ -42,6 +42,7 @@
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/FLOAT"/>
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/FLOAT128"/>
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//NumericDataTypes/LONG"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//StringDataTypes">
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//StringDataTypes/VARCHAR"/>
@@ -62,12 +63,14 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graph.ecore#//GraphItem/graph"/>
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//NodeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//NodeType/name"/>
       <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/label"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/outgoing"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/incoming"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//NodeType/properties"/>
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//EdgeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//EdgeType/name"/>
       <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/labels"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/properties"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graph.ecore#//EdgeType/src"/>

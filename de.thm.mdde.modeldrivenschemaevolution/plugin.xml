@@ -32,6 +32,20 @@
                   visible="true">
             </separator>
             <command
+                  commandId="de.thm.graph.createTechnicalDifference"
+                  label="Create Technical Graph Difference (SiLift)"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.graph.createLiftedDifference"
+                  label="Create Lifted Graph Difference (SiLift)"
+                  style="push">
+            </command>
+            <separator
+                  name="ModelDrivenSchemaEvolution.separator4"
+                  visible="true">
+            </separator>
+            <command
                   commandId="de.thm.mdde.createMigrationModel"
                   label="Create Migration Model"
                   style="push">
@@ -43,6 +57,25 @@
             <command
                   commandId="de.thm.mdde.createSQLMigrations"
                   label="Generate SQL Migrations"
+                  style="push">
+            </command>
+            <separator
+                  name="de.thm.mdde.modeldrivenschemaevolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.count.correspondences"
+                  label="Count Correspondences"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.count.intersections"
+                  label="Count Intersections"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.countStructuralElements"
+                  label="Count Structural Elements"
                   style="push">
             </command>
          </menu>
@@ -72,6 +105,20 @@
                   style="push">
             </command>
             <separator
+                  name="ModelDrivenSchemaEvolution.separator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.graph.createTechnicalDifference"
+                  label="Create Technical Graph Difference (SiLift)"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.graph.createLiftedDifference"
+                  label="Create Lifted Graph Difference (SiLift)"
+                  style="push">
+            </command>
+            <separator
                   name="ModelDrivenSchemaEvolution.separator1"
                   visible="true">
             </separator>
@@ -89,6 +136,25 @@
                   label="Generate SQL Migrations"
                   style="push">
             </command>
+            <separator
+                  name="de.thm.mdde.modeldrivenschemaevolution.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.thm.mdde.count.correspondences"
+                  label="Count Correspondences"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.count.intersections"
+                  label="Count Intersections"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.thm.mdde.countStructuralElements"
+                  label="Count Structural Elements"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -99,7 +165,7 @@
             name="Open Create MDSE Model Wizard">
       </command>
       <command
-            description="Create a technical difference and lift it with Silift"
+            description="Create a lifted difference and lift it with Silift"
             id="de.thm.mdde.createLiftedDifference"
             name="CreateLiftedDifference">
       </command>
@@ -122,6 +188,31 @@
             description="Download Driver"
             id="de.thm.mdde.downloaddriver"
             name="Download Driver">
+      </command>
+      <command
+            description="Create a lifted graph difference and lift it with Silift"
+            id="de.thm.graph.createLiftedDifference"
+            name="CreateLiftedGraphDifference">
+      </command>
+      <command
+            description="Create a technical graph difference with silift"
+            id="de.thm.graph.createTechnicalDifference"
+            name="CreateTechnicalGraphDifference">
+      </command>
+      <command
+            description="Count Correspondences"
+            id="de.thm.mdde.count.correspondences"
+            name="Count Correspondences">
+      </command>
+      <command
+            description="Count Intersections"
+            id="de.thm.mdde.count.intersections"
+            name="Count Intersections">
+      </command>
+      <command
+            description="Count Structural Elements"
+            id="de.thm.mdde.countStructuralElements"
+            name="Count Structural Elements">
       </command>
    </extension>
    <extension
@@ -208,6 +299,90 @@
             class="de.thm.commands.OpenDriverWizardCommand"
             commandId="de.thm.mdde.downloaddriver">
       </handler>
+      <handler
+            class="de.thm.evolvedb.graph.handler.GraphDifferenceBuilderHandler"
+            commandId="de.thm.graph.createTechnicalDifference">
+         <activeWhen>
+            <reference
+                  definitionId="de.thm.difference.lifting.ui.definition.graphFiles">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="de.thm.evolvedb.graph.handler.GraphLiftedDifferenceBuilderHandler"
+            commandId="de.thm.graph.createLiftedDifference">
+         <activeWhen>
+            <reference
+                  definitionId="de.thm.difference.lifting.ui.definition.graphFiles">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CreateStatisticsHandler"
+            commandId="de.thm.mdde.count.correspondences">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CreateIntersectionStatisticsHandler"
+            commandId="de.thm.mdde.count.intersections">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="symmetric">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.CountStructuralElements"
+            commandId="de.thm.mdde.countStructuralElements">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <or>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="mdde">
+                        </test>
+                     </or>
+                  </adapt>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -220,6 +395,11 @@
             class="de.thm.mdde.differenceBuilderWizard.MddeDifferenceBuilderWizard"
             id="MddeDifferenceBuilderWizard"
             name="MddeDifferenceBuilderWizard">
+      </wizard>
+      <wizard
+            class="de.thm.evolvedb.graph.difference.wizard.GraphDifferenceBuilderWizard"
+            id="GraphDifferenceBuilderWizard"
+            name="GraphDifferenceBuilderWizard">
       </wizard>
    </extension>
    <extension
@@ -244,6 +424,22 @@
             </iterate>
          </with>
       </definition>
+      <definition
+            id="de.thm.difference.lifting.ui.definition.graphFiles">
+         <with
+               variable="selection">
+            <count
+                  value="2">
+            </count>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.eclipse.core.resources.IFile">
+               </instanceof>
+            </iterate>
+         </with>
+      </definition>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -251,6 +447,13 @@
             class="de.thm.mdde.handler.MddePropertyTester"
             id="de.thm.mdde.difference.lifting.ui.PropertyTester"
             namespace="de.thm.mdde.difference.lifting.ui.properties"
+            properties="modelFile"
+            type="org.eclipse.core.resources.IFile">
+      </propertyTester>
+      <propertyTester
+            class="de.thm.evolvedb.graph.handler.GraphPropertyTester"
+            id="de.thm.graph.difference.lifting.ui.GraphPropertyTester"
+            namespace="de.thm.graph.difference.lifting.ui.properties"
             properties="modelFile"
             type="org.eclipse.core.resources.IFile">
       </propertyTester>

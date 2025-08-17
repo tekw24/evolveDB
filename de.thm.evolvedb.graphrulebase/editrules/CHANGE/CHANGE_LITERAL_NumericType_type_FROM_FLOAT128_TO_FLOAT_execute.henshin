@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOQBIBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_NumericType_type_FROM_FLOAT128_TO_FLOAT" description="Changes the attribute value of type_FROM_FLOAT128_TO_FLOAT">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOQBIRuOEfCiO5YsU3IcKQ" name="changeNumericTypeType_FROM_FLOAT128_TO_FLOAT" description="Changes the attribute value of type_FROM_FLOAT128_TO_FLOAT">
+    <parameters xmi:id="_VOQBIhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VOQBIxuOEfCiO5YsU3IcKQ" name="&quot;FLOAT128&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VOQBJBuOEfCiO5YsU3IcKQ" name="&quot;FLOAT&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VOQBJRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOQBJhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VOQBJxuOEfCiO5YsU3IcKQ" value="&quot;FLOAT128&quot;">
+          <type href="http://www.thm.de/graph#//NumericType/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOQBKBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOQBKRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VOQBKhuOEfCiO5YsU3IcKQ" value="&quot;FLOAT&quot;">
+          <type href="http://www.thm.de/graph#//NumericType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOQBKxuOEfCiO5YsU3IcKQ" origin="_VOQBJhuOEfCiO5YsU3IcKQ" image="_VOQBKRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOQBLBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOQBIRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOQBLRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VOQBLhuOEfCiO5YsU3IcKQ" name="&quot;FLOAT128&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//NumericDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOQBLxuOEfCiO5YsU3IcKQ" source="_VOQBLRuOEfCiO5YsU3IcKQ" target="_VOQBIhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOQBMBuOEfCiO5YsU3IcKQ" source="_VOQBLhuOEfCiO5YsU3IcKQ" target="_VOQBIxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

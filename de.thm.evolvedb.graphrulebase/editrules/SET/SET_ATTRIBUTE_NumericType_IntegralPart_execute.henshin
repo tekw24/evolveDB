@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VNRwwBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_NumericType_IntegralPart" description="Sets NumericType IntegralPart">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VNRwwRuOEfCiO5YsU3IcKQ" name="setNumericTypeIntegralPart" description="Sets the EAttribute integralPart">
+    <parameters xmi:id="_VNRwwhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VNRwwxuOEfCiO5YsU3IcKQ" name="IntegralPart" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <lhs xmi:id="_VNRwxBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VNRwxRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VNRwxhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VNRwxxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//NumericType"/>
+        <attributes xmi:id="_VNRwyBuOEfCiO5YsU3IcKQ" value="IntegralPart">
+          <type href="http://www.thm.de/graph#//NumericType/integralPart"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VNRwyRuOEfCiO5YsU3IcKQ" origin="_VNRwxRuOEfCiO5YsU3IcKQ" image="_VNRwxxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VNRwyhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VNRwwRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VNRwyxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//NumericType"/>
+    </parameters>
+    <parameters xmi:id="_VNRwzBuOEfCiO5YsU3IcKQ" name="IntegralPart">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <parameterMappings xmi:id="_VNRwzRuOEfCiO5YsU3IcKQ" source="_VNRwyxuOEfCiO5YsU3IcKQ" target="_VNRwwhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNRwzhuOEfCiO5YsU3IcKQ" source="_VNRwzBuOEfCiO5YsU3IcKQ" target="_VNRwwxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

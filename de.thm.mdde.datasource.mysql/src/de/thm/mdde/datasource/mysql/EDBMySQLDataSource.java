@@ -23,6 +23,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Driver;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -30,6 +33,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 
+import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
 import de.thm.mdde.connection.model.DBPDriverLibrary;
@@ -126,6 +130,12 @@ public class EDBMySQLDataSource implements EDBDataSource {
 	@Override
 	public boolean isCanceled() {
 		return connectionController.isCanceled();
+	}
+
+	@Override
+	public List<String> getFileExtensions() {
+		return Collections.unmodifiableList(
+				Arrays.asList(MddeEditorPlugin.INSTANCE.getString("_UI_MddeEditorFilenameExtensions").split("\\s*,\\s*")));
 	}
 
 }

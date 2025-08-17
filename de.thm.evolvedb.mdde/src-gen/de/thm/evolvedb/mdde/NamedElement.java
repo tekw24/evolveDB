@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see de.thm.evolvedb.mdde.MddePackage#getNamedElement()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='NameNotNull'"
+ * @model abstract="true"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='NameNotNull'"
  *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot NameNotNull='Tuple {\n\tmessage : String = \'Name should not be empty!\',\n\tstatus : Boolean = self.name-&gt;size() &gt; 0\n}.status'"
  * @generated
  */

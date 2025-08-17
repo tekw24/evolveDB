@@ -1,10 +1,8 @@
 package de.thm.mdde.connection.ui.wizard;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -12,17 +10,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
@@ -30,8 +23,7 @@ import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
 
 public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPage {
 
-	public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(
-			Arrays.asList(MddeEditorPlugin.INSTANCE.getString("_UI_MddeEditorFilenameExtensions").split("\\s*,\\s*")));
+	public List<String> file_extensions;
 
 	/**
 	 * A formatted list of supported file extensions, suitable for display. <!--
@@ -39,8 +31,8 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 	 * 
 	 * @generated
 	 */
-	public static final String FORMATTED_FILE_EXTENSIONS = MddeEditorPlugin.INSTANCE
-			.getString("_UI_MddeEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+	public String formatted_file_extensions; 
+			
 
 	private Combo encodingField;
 
@@ -54,6 +46,7 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 	public EDBDatabaseModelNewFileCreationPage(String pageName, IStructuredSelection selection, EDBConnectionController controller) {
 		super(pageName, selection);
 		this.controller = controller;
+		
 
 	}
 	
@@ -119,9 +112,9 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 	protected boolean validatePage() {
 		if (super.validatePage()) {
 			String extension = new Path(getFileName()).getFileExtension();
-			if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
-				String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
-				setErrorMessage(MddeEditorPlugin.INSTANCE.getString(key, new Object[] { FORMATTED_FILE_EXTENSIONS }));
+			if (extension == null || !file_extensions.contains(extension)) {
+				String key = file_extensions.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
+				setErrorMessage(MddeEditorPlugin.INSTANCE.getString(key, new Object[] { formatted_file_extensions }));
 				setPageComplete(false);
 				return false;
 			}
@@ -147,6 +140,13 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 		}
 		return encodings;
 	}
+	
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		file_extensions = controller.getFileExtensions();
+		formatted_file_extensions= file_extensions.get(0).replaceAll("\\s*,\\s*", ", ");	
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -155,6 +155,12 @@ public class EDBDatabaseModelNewFileCreationPage extends WizardNewFileCreationPa
 	 */
 	public String getEncoding() {
 		return encodingField.getText();
+	}
+	
+	
+
+	public String getFormatted_file_extensions() {
+		return formatted_file_extensions;
 	}
 
 	/**

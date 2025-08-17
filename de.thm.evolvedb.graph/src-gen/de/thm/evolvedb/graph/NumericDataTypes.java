@@ -76,7 +76,16 @@ public enum NumericDataTypes implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DOUBLE(5, "DOUBLE", "DOUBLE");
+	DOUBLE(5, "DOUBLE", "DOUBLE"),
+	/**
+	 * The '<em><b>LONG</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	* <!-- end-user-doc -->
+	 * @see #LONG_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	LONG(0, "LONG", "LONG");
 
 	/**
 	 * The '<em><b>DECIMAL</b></em>' literal value.
@@ -145,13 +154,24 @@ public enum NumericDataTypes implements Enumerator {
 	public static final int DOUBLE_VALUE = 5;
 
 	/**
+	 * The '<em><b>LONG</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #LONG
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LONG_VALUE = 0;
+
+	/**
 	 * An array of all the '<em><b>Numeric Data Types</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private static final NumericDataTypes[] VALUES_ARRAY = new NumericDataTypes[] { DECIMAL, INT, UINT, FLOAT, FLOAT128,
-			DOUBLE, };
+			DOUBLE, LONG, };
 
 	/**
 	 * A public read-only list of all the '<em><b>Numeric Data Types</b></em>' enumerators.

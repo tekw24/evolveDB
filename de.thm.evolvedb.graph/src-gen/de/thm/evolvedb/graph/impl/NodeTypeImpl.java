@@ -2,13 +2,13 @@
  */
 package de.thm.evolvedb.graph.impl;
 
+import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.NodeTypeImpl#getIncoming <em>Incoming</em>}</li>
@@ -36,6 +37,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class NodeTypeImpl extends GraphItemImpl implements NodeType {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getLabel() <em>Label</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -94,6 +115,27 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	protected EClass eStaticClass() {
 		return GraphPackage.Literals.NODE_TYPE;
 	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public String getName() {
+		String name = "";
+		for (NodeLabel label : getLabel()) {
+			name += label.getName() != null ? ":" + label.getName() : "";
+		}
+
+		if(name.equals(""))
+			name="noLabel";
+		return name;
+	}
+	
+	
+
+	
+	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,6 +236,8 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case GraphPackage.NODE_TYPE__NAME:
+			return getName();
 		case GraphPackage.NODE_TYPE__LABEL:
 			return getLabel();
 		case GraphPackage.NODE_TYPE__OUTGOING:
@@ -267,6 +311,8 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case GraphPackage.NODE_TYPE__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case GraphPackage.NODE_TYPE__LABEL:
 			return label != null && !label.isEmpty();
 		case GraphPackage.NODE_TYPE__OUTGOING:
@@ -277,6 +323,30 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			return properties != null && !properties.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy())
+			return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (name: ");
+		result.append(getName());
+		result.append(')');
+		return result.toString();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null)
+			return super.equals(obj);
+		return toString().equals(obj.toString());
 	}
 
 } //NodeTypeImpl

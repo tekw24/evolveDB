@@ -5,6 +5,7 @@ package de.thm.evolvedb.graph.impl;
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
+import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getLabels <em>Labels</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.impl.EdgeTypeImpl#getSrc <em>Src</em>}</li>
@@ -41,6 +43,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getLabels() <em>Labels</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -98,6 +120,36 @@ public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 	@Override
 	protected EClass eStaticClass() {
 		return GraphPackage.Literals.EDGE_TYPE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public String getName() {
+		String name = "";
+		for (EdgeLabel label : getLabels()) {
+			name += label.getName() != null ? ":" + label.getName() : "";
+			name += "(" + getNodeTypeName(getSrc())+ ", " + getNodeTypeName(getTgt())+")";
+		}
+
+		return name;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	private String getNodeTypeName(NodeType nodeType) {
+
+		String name = "";
+		for (NodeLabel label : nodeType.getLabel()) {
+			name += label.getName() != null ? ":" + label.getName() : "";
+		}
+
+		return name;
 	}
 
 	/**
@@ -313,6 +365,8 @@ public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case GraphPackage.EDGE_TYPE__NAME:
+			return getName();
 		case GraphPackage.EDGE_TYPE__LABELS:
 			return getLabels();
 		case GraphPackage.EDGE_TYPE__PROPERTIES:
@@ -388,6 +442,8 @@ public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case GraphPackage.EDGE_TYPE__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case GraphPackage.EDGE_TYPE__LABELS:
 			return labels != null && !labels.isEmpty();
 		case GraphPackage.EDGE_TYPE__PROPERTIES:
@@ -398,6 +454,23 @@ public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 			return tgt != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy())
+			return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(')');
+		return result.toString();
 	}
 
 } //EdgeTypeImpl

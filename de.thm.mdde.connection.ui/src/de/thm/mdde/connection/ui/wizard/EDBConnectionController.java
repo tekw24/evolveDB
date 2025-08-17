@@ -134,5 +134,9 @@ public class EDBConnectionController {
 	private void seteObject(EObject eObject) {
 		this.eObject = eObject;
 	}
+	
+	protected List<String> getFileExtensions(){
+		return dataSource.getFileExtensions();
+	}
 
 }

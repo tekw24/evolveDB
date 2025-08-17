@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQhSABuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_StringType_type_FROM_VARCHAR_TO_STRING" description="Changes the attribute value of type_FROM_VARCHAR_TO_STRING">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQhSARuOEfCiO5YsU3IcKQ" name="changeStringTypeType_FROM_VARCHAR_TO_STRING" description="Changes the attribute value of type_FROM_VARCHAR_TO_STRING">
+    <parameters xmi:id="_VQhSAhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VQhSAxuOEfCiO5YsU3IcKQ" name="&quot;VARCHAR&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VQhSBBuOEfCiO5YsU3IcKQ" name="&quot;STRING&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VQhSBRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQhSBhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//StringType"/>
+        <attributes xmi:id="_VQhSBxuOEfCiO5YsU3IcKQ" value="&quot;VARCHAR&quot;">
+          <type href="http://www.thm.de/graph#//StringType/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VQhSCBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQhSCRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//StringType"/>
+        <attributes xmi:id="_VQhSChuOEfCiO5YsU3IcKQ" value="&quot;STRING&quot;">
+          <type href="http://www.thm.de/graph#//StringType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VQhSCxuOEfCiO5YsU3IcKQ" origin="_VQhSBhuOEfCiO5YsU3IcKQ" image="_VQhSCRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQhSDBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQhSARuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQhSDRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VQhSDhuOEfCiO5YsU3IcKQ" name="&quot;VARCHAR&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQhSDxuOEfCiO5YsU3IcKQ" source="_VQhSDRuOEfCiO5YsU3IcKQ" target="_VQhSAhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQhSEBuOEfCiO5YsU3IcKQ" source="_VQhSDhuOEfCiO5YsU3IcKQ" target="_VQhSAxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_J5L5dEhcEfCmlOepJcslnw" name="RR: CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME" description="Recognize: Changes the attribute value of type_FROM_MONTH_TO_LOCAL_TIME">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_J5L5dUhcEfCmlOepJcslnw" name="rr:changeTemporalTypesType_FROM_MONTH_TO_LOCAL_TIME" description="Recognize: Changes the attribute value of type_FROM_MONTH_TO_LOCAL_TIME">
+    <parameters xmi:id="_J5L5dkhcEfCmlOepJcslnw" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_J5L5d0hcEfCmlOepJcslnw" name="&quot;MONTH&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_J5L5eEhcEfCmlOepJcslnw" name="&quot;LOCAL_TIME&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_J5L5eUhcEfCmlOepJcslnw" name="Lhs">
+      <nodes xmi:id="_J5L5ekhcEfCmlOepJcslnw" name="B.Selected" incoming="_J5L5hEhcEfCmlOepJcslnw _J5L5hkhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_J5L5e0hcEfCmlOepJcslnw" value="&quot;LOCAL_TIME&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J5L5fEhcEfCmlOepJcslnw" name="A.Selected" incoming="_J5L5g0hcEfCmlOepJcslnw _J5L5hUhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_J5L5fUhcEfCmlOepJcslnw" value="&quot;MONTH&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J5L5fkhcEfCmlOepJcslnw" name="" outgoing="_J5L5g0hcEfCmlOepJcslnw _J5L5hEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+      </nodes>
+      <nodes xmi:id="_J5L5f0hcEfCmlOepJcslnw" name="" outgoing="_J5L5hUhcEfCmlOepJcslnw _J5L5hkhcEfCmlOepJcslnw _J5L5h0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange"/>
+      </nodes>
+      <nodes xmi:id="_J5L5gEhcEfCmlOepJcslnw" name="" incoming="_J5L5h0hcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_J5L5gUhcEfCmlOepJcslnw" value="&quot;type&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J5L5gkhcEfCmlOepJcslnw" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J5L5g0hcEfCmlOepJcslnw" source="_J5L5fkhcEfCmlOepJcslnw" target="_J5L5fEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+      </edges>
+      <edges xmi:id="_J5L5hEhcEfCmlOepJcslnw" source="_J5L5fkhcEfCmlOepJcslnw" target="_J5L5ekhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+      </edges>
+      <edges xmi:id="_J5L5hUhcEfCmlOepJcslnw" source="_J5L5f0hcEfCmlOepJcslnw" target="_J5L5fEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/objA"/>
+      </edges>
+      <edges xmi:id="_J5L5hkhcEfCmlOepJcslnw" source="_J5L5f0hcEfCmlOepJcslnw" target="_J5L5ekhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/objB"/>
+      </edges>
+      <edges xmi:id="_J5L5h0hcEfCmlOepJcslnw" source="_J5L5f0hcEfCmlOepJcslnw" target="_J5L5gEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/type"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_J5L5iEhcEfCmlOepJcslnw" name="Rhs">
+      <nodes xmi:id="_J5L5iUhcEfCmlOepJcslnw" name="B.Selected" incoming="_J5L5mUhcEfCmlOepJcslnw _J5L5m0hcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+      </nodes>
+      <nodes xmi:id="_J5L5ikhcEfCmlOepJcslnw" name="A.Selected" incoming="_J5L5mEhcEfCmlOepJcslnw _J5L5mkhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+      </nodes>
+      <nodes xmi:id="_J5L5i0hcEfCmlOepJcslnw" name="" outgoing="_J5L5mEhcEfCmlOepJcslnw _J5L5mUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+      </nodes>
+      <nodes xmi:id="_J5L5jEhcEfCmlOepJcslnw" name="" incoming="_J5L5nUhcEfCmlOepJcslnw" outgoing="_J5L5mkhcEfCmlOepJcslnw _J5L5m0hcEfCmlOepJcslnw _J5L5nEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange"/>
+      </nodes>
+      <nodes xmi:id="_J5L5jUhcEfCmlOepJcslnw" name="" incoming="_J5L5nEhcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+      </nodes>
+      <nodes xmi:id="_J5L5jkhcEfCmlOepJcslnw" name="ChangeSet" incoming="_J5L5nkhcEfCmlOepJcslnw" outgoing="_J5L5nUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_J5L5j0hcEfCmlOepJcslnw" value="&quot;CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_J5L5kEhcEfCmlOepJcslnw" value="&quot;Changes the attribute value of type_FROM_MONTH_TO_LOCAL_TIME&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_J5L5kUhcEfCmlOepJcslnw" value="&quot;CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_J5L5kkhcEfCmlOepJcslnw" value="&quot;RR: CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_J5L5k0hcEfCmlOepJcslnw" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_J5L5lEhcEfCmlOepJcslnw" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_J5L5lUhcEfCmlOepJcslnw" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_J5L5lkhcEfCmlOepJcslnw" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J5L5l0hcEfCmlOepJcslnw" name="" outgoing="_J5L5nkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J5L5mEhcEfCmlOepJcslnw" source="_J5L5i0hcEfCmlOepJcslnw" target="_J5L5ikhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+      </edges>
+      <edges xmi:id="_J5L5mUhcEfCmlOepJcslnw" source="_J5L5i0hcEfCmlOepJcslnw" target="_J5L5iUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+      </edges>
+      <edges xmi:id="_J5L5mkhcEfCmlOepJcslnw" source="_J5L5jEhcEfCmlOepJcslnw" target="_J5L5ikhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/objA"/>
+      </edges>
+      <edges xmi:id="_J5L5m0hcEfCmlOepJcslnw" source="_J5L5jEhcEfCmlOepJcslnw" target="_J5L5iUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/objB"/>
+      </edges>
+      <edges xmi:id="_J5L5nEhcEfCmlOepJcslnw" source="_J5L5jEhcEfCmlOepJcslnw" target="_J5L5jUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//AttributeValueChange/type"/>
+      </edges>
+      <edges xmi:id="_J5L5nUhcEfCmlOepJcslnw" source="_J5L5jkhcEfCmlOepJcslnw" target="_J5L5jEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_J5L5nkhcEfCmlOepJcslnw" source="_J5L5l0hcEfCmlOepJcslnw" target="_J5L5jkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_J5L5n0hcEfCmlOepJcslnw" origin="_J5L5ekhcEfCmlOepJcslnw" image="_J5L5iUhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J5L5oEhcEfCmlOepJcslnw" origin="_J5L5fEhcEfCmlOepJcslnw" image="_J5L5ikhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J5L5oUhcEfCmlOepJcslnw" origin="_J5L5fkhcEfCmlOepJcslnw" image="_J5L5i0hcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J5L5okhcEfCmlOepJcslnw" origin="_J5L5f0hcEfCmlOepJcslnw" image="_J5L5jEhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J5L5o0hcEfCmlOepJcslnw" origin="_J5L5gEhcEfCmlOepJcslnw" image="_J5L5jUhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J5L5pEhcEfCmlOepJcslnw" origin="_J5L5gkhcEfCmlOepJcslnw" image="_J5L5l0hcEfCmlOepJcslnw"/>
+  </units>
+</henshin:Module>

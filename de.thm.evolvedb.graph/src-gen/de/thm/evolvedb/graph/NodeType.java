@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.thm.evolvedb.graph.NodeType#getName <em>Name</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getLabel <em>Label</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getOutgoing <em>Outgoing</em>}</li>
  *   <li>{@link de.thm.evolvedb.graph.NodeType#getIncoming <em>Incoming</em>}</li>
@@ -24,6 +25,17 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface NodeType extends GraphItem {
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see de.thm.evolvedb.graph.GraphPackage#getNodeType_Name()
+	 * @model changeable="false" derived="true"
+	 * @generated
+	 */
+	String getName();
+
 	/**
 	 * Returns the value of the '<em><b>Label</b></em>' reference list.
 	 * The list contents are of type {@link de.thm.evolvedb.graph.NodeLabel}.

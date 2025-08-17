@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_J88_FkhcEfCmlOepJcslnw" name="RR: REMOVE_UniqueConstraint_(properties)_TGT_Property" description="Recognize: Removes UniqueConstraint's reference properties the target Property">
+  <imports href="http://www.sidiff.org/difference/symmetric/1.0#/"/>
+  <imports href="http://www.sidiff.org/matching/model#/"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_J88_F0hcEfCmlOepJcslnw" name="rr:removeFromUniqueConstraint_properties_Property" description="Recognize: Removes from UniqueConstraint's reference properties the target Property">
+    <parameters xmi:id="_J88_GEhcEfCmlOepJcslnw" name="Selected">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_J88_GUhcEfCmlOepJcslnw" name="OldTarget">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_J88_GkhcEfCmlOepJcslnw" name="Lhs">
+      <nodes xmi:id="_J88_G0hcEfCmlOepJcslnw" name="A.Selected" incoming="_J88_IUhcEfCmlOepJcslnw" outgoing="_J88_JEhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_J88_HEhcEfCmlOepJcslnw" name="A.OldTarget" incoming="_J88_IkhcEfCmlOepJcslnw _J88_JEhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_J88_HUhcEfCmlOepJcslnw" name="" outgoing="_J88_IUhcEfCmlOepJcslnw _J88_IkhcEfCmlOepJcslnw _J88_I0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_J88_HkhcEfCmlOepJcslnw" name="" incoming="_J88_I0hcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_J88_H0hcEfCmlOepJcslnw" value="&quot;properties&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J88_IEhcEfCmlOepJcslnw" name="">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J88_IUhcEfCmlOepJcslnw" source="_J88_HUhcEfCmlOepJcslnw" target="_J88_G0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_J88_IkhcEfCmlOepJcslnw" source="_J88_HUhcEfCmlOepJcslnw" target="_J88_HEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_J88_I0hcEfCmlOepJcslnw" source="_J88_HUhcEfCmlOepJcslnw" target="_J88_HkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_J88_JEhcEfCmlOepJcslnw" source="_J88_G0hcEfCmlOepJcslnw" target="_J88_HEhcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UniqueConstraint/properties"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_J88_JUhcEfCmlOepJcslnw" name="Rhs">
+      <nodes xmi:id="_J88_JkhcEfCmlOepJcslnw" name="A.Selected" incoming="_J88_NEhcEfCmlOepJcslnw" outgoing="_J88_N0hcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_J88_J0hcEfCmlOepJcslnw" name="A.OldTarget" incoming="_J88_NUhcEfCmlOepJcslnw _J88_N0hcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_J88_KEhcEfCmlOepJcslnw" name="" incoming="_J88_OEhcEfCmlOepJcslnw" outgoing="_J88_NEhcEfCmlOepJcslnw _J88_NUhcEfCmlOepJcslnw _J88_NkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+      </nodes>
+      <nodes xmi:id="_J88_KUhcEfCmlOepJcslnw" name="" incoming="_J88_NkhcEfCmlOepJcslnw">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_J88_KkhcEfCmlOepJcslnw" name="ChangeSet" incoming="_J88_OUhcEfCmlOepJcslnw" outgoing="_J88_OEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet"/>
+        <attributes xmi:id="_J88_K0hcEfCmlOepJcslnw" value="&quot;REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/name"/>
+        </attributes>
+        <attributes xmi:id="_J88_LEhcEfCmlOepJcslnw" value="&quot;Removes UniqueConstraint's reference properties the target Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/description"/>
+        </attributes>
+        <attributes xmi:id="_J88_LUhcEfCmlOepJcslnw" value="&quot;REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/editRName"/>
+        </attributes>
+        <attributes xmi:id="_J88_LkhcEfCmlOepJcslnw" value="&quot;RR: REMOVE_UniqueConstraint_(properties)_TGT_Property&quot;">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/recognitionRName"/>
+        </attributes>
+        <attributes xmi:id="_J88_L0hcEfCmlOepJcslnw" value="1">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/priority"/>
+        </attributes>
+        <attributes xmi:id="_J88_MEhcEfCmlOepJcslnw" value="0">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfACs"/>
+        </attributes>
+        <attributes xmi:id="_J88_MUhcEfCmlOepJcslnw" value="2">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/numberOfParams"/>
+        </attributes>
+        <attributes xmi:id="_J88_MkhcEfCmlOepJcslnw" value="3">
+          <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/refinementLevel"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_J88_M0hcEfCmlOepJcslnw" name="" outgoing="_J88_OUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+      </nodes>
+      <edges xmi:id="_J88_NEhcEfCmlOepJcslnw" source="_J88_KEhcEfCmlOepJcslnw" target="_J88_JkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+      </edges>
+      <edges xmi:id="_J88_NUhcEfCmlOepJcslnw" source="_J88_KEhcEfCmlOepJcslnw" target="_J88_J0hcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+      </edges>
+      <edges xmi:id="_J88_NkhcEfCmlOepJcslnw" source="_J88_KEhcEfCmlOepJcslnw" target="_J88_KUhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+      </edges>
+      <edges xmi:id="_J88_N0hcEfCmlOepJcslnw" source="_J88_JkhcEfCmlOepJcslnw" target="_J88_J0hcEfCmlOepJcslnw">
+        <type href="http://www.thm.de/graph#//UniqueConstraint/properties"/>
+      </edges>
+      <edges xmi:id="_J88_OEhcEfCmlOepJcslnw" source="_J88_KkhcEfCmlOepJcslnw" target="_J88_KEhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SemanticChangeSet/changes"/>
+      </edges>
+      <edges xmi:id="_J88_OUhcEfCmlOepJcslnw" source="_J88_M0hcEfCmlOepJcslnw" target="_J88_KkhcEfCmlOepJcslnw">
+        <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference/changeSets"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_J88_OkhcEfCmlOepJcslnw" origin="_J88_G0hcEfCmlOepJcslnw" image="_J88_JkhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J88_O0hcEfCmlOepJcslnw" origin="_J88_HEhcEfCmlOepJcslnw" image="_J88_J0hcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J88_PEhcEfCmlOepJcslnw" origin="_J88_HUhcEfCmlOepJcslnw" image="_J88_KEhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J88_PUhcEfCmlOepJcslnw" origin="_J88_HkhcEfCmlOepJcslnw" image="_J88_KUhcEfCmlOepJcslnw"/>
+    <mappings xmi:id="_J88_PkhcEfCmlOepJcslnw" origin="_J88_IEhcEfCmlOepJcslnw" image="_J88_M0hcEfCmlOepJcslnw"/>
+  </units>
+</henshin:Module>

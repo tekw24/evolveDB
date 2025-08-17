@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VOnNgBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_MINUTES" description="Changes the attribute value of type_FROM_DAY_TO_MINUTES">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VOnNgRuOEfCiO5YsU3IcKQ" name="changeTemporalTypesType_FROM_DAY_TO_MINUTES" description="Changes the attribute value of type_FROM_DAY_TO_MINUTES">
+    <parameters xmi:id="_VOnNghuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VOnNgxuOEfCiO5YsU3IcKQ" name="&quot;DAY&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VOnNhBuOEfCiO5YsU3IcKQ" name="&quot;MINUTES&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VOnNhRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VOnNhhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VOnNhxuOEfCiO5YsU3IcKQ" value="&quot;DAY&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VOnNiBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VOnNiRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VOnNihuOEfCiO5YsU3IcKQ" value="&quot;MINUTES&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VOnNixuOEfCiO5YsU3IcKQ" origin="_VOnNhhuOEfCiO5YsU3IcKQ" image="_VOnNiRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VOnNjBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VOnNgRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VOnNjRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VOnNjhuOEfCiO5YsU3IcKQ" name="&quot;DAY&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VOnNjxuOEfCiO5YsU3IcKQ" source="_VOnNjRuOEfCiO5YsU3IcKQ" target="_VOnNghuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VOnNkBuOEfCiO5YsU3IcKQ" source="_VOnNjhuOEfCiO5YsU3IcKQ" target="_VOnNgxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -16,6 +16,8 @@
  */
 package de.thm.mdde.datasource;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
 
@@ -74,5 +76,10 @@ public interface EDBDataSource {
 	boolean isCanceled();
 	
 	
-
+	/**
+	 * FileExtensions for the new File Wizard Page
+	 */
+	List<String> getFileExtensions(); 
+	
+	
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPUYIBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_TemporalTypes_Type" description="Sets TemporalTypes Type">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPUYIRuOEfCiO5YsU3IcKQ" name="setTemporalTypesType" description="Sets the EAttribute type">
+    <parameters xmi:id="_VPUYIhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPUYIxuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VPUYJBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VPUYJRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPUYJhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPUYJxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VPUYKBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPUYKRuOEfCiO5YsU3IcKQ" origin="_VPUYJRuOEfCiO5YsU3IcKQ" image="_VPUYJxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPUYKhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPUYIRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPUYKxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPUYLBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPUYLRuOEfCiO5YsU3IcKQ" source="_VPUYKxuOEfCiO5YsU3IcKQ" target="_VPUYIhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPUYLhuOEfCiO5YsU3IcKQ" source="_VPUYLBuOEfCiO5YsU3IcKQ" target="_VPUYIxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

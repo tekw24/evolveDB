@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VNjdkBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_BinaryTypes_type_FROM_VARBINARY_TO_BYTES" description="Changes the attribute value of type_FROM_VARBINARY_TO_BYTES">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VNjdkRuOEfCiO5YsU3IcKQ" name="changeBinaryTypesType_FROM_VARBINARY_TO_BYTES" description="Changes the attribute value of type_FROM_VARBINARY_TO_BYTES">
+    <parameters xmi:id="_VNjdkhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//BinaryTypes"/>
+    </parameters>
+    <parameters xmi:id="_VNjdkxuOEfCiO5YsU3IcKQ" name="&quot;VARBINARY&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//BinaryDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VNjdlBuOEfCiO5YsU3IcKQ" name="&quot;BYTES&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//BinaryDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VNjdlRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VNjdlhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//BinaryTypes"/>
+        <attributes xmi:id="_VNjdlxuOEfCiO5YsU3IcKQ" value="&quot;VARBINARY&quot;">
+          <type href="http://www.thm.de/graph#//BinaryTypes/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VNjdmBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VNjdmRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//BinaryTypes"/>
+        <attributes xmi:id="_VNjdmhuOEfCiO5YsU3IcKQ" value="&quot;BYTES&quot;">
+          <type href="http://www.thm.de/graph#//BinaryTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VNjdmxuOEfCiO5YsU3IcKQ" origin="_VNjdlhuOEfCiO5YsU3IcKQ" image="_VNjdmRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VNjdnBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VNjdkRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VNjdnRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//BinaryTypes"/>
+    </parameters>
+    <parameters xmi:id="_VNjdnhuOEfCiO5YsU3IcKQ" name="&quot;VARBINARY&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//BinaryDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VNjdnxuOEfCiO5YsU3IcKQ" source="_VNjdnRuOEfCiO5YsU3IcKQ" target="_VNjdkhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VNjdoBuOEfCiO5YsU3IcKQ" source="_VNjdnhuOEfCiO5YsU3IcKQ" target="_VNjdkxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

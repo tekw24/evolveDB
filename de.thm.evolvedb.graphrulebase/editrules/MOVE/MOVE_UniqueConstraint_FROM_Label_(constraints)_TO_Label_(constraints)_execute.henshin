@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQW58BuOEfCiO5YsU3IcKQ" name="MOVE_UniqueConstraint_FROM_Label_(constraints)_TO_Label_(constraints)" description="MOVEs UniqueConstraint from Label(Reference:constraints) to Label(Reference:constraints">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQW58RuOEfCiO5YsU3IcKQ" name="moveUniqueConstraint_FROM_Label_constraints_TO_Label_Label" description="Moves UniqueConstraint from Label(Reference:constraints) toLabel(Reference:Label)">
+    <parameters xmi:id="_VQW58huOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VQW58xuOEfCiO5YsU3IcKQ" name="OldSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQW59BuOEfCiO5YsU3IcKQ" name="NewSource" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <lhs xmi:id="_VQW59RuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQW59huOEfCiO5YsU3IcKQ" name="Selected" incoming="_VQW5-RuOEfCiO5YsU3IcKQ" outgoing="_VQW5-huOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VQW59xuOEfCiO5YsU3IcKQ" name="OldSource" incoming="_VQW5-huOEfCiO5YsU3IcKQ" outgoing="_VQW5-RuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VQW5-BuOEfCiO5YsU3IcKQ" name="NewSource">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <edges xmi:id="_VQW5-RuOEfCiO5YsU3IcKQ" source="_VQW59xuOEfCiO5YsU3IcKQ" target="_VQW59huOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VQW5-huOEfCiO5YsU3IcKQ" source="_VQW59huOEfCiO5YsU3IcKQ" target="_VQW59xuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VQW5-xuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQW5_BuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VQW5_xuOEfCiO5YsU3IcKQ" outgoing="_VQW6ABuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//UniqueConstraint"/>
+      </nodes>
+      <nodes xmi:id="_VQW5_RuOEfCiO5YsU3IcKQ" name="OldSource">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VQW5_huOEfCiO5YsU3IcKQ" name="NewSource" incoming="_VQW6ABuOEfCiO5YsU3IcKQ" outgoing="_VQW5_xuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <edges xmi:id="_VQW5_xuOEfCiO5YsU3IcKQ" source="_VQW5_huOEfCiO5YsU3IcKQ" target="_VQW5_BuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VQW6ABuOEfCiO5YsU3IcKQ" source="_VQW5_BuOEfCiO5YsU3IcKQ" target="_VQW5_huOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VQW6ARuOEfCiO5YsU3IcKQ" origin="_VQW59huOEfCiO5YsU3IcKQ" image="_VQW5_BuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VQW6AhuOEfCiO5YsU3IcKQ" origin="_VQW59xuOEfCiO5YsU3IcKQ" image="_VQW5_RuOEfCiO5YsU3IcKQ"/>
+    <mappings xmi:id="_VQW6AxuOEfCiO5YsU3IcKQ" origin="_VQW5-BuOEfCiO5YsU3IcKQ" image="_VQW5_huOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQW6BBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQW58RuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQW6BRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//UniqueConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VQW6BhuOEfCiO5YsU3IcKQ" name="OldSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQW6BxuOEfCiO5YsU3IcKQ" name="NewSource">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQW6CBuOEfCiO5YsU3IcKQ" source="_VQW6BRuOEfCiO5YsU3IcKQ" target="_VQW58huOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQW6CRuOEfCiO5YsU3IcKQ" source="_VQW6BhuOEfCiO5YsU3IcKQ" target="_VQW58xuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQW6ChuOEfCiO5YsU3IcKQ" source="_VQW6BxuOEfCiO5YsU3IcKQ" target="_VQW59BuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -114,12 +114,12 @@ public class BinaryTypesItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		BinaryTypes binaryTypes = (BinaryTypes) object;
-		return getString("_UI_BinaryTypes_type") + " " + binaryTypes.isNullable();
+		return getString("_UI_BinaryTypes_type") + " " + binaryTypes.getType().name();
 	}
 
 	/**

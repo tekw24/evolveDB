@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VP0ucBuOEfCiO5YsU3IcKQ" name="CREATE_PropertyTypeConstraint_IN_Label_(constraints)" description="Creates one PropertyTypeConstraint in Label">
+  <annotations xmi:id="_VP0ucRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_PropertyTypeConstraint_IN_Label_(constraints)"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VP0uchuOEfCiO5YsU3IcKQ" name="createPropertyTypeConstraint_IN_Label" description="creates one PropertyTypeConstraint in the context: Label">
+    <parameters xmi:id="_VP0ucxuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VP0udBuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VP0udRuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VP0udhuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VP0udxuOEfCiO5YsU3IcKQ" name="Selected">
+        <annotations xmi:id="_VP0ueBuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VP0ueRuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VP0uehuOEfCiO5YsU3IcKQ" name="Selected" incoming="_VP0ugBuOEfCiO5YsU3IcKQ" outgoing="_VP0ufxuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VP0uexuOEfCiO5YsU3IcKQ" key="SERGE_" value="CONTEXT"/>
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+      <nodes xmi:id="_VP0ufBuOEfCiO5YsU3IcKQ" name="New" incoming="_VP0ufxuOEfCiO5YsU3IcKQ" outgoing="_VP0ugBuOEfCiO5YsU3IcKQ">
+        <annotations xmi:id="_VP0ufRuOEfCiO5YsU3IcKQ" key="SERGE_" value="FOCUS"/>
+        <type href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+        <attributes xmi:id="_VP0ufhuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Constraint/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_VP0ufxuOEfCiO5YsU3IcKQ" source="_VP0uehuOEfCiO5YsU3IcKQ" target="_VP0ufBuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Label/constraints"/>
+      </edges>
+      <edges xmi:id="_VP0ugBuOEfCiO5YsU3IcKQ" source="_VP0ufBuOEfCiO5YsU3IcKQ" target="_VP0uehuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Constraint/Label"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_VP0ugRuOEfCiO5YsU3IcKQ" origin="_VP0udxuOEfCiO5YsU3IcKQ" image="_VP0uehuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VP0ughuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VP0uchuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VP0ugxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <annotations xmi:id="_VP0uhBuOEfCiO5YsU3IcKQ" key="INVERSE" value="selectedEObject"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VP0uhRuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VP0uhhuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyTypeConstraint"/>
+    </parameters>
+    <parameters xmi:id="_VP0uhxuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VP0uiBuOEfCiO5YsU3IcKQ" source="_VP0ugxuOEfCiO5YsU3IcKQ" target="_VP0ucxuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VP0uiRuOEfCiO5YsU3IcKQ" source="_VP0udBuOEfCiO5YsU3IcKQ" target="_VP0uhRuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VP0uihuOEfCiO5YsU3IcKQ" source="_VP0uhxuOEfCiO5YsU3IcKQ" target="_VP0udRuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

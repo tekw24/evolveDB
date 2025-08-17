@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPO4kBuOEfCiO5YsU3IcKQ" name="CREATE_StringType" description="Creates one StringType">
+  <annotations xmi:id="_VPO4kRuOEfCiO5YsU3IcKQ" key="INVERSE" value="DELETE_StringType"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPO4khuOEfCiO5YsU3IcKQ" name="createStringType" description="creates one StringType">
+    <parameters xmi:id="_VPO4kxuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VPO4lBuOEfCiO5YsU3IcKQ" name="Type" kind="OUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VPO4lRuOEfCiO5YsU3IcKQ" name="Lhs"/>
+    <rhs xmi:id="_VPO4lhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPO4lxuOEfCiO5YsU3IcKQ" name="New">
+        <type href="http://www.thm.de/graph#//StringType"/>
+        <attributes xmi:id="_VPO4mBuOEfCiO5YsU3IcKQ" value="Type">
+          <type href="http://www.thm.de/graph#//StringType/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPO4mRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPO4khuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPO4mhuOEfCiO5YsU3IcKQ" name="New">
+      <annotations xmi:id="_VPO4mxuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//StringType"/>
+    </parameters>
+    <parameters xmi:id="_VPO4nBuOEfCiO5YsU3IcKQ" name="Type">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//StringDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPO4nRuOEfCiO5YsU3IcKQ" source="_VPO4kxuOEfCiO5YsU3IcKQ" target="_VPO4mhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPO4nhuOEfCiO5YsU3IcKQ" source="_VPO4nBuOEfCiO5YsU3IcKQ" target="_VPO4lBuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

@@ -16,6 +16,8 @@
  */
 package de.thm.mdde.differenceBuilderWizard;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,6 +41,8 @@ import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
 import org.sidiff.difference.lifting.api.settings.RecognitionEngineMode;
 import org.sidiff.difference.lifting.api.util.PipelineUtils;
+import org.sidiff.difference.lifting.recognitionengine.RecognitionEngineSetup;
+import org.sidiff.difference.lifting.recognitionengine.util.RecognitionEngineUtil;
 import org.sidiff.difference.lifting.recognitionrulesorter.IRecognitionRuleSorter;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -101,14 +105,20 @@ public class MddeDifferenceBuilderController {
 
 		settings.setScope(Scope.RESOURCE);
 		settings.setValidate(true);
-		settings.setCandidatesService(null);
-		settings.setCorrespondencesService(null);
+//		settings.setCandidatesService(null);
+//		settings.setCorrespondencesService(null);
 
 		Optional<IRecognitionRuleSorter> sorter = IRecognitionRuleSorter.MANAGER.getDefaultExtension();
 		settings.setRrSorter(sorter.get());
 
-		settings.setCalculateEditRuleMatch(false);
-		settings.setSerializeEditRuleMatch(false);
+//		settings.setCalculateEditRuleMatch(false);
+//		settings.setSerializeEditRuleMatch(false);
+
+		RecognitionEngineSetup setup = PipelineUtils.createRecognitionEngineSetup(settings);
+		// TODO Try to prevent Deadlock
+		setup.setUseThreadPool(true);
+
+		settings.setRecognitionEngine(RecognitionEngineUtil.getDefaultRecognitionEngine(setup));
 
 		SymmetricDifference technicalDifference = createTechnicalDifference();
 
@@ -151,7 +161,21 @@ public class MddeDifferenceBuilderController {
 			settings.setCorrespondencesService(null);
 			settings.setUnmergeImports(false);
 
+			//TODO Remove 
+			Instant start = Instant.now();
+
 			matching = MatchingFacade.match(Arrays.asList(resourceA, resourceB), settings);
+
+			// Zeit nach der Aktion
+			Instant end = Instant.now();
+
+			// Differenz berechnen
+			Duration duration = Duration.between(start, end);
+			long seconds = duration.getSeconds();
+			long millis = duration.toMillis();
+
+			System.out.println("Dauer: " + seconds + " Sekunden");
+			System.out.println("Dauer (genauer): " + millis + " Millisekunden");
 
 		}
 		return matching;

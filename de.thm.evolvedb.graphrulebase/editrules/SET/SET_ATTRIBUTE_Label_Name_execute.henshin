@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VQKFoBuOEfCiO5YsU3IcKQ" name="SET_ATTRIBUTE_Label_Name" description="Sets Label Name">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VQKFoRuOEfCiO5YsU3IcKQ" name="setLabelName" description="Sets the EAttribute name">
+    <parameters xmi:id="_VQKFohuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQKFoxuOEfCiO5YsU3IcKQ" name="Name" kind="OUT">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <lhs xmi:id="_VQKFpBuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VQKFpRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Label"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VQKFphuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VQKFpxuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//Label"/>
+        <attributes xmi:id="_VQKFqBuOEfCiO5YsU3IcKQ" value="Name">
+          <type href="http://www.thm.de/graph#//Label/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VQKFqRuOEfCiO5YsU3IcKQ" origin="_VQKFpRuOEfCiO5YsU3IcKQ" image="_VQKFpxuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VQKFqhuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VQKFoRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VQKFqxuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Label"/>
+    </parameters>
+    <parameters xmi:id="_VQKFrBuOEfCiO5YsU3IcKQ" name="Name">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </parameters>
+    <parameterMappings xmi:id="_VQKFrRuOEfCiO5YsU3IcKQ" source="_VQKFqxuOEfCiO5YsU3IcKQ" target="_VQKFohuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VQKFrhuOEfCiO5YsU3IcKQ" source="_VQKFrBuOEfCiO5YsU3IcKQ" target="_VQKFoxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

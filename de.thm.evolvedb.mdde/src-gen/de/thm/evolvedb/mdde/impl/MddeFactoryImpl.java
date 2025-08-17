@@ -60,7 +60,6 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 			case MddePackage.TABLE: return createTable();
 			case MddePackage.PRIMARY_KEY: return createPrimaryKey();
 			case MddePackage.FOREIGN_KEY: return createForeignKey();
-			case MddePackage.NAMED_ELEMENT: return createNamedElement();
 			case MddePackage.DATABASE_SCHEMA: return createDatabase_Schema();
 			case MddePackage.COLUMN: return createColumn();
 			case MddePackage.UNIQUE_CONSTRAINT: return createUniqueConstraint();
@@ -148,17 +147,6 @@ public class MddeFactoryImpl extends EFactoryImpl implements MddeFactory {
 	public ForeignKey createForeignKey() {
 		ForeignKeyImpl foreignKey = new ForeignKeyImpl();
 		return foreignKey;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NamedElement createNamedElement() {
-		NamedElementImpl namedElement = new NamedElementImpl();
-		return namedElement;
 	}
 
 	/**

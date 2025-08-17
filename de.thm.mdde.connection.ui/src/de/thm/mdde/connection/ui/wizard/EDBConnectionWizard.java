@@ -156,9 +156,10 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 						}
 
 						String filename = edbDatabaseModelNewFileCreationPage.getFileName();
+						String extension = edbDatabaseModelNewFileCreationPage.getFormatted_file_extensions();
 						if (filename != null) {
-							filename = filename.substring(0, filename.length() - 5);
-							filename = filename + "V2.mdde";
+							filename = filename.substring(0, filename.length() - (extension.length() + 1));
+							filename = filename + "V2." + extension;
 						}
 
 						ResourceSet resourceSet2 = new ResourceSetImpl();

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPqWYBuOEfCiO5YsU3IcKQ" name="CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_DATE" description="Changes the attribute value of type_FROM_LOCAL_TIME_TO_DATE">
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPqWYRuOEfCiO5YsU3IcKQ" name="changeTemporalTypesType_FROM_LOCAL_TIME_TO_DATE" description="Changes the attribute value of type_FROM_LOCAL_TIME_TO_DATE">
+    <parameters xmi:id="_VPqWYhuOEfCiO5YsU3IcKQ" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPqWYxuOEfCiO5YsU3IcKQ" name="&quot;LOCAL_TIME&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPqWZBuOEfCiO5YsU3IcKQ" name="&quot;DATE&quot;" kind="INOUT">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <lhs xmi:id="_VPqWZRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_VPqWZhuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VPqWZxuOEfCiO5YsU3IcKQ" value="&quot;LOCAL_TIME&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_VPqWaBuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPqWaRuOEfCiO5YsU3IcKQ" name="Selected">
+        <type href="http://www.thm.de/graph#//TemporalTypes"/>
+        <attributes xmi:id="_VPqWahuOEfCiO5YsU3IcKQ" value="&quot;DATE&quot;">
+          <type href="http://www.thm.de/graph#//TemporalTypes/type"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_VPqWaxuOEfCiO5YsU3IcKQ" origin="_VPqWZhuOEfCiO5YsU3IcKQ" image="_VPqWaRuOEfCiO5YsU3IcKQ"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPqWbBuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPqWYRuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPqWbRuOEfCiO5YsU3IcKQ" name="selectedEObject">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//TemporalTypes"/>
+    </parameters>
+    <parameters xmi:id="_VPqWbhuOEfCiO5YsU3IcKQ" name="&quot;LOCAL_TIME&quot;">
+      <type xsi:type="ecore:EEnum" href="http://www.thm.de/graph#//TemporalDataTypes"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPqWbxuOEfCiO5YsU3IcKQ" source="_VPqWbRuOEfCiO5YsU3IcKQ" target="_VPqWYhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPqWcBuOEfCiO5YsU3IcKQ" source="_VPqWbhuOEfCiO5YsU3IcKQ" target="_VPqWYxuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

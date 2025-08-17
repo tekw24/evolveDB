@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPIK4BuOEfCiO5YsU3IcKQ" name="DELETE_ListType" description="Deletes one ListType">
+  <annotations xmi:id="_VPIK4RuOEfCiO5YsU3IcKQ" key="INVERSE" value="CREATE_ListType"/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPIK4huOEfCiO5YsU3IcKQ" name="deleteListType" description="deletes one ListType">
+    <parameters xmi:id="_VPIK4xuOEfCiO5YsU3IcKQ" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//ListType"/>
+    </parameters>
+    <parameters xmi:id="_VPIK5BuOEfCiO5YsU3IcKQ" name="Child" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <lhs xmi:id="_VPIK5RuOEfCiO5YsU3IcKQ" name="LHS">
+      <nodes xmi:id="_VPIK5huOEfCiO5YsU3IcKQ" name="ToBeDeleted" outgoing="_VPIK6BuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//ListType"/>
+      </nodes>
+      <nodes xmi:id="_VPIK5xuOEfCiO5YsU3IcKQ" name="Child" incoming="_VPIK6BuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//PropertyValueType"/>
+      </nodes>
+      <edges xmi:id="_VPIK6BuOEfCiO5YsU3IcKQ" source="_VPIK5huOEfCiO5YsU3IcKQ" target="_VPIK5xuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//ListType/type"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VPIK6RuOEfCiO5YsU3IcKQ" name="RHS"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPIK6huOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPIK4huOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPIK6xuOEfCiO5YsU3IcKQ" name="ToBeDeleted">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//ListType"/>
+    </parameters>
+    <parameters xmi:id="_VPIK7BuOEfCiO5YsU3IcKQ" name="Child">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPIK7RuOEfCiO5YsU3IcKQ" source="_VPIK6xuOEfCiO5YsU3IcKQ" target="_VPIK4xuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPIK7huOEfCiO5YsU3IcKQ" source="_VPIK7BuOEfCiO5YsU3IcKQ" target="_VPIK5BuOEfCiO5YsU3IcKQ"/>
+  </units>
+</henshin:Module>

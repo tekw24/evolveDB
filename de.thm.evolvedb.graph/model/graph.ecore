@@ -22,6 +22,8 @@
     <eLiterals name="empty_graph" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeType" eSuperTypes="#//GraphItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-1"
         eType="#//NodeLabel" eOpposite="#//NodeLabel/nodes"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1"
@@ -32,6 +34,8 @@
         eType="#//Property" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgeType" eSuperTypes="#//GraphItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labels" upperBound="-1"
         eType="#//EdgeLabel" eOpposite="#//EdgeLabel/edges"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
@@ -146,6 +150,7 @@
     <eLiterals name="FLOAT" value="3"/>
     <eLiterals name="FLOAT128" value="4"/>
     <eLiterals name="DOUBLE" value="5"/>
+    <eLiterals name="LONG"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StringDataTypes">
     <eLiterals name="VARCHAR" value="1"/>
@@ -154,5 +159,6 @@
   <eClassifiers xsi:type="ecore:EEnum" name="BinaryDataTypes">
     <eLiterals name="VARBINARY" value="3"/>
     <eLiterals name="BYTES" value="4"/>
+    <eLiterals name="LITERAL2" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

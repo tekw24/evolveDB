@@ -80,12 +80,12 @@ public class TemporalTypesItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		TemporalTypes temporalTypes = (TemporalTypes) object;
-		return getString("_UI_TemporalTypes_type") + " " + temporalTypes.isNullable();
+		return getString("_UI_TemporalTypes_type") + " " + temporalTypes.getType().name();
 	}
 
 	/**
