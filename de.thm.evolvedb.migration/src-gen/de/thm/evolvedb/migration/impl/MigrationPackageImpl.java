@@ -295,6 +295,15 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getMigration_UnassignedChanges() {
+		return (EReference)migrationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getMigration__GetResolvableSMO() {
 		return migrationEClass.getEOperations().get(0);
 	}
@@ -483,6 +492,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		createEReference(migrationEClass, MIGRATION__SCHEMA_MODIFICATION_OPERATORS);
 		createEAttribute(migrationEClass, MIGRATION__SYMETRIC_DIFFERENCE_MODEL);
 		createEAttribute(migrationEClass, MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL);
+		createEReference(migrationEClass, MIGRATION__UNASSIGNED_CHANGES);
 		createEOperation(migrationEClass, MIGRATION___GET_RESOLVABLE_SMO);
 		createEOperation(migrationEClass, MIGRATION___GET_PARTIALLY_RESOVABLE_SMO);
 		createEOperation(migrationEClass, MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE);
@@ -563,6 +573,7 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		initEReference(getMigration_SchemaModificationOperators(), this.getSchemaModificationOperator(), this.getSchemaModificationOperator_Migration(), "schemaModificationOperators", null, 0, -1, Migration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMigration_SymetricDifferenceModel(), ecorePackage.getEResource(), "symetricDifferenceModel", null, 0, 1, Migration.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMigration_UriSymetricDifferenceModel(), ecorePackage.getEString(), "uriSymetricDifferenceModel", null, 0, 1, Migration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMigration_UnassignedChanges(), theSymmetricPackage.getChange(), null, "unassignedChanges", null, 0, -1, Migration.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getMigration__GetResolvableSMO(), this.getResolvableOperator(), "getResolvableSMO", 0, -1, IS_UNIQUE, IS_ORDERED);
 

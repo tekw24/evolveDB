@@ -17,6 +17,7 @@ import junit.textui.TestRunner;
  * The following features are tested:
  * <ul>
  *   <li>{@link de.thm.evolvedb.migration.Migration#getSymetricDifferenceModel() <em>Symetric Difference Model</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.Migration#getUnassignedChanges() <em>Unassigned Changes</em>}</li>
  * </ul>
  * </p>
  * <p>
@@ -122,6 +123,19 @@ public class MigrationTest extends TestCase {
 	 */
 	public void testSetSymetricDifferenceModel() {
 		// TODO: implement this feature setter test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link de.thm.evolvedb.migration.Migration#getUnassignedChanges() <em>Unassigned Changes</em>}' feature getter.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.Migration#getUnassignedChanges()
+	 * @generated
+	 */
+	public void testGetUnassignedChanges() {
+		// TODO: implement this feature getter test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
 	}

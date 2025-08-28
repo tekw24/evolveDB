@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
 /**
@@ -23,6 +24,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  *   <li>{@link de.thm.evolvedb.migration.Migration#getSchemaModificationOperators <em>Schema Modification Operators</em>}</li>
  *   <li>{@link de.thm.evolvedb.migration.Migration#getSymetricDifferenceModel <em>Symetric Difference Model</em>}</li>
  *   <li>{@link de.thm.evolvedb.migration.Migration#getUriSymetricDifferenceModel <em>Uri Symetric Difference Model</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.Migration#getUnassignedChanges <em>Unassigned Changes</em>}</li>
  * </ul>
  *
  * @see de.thm.evolvedb.migration.MigrationPackage#getMigration()
@@ -109,6 +111,18 @@ public interface Migration extends EObject {
 	 * @generated
 	 */
 	void setUriSymetricDifferenceModel(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Unassigned Changes</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.difference.symmetric.Change}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unassigned Changes</em>' reference list.
+	 * @see de.thm.evolvedb.migration.MigrationPackage#getMigration_UnassignedChanges()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<Change> getUnassignedChanges();
 
 	/**
 	 * <!-- begin-user-doc -->

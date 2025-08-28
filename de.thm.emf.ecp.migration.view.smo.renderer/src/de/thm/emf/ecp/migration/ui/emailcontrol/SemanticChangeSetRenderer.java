@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -45,6 +46,8 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
@@ -1556,7 +1559,99 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 				}
 
+				final Optional<SemanticChangeSet> optional7 = object.stream()
+					.filter(n -> n.getEditRName().equals("DELETE_ColumnConstraint_IN_Constraint_(columns)")) //$NON-NLS-1$
+					.findFirst();
+
+				if (optional7.isPresent()) {
+
+					final SemanticChangeSet set = optional7.get();
+
+					final Optional<Change> optional8 = set.getChanges().stream()
+						.filter(n -> n instanceof RemoveReference).findFirst();
+
+					if (optional8.isPresent()) {
+
+						final RemoveReference removeObject = (RemoveReference) optional8.get();
+						final EObject eObject = removeObject.getSrc();
+
+						Constraint constraint;
+						final ColumnConstraint columnConstraint;
+
+						if (eObject instanceof Constraint) {
+							constraint = (Constraint) eObject;
+							columnConstraint = (ColumnConstraint) removeObject.getTgt();
+						} else {
+							constraint = (Constraint) removeObject.getTgt();
+							columnConstraint = (ColumnConstraint) removeObject.getSrc();
+						}
+
+						final Column column = columnConstraint.getColumn();
+
+						final Composite area = new Composite(composite, SWT.NONE);
+						GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+						GridDataFactory.fillDefaults().grab(true, false)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+						final Label label = new Label(area, SWT.NONE);
+						label.setText(Messages.SemanticChangeSetRenderer_Column_Index_Remove);
+						GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+							.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+						createHyperlink(area, column,
+							Messages.SemanticChangeSetRenderer_Column + column.getName(),
+							Messages.SemanticChangeSetRenderer_Removed_Elements);
+
+						if (constraint instanceof Index) {
+							createHyperlink(area, constraint,
+								Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+								Messages.SemanticChangeSetRenderer_0);
+						} else {
+							createHyperlink(area, constraint,
+								Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+								Messages.SemanticChangeSetRenderer_Removed_Elements);
+						}
+
+						// createDescription(composite, eAttribute, columnA, columnB);
+
+						final Grid grid = createGrid(area, 3, 1);
+
+						final GridItem item = new GridItem(grid, SWT.NONE);
+						item.setText(column.getName());
+						item.setText(1, column.eClass().getName());
+						item.setText(2, column.getType().getName());
+						item.setText(3, column.getSize() != null ? column.getSize()
+							: Messages.SemanticChangeSetRenderer_null);
+						item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+							: Messages.SemanticChangeSetRenderer_null);
+						// item.setChecked(5, columnA.getUnique());
+						item.setChecked(5, column.getAutoIncrement());
+
+					}
+
+				}
+
 			}
+
+			createBoldLabel(composite, "Atomic Changes");
+			// Table
+			final TableViewer viewer = new TableViewer(composite,
+				SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
+			final org.eclipse.swt.widgets.Table table = viewer.getTable();
+			table.setHeaderVisible(false);
+			table.setLinesVisible(true);
+			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).hint(SWT.DEFAULT, 220)
+				.applyTo(table);
+
+			viewer.setContentProvider(ArrayContentProvider.getInstance());
+			viewer.setLabelProvider(new AdapterFactoryLabelProvider(composedAdapterFactory));
+			viewer.setUseHashlookup(true);
+
+			final List<Change> changes = object.stream()
+				.flatMap(scs -> scs.getChanges().stream())
+				.toList();
+
+			viewer.setInput(changes);
 
 		} catch (
 

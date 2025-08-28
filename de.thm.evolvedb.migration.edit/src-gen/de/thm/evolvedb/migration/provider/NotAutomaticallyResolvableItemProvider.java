@@ -17,7 +17,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
-import de.thm.evolvedb.migration.NotAutomaticallyResolvableOperatorType;
 
 /**
  * This is the item provider adapter for a {@link de.thm.evolvedb.migration.NotAutomaticallyResolvable} object.

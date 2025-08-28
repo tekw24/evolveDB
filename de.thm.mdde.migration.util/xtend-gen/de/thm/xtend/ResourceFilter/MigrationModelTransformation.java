@@ -301,6 +301,7 @@ public class MigrationModelTransformation {
                     RemoveReference removeReference = ((RemoveReference) change);
                     if ((removeReference.getSrc().equals(columnConstraint) || 
                       removeReference.getTgt().equals(columnConstraint))) {
+                      resolvable.getSemanticChangeSets().addAll(reference.getSemanticChangeSets());
                       migration.getSchemaModificationOperators().remove(reference);
                     }
                   }

@@ -178,13 +178,22 @@ public interface MigrationPackage extends EPackage {
 	int MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL = 3;
 
 	/**
+	 * The feature id for the '<em><b>Unassigned Changes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MIGRATION__UNASSIGNED_CHANGES = 4;
+
+	/**
 	 * The number of structural features of the '<em>Migration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MIGRATION_FEATURE_COUNT = 4;
+	int MIGRATION_FEATURE_COUNT = 5;
 
 	/**
 	 * The operation id for the '<em>Get Resolvable SMO</em>' operation.
@@ -666,6 +675,17 @@ public interface MigrationPackage extends EPackage {
 	EAttribute getMigration_UriSymetricDifferenceModel();
 
 	/**
+	 * Returns the meta object for the reference list '{@link de.thm.evolvedb.migration.Migration#getUnassignedChanges <em>Unassigned Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Unassigned Changes</em>'.
+	 * @see de.thm.evolvedb.migration.Migration#getUnassignedChanges()
+	 * @see #getMigration()
+	 * @generated
+	 */
+	EReference getMigration_UnassignedChanges();
+
+	/**
 	 * Returns the meta object for the '{@link de.thm.evolvedb.migration.Migration#getResolvableSMO() <em>Get Resolvable SMO</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -954,6 +974,14 @@ public interface MigrationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL = eINSTANCE.getMigration_UriSymetricDifferenceModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Unassigned Changes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MIGRATION__UNASSIGNED_CHANGES = eINSTANCE.getMigration_UnassignedChanges();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Resolvable SMO</b></em>' operation.

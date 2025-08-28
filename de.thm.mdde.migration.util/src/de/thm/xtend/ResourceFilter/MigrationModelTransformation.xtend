@@ -265,6 +265,8 @@ class MigrationModelTransformation {
 
 								if (removeReference.src.equals(columnConstraint) ||
 									removeReference.tgt.equals(columnConstraint)) {
+									//TODO Operatoren werden vereinheitlicht	
+									resolvable.semanticChangeSets.addAll(reference.semanticChangeSets)
 									migration.schemaModificationOperators.remove(reference);
 
 								}

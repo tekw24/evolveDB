@@ -68,6 +68,7 @@ public class MigrationItemProvider
 			addSymmetricDifferencePropertyDescriptor(object);
 			addSymetricDifferenceModelPropertyDescriptor(object);
 			addUriSymetricDifferenceModelPropertyDescriptor(object);
+			addUnassignedChangesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -134,6 +135,28 @@ public class MigrationItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Unassigned Changes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUnassignedChangesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Migration_unassignedChanges_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Migration_unassignedChanges_feature", "_UI_Migration_type"),
+				 MigrationPackage.Literals.MIGRATION__UNASSIGNED_CHANGES,
+				 false,
+				 false,
+				 false,
+				 null,
 				 null,
 				 null));
 	}

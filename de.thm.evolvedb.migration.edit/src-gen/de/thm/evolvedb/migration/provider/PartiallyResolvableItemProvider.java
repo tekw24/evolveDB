@@ -17,7 +17,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.PartiallyResolvable;
-import de.thm.evolvedb.migration.PartiallyResolvableOperatorType;
 
 /**
  * This is the item provider adapter for a {@link de.thm.evolvedb.migration.PartiallyResolvable} object.
