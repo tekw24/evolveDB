@@ -62,11 +62,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.sidiff.common.emf.exceptions.InvalidModelException;
+import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
 
+import de.thm.evolvedb.lifting.facade.CustomLiftingFacade;
 import de.thm.evolvedb.migration.Migration;
 import de.thm.evolvedb.migration.MigrationPackage;
 
@@ -162,22 +164,23 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 				if (sel.isEmpty()) {
 					return;
 				}
-				runInCommand(() -> {
-					final SymmetricDifference diff = getDiff();
-					if (diff == null) {
-						return null;
-					}
 
-					// TODO[1]: Stelle sicher, dass du hier die korrekte Factory nutzt:
-					final SemanticChangeSet scs = SymmetricFactory.eINSTANCE.createSemanticChangeSet();
+				final SymmetricDifference diff = getDiff();
+				if (diff == null) {
+					return;
+				}
 
-					// TODO[2]: Füge das SCS in die richtige Containment-Liste des diff ein:
-					// z.B.: diff.getChangeSets().add(scs);
-					addSCS(diff, scs);
+				try {
+					final SymmetricDifference lifted = CustomLiftingFacade.createLiftedDifference(sel, diff);
 
-					scs.getChanges().addAll(sel);
-					return null;
-				});
+					final List<SemanticChangeSet> toAdd = new ArrayList<>(lifted.getChangeSets());
+					diff.getChangeSets().addAll(toAdd);
+
+				} catch (InvalidModelException | NoCorrespondencesException ex) {
+					ex.printStackTrace();
+					return;
+				}
+
 				refreshViewer(viewer);
 			}
 		});
@@ -307,6 +310,16 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 		return null;
 	}
 
+	private Migration getMigration() {
+		final EObject root = getViewModelContext().getDomainModel();
+		// DomainModel kann Migration sein – passe ggf. an deinen Typ an:
+		if (root instanceof Migration) {
+			return (Migration) root;
+		}
+		// Fallback: Suche im selben ResourceSet
+		return null;
+	}
+
 	// Kapselt Ausführung auf dem CommandStack (undo/redo-fähig)
 	private void runInCommand(Supplier<Void> work) {
 		final EObject anchor = getViewModelContext().getDomainModel();
@@ -345,15 +358,6 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 			}
 		}
 		return null;
-	}
-
-	/* ---- Modell-spezifische Stellen: bitte prüfen/anpassen ---- */
-
-	// fügt SCS in die Containment-Liste des Diff ein
-	private void addSCS(SymmetricDifference diff, SemanticChangeSet scs) {
-		// TODO[2]: hier die _richtige_ Containment-Referenz verwenden:
-		// Beispiel (häufiger Name): diff.getChangeSets().add(scs);
-		diff.getChangeSets().add(scs);
 	}
 
 	private List<SemanticChangeSet> getAllSCS(SymmetricDifference diff) {
