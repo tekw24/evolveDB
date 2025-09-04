@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -55,12 +54,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -68,6 +67,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
+import de.thm.evolvedb.lifting.adapter.SchemaModificationOperatorAdder;
 import de.thm.evolvedb.lifting.facade.CustomLiftingFacade;
 import de.thm.evolvedb.migration.Migration;
 import de.thm.evolvedb.migration.MigrationPackage;
@@ -132,31 +132,39 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) {
-		// Layout wie gehabt …
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, false)
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 
-		// Toolbar
-		toolbar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(toolbar);
+		// --- Button-Leiste ---------------------------------------------------
+		final Composite buttonBar = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).spacing(8, 0).applyTo(buttonBar);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(buttonBar);
 
-		// Table
+		final Button createSetBtn = new Button(buttonBar, SWT.PUSH);
+		createSetBtn.setText("Neues Set aus Auswahl");
+		createSetBtn.setEnabled(false); // initial deaktiviert
+
+		final Button addToExistingBtn = new Button(buttonBar, SWT.PUSH);
+		addToExistingBtn.setText("Zu bestehendem Set…");
+		addToExistingBtn.setEnabled(false);
+
+		// --- Tabelle ---------------------------------------------------------
 		viewer = new TableViewer(composite,
 			SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
 		final Table table = viewer.getTable();
 		table.setHeaderVisible(false);
 		table.setLinesVisible(true);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).hint(SWT.DEFAULT, 220)
-			.applyTo(table);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
+			.hint(SWT.DEFAULT, 220).applyTo(table);
 
 		viewer.setContentProvider(ArrayContentProvider.getInstance());
 		viewer.setLabelProvider(new AdapterFactoryLabelProvider(composedAdapterFactory));
 		viewer.setUseHashlookup(true);
 		viewer.setInput(getCurrentUnassigned());
 
-		final ToolItem createSetBtn = new ToolItem(toolbar, SWT.PUSH);
-		createSetBtn.setText("Neues Set aus Auswahl");
+		// --- Listener für Buttons --------------------------------------------
 		createSetBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -170,23 +178,26 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 					return;
 				}
 
-				try {
-					final SymmetricDifference lifted = CustomLiftingFacade.createLiftedDifference(sel, diff);
-
-					final List<SemanticChangeSet> toAdd = new ArrayList<>(lifted.getChangeSets());
-					diff.getChangeSets().addAll(toAdd);
-
-				} catch (InvalidModelException | NoCorrespondencesException ex) {
-					ex.printStackTrace();
-					return;
-				}
+				runInCommand(() -> {
+					try {
+						final SymmetricDifference lifted = CustomLiftingFacade.createLiftedDifference(sel, diff);
+						final List<SemanticChangeSet> toAdd = new ArrayList<>(lifted.getChangeSets());
+						diff.getChangeSets().addAll(toAdd);
+						diff.getChanges().addAll(lifted.getChanges());
+						diff.setMatching(lifted.getMatching());
+						for (final SemanticChangeSet scs : toAdd) {
+							SchemaModificationOperatorAdder.addOperatorFor(scs, getMigration(), diff);
+						}
+					} catch (InvalidModelException | NoCorrespondencesException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				});
 
 				refreshViewer(viewer);
 			}
 		});
 
-		final ToolItem addToExistingBtn = new ToolItem(toolbar, SWT.PUSH);
-		addToExistingBtn.setText("Zu bestehendem Set…");
 		addToExistingBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -195,7 +206,7 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 					return;
 				}
 
-				final SemanticChangeSet target = pickExistingSCS(toolbar.getShell());
+				final SemanticChangeSet target = pickExistingSCS(composite.getShell());
 				if (target == null) {
 					return;
 				}
@@ -208,16 +219,17 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 			}
 		});
 
+		// --- Selektion überwachen --------------------------------------------
+		viewer.addSelectionChangedListener(event -> {
+			final boolean hasSelection = !event.getSelection().isEmpty();
+			createSetBtn.setEnabled(hasSelection);
+			addToExistingBtn.setEnabled(hasSelection);
+		});
+
 		// Live-Refresh bei Modelländerungen
 		attachAutoRefreshAdapter(composite, viewer);
 
-		// … Buttons & Listener wie zuvor …
-
-		// WICHTIG: erst JETZT Enable-Status anwenden (wir überschreiben Read-only)
 		applyEnable();
-
-		// optional: Fokusierbares Control an EMF Forms melden
-		// table.setData("org.eclipse.emfforms.renderer.multiControl.isFocusCandidate", Boolean.TRUE);
 
 		return composite;
 	}
@@ -320,18 +332,37 @@ public class UnassignedChangesRenderer extends AbstractControlSWTRenderer<VContr
 		return null;
 	}
 
-	// Kapselt Ausführung auf dem CommandStack (undo/redo-fähig)
 	private void runInCommand(Supplier<Void> work) {
 		final EObject anchor = getViewModelContext().getDomainModel();
 		final EditingDomain domain = getDomain(anchor);
-		final CommandStack stack = domain.getCommandStack();
-		stack.execute(new RecordingCommand(
-			(org.eclipse.emf.transaction.TransactionalEditingDomain) domain) {
-			@Override
-			protected void doExecute() {
-				work.get();
-			}
-		});
+
+		if (domain instanceof TransactionalEditingDomain) {
+			final TransactionalEditingDomain tx = (TransactionalEditingDomain) domain;
+			tx.getCommandStack().execute(new RecordingCommand(tx) {
+				@Override
+				protected void doExecute() {
+					work.get();
+				}
+			});
+		} else {
+			// Fallback für non-transactional EditingDomain
+			domain.getCommandStack().execute(new org.eclipse.emf.common.command.AbstractCommand() {
+				@Override
+				protected boolean prepare() {
+					return true;
+				}
+
+				@Override
+				public void execute() {
+					work.get();
+				}
+
+				@Override
+				public void redo() {
+					work.get();
+				}
+			});
+		}
 	}
 
 	/* ---- Auswahl-Dialog für vorhandene Sets ---- */

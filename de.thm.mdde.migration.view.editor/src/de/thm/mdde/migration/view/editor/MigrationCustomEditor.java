@@ -75,6 +75,7 @@ import de.thm.evolvedb.migration.ProcessStatus;
 import de.thm.evolvedb.migration.ResolvableOperator;
 import de.thm.evolvedb.migration.SchemaModificationOperator;
 import de.thm.evolvedb.migration.provider.SchemaModificationOperatorItemProvider;
+import de.thm.mdde.migration.view.editor.action.ConfirmingDeleteActionBuilder;
 import de.thm.mdde.migration.view.editor.action.ResolvemasterDetailAction;
 import de.thm.mdde.migration.view.editor.action.UnresolvemasterDetailAction;
 import de.thm.mdde.migration.view.editor.toolbar.GenerateAction;
@@ -256,7 +257,7 @@ public class MigrationCustomEditor extends GenericEditor {
 
 				menuMgr.addMenuListener(new TreeMasterDetailMenuListener(new ChildrenDescriptorCollector(), menuMgr,
 					treeViewer, editingDomain, masterDetailActions, getCreateElementCallback(),
-					new DefaultDeleteActionBuilder()));
+					new ConfirmingDeleteActionBuilder()));
 				final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 				return menu;
 
@@ -273,7 +274,7 @@ public class MigrationCustomEditor extends GenericEditor {
 	 * This returns the label text for the adapted class. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	public String getText(SchemaModificationOperator o) {
 		EList<SemanticChangeSet> s = o.getSemanticChangeSets();
