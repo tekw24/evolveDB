@@ -58,6 +58,33 @@ public interface MigrationFactory extends EFactory {
 	NotAutomaticallyResolvable createNotAutomaticallyResolvable();
 
 	/**
+	 * Returns a new object of class '<em>Graph Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Resolvable Operator</em>'.
+	 * @generated
+	 */
+	GraphResolvableOperator createGraphResolvableOperator();
+
+	/**
+	 * Returns a new object of class '<em>Graph Partially Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Partially Resolvable Operator</em>'.
+	 * @generated
+	 */
+	GraphPartiallyResolvableOperator createGraphPartiallyResolvableOperator();
+
+	/**
+	 * Returns a new object of class '<em>Graph Not Automatically Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Not Automatically Resolvable Operator</em>'.
+	 * @generated
+	 */
+	GraphNotAutomaticallyResolvableOperator createGraphNotAutomaticallyResolvableOperator();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

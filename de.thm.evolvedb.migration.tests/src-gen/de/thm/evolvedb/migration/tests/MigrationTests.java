@@ -35,6 +35,9 @@ public class MigrationTests extends TestSuite {
 		suite.addTestSuite(ResolvableOperatorTest.class);
 		suite.addTestSuite(PartiallyResolvableTest.class);
 		suite.addTestSuite(NotAutomaticallyResolvableTest.class);
+		suite.addTestSuite(GraphResolvableOperatorTest.class);
+		suite.addTestSuite(GraphPartiallyResolvableOperatorTest.class);
+		suite.addTestSuite(GraphNotAutomaticallyResolvableOperatorTest.class);
 		return suite;
 	}
 

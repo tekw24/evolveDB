@@ -148,4 +148,28 @@ public interface Migration extends EObject {
 	 */
 	EList<NotAutomaticallyResolvable> getNotAutimaticallyResolvable();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<GraphResolvableOperator> getGraphResolvableSMO();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<GraphPartiallyResolvableOperator> getGraphPartiallyResovableSMO();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<GraphNotAutomaticallyResolvableOperator> getGraphNotAutimaticallyResolvable();
+
 } // Migration

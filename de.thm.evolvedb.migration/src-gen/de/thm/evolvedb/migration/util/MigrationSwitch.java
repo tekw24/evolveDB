@@ -99,6 +99,27 @@ public class MigrationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR: {
+				GraphResolvableOperator graphResolvableOperator = (GraphResolvableOperator)theEObject;
+				T result = caseGraphResolvableOperator(graphResolvableOperator);
+				if (result == null) result = caseSchemaModificationOperator(graphResolvableOperator);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR: {
+				GraphPartiallyResolvableOperator graphPartiallyResolvableOperator = (GraphPartiallyResolvableOperator)theEObject;
+				T result = caseGraphPartiallyResolvableOperator(graphPartiallyResolvableOperator);
+				if (result == null) result = caseSchemaModificationOperator(graphPartiallyResolvableOperator);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR: {
+				GraphNotAutomaticallyResolvableOperator graphNotAutomaticallyResolvableOperator = (GraphNotAutomaticallyResolvableOperator)theEObject;
+				T result = caseGraphNotAutomaticallyResolvableOperator(graphNotAutomaticallyResolvableOperator);
+				if (result == null) result = caseSchemaModificationOperator(graphNotAutomaticallyResolvableOperator);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -175,6 +196,51 @@ public class MigrationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNotAutomaticallyResolvable(NotAutomaticallyResolvable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Resolvable Operator</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraphResolvableOperator(GraphResolvableOperator object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Partially Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Partially Resolvable Operator</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraphPartiallyResolvableOperator(GraphPartiallyResolvableOperator object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Not Automatically Resolvable Operator</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Not Automatically Resolvable Operator</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraphNotAutomaticallyResolvableOperator(GraphNotAutomaticallyResolvableOperator object) {
 		return null;
 	}
 

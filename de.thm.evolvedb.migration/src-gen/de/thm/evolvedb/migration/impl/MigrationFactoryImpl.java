@@ -61,6 +61,9 @@ public class MigrationFactoryImpl extends EFactoryImpl implements MigrationFacto
 			case MigrationPackage.RESOLVABLE_OPERATOR: return createResolvableOperator();
 			case MigrationPackage.PARTIALLY_RESOLVABLE: return createPartiallyResolvable();
 			case MigrationPackage.NOT_AUTOMATICALLY_RESOLVABLE: return createNotAutomaticallyResolvable();
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR: return createGraphResolvableOperator();
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR: return createGraphPartiallyResolvableOperator();
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR: return createGraphNotAutomaticallyResolvableOperator();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -86,6 +89,12 @@ public class MigrationFactoryImpl extends EFactoryImpl implements MigrationFacto
 				return createColumnOptionsFromString(eDataType, initialValue);
 			case MigrationPackage.COMPLEX_RESOLVE_OPTIONS:
 				return createComplexResolveOptionsFromString(eDataType, initialValue);
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR_TYPE:
+				return createGraphResolvableOperatorTypeFromString(eDataType, initialValue);
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE:
+				return createGraphPartiallyResolvableOperatorTypeFromString(eDataType, initialValue);
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE:
+				return createGraphNotAutomaticallyResolvableOperatorTypeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -111,6 +120,12 @@ public class MigrationFactoryImpl extends EFactoryImpl implements MigrationFacto
 				return convertColumnOptionsToString(eDataType, instanceValue);
 			case MigrationPackage.COMPLEX_RESOLVE_OPTIONS:
 				return convertComplexResolveOptionsToString(eDataType, instanceValue);
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR_TYPE:
+				return convertGraphResolvableOperatorTypeToString(eDataType, instanceValue);
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE:
+				return convertGraphPartiallyResolvableOperatorTypeToString(eDataType, instanceValue);
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE:
+				return convertGraphNotAutomaticallyResolvableOperatorTypeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -154,6 +169,36 @@ public class MigrationFactoryImpl extends EFactoryImpl implements MigrationFacto
 	public NotAutomaticallyResolvable createNotAutomaticallyResolvable() {
 		NotAutomaticallyResolvableImpl notAutomaticallyResolvable = new NotAutomaticallyResolvableImpl();
 		return notAutomaticallyResolvable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphResolvableOperator createGraphResolvableOperator() {
+		GraphResolvableOperatorImpl graphResolvableOperator = new GraphResolvableOperatorImpl();
+		return graphResolvableOperator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphPartiallyResolvableOperator createGraphPartiallyResolvableOperator() {
+		GraphPartiallyResolvableOperatorImpl graphPartiallyResolvableOperator = new GraphPartiallyResolvableOperatorImpl();
+		return graphPartiallyResolvableOperator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphNotAutomaticallyResolvableOperator createGraphNotAutomaticallyResolvableOperator() {
+		GraphNotAutomaticallyResolvableOperatorImpl graphNotAutomaticallyResolvableOperator = new GraphNotAutomaticallyResolvableOperatorImpl();
+		return graphNotAutomaticallyResolvableOperator;
 	}
 
 	/**
@@ -273,6 +318,66 @@ public class MigrationFactoryImpl extends EFactoryImpl implements MigrationFacto
 	 * @generated
 	 */
 	public String convertComplexResolveOptionsToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphResolvableOperatorType createGraphResolvableOperatorTypeFromString(EDataType eDataType, String initialValue) {
+		GraphResolvableOperatorType result = GraphResolvableOperatorType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGraphResolvableOperatorTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphPartiallyResolvableOperatorType createGraphPartiallyResolvableOperatorTypeFromString(EDataType eDataType, String initialValue) {
+		GraphPartiallyResolvableOperatorType result = GraphPartiallyResolvableOperatorType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGraphPartiallyResolvableOperatorTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphNotAutomaticallyResolvableOperatorType createGraphNotAutomaticallyResolvableOperatorTypeFromString(EDataType eDataType, String initialValue) {
+		GraphNotAutomaticallyResolvableOperatorType result = GraphNotAutomaticallyResolvableOperatorType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGraphNotAutomaticallyResolvableOperatorTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

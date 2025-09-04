@@ -266,6 +266,21 @@ public class MigrationItemProvider
 			(createChildParameter
 				(MigrationPackage.Literals.MIGRATION__SCHEMA_MODIFICATION_OPERATORS,
 				 MigrationFactory.eINSTANCE.createNotAutomaticallyResolvable()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(MigrationPackage.Literals.MIGRATION__SCHEMA_MODIFICATION_OPERATORS,
+				 MigrationFactory.eINSTANCE.createGraphResolvableOperator()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(MigrationPackage.Literals.MIGRATION__SCHEMA_MODIFICATION_OPERATORS,
+				 MigrationFactory.eINSTANCE.createGraphPartiallyResolvableOperator()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(MigrationPackage.Literals.MIGRATION__SCHEMA_MODIFICATION_OPERATORS,
+				 MigrationFactory.eINSTANCE.createGraphNotAutomaticallyResolvableOperator()));
 	}
 
 	/**

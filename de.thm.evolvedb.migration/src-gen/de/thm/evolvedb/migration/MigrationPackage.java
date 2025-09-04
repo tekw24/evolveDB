@@ -223,13 +223,40 @@ public interface MigrationPackage extends EPackage {
 	int MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE = 2;
 
 	/**
+	 * The operation id for the '<em>Get Graph Resolvable SMO</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MIGRATION___GET_GRAPH_RESOLVABLE_SMO = 3;
+
+	/**
+	 * The operation id for the '<em>Get Graph Partially Resovable SMO</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MIGRATION___GET_GRAPH_PARTIALLY_RESOVABLE_SMO = 4;
+
+	/**
+	 * The operation id for the '<em>Get Graph Not Autimatically Resolvable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MIGRATION___GET_GRAPH_NOT_AUTIMATICALLY_RESOLVABLE = 5;
+
+	/**
 	 * The number of operations of the '<em>Migration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MIGRATION_OPERATION_COUNT = 3;
+	int MIGRATION_OPERATION_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.impl.ResolvableOperatorImpl <em>Resolvable Operator</em>}' class.
@@ -496,6 +523,252 @@ public interface MigrationPackage extends EPackage {
 	int NOT_AUTOMATICALLY_RESOLVABLE_OPERATION_COUNT = SCHEMA_MODIFICATION_OPERATOR_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.impl.GraphResolvableOperatorImpl <em>Graph Resolvable Operator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.impl.GraphResolvableOperatorImpl
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphResolvableOperator()
+	 * @generated
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR = 5;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Change Sets</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR__SEMANTIC_CHANGE_SETS = SCHEMA_MODIFICATION_OPERATOR__SEMANTIC_CHANGE_SETS;
+
+	/**
+	 * The feature id for the '<em><b>Process Status</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR__PROCESS_STATUS = SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS;
+
+	/**
+	 * The feature id for the '<em><b>Migration</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR__MIGRATION = SCHEMA_MODIFICATION_OPERATOR__MIGRATION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR__DESCRIPTION = SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR__DISPLAY_NAME = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Graph Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR_FEATURE_COUNT = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate SMO</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP = SCHEMA_MODIFICATION_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The number of operations of the '<em>Graph Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR_OPERATION_COUNT = SCHEMA_MODIFICATION_OPERATOR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.impl.GraphPartiallyResolvableOperatorImpl <em>Graph Partially Resolvable Operator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.impl.GraphPartiallyResolvableOperatorImpl
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphPartiallyResolvableOperator()
+	 * @generated
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR = 6;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Change Sets</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__SEMANTIC_CHANGE_SETS = SCHEMA_MODIFICATION_OPERATOR__SEMANTIC_CHANGE_SETS;
+
+	/**
+	 * The feature id for the '<em><b>Process Status</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__PROCESS_STATUS = SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS;
+
+	/**
+	 * The feature id for the '<em><b>Migration</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__MIGRATION = SCHEMA_MODIFICATION_OPERATOR__MIGRATION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__DESCRIPTION = SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Graph Partially Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_FEATURE_COUNT = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate SMO</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP = SCHEMA_MODIFICATION_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The number of operations of the '<em>Graph Partially Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_OPERATION_COUNT = SCHEMA_MODIFICATION_OPERATOR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.impl.GraphNotAutomaticallyResolvableOperatorImpl <em>Graph Not Automatically Resolvable Operator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.impl.GraphNotAutomaticallyResolvableOperatorImpl
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphNotAutomaticallyResolvableOperator()
+	 * @generated
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR = 7;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Change Sets</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__SEMANTIC_CHANGE_SETS = SCHEMA_MODIFICATION_OPERATOR__SEMANTIC_CHANGE_SETS;
+
+	/**
+	 * The feature id for the '<em><b>Process Status</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__PROCESS_STATUS = SCHEMA_MODIFICATION_OPERATOR__PROCESS_STATUS;
+
+	/**
+	 * The feature id for the '<em><b>Migration</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__MIGRATION = SCHEMA_MODIFICATION_OPERATOR__MIGRATION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__DESCRIPTION = SCHEMA_MODIFICATION_OPERATOR__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Graph Not Automatically Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_FEATURE_COUNT = SCHEMA_MODIFICATION_OPERATOR_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate SMO</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP = SCHEMA_MODIFICATION_OPERATOR___VALIDATE_SMO__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The number of operations of the '<em>Graph Not Automatically Resolvable Operator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_OPERATION_COUNT = SCHEMA_MODIFICATION_OPERATOR_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.ProcessStatus <em>Process Status</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -503,7 +776,7 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getProcessStatus()
 	 * @generated
 	 */
-	int PROCESS_STATUS = 5;
+	int PROCESS_STATUS = 8;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.ResolvableOperatorType <em>Resolvable Operator Type</em>}' enum.
@@ -513,7 +786,7 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getResolvableOperatorType()
 	 * @generated
 	 */
-	int RESOLVABLE_OPERATOR_TYPE = 6;
+	int RESOLVABLE_OPERATOR_TYPE = 9;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.PartiallyResolvableOperatorType <em>Partially Resolvable Operator Type</em>}' enum.
@@ -523,7 +796,7 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getPartiallyResolvableOperatorType()
 	 * @generated
 	 */
-	int PARTIALLY_RESOLVABLE_OPERATOR_TYPE = 7;
+	int PARTIALLY_RESOLVABLE_OPERATOR_TYPE = 10;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.NotAutomaticallyResolvableOperatorType <em>Not Automatically Resolvable Operator Type</em>}' enum.
@@ -533,7 +806,7 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getNotAutomaticallyResolvableOperatorType()
 	 * @generated
 	 */
-	int NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE = 8;
+	int NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE = 11;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.ColumnOptions <em>Column Options</em>}' enum.
@@ -543,7 +816,7 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getColumnOptions()
 	 * @generated
 	 */
-	int COLUMN_OPTIONS = 9;
+	int COLUMN_OPTIONS = 12;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.migration.ComplexResolveOptions <em>Complex Resolve Options</em>}' enum.
@@ -553,7 +826,38 @@ public interface MigrationPackage extends EPackage {
 	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getComplexResolveOptions()
 	 * @generated
 	 */
-	int COMPLEX_RESOLVE_OPTIONS = 10;
+	int COMPLEX_RESOLVE_OPTIONS = 13;
+
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.GraphResolvableOperatorType <em>Graph Resolvable Operator Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.GraphResolvableOperatorType
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphResolvableOperatorType()
+	 * @generated
+	 */
+	int GRAPH_RESOLVABLE_OPERATOR_TYPE = 14;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType <em>Graph Partially Resolvable Operator Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphPartiallyResolvableOperatorType()
+	 * @generated
+	 */
+	int GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE = 15;
+
+	/**
+	 * The meta object id for the '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType <em>Graph Not Automatically Resolvable Operator Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType
+	 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphNotAutomaticallyResolvableOperatorType()
+	 * @generated
+	 */
+	int GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE = 16;
 
 
 	/**
@@ -716,6 +1020,36 @@ public interface MigrationPackage extends EPackage {
 	EOperation getMigration__GetNotAutimaticallyResolvable();
 
 	/**
+	 * Returns the meta object for the '{@link de.thm.evolvedb.migration.Migration#getGraphResolvableSMO() <em>Get Graph Resolvable SMO</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Graph Resolvable SMO</em>' operation.
+	 * @see de.thm.evolvedb.migration.Migration#getGraphResolvableSMO()
+	 * @generated
+	 */
+	EOperation getMigration__GetGraphResolvableSMO();
+
+	/**
+	 * Returns the meta object for the '{@link de.thm.evolvedb.migration.Migration#getGraphPartiallyResovableSMO() <em>Get Graph Partially Resovable SMO</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Graph Partially Resovable SMO</em>' operation.
+	 * @see de.thm.evolvedb.migration.Migration#getGraphPartiallyResovableSMO()
+	 * @generated
+	 */
+	EOperation getMigration__GetGraphPartiallyResovableSMO();
+
+	/**
+	 * Returns the meta object for the '{@link de.thm.evolvedb.migration.Migration#getGraphNotAutimaticallyResolvable() <em>Get Graph Not Autimatically Resolvable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Graph Not Autimatically Resolvable</em>' operation.
+	 * @see de.thm.evolvedb.migration.Migration#getGraphNotAutimaticallyResolvable()
+	 * @generated
+	 */
+	EOperation getMigration__GetGraphNotAutimaticallyResolvable();
+
+	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.migration.ResolvableOperator <em>Resolvable Operator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -801,6 +1135,69 @@ public interface MigrationPackage extends EPackage {
 	EAttribute getNotAutomaticallyResolvable_ResolveOptions();
 
 	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.migration.GraphResolvableOperator <em>Graph Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Graph Resolvable Operator</em>'.
+	 * @see de.thm.evolvedb.migration.GraphResolvableOperator
+	 * @generated
+	 */
+	EClass getGraphResolvableOperator();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.migration.GraphResolvableOperator#getDisplayName <em>Display Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Display Name</em>'.
+	 * @see de.thm.evolvedb.migration.GraphResolvableOperator#getDisplayName()
+	 * @see #getGraphResolvableOperator()
+	 * @generated
+	 */
+	EAttribute getGraphResolvableOperator_DisplayName();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperator <em>Graph Partially Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Graph Partially Resolvable Operator</em>'.
+	 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperator
+	 * @generated
+	 */
+	EClass getGraphPartiallyResolvableOperator();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperator#getDisplayName <em>Display Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Display Name</em>'.
+	 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperator#getDisplayName()
+	 * @see #getGraphPartiallyResolvableOperator()
+	 * @generated
+	 */
+	EAttribute getGraphPartiallyResolvableOperator_DisplayName();
+
+	/**
+	 * Returns the meta object for class '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator <em>Graph Not Automatically Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Graph Not Automatically Resolvable Operator</em>'.
+	 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator
+	 * @generated
+	 */
+	EClass getGraphNotAutomaticallyResolvableOperator();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator#getDisplayName <em>Display Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Display Name</em>'.
+	 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator#getDisplayName()
+	 * @see #getGraphNotAutomaticallyResolvableOperator()
+	 * @generated
+	 */
+	EAttribute getGraphNotAutomaticallyResolvableOperator_DisplayName();
+
+	/**
 	 * Returns the meta object for enum '{@link de.thm.evolvedb.migration.ProcessStatus <em>Process Status</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -859,6 +1256,36 @@ public interface MigrationPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getComplexResolveOptions();
+
+	/**
+	 * Returns the meta object for enum '{@link de.thm.evolvedb.migration.GraphResolvableOperatorType <em>Graph Resolvable Operator Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Graph Resolvable Operator Type</em>'.
+	 * @see de.thm.evolvedb.migration.GraphResolvableOperatorType
+	 * @generated
+	 */
+	EEnum getGraphResolvableOperatorType();
+
+	/**
+	 * Returns the meta object for enum '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType <em>Graph Partially Resolvable Operator Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Graph Partially Resolvable Operator Type</em>'.
+	 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType
+	 * @generated
+	 */
+	EEnum getGraphPartiallyResolvableOperatorType();
+
+	/**
+	 * Returns the meta object for enum '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType <em>Graph Not Automatically Resolvable Operator Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Graph Not Automatically Resolvable Operator Type</em>'.
+	 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType
+	 * @generated
+	 */
+	EEnum getGraphNotAutomaticallyResolvableOperatorType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1008,6 +1435,30 @@ public interface MigrationPackage extends EPackage {
 		EOperation MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE = eINSTANCE.getMigration__GetNotAutimaticallyResolvable();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Graph Resolvable SMO</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MIGRATION___GET_GRAPH_RESOLVABLE_SMO = eINSTANCE.getMigration__GetGraphResolvableSMO();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Graph Partially Resovable SMO</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MIGRATION___GET_GRAPH_PARTIALLY_RESOVABLE_SMO = eINSTANCE.getMigration__GetGraphPartiallyResovableSMO();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Graph Not Autimatically Resolvable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MIGRATION___GET_GRAPH_NOT_AUTIMATICALLY_RESOLVABLE = eINSTANCE.getMigration__GetGraphNotAutimaticallyResolvable();
+
+		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.migration.impl.ResolvableOperatorImpl <em>Resolvable Operator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1078,6 +1529,60 @@ public interface MigrationPackage extends EPackage {
 		EAttribute NOT_AUTOMATICALLY_RESOLVABLE__RESOLVE_OPTIONS = eINSTANCE.getNotAutomaticallyResolvable_ResolveOptions();
 
 		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.impl.GraphResolvableOperatorImpl <em>Graph Resolvable Operator</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.impl.GraphResolvableOperatorImpl
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphResolvableOperator()
+		 * @generated
+		 */
+		EClass GRAPH_RESOLVABLE_OPERATOR = eINSTANCE.getGraphResolvableOperator();
+
+		/**
+		 * The meta object literal for the '<em><b>Display Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GRAPH_RESOLVABLE_OPERATOR__DISPLAY_NAME = eINSTANCE.getGraphResolvableOperator_DisplayName();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.impl.GraphPartiallyResolvableOperatorImpl <em>Graph Partially Resolvable Operator</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.impl.GraphPartiallyResolvableOperatorImpl
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphPartiallyResolvableOperator()
+		 * @generated
+		 */
+		EClass GRAPH_PARTIALLY_RESOLVABLE_OPERATOR = eINSTANCE.getGraphPartiallyResolvableOperator();
+
+		/**
+		 * The meta object literal for the '<em><b>Display Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME = eINSTANCE.getGraphPartiallyResolvableOperator_DisplayName();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.impl.GraphNotAutomaticallyResolvableOperatorImpl <em>Graph Not Automatically Resolvable Operator</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.impl.GraphNotAutomaticallyResolvableOperatorImpl
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphNotAutomaticallyResolvableOperator()
+		 * @generated
+		 */
+		EClass GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR = eINSTANCE.getGraphNotAutomaticallyResolvableOperator();
+
+		/**
+		 * The meta object literal for the '<em><b>Display Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME = eINSTANCE.getGraphNotAutomaticallyResolvableOperator_DisplayName();
+
+		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.migration.ProcessStatus <em>Process Status</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1136,6 +1641,36 @@ public interface MigrationPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum COMPLEX_RESOLVE_OPTIONS = eINSTANCE.getComplexResolveOptions();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.GraphResolvableOperatorType <em>Graph Resolvable Operator Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.GraphResolvableOperatorType
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphResolvableOperatorType()
+		 * @generated
+		 */
+		EEnum GRAPH_RESOLVABLE_OPERATOR_TYPE = eINSTANCE.getGraphResolvableOperatorType();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType <em>Graph Partially Resolvable Operator Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphPartiallyResolvableOperatorType()
+		 * @generated
+		 */
+		EEnum GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE = eINSTANCE.getGraphPartiallyResolvableOperatorType();
+
+		/**
+		 * The meta object literal for the '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType <em>Graph Not Automatically Resolvable Operator Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType
+		 * @see de.thm.evolvedb.migration.impl.MigrationPackageImpl#getGraphNotAutomaticallyResolvableOperatorType()
+		 * @generated
+		 */
+		EEnum GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE = eINSTANCE.getGraphNotAutomaticallyResolvableOperatorType();
 
 	}
 

@@ -23,6 +23,9 @@
     <eOperations name="getResolvableSMO" upperBound="-1" eType="#//ResolvableOperator"/>
     <eOperations name="getPartiallyResovableSMO" upperBound="-1" eType="#//PartiallyResolvable"/>
     <eOperations name="getNotAutimaticallyResolvable" upperBound="-1" eType="#//NotAutomaticallyResolvable"/>
+    <eOperations name="getGraphResolvableSMO" upperBound="-1" eType="#//GraphResolvableOperator"/>
+    <eOperations name="getGraphPartiallyResovableSMO" upperBound="-1" eType="#//GraphPartiallyResolvableOperator"/>
+    <eOperations name="getGraphNotAutimaticallyResolvable" upperBound="-1" eType="#//GraphNotAutomaticallyResolvableOperator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SymmetricDifference" eType="ecore:EClass ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schemaModificationOperators"
         upperBound="-1" eType="#//SchemaModificationOperator" containment="true" eOpposite="#//SchemaModificationOperator/migration"/>
@@ -108,5 +111,42 @@
     <eLiterals name="RESOLVE_BY_DB_ID" value="1" literal="Match rows by primary key."/>
     <eLiterals name="CARTESIAN_PRODUCT" value="2" literal="Create a cartesian product of all associated tables."/>
     <eLiterals name="SPECIFY_CONDITION_MANUALLY" value="3" literal="Specify condition manually"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphResolvableOperator" eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//GraphResolvableOperatorType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphPartiallyResolvableOperator" eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//GraphPartiallyResolvableOperatorType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphNotAutomaticallyResolvableOperator"
+      eSuperTypes="#//SchemaModificationOperator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="#//GraphNotAutomaticallyResolvableOperatorType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GraphResolvableOperatorType">
+    <eLiterals name="SET_ATTRIBUTE_OR_REF"/>
+    <eLiterals name="CREATE_NODE_TYPE" value="1" literal="CREATE_NODE_TYPE"/>
+    <eLiterals name="CREATE_EDGE_TYPE" value="2" literal="CREATE_EDGE_TYPE"/>
+    <eLiterals name="CREATE_LABEL" value="3"/>
+    <eLiterals name="CREATE_CONSTRAINT_IN_LABEL" value="4"/>
+    <eLiterals name="ADD_REFERENCE_OR_MEMBER" value="5"/>
+    <eLiterals name="WIDEN_NUMERIC_TYPE" value="6"/>
+    <eLiterals name="WIDEN_TEMPORAL_TYPE" value="7"/>
+    <eLiterals name="BINARY_ENCODING_CHANGE" value="8" literal="BINARY_ENCODING_CHANGE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GraphPartiallyResolvableOperatorType">
+    <eLiterals name="DELETE_NODE_TYPE"/>
+    <eLiterals name="DELETE_EDGE_TYPE" value="1" literal="DELETE_EDGE_TYPE"/>
+    <eLiterals name="DELETE_LABEL" value="2" literal="DELETE_LABEL"/>
+    <eLiterals name="REMOVE_REFERENCE_OR_CONSTRAINT" value="3" literal="REMOVE_REFERENCE_OR_CONSTRAINT"/>
+    <eLiterals name="DELETE_PROPERTY_GRAPH" value="4" literal="DELETE_PROPERTY_GRAPH"/>
+    <eLiterals name="NARROW_NUMERIC_TYPE" value="5" literal="NARROW_NUMERIC_TYPE"/>
+    <eLiterals name="NARROW_TEMPORAL_TYPE" value="6" literal="NARROW_TEMPORAL_TYPE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GraphNotAutomaticallyResolvableOperatorType">
+    <eLiterals name="MOVE_PROPERTY"/>
+    <eLiterals name="MOVE_LABEL" value="1" literal="MOVE_LABEL"/>
+    <eLiterals name="MOVE_NODE_TYPE" value="2"/>
+    <eLiterals name="MOVE_EDGE_TYPE" value="3" literal="MOVE_EDGE_TYPE"/>
+    <eLiterals name="MOVE_COMBINED" value="4" literal="MOVE_COMBINED"/>
   </eClassifiers>
 </ecore:EPackage>

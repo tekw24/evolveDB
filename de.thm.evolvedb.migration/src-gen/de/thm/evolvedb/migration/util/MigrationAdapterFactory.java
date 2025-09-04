@@ -88,6 +88,18 @@ public class MigrationAdapterFactory extends AdapterFactoryImpl {
 				return createNotAutomaticallyResolvableAdapter();
 			}
 			@Override
+			public Adapter caseGraphResolvableOperator(GraphResolvableOperator object) {
+				return createGraphResolvableOperatorAdapter();
+			}
+			@Override
+			public Adapter caseGraphPartiallyResolvableOperator(GraphPartiallyResolvableOperator object) {
+				return createGraphPartiallyResolvableOperatorAdapter();
+			}
+			@Override
+			public Adapter caseGraphNotAutomaticallyResolvableOperator(GraphNotAutomaticallyResolvableOperator object) {
+				return createGraphNotAutomaticallyResolvableOperatorAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -174,6 +186,48 @@ public class MigrationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNotAutomaticallyResolvableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.migration.GraphResolvableOperator <em>Graph Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.migration.GraphResolvableOperator
+	 * @generated
+	 */
+	public Adapter createGraphResolvableOperatorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperator <em>Graph Partially Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.migration.GraphPartiallyResolvableOperator
+	 * @generated
+	 */
+	public Adapter createGraphPartiallyResolvableOperatorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator <em>Graph Not Automatically Resolvable Operator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator
+	 * @generated
+	 */
+	public Adapter createGraphNotAutomaticallyResolvableOperatorAdapter() {
 		return null;
 	}
 

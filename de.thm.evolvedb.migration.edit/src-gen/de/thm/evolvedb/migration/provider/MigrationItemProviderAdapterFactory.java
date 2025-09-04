@@ -164,6 +164,75 @@ public class MigrationItemProviderAdapterFactory extends MigrationAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.migration.GraphResolvableOperator} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GraphResolvableOperatorItemProvider graphResolvableOperatorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.migration.GraphResolvableOperator}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGraphResolvableOperatorAdapter() {
+		if (graphResolvableOperatorItemProvider == null) {
+			graphResolvableOperatorItemProvider = new GraphResolvableOperatorItemProvider(this);
+		}
+
+		return graphResolvableOperatorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperator} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GraphPartiallyResolvableOperatorItemProvider graphPartiallyResolvableOperatorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.migration.GraphPartiallyResolvableOperator}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGraphPartiallyResolvableOperatorAdapter() {
+		if (graphPartiallyResolvableOperatorItemProvider == null) {
+			graphPartiallyResolvableOperatorItemProvider = new GraphPartiallyResolvableOperatorItemProvider(this);
+		}
+
+		return graphPartiallyResolvableOperatorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GraphNotAutomaticallyResolvableOperatorItemProvider graphNotAutomaticallyResolvableOperatorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGraphNotAutomaticallyResolvableOperatorAdapter() {
+		if (graphNotAutomaticallyResolvableOperatorItemProvider == null) {
+			graphNotAutomaticallyResolvableOperatorItemProvider = new GraphNotAutomaticallyResolvableOperatorItemProvider(this);
+		}
+
+		return graphNotAutomaticallyResolvableOperatorItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -266,6 +335,9 @@ public class MigrationItemProviderAdapterFactory extends MigrationAdapterFactory
 		if (resolvableOperatorItemProvider != null) resolvableOperatorItemProvider.dispose();
 		if (partiallyResolvableItemProvider != null) partiallyResolvableItemProvider.dispose();
 		if (notAutomaticallyResolvableItemProvider != null) notAutomaticallyResolvableItemProvider.dispose();
+		if (graphResolvableOperatorItemProvider != null) graphResolvableOperatorItemProvider.dispose();
+		if (graphPartiallyResolvableOperatorItemProvider != null) graphPartiallyResolvableOperatorItemProvider.dispose();
+		if (graphNotAutomaticallyResolvableOperatorItemProvider != null) graphNotAutomaticallyResolvableOperatorItemProvider.dispose();
 	}
 
 }

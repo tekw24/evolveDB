@@ -4,6 +4,12 @@ package de.thm.evolvedb.migration.impl;
 
 import de.thm.evolvedb.migration.ColumnOptions;
 import de.thm.evolvedb.migration.ComplexResolveOptions;
+import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType;
+import de.thm.evolvedb.migration.GraphResolvableOperator;
+import de.thm.evolvedb.migration.GraphResolvableOperatorType;
 import de.thm.evolvedb.migration.Migration;
 import de.thm.evolvedb.migration.MigrationFactory;
 import de.thm.evolvedb.migration.MigrationPackage;
@@ -80,6 +86,27 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass graphResolvableOperatorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphPartiallyResolvableOperatorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphNotAutomaticallyResolvableOperatorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum processStatusEEnum = null;
 
 	/**
@@ -116,6 +143,27 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * @generated
 	 */
 	private EEnum complexResolveOptionsEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum graphResolvableOperatorTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum graphPartiallyResolvableOperatorTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum graphNotAutomaticallyResolvableOperatorTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -331,6 +379,33 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getMigration__GetGraphResolvableSMO() {
+		return migrationEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getMigration__GetGraphPartiallyResovableSMO() {
+		return migrationEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getMigration__GetGraphNotAutimaticallyResolvable() {
+		return migrationEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getResolvableOperator() {
 		return resolvableOperatorEClass;
 	}
@@ -403,6 +478,60 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getGraphResolvableOperator() {
+		return graphResolvableOperatorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGraphResolvableOperator_DisplayName() {
+		return (EAttribute)graphResolvableOperatorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphPartiallyResolvableOperator() {
+		return graphPartiallyResolvableOperatorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGraphPartiallyResolvableOperator_DisplayName() {
+		return (EAttribute)graphPartiallyResolvableOperatorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphNotAutomaticallyResolvableOperator() {
+		return graphNotAutomaticallyResolvableOperatorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGraphNotAutomaticallyResolvableOperator_DisplayName() {
+		return (EAttribute)graphNotAutomaticallyResolvableOperatorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getProcessStatus() {
 		return processStatusEEnum;
 	}
@@ -457,6 +586,33 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getGraphResolvableOperatorType() {
+		return graphResolvableOperatorTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getGraphPartiallyResolvableOperatorType() {
+		return graphPartiallyResolvableOperatorTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getGraphNotAutomaticallyResolvableOperatorType() {
+		return graphNotAutomaticallyResolvableOperatorTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MigrationFactory getMigrationFactory() {
 		return (MigrationFactory)getEFactoryInstance();
 	}
@@ -496,6 +652,9 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		createEOperation(migrationEClass, MIGRATION___GET_RESOLVABLE_SMO);
 		createEOperation(migrationEClass, MIGRATION___GET_PARTIALLY_RESOVABLE_SMO);
 		createEOperation(migrationEClass, MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE);
+		createEOperation(migrationEClass, MIGRATION___GET_GRAPH_RESOLVABLE_SMO);
+		createEOperation(migrationEClass, MIGRATION___GET_GRAPH_PARTIALLY_RESOVABLE_SMO);
+		createEOperation(migrationEClass, MIGRATION___GET_GRAPH_NOT_AUTIMATICALLY_RESOLVABLE);
 
 		resolvableOperatorEClass = createEClass(RESOLVABLE_OPERATOR);
 		createEAttribute(resolvableOperatorEClass, RESOLVABLE_OPERATOR__DISPLAY_NAME);
@@ -508,6 +667,15 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		createEAttribute(notAutomaticallyResolvableEClass, NOT_AUTOMATICALLY_RESOLVABLE__DISPLAY_NAME);
 		createEAttribute(notAutomaticallyResolvableEClass, NOT_AUTOMATICALLY_RESOLVABLE__RESOLVE_OPTIONS);
 
+		graphResolvableOperatorEClass = createEClass(GRAPH_RESOLVABLE_OPERATOR);
+		createEAttribute(graphResolvableOperatorEClass, GRAPH_RESOLVABLE_OPERATOR__DISPLAY_NAME);
+
+		graphPartiallyResolvableOperatorEClass = createEClass(GRAPH_PARTIALLY_RESOLVABLE_OPERATOR);
+		createEAttribute(graphPartiallyResolvableOperatorEClass, GRAPH_PARTIALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME);
+
+		graphNotAutomaticallyResolvableOperatorEClass = createEClass(GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR);
+		createEAttribute(graphNotAutomaticallyResolvableOperatorEClass, GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR__DISPLAY_NAME);
+
 		// Create enums
 		processStatusEEnum = createEEnum(PROCESS_STATUS);
 		resolvableOperatorTypeEEnum = createEEnum(RESOLVABLE_OPERATOR_TYPE);
@@ -515,6 +683,9 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		notAutomaticallyResolvableOperatorTypeEEnum = createEEnum(NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE);
 		columnOptionsEEnum = createEEnum(COLUMN_OPTIONS);
 		complexResolveOptionsEEnum = createEEnum(COMPLEX_RESOLVE_OPTIONS);
+		graphResolvableOperatorTypeEEnum = createEEnum(GRAPH_RESOLVABLE_OPERATOR_TYPE);
+		graphPartiallyResolvableOperatorTypeEEnum = createEEnum(GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE);
+		graphNotAutomaticallyResolvableOperatorTypeEEnum = createEEnum(GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE);
 	}
 
 	/**
@@ -551,6 +722,9 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		resolvableOperatorEClass.getESuperTypes().add(this.getSchemaModificationOperator());
 		partiallyResolvableEClass.getESuperTypes().add(this.getSchemaModificationOperator());
 		notAutomaticallyResolvableEClass.getESuperTypes().add(this.getSchemaModificationOperator());
+		graphResolvableOperatorEClass.getESuperTypes().add(this.getSchemaModificationOperator());
+		graphPartiallyResolvableOperatorEClass.getESuperTypes().add(this.getSchemaModificationOperator());
+		graphNotAutomaticallyResolvableOperatorEClass.getESuperTypes().add(this.getSchemaModificationOperator());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(schemaModificationOperatorEClass, SchemaModificationOperator.class, "SchemaModificationOperator", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -581,6 +755,12 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 
 		initEOperation(getMigration__GetNotAutimaticallyResolvable(), this.getNotAutomaticallyResolvable(), "getNotAutimaticallyResolvable", 0, -1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getMigration__GetGraphResolvableSMO(), this.getGraphResolvableOperator(), "getGraphResolvableSMO", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getMigration__GetGraphPartiallyResovableSMO(), this.getGraphPartiallyResolvableOperator(), "getGraphPartiallyResovableSMO", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getMigration__GetGraphNotAutimaticallyResolvable(), this.getGraphNotAutomaticallyResolvableOperator(), "getGraphNotAutimaticallyResolvable", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(resolvableOperatorEClass, ResolvableOperator.class, "ResolvableOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResolvableOperator_DisplayName(), this.getResolvableOperatorType(), "displayName", null, 0, 1, ResolvableOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -591,6 +771,15 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		initEClass(notAutomaticallyResolvableEClass, NotAutomaticallyResolvable.class, "NotAutomaticallyResolvable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNotAutomaticallyResolvable_DisplayName(), this.getNotAutomaticallyResolvableOperatorType(), "displayName", null, 0, 1, NotAutomaticallyResolvable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNotAutomaticallyResolvable_ResolveOptions(), this.getComplexResolveOptions(), "resolveOptions", null, 0, 1, NotAutomaticallyResolvable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(graphResolvableOperatorEClass, GraphResolvableOperator.class, "GraphResolvableOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGraphResolvableOperator_DisplayName(), this.getGraphResolvableOperatorType(), "displayName", null, 0, 1, GraphResolvableOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(graphPartiallyResolvableOperatorEClass, GraphPartiallyResolvableOperator.class, "GraphPartiallyResolvableOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGraphPartiallyResolvableOperator_DisplayName(), this.getGraphPartiallyResolvableOperatorType(), "displayName", null, 0, 1, GraphPartiallyResolvableOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(graphNotAutomaticallyResolvableOperatorEClass, GraphNotAutomaticallyResolvableOperator.class, "GraphNotAutomaticallyResolvableOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGraphNotAutomaticallyResolvableOperator_DisplayName(), this.getGraphNotAutomaticallyResolvableOperatorType(), "displayName", null, 0, 1, GraphNotAutomaticallyResolvableOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(processStatusEEnum, ProcessStatus.class, "ProcessStatus");
@@ -655,6 +844,33 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.RESOLVE_BY_DB_ID);
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.CARTESIAN_PRODUCT);
 		addEEnumLiteral(complexResolveOptionsEEnum, ComplexResolveOptions.SPECIFY_CONDITION_MANUALLY);
+
+		initEEnum(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.class, "GraphResolvableOperatorType");
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.SET_ATTRIBUTE_OR_REF);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CREATE_NODE_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CREATE_EDGE_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CREATE_LABEL);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CREATE_CONSTRAINT_IN_LABEL);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.ADD_REFERENCE_OR_MEMBER);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.WIDEN_NUMERIC_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.WIDEN_TEMPORAL_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.BINARY_ENCODING_CHANGE);
+
+		initEEnum(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.class, "GraphPartiallyResolvableOperatorType");
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.DELETE_NODE_TYPE);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.DELETE_EDGE_TYPE);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.DELETE_LABEL);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.REMOVE_REFERENCE_OR_CONSTRAINT);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.DELETE_PROPERTY_GRAPH);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.NARROW_NUMERIC_TYPE);
+		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.NARROW_TEMPORAL_TYPE);
+
+		initEEnum(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.class, "GraphNotAutomaticallyResolvableOperatorType");
+		addEEnumLiteral(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.MOVE_PROPERTY);
+		addEEnumLiteral(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.MOVE_LABEL);
+		addEEnumLiteral(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.MOVE_NODE_TYPE);
+		addEEnumLiteral(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.MOVE_EDGE_TYPE);
+		addEEnumLiteral(graphNotAutomaticallyResolvableOperatorTypeEEnum, GraphNotAutomaticallyResolvableOperatorType.MOVE_COMBINED);
 
 		// Create resource
 		createResource(eNS_URI);

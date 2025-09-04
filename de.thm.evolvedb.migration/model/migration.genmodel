@@ -72,6 +72,33 @@
       <genEnumLiterals ecoreEnumLiteral="migration.ecore#//ComplexResolveOptions/CARTESIAN_PRODUCT"/>
       <genEnumLiterals ecoreEnumLiteral="migration.ecore#//ComplexResolveOptions/SPECIFY_CONDITION_MANUALLY"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="migration.ecore#//GraphResolvableOperatorType">
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/SET_ATTRIBUTE_OR_REF"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/CREATE_NODE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/CREATE_EDGE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/CREATE_LABEL"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/CREATE_CONSTRAINT_IN_LABEL"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/ADD_REFERENCE_OR_MEMBER"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/WIDEN_NUMERIC_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/WIDEN_TEMPORAL_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphResolvableOperatorType/BINARY_ENCODING_CHANGE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="migration.ecore#//GraphPartiallyResolvableOperatorType">
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/DELETE_NODE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/DELETE_EDGE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/DELETE_LABEL"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/REMOVE_REFERENCE_OR_CONSTRAINT"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/DELETE_PROPERTY_GRAPH"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/NARROW_NUMERIC_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphPartiallyResolvableOperatorType/NARROW_TEMPORAL_TYPE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType">
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType/MOVE_PROPERTY"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType/MOVE_LABEL"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType/MOVE_NODE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType/MOVE_EDGE_TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="migration.ecore#//GraphNotAutomaticallyResolvableOperatorType/MOVE_COMBINED"/>
+    </genEnums>
     <genClasses image="false" ecoreClass="migration.ecore#//SchemaModificationOperator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference migration.ecore#//SchemaModificationOperator/semanticChangeSets"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//SchemaModificationOperator/processStatus"/>
@@ -91,6 +118,9 @@
       <genOperations ecoreOperation="migration.ecore#//Migration/getResolvableSMO"/>
       <genOperations ecoreOperation="migration.ecore#//Migration/getPartiallyResovableSMO"/>
       <genOperations ecoreOperation="migration.ecore#//Migration/getNotAutimaticallyResolvable"/>
+      <genOperations ecoreOperation="migration.ecore#//Migration/getGraphResolvableSMO"/>
+      <genOperations ecoreOperation="migration.ecore#//Migration/getGraphPartiallyResovableSMO"/>
+      <genOperations ecoreOperation="migration.ecore#//Migration/getGraphNotAutimaticallyResolvable"/>
     </genClasses>
     <genClasses ecoreClass="migration.ecore#//ResolvableOperator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//ResolvableOperator/displayName"/>
@@ -102,6 +132,15 @@
     <genClasses ecoreClass="migration.ecore#//NotAutomaticallyResolvable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//NotAutomaticallyResolvable/displayName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//NotAutomaticallyResolvable/resolveOptions"/>
+    </genClasses>
+    <genClasses ecoreClass="migration.ecore#//GraphResolvableOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//GraphResolvableOperator/displayName"/>
+    </genClasses>
+    <genClasses ecoreClass="migration.ecore#//GraphPartiallyResolvableOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//GraphPartiallyResolvableOperator/displayName"/>
+    </genClasses>
+    <genClasses ecoreClass="migration.ecore#//GraphNotAutomaticallyResolvableOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute migration.ecore#//GraphNotAutomaticallyResolvableOperator/displayName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

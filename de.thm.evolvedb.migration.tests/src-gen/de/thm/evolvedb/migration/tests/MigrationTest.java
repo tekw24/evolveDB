@@ -26,6 +26,9 @@ import junit.textui.TestRunner;
  *   <li>{@link de.thm.evolvedb.migration.Migration#getResolvableSMO() <em>Get Resolvable SMO</em>}</li>
  *   <li>{@link de.thm.evolvedb.migration.Migration#getPartiallyResovableSMO() <em>Get Partially Resovable SMO</em>}</li>
  *   <li>{@link de.thm.evolvedb.migration.Migration#getNotAutimaticallyResolvable() <em>Get Not Autimatically Resolvable</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.Migration#getGraphResolvableSMO() <em>Get Graph Resolvable SMO</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.Migration#getGraphPartiallyResovableSMO() <em>Get Graph Partially Resovable SMO</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.Migration#getGraphNotAutimaticallyResolvable() <em>Get Graph Not Autimatically Resolvable</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -174,6 +177,45 @@ public class MigrationTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetNotAutimaticallyResolvable() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link de.thm.evolvedb.migration.Migration#getGraphResolvableSMO() <em>Get Graph Resolvable SMO</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.Migration#getGraphResolvableSMO()
+	 * @generated
+	 */
+	public void testGetGraphResolvableSMO() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link de.thm.evolvedb.migration.Migration#getGraphPartiallyResovableSMO() <em>Get Graph Partially Resovable SMO</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.Migration#getGraphPartiallyResovableSMO()
+	 * @generated
+	 */
+	public void testGetGraphPartiallyResovableSMO() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link de.thm.evolvedb.migration.Migration#getGraphNotAutimaticallyResolvable() <em>Get Graph Not Autimatically Resolvable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.thm.evolvedb.migration.Migration#getGraphNotAutimaticallyResolvable()
+	 * @generated
+	 */
+	public void testGetGraphNotAutimaticallyResolvable() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

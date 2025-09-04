@@ -23,6 +23,9 @@ Package migration <http://www.thm.de/migration>
     Operation getResolvableSMO() : ResolvableOperator<<0..*>>
     Operation getPartiallyResovableSMO() : PartiallyResolvable<<0..*>>
     Operation getNotAutimaticallyResolvable() : NotAutomaticallyResolvable<<0..*>>
+    Operation getGraphResolvableSMO() : GraphResolvableOperator<<0..*>>
+    Operation getGraphPartiallyResovableSMO() : GraphPartiallyResolvableOperator<<0..*>>
+    Operation getGraphNotAutimaticallyResolvable() : GraphNotAutomaticallyResolvableOperator<<0..*>>
 
   Class ResolvableOperator -> SchemaModificationOperator
     Attribute displayName : ResolvableOperatorType
@@ -34,6 +37,15 @@ Package migration <http://www.thm.de/migration>
   Class NotAutomaticallyResolvable -> SchemaModificationOperator
     Attribute displayName : NotAutomaticallyResolvableOperatorType
     Attribute resolveOptions : ComplexResolveOptions
+
+  Class GraphResolvableOperator -> SchemaModificationOperator
+    Attribute displayName : GraphResolvableOperatorType
+
+  Class GraphPartiallyResolvableOperator -> SchemaModificationOperator
+    Attribute displayName : GraphPartiallyResolvableOperatorType
+
+  Class GraphNotAutomaticallyResolvableOperator -> SchemaModificationOperator
+    Attribute displayName : GraphNotAutomaticallyResolvableOperatorType
 
   Enum ProcessStatus
     Literal RESOLVED = 0
@@ -97,3 +109,30 @@ Package migration <http://www.thm.de/migration>
     Literal RESOLVE_BY_DB_ID = 1
     Literal CARTESIAN_PRODUCT = 2
     Literal SPECIFY_CONDITION_MANUALLY = 3
+
+  Enum GraphResolvableOperatorType
+    Literal SET_ATTRIBUTE_OR_REF = 0
+    Literal CREATE_NODE_TYPE = 1
+    Literal CREATE_EDGE_TYPE = 2
+    Literal CREATE_LABEL = 3
+    Literal CREATE_CONSTRAINT_IN_LABEL = 4
+    Literal ADD_REFERENCE_OR_MEMBER = 5
+    Literal WIDEN_NUMERIC_TYPE = 6
+    Literal WIDEN_TEMPORAL_TYPE = 7
+    Literal BINARY_ENCODING_CHANGE = 8
+
+  Enum GraphPartiallyResolvableOperatorType
+    Literal DELETE_NODE_TYPE = 0
+    Literal DELETE_EDGE_TYPE = 1
+    Literal DELETE_LABEL = 2
+    Literal REMOVE_REFERENCE_OR_CONSTRAINT = 3
+    Literal DELETE_PROPERTY_GRAPH = 4
+    Literal NARROW_NUMERIC_TYPE = 5
+    Literal NARROW_TEMPORAL_TYPE = 6
+
+  Enum GraphNotAutomaticallyResolvableOperatorType
+    Literal MOVE_PROPERTY = 0
+    Literal MOVE_LABEL = 1
+    Literal MOVE_NODE_TYPE = 2
+    Literal MOVE_EDGE_TYPE = 3
+    Literal MOVE_COMBINED = 4

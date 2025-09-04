@@ -1,44 +1,56 @@
 -- @nsURI Migration=http://www.thm.de/migration
--- @nsURI Symmetric =http://www.sidiff.org/difference/symmetric/1.0
+-- @nsURI Symmetric=http://www.sidiff.org/difference/symmetric/1.0
 -- @nsURI Mdde=http://www.thm.de/mdde
+
 
 module symmetric2migration;
 create OUT: Migration from IN: Symmetric, IN2: Mdde;
 
-helper context Symmetric!SemanticChangeSet def :isResolvable() : Boolean =
+helper context Symmetric!SemanticChangeSet def: isResolvable(): Boolean =
 	if thisModule.resolvableRules.includes(self.editRName) then
 		true
-	else 
+	else
 		false
 	endif;
 
-helper context Symmetric!SemanticChangeSet def :isPartiallyResolvable() : Boolean =
+helper context Symmetric!SemanticChangeSet def: isPartiallyResolvable(): Boolean =
 	if thisModule.partiallyResolvableRules.includes(self.editRName) then
 		true
-	else 
+	else
 		false
 	endif;
 
-helper context Symmetric!SemanticChangeSet def :isNotAutomaticallyResolvable() : Boolean =
+helper context Symmetric!SemanticChangeSet def: isNotAutomaticallyResolvable(): Boolean =
 	if thisModule.notAutomaticallyResolvableRules.includes(self.editRName) then
 		true
-	else 
+	else
 		false
 	endif;
 
-helper context Symmetric!SemanticChangeSet def :isNewTable() : Boolean =
+helper context Symmetric!SemanticChangeSet def: isNewTable(): Boolean =
 	if self.editRName = 'CREATE_Table_IN_Database_Schema_(entites)' then
 		true
 	else
 		false
 	endif;
 
+-- Bestehende relationalen Checks bleiben. Wir ergänzen parallele Graph-Checks.
+helper context Symmetric!SemanticChangeSet def :isResolvableGraph() : Boolean =
+  thisModule.resolvableRulesGraph->includes(self.editRName);
+
+helper context Symmetric!SemanticChangeSet def :isPartiallyResolvableGraph() : Boolean =
+  thisModule.partiallyResolvableRulesGraph->includes(self.editRName);
+
+helper context Symmetric!SemanticChangeSet def :isNotAutomaticallyResolvableGraph() : Boolean =
+  thisModule.notAutomaticallyResolvableRulesGraph->includes(self.editRName);
+
 
 -- ->exists(y| y.table.name = tableName)
-helper context Symmetric!SemanticChangeSet def :dependsOnNewTable(tableName : String) : Boolean =
+helper context Symmetric!SemanticChangeSet def: dependsOnNewTable(tableName: String):
+		Boolean =
 	if self.changes -> exists(e | e.oclIsKindOf(Symmetric!AddObject)) then
-		if self.changes ->select(x | x.oclIsTypeOf(Symmetric!AddObject))
-       		-> exists(z | z.obj.oclIsKindOf(Symmetric!EObjectSet)) then
+		if self.changes -> select(x | x.oclIsTypeOf(Symmetric!AddObject)) -> exists(z | z.
+				obj.oclIsKindOf(Symmetric!EObjectSet)) then
 			true
 		else
 			false
@@ -48,34 +60,35 @@ helper context Symmetric!SemanticChangeSet def :dependsOnNewTable(tableName : St
 	endif;
 
 --This is a new commment
-helper context Symmetric!SemanticChangeSet def :getResovableSMO() : Migration!ResolvableOperator = 
-		if self.isNewTable() then
-			--thisModule.SemanticChangeSet2newTableSMO(self)
-			thisModule.SemanticChangeSet2ResolvableSMO(self)
-		else
-			thisModule.SemanticChangeSet2ResolvableSMO(self)
-		endif;
+helper context Symmetric!SemanticChangeSet def: getResovableSMO():
+		Migration!ResolvableOperator =
+	if self.isNewTable() then
+		--thisModule.SemanticChangeSet2newTableSMO(self)
+		thisModule.SemanticChangeSet2ResolvableSMO(self)
+	else
+		thisModule.SemanticChangeSet2ResolvableSMO(self)
+	endif;
 
-
-helper def: symmetric : Symmetric!SymmetricDifference = Symmetric!SymmetricDifference.allInstances()->asSequence().first(); 
+helper def: symmetric: Symmetric!SymmetricDifference =
+	Symmetric!SymmetricDifference.allInstances() -> asSequence().first();
 
 --Resolvable
-helper def: resolvableRules : Sequence(String) = 
+helper def: resolvableRules: Sequence(String) =
 	Sequence{'CREATE_Database_Schema',
-			'CREATE_Column_IN_Table_(columns)', 
+			'CREATE_Column_IN_Table_(columns)',
 			'CREATE_ForeignKey_IN_Table_(columns)',
 			'SET_ATTRIBUTE_NamedElement_Name',
 			'SET_ATTRIBUTE_Column_DefaultValue',
 			'SET_ATTRIBUTE_Column_AutoIncrement',
 			'CREATE_Table_IN_Database_Schema_(entites)',
-			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_RESTRICT', 
+			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_RESTRICT',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_NO_ACTION',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_CASCADE',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_SET_NULL',
-			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_NO_ACTION', 
+			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_NO_ACTION',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_CASCADE',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_SET_NULL',
-			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_RESTRICT', 
+			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_RESTRICT',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_CASCADE',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_SET_NULL',
 			'CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_RESTRICT',
@@ -86,7 +99,7 @@ helper def: resolvableRules : Sequence(String) =
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_SET_NULL',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_NO_ACTION',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_CASCADE',
-			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_SET_NULL',	
+			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_SET_NULL',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_RESTRICT',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_CASCADE',
 			'CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL',
@@ -101,63 +114,93 @@ helper def: resolvableRules : Sequence(String) =
 			'CREATE_ColumnConstraint_IN_Constraint_(columns)',
 			'DELETE_ColumnConstraint_IN_Constraint_(columns)',
 			'ADD_Column_(constraints)_TGT_ColumnConstraint',
-			'SET_ATTRIBUTE_ColumnConstraint_Name'
-			
-			
-			
-			};
+			'SET_ATTRIBUTE_ColumnConstraint_Name'};
 
-helper def: resolvableEnumType : Map(String, Migration!ResolvableOperatorType) =  
-	Map{('CREATE_Table_IN_Database_Schema_(entites)', #CREATE_TABLE),
-		('SET_ATTRIBUTE_NamedElement_Name', #RENAME_TABLE),
-		('SET_ATTRIBUTE_ColumnConstraint_Name', #RENAME_TABLE),
-		('CREATE_Column_IN_Table_(columns)', #CREATE_COLUMN),
-		('CREATE_ForeignKey_IN_Table_(columns)', #CREATE_FOREIGN_KEY),
-		('SET_ATTRIBUTE_Column_DefaultValue', #SET_COLUMN_DEFAULT_VALUE),
-		('SET_ATTRIBUTE_Column_AutoIncrement', #SET_COLUMN_AUTO_INCREMENT),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_CASCADE', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT', #CHANGE_REFERENTIAL_ACTION),
-		('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION', #CHANGE_REFERENTIAL_ACTION),
-		('SET_ATTRIBUTE_ForeignKey_ConstraintName', #SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME),
-		('CREATE_Index_IN_Table_(constraints)', #CREATE_INDEX_IN_TABLE),
-		('REMOVE_Column_(constraints)_TGT_ColumnConstraint', #REMOVE_CONSTRAINT),
-		('DELETE_Index_IN_Table_(constraints)',#REMOVE_CONSTRAINT),
-		('DELETE_UniqueConstraint_IN_Table_(constraints)',#REMOVE_CONSTRAINT),
-		('SET_REFERENCE_ColumnConstraint_(column)_TGT_Column',#ADD_COLUMN_TO_INDEX),
-		('CREATE_ColumnConstraint_IN_Constraint_(columns)',#ADD_COLUMN_TO_INDEX),
-		('DELETE_ColumnConstraint_IN_Constraint_(columns)', #REMOVE_CONSTRAINT),
-		('ADD_Column_(constraints)_TGT_ColumnConstraint', #ADD_COLUMN_TO_INDEX)
-		
-		
-		
-		
-	};
-	
+helper def: resolvableEnumType: Map(String, Migration!ResolvableOperatorType) =
+	Map{('CREATE_Table_IN_Database_Schema_(entites)',
+			#CREATE_TABLE),
+			('SET_ATTRIBUTE_NamedElement_Name',
+			#RENAME_TABLE),
+			('SET_ATTRIBUTE_ColumnConstraint_Name',
+			#RENAME_TABLE),
+			('CREATE_Column_IN_Table_(columns)',
+			#CREATE_COLUMN),
+			('CREATE_ForeignKey_IN_Table_(columns)',
+			#CREATE_FOREIGN_KEY),
+			('SET_ATTRIBUTE_Column_DefaultValue',
+			#SET_COLUMN_DEFAULT_VALUE),
+			('SET_ATTRIBUTE_Column_AutoIncrement',
+			#SET_COLUMN_AUTO_INCREMENT),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_CASCADE',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT',
+			#CHANGE_REFERENTIAL_ACTION),
+			('CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION',
+			#CHANGE_REFERENTIAL_ACTION),
+			('SET_ATTRIBUTE_ForeignKey_ConstraintName',
+			#SET_ATTRIBUTE_FOREIGNKEY_CONSTRAINT_NAME),
+			('CREATE_Index_IN_Table_(constraints)',
+			#CREATE_INDEX_IN_TABLE),
+			('REMOVE_Column_(constraints)_TGT_ColumnConstraint',
+			#REMOVE_CONSTRAINT),
+			('DELETE_Index_IN_Table_(constraints)',
+			#REMOVE_CONSTRAINT),
+			('DELETE_UniqueConstraint_IN_Table_(constraints)',
+			#REMOVE_CONSTRAINT),
+			('SET_REFERENCE_ColumnConstraint_(column)_TGT_Column',
+			#ADD_COLUMN_TO_INDEX),
+			('CREATE_ColumnConstraint_IN_Constraint_(columns)',
+			#ADD_COLUMN_TO_INDEX),
+			('DELETE_ColumnConstraint_IN_Constraint_(columns)',
+			#REMOVE_CONSTRAINT),
+			('ADD_Column_(constraints)_TGT_ColumnConstraint',
+			#ADD_COLUMN_TO_INDEX)};
 
-helper def: partiallyResolvableRules : Sequence(String) = 
+helper def: partiallyResolvableRules: Sequence(String) =
 	Sequence{'DELETE_Column_IN_Table_(columns)',
-			'DELETE_ForeignKey_IN_Table_(columns)', 
+			'DELETE_ForeignKey_IN_Table_(columns)',
 			'DELETE_PrimaryKey_IN_Table_(columns)',
 			'DELETE_Table_IN_Database_Schema_(entites)',
 			'SET_ATTRIBUTE_Column_NotNull',
@@ -172,131 +215,698 @@ helper def: partiallyResolvableRules : Sequence(String) =
 			'CHANGE_NM_INTO_1N_PRESERVE',
 			'SET_ATTRIBUTE_Column_Size_and_Type',
 			'CREATE_PrimaryKey_IN_Table_(columns)',
-			'CREATE_UniqueConstraint_IN_Table_(constraints)'
-			
-			};
+			'CREATE_UniqueConstraint_IN_Table_(constraints)'};
 
-helper def: partiallyResolvableEnumType : Map(String, Migration!PartiallyResolvableOperatorType) =  
-	Map{('DELETE_Column_IN_Table_(columns)', #DELETE_COLUMN),
-		('DELETE_ForeignKey_IN_Table_(columns)', #DELETE_FOREIGN_KEY),
-		('DELETE_PrimaryKey_IN_Table_(columns)', #DELETE_PRIMARY_KEY),
-		('DELETE_Table_IN_Database_Schema_(entites)', #DELETE_TABLE),
-		('SET_ATTRIBUTE_Column_NotNull', #SET_COLUMN_NOT_NULL),
-		('SET_ATTRIBUTE_Column_Size', #SET_COLUMN_SIZE),
-		('SET_ATTRIBUTE_Column_Unique', #SET_COLUMN_UNIQUE),
-		('SET_ATTRIBUTE_Column_Type', #SET_COLUMN_TYPE),
-		('SET_ATTRIBUTE_Column_Size_and_Type', #SET_COLUMN_TYPE_AND_SIZE),
-		('CREATE_UniqueConstraint_IN_Table_(constraints)', #CREATE_UNIQUE_CONSTRAINT),
-		('CREATE_PrimaryKey_IN_Table_(columns)', #CREATE_PRIMARY_KEY),		
-		('SET_REFERENCE_ForeignKey_(referencedTable)_TGT_Table', #SET_FOREIGNKEYS_TARGET_TABLE),
-		('CHANGE_1N_INTO_NM', #CHANGE_1N_INTO_NM),
-		('CHANGE_1N_INTO_NM_MOVE', #CHANGE_1N_INTO_NM_MOVE),
-		('CHANGE_1N_INTO_NM_PRESERVE', #CHANGE_1N_INTO_NM_PRESERVE),
-		('CHANGE_NM_INTO_1N', #CHANGE_NM_INTO_1N),
-		('CHANGE_NM_INTO_1N_PRESERVE', #CHANGE_NM_INTO_1N_PRESERVE)
-		
-	};
-	
-helper def: notAutomaticallyResolvableRules : Sequence(String) = 
+helper def: partiallyResolvableEnumType: Map(String,
+		Migration!PartiallyResolvableOperatorType) =
+	Map{('DELETE_Column_IN_Table_(columns)',
+			#DELETE_COLUMN),
+			('DELETE_ForeignKey_IN_Table_(columns)',
+			#DELETE_FOREIGN_KEY),
+			('DELETE_PrimaryKey_IN_Table_(columns)',
+			#DELETE_PRIMARY_KEY),
+			('DELETE_Table_IN_Database_Schema_(entites)',
+			#DELETE_TABLE),
+			('SET_ATTRIBUTE_Column_NotNull',
+			#SET_COLUMN_NOT_NULL),
+			('SET_ATTRIBUTE_Column_Size',
+			#SET_COLUMN_SIZE),
+			('SET_ATTRIBUTE_Column_Unique',
+			#SET_COLUMN_UNIQUE),
+			('SET_ATTRIBUTE_Column_Type',
+			#SET_COLUMN_TYPE),
+			('SET_ATTRIBUTE_Column_Size_and_Type',
+			#SET_COLUMN_TYPE_AND_SIZE),
+			('CREATE_UniqueConstraint_IN_Table_(constraints)',
+			#CREATE_UNIQUE_CONSTRAINT),
+			('CREATE_PrimaryKey_IN_Table_(columns)',
+			#CREATE_PRIMARY_KEY),
+			('SET_REFERENCE_ForeignKey_(referencedTable)_TGT_Table',
+			#SET_FOREIGNKEYS_TARGET_TABLE),
+			('CHANGE_1N_INTO_NM',
+			#CHANGE_1N_INTO_NM),
+			('CHANGE_1N_INTO_NM_MOVE',
+			#CHANGE_1N_INTO_NM_MOVE),
+			('CHANGE_1N_INTO_NM_PRESERVE',
+			#CHANGE_1N_INTO_NM_PRESERVE),
+			('CHANGE_NM_INTO_1N',
+			#CHANGE_NM_INTO_1N),
+			('CHANGE_NM_INTO_1N_PRESERVE',
+			#CHANGE_NM_INTO_1N_PRESERVE)};
+
+helper def: notAutomaticallyResolvableRules: Sequence(String) =
 	Sequence{'MOVE_PrimaryKey_FROM_Table_(columns)_TO_Table_(columns)',
-			'MOVE_ForeignKey_FROM_Table_(columns)_TO_Table_(columns)', 
+			'MOVE_ForeignKey_FROM_Table_(columns)_TO_Table_(columns)',
 			'DELETE_PrimaryKey_IN_Table_(columns)',
-			'JOIN_tables'
-		
-			};
+			'JOIN_tables'};
 
-helper def: notAutomaticallyResolvableEnumType : Map(String, Migration!NotAutomaticallyResolvableOperatorType) =  
-	Map{('MOVE_PrimaryKey_FROM_Table_(columns)_TO_Table_(columns)', #MOVE_PRIMARY_KEY),
-		('MOVE_ForeignKey_FROM_Table_(columns)_TO_Table_(columns)', #MOVE_FOREIGN_KEY),
-		('MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)', #MOVE_COLUMN),
-		('JOIN_tables', #JOIN_TABLE)
-		
-	};			
+helper def: notAutomaticallyResolvableEnumType: Map(String,
+		Migration!NotAutomaticallyResolvableOperatorType) =
+	Map{('MOVE_PrimaryKey_FROM_Table_(columns)_TO_Table_(columns)',
+			#MOVE_PRIMARY_KEY),
+			('MOVE_ForeignKey_FROM_Table_(columns)_TO_Table_(columns)',
+			#MOVE_FOREIGN_KEY),
+			('MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)',
+			#MOVE_COLUMN),
+			('JOIN_tables',
+			#JOIN_TABLE)};
+
+
 			
+helper def: resolvableRulesGraph : Sequence(String) =
+Sequence{
+  'ADD_EdgeType (labels)_TGT_EdgeLabel',
+  'ADD_Edgelabel_(edges)_IGT_EdgeType',
+  'ADD_KeyConstraint_(properties)_TGT_Property',
+  'ADD_Label_(Superlype)_TGT_Label',
+  'ADD_NodeType (label)_TGT_NodeLabel',
+  'ADD_NodeType_(incoming)_TGT_EdgeType',
+  'ADD_NodeType_(outgoing)_TGT_EdgeType',
+  'ADD_Nodelabel_(nodes)_TGT_NodeType',
+  'ADD_UniqueConstraint_(properties)_TGT_Property',
+  'CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_FLOAT128',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_FLOAT128',
+  'CHANGE_LITERAL_NumericType_type_FROM_INT_TO_FLOAT',
+  'CHANGE_LITERAL_NumericType_type_FROM_INT_TO_FLOAT128',
+  'CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_DOUBLE',
+  'CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_FLOAT',
+  'CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_FLOAT128',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_ZONED_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_Temporallypes_type_FROM_SUBSECONDS_TO_ZONED_TIME',
+  'CREATE_BinaryTypes',
+  'CREATE_BooleanType',
+  'CREATE_EdgeLabel_IN_PropertyGraph_(items)',
+  'CREATE_EdgeType_IN_PropertyGraph_(items)',
+  'CREATE_KeyConstraint_IN_Label_(constraints)',
+  'CREATE_NodeType_IN_PropertyGraph_{items)',
+  'CREATE_Nodelabel_IN_PropertyGraph_(items)',
+  'CREATE_NumericType',
+  'CREATE_PropertyExistenceConstraint_IN_Label_(constraints)',
+  'CREATE_PropertyGraph',
+  'CREATE_PropertyTypeConstraint_IN_Label_(constraints)',
+  'CREATE_PropertyValueType',
+  'CREATE_Property_IN_Label_(properties)',
+  'CREATE_StringType',
+  'CREATE_TemporalTypes',
+  'CREATE_UnionType',
+  'CREATE_UniqueConstraint_IN_Label_(constraints)',
+  'SET_ATTRIBUTE ListType_LowerBound',
+  'SET_ATTRIBUTE Property Name',
+  'SET_ATTRIBUTE PropertyGraph_Closed',
+  'SET_ATTRIBUTE PropertyMandatory',
+  'SET_ATTRIBUTE PropertyValueType_Nullable',
+  'SET_ATTRIBUTE.StringType_MinLength',
+  'SET_ATTRIBUTEStringType_MaxLength',
+  'SET_ATTRIBUTEStringType_Type',
+  'SET_ATTRIBUTE_BinaryTypes_MaxLength',
+  'SET_ATTRIBUTE_BinaryTypes_MinLength',
+  'SET_ATTRIBUTE_BinaryTypes_Type',
+  'SET_ATTRIBUTE_BooleanType_Type',
+  'SET_ATTRIBUTE_Constraint_Name',
+  'SET_ATTRIBUTE_Label_Name',
+  'SET_ATTRIBUTE_ListType_UpperBound',
+  'SET_ATTRIBUTE_NumericType FractionalPart',
+  'SET_ATTRIBUTE_NumericType_IntegralPart',
+  'SET_ATTRIBUTE_NumericType_Type',
+  'SET_ATTRIBUTE_PropertyGraph_Graphtype',
+  'SET_ATTRIBUTE_PropertyGraph_Location',
+  'SET_ATTRIBUTE_PropertyGraph_Name',
+  'SET_ATTRIBUTE_TemporalTypes_Type',
+  'SET_ATTRIBUTE_UnionType_Type',
+  'SET_REFERENCE PropertyExistenceConstraint_(properties)_TGT_Property',
+  'SET_REFERENCE PropertyTypeConstraint_(properties)_TGT_Property',
+  'SET_REFERENCE PropertyTypeConstraint_(type)_TGT_PropertyValueType',
+  'SET_REFERENCE_EdgeType_(src)_TGT_NodeType',
+  'SET_REFERENCE_EdgeType_(tat)_TGT_NodeType'
+};
 
-	--let symmetricDifference : Sequence( Symmetric!SymmetricDifference) =
-		--Symmetric!SymmetricDifference.allInstances()->asSequence().first() in symmetricDifference.first();
 
 
+helper def: partiallyResolvableRulesGraph : Sequence(String) =
+Sequence{
+  'CHANGE_LITERAL TemporalTypes_type FROM_DAY_TO_MINUTES',
+  'CHANGE_LITERALStringType_type FROM_STRING_TO_VARCHAR',
+  'CHANGE_LITERALStringType_type FROM_VARCHAR_TO_STRING',
+  'CHANGE_LITERAL_BinaryTypes type FROM_BYTES_TO_VARBINARY',
+  'CHANGE_LITERAL_BinaryTypes type FROM_VARBINARY_TO_BYTES',
+  'CHANGE_LITERAL_NumericType_type FROM FLOAT128 TO_UINT',
+  'CHANGE_LITERAL_NumericType_type FROM FLOAT_TO_DOUBLE',
+  'CHANGE_LITERAL_NumericType_type FROM_INT_TO_DOUBLE',
+  'CHANGE_LITERAL_NumericType_type_FROM_DECIMAL TO_FLOAT',
+  'CHANGE_LITERAL_NumericType_type_FROM_DECIMAL TO_FLOAT128',
+  'CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_DOUBLE',
+  'CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_INT',
+  'CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_UINT',
+  'CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_DECIMAL',
+  'CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_FLOAT',
+  'CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_INT',
+  'CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_UINT',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_DECIMAL',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_DOUBLE',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_FLOAT',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_INT',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_DECIMAL',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_INT',
+  'CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_UINT',
+  'CHANGE_LITERAL_NumericType_type_FROM_INT_TO_DECIMAL',
+  'CHANGE_LITERAL_NumericType_type_FROM_INT_TO_UINT',
+  'CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_DECIMAL',
+  'CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_INT',
+  'CHANGE_LITERAL_TemporalTypes_type FROM_YEAR TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_LOCAL TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_ZONED_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_YEAR',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_DATE',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_DAY',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_LOCAL_DATETIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_LOCAL_TIME',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_MINUTES',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_MONTH',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_SUBSECONDS',
+  'CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_YEAR',
+  'DELETE KeyConstraint_IN_Label_(constraints)',
+  'DELETE ListType',
+  'DELETE NodeLabel_IN_PropertyGraph_(items)',
+  'DELETE NumericType',
+  'DELETE PropertyExistenceConstraint_IN_Label_(constraints)',
+  'DELETE PropertyGraph',
+  'DELETE PropertyTypeConstraint_IN_Label_(constraints)',
+  'DELETE Property_IN_EdgeType_(properties)',
+  'DELETE Property_IN_Label_(properties)',
+  'DELETE Property_IN_NodeType_(properties)',
+  'DELETE UnionType',
+  'DELETEStringType',
+  'DELETE_BinaryTypes',
+  'DELETE_BooleanType_executehhenshin',
+  'DELETE_EdgeLabel_IN_PropertyGraph_(items)',
+  'DELETE_EdgeType_IN_PropertyGraph_(items)',
+  'DELETE_NodeType_IN_PropertyGraph_(items)',
+  'DELETE_TemporalTypes',
+  'DELETE_UniqueConstraint_IN_Label_(constraints)',
+  'REMOVE KeyConstraint_(properties)_TGT_Property',
+  'REMOVE NodeLabel_(nodes)_TGT_NodeType',
+  'REMOVE_EdgeLabel_(edges)_TGT_EdgeType',
+  'REMOVE_EdgeType_(labels)_TGT_EdgeLabel',
+  'REMOVE_Label_Superlype)_TGT_Label',
+  'REMOVE_NodeType_(incoming)_TGT_EdgeType',
+  'REMOVE_NodeType_(label)_TGT_NodeLabel',
+  'REMOVE_NodeType_(outgoing)_TGT_EdgeType',
+  'REMOVE_UniqueConstraint_(properties)_TGT_Property'
+};
+
+
+
+helper def: notAutomaticallyResolvableRulesGraph : Sequence(String) =
+Sequence{
+  'MOVE_EdgeLabel_FROM PropertyGraph (items) TO_PropertyGraph_(items)',
+  'MOVE_EdgeType FROM PropertyGraph_(items)_TO_PropertyGraph_(items)',
+  'MOVE_KeyConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_NodeLabel_ FROM PropertyGraph (items) TO_PropertyGraph_(items)',
+  'MOVE_NodeType FROM PropertyGraph (items) TO_PropertyGraph_(items)',
+  'MOVE_Property FROM_EdgeType_(properties)_TO_EdgeType_(properties)',
+  'MOVE_Property FROM_NodeType (properties) TO_NodeType_(properties)',
+  'MOVE_PropertyExistenceConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_PropertyTypeConstraint FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_REF_COMBI_EdgeLabel_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)',
+  'MOVE_REF_COMBI_EdgeType_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)',
+  'MOVE_REF_COMBI_KeyConstraint_FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_REF_COMBI_NodeLabel_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)',
+  'MOVE_REF_COMBI_NodeType_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)',
+  'MOVE_REF_COMBI_Property FROM_EdgeType_(properties) TO_EdgeType_(properties)',
+  'MOVE_REF_COMBI_Property FROM_Label_(properties)_TO_NodeType_(properties)',
+  'MOVE_REF_COMBI_Property FROM_NodeType_(properties)TO_EdgeType_(properties)',
+  'MOVE_REF_COMBI_Property FROM_NodeType_(properties)_TO_Label_(properties)',
+  'MOVE_REF_COMBI_Property FROM_NodeType_(properties)_TO_NodeType_(properties)',
+  'MOVE_REF_COMBI_PropertyExistenceConstraint_FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_REF_COMBI_PropertyTypeConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_REF_COMBI_Property_ FROM_EdgeType_(properties)_TO_Label_(properties)',
+  'MOVE_REF_COMBI_Property_FROM_EdgeType_(properties) TO_NodeType_(properties)',
+  'MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_EdgeType_(properties)',
+  'MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_Label_(properties)',
+  'MOVE_REF_COMBI_UniqueConstraint_FROM_Label_(constraints)_TO_Label_(constraints)',
+  'MOVE_UniqueConstraint_FROM_Label_(constraints)_TO_Label_(constraints)'
+};
+
+
+-- Graph enum maps
+
+helper def: resolvableEnumTypeGraph : Map(String, Migration!GraphResolvableOperatorType) =
+Map{
+  ('ADD_EdgeType (labels)_TGT_EdgeLabel', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_Edgelabel_(edges)_IGT_EdgeType', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_KeyConstraint_(properties)_TGT_Property', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_Label_(Superlype)_TGT_Label', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_NodeType (label)_TGT_NodeLabel', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_NodeType_(incoming)_TGT_EdgeType', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_NodeType_(outgoing)_TGT_EdgeType', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_Nodelabel_(nodes)_TGT_NodeType', #ADD_REFERENCE_OR_MEMBER),
+  ('ADD_UniqueConstraint_(properties)_TGT_Property', #ADD_REFERENCE_OR_MEMBER),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_FLOAT128', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_FLOAT128', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_INT_TO_FLOAT', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_INT_TO_FLOAT128', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_DOUBLE', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_FLOAT', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_FLOAT128', #WIDEN_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_LOCAL_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_ZONED_DATETIME', #WIDEN_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_Temporallypes_type_FROM_SUBSECONDS_TO_ZONED_TIME', #WIDEN_TEMPORAL_TYPE),
+  ('CREATE_BinaryTypes', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_BooleanType', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_EdgeLabel_IN_PropertyGraph_(items)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_EdgeType_IN_PropertyGraph_(items)', #CREATE_EDGE_TYPE),
+  ('CREATE_KeyConstraint_IN_Label_(constraints)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_NodeType_IN_PropertyGraph_{items)', #CREATE_NODE_TYPE),
+  ('CREATE_Nodelabel_IN_PropertyGraph_(items)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_NumericType', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_PropertyExistenceConstraint_IN_Label_(constraints)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_PropertyGraph', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_PropertyTypeConstraint_IN_Label_(constraints)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_PropertyValueType', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_Property_IN_Label_(properties)', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_StringType', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_TemporalTypes', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_UnionType', #ADD_REFERENCE_OR_MEMBER),
+  ('CREATE_UniqueConstraint_IN_Label_(constraints)', #CREATE_CONSTRAINT_IN_LABEL),
+  ('SET_ATTRIBUTE ListType_LowerBound', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE Property Name', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE PropertyGraph_Closed', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE PropertyMandatory', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE PropertyValueType_Nullable', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE.StringType_MinLength', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTEStringType_MaxLength', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTEStringType_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_BinaryTypes_MaxLength', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_BinaryTypes_MinLength', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_BinaryTypes_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_BooleanType_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_Constraint_Name', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_Label_Name', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_ListType_UpperBound', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_NumericType FractionalPart', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_NumericType_IntegralPart', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_NumericType_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_PropertyGraph_Graphtype', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_PropertyGraph_Location', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_PropertyGraph_Name', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_TemporalTypes_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_ATTRIBUTE_UnionType_Type', #SET_ATTRIBUTE_OR_REF),
+  ('SET_REFERENCE PropertyExistenceConstraint_(properties)_TGT_Property', #SET_ATTRIBUTE_OR_REF),
+  ('SET_REFERENCE PropertyTypeConstraint_(properties)_TGT_Property', #SET_ATTRIBUTE_OR_REF),
+  ('SET_REFERENCE PropertyTypeConstraint_(type)_TGT_PropertyValueType', #SET_ATTRIBUTE_OR_REF),
+  ('SET_REFERENCE_EdgeType_(src)_TGT_NodeType', #SET_ATTRIBUTE_OR_REF),
+  ('SET_REFERENCE_EdgeType_(tat)_TGT_NodeType', #SET_ATTRIBUTE_OR_REF)
+};
+
+
+
+helper def: partiallyResolvableEnumTypeGraph : Map(String, Migration!GraphPartiallyResolvableOperatorType) =
+Map{
+  ('CHANGE_LITERAL TemporalTypes_type FROM_DAY_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERALStringType_type FROM_STRING_TO_VARCHAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERALStringType_type FROM_VARCHAR_TO_STRING', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_BinaryTypes type FROM_BYTES_TO_VARBINARY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_BinaryTypes type FROM_VARBINARY_TO_BYTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type FROM FLOAT128 TO_UINT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type FROM FLOAT_TO_DOUBLE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type FROM_INT_TO_DOUBLE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DECIMAL TO_FLOAT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DECIMAL TO_FLOAT128', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_DOUBLE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_INT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DECIMAL_TO_UINT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_DECIMAL', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_FLOAT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_INT', #NARROW_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_DOUBLE_TO_UINT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_DECIMAL', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_DOUBLE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_FLOAT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT128 TO_INT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_DECIMAL', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_INT', #NARROW_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_NumericType_type_FROM_FLOAT_TO_UINT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_INT_TO_DECIMAL', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_INT_TO_UINT', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_DECIMAL', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_NumericType_type_FROM_UINT_TO_INT', #NARROW_NUMERIC_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type FROM_YEAR TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DATE_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_DAY_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL TIME_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_DATE', #NARROW_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_LOCAL TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_DATETIME_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_LOCAL_TIME_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES TO_ZONED_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MINUTES_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_MONTH_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS TO_ZONED_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_SUBSECONDS_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR TO_ZONED_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_YEAR_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_DATE', #NARROW_TEMPORAL_TYPE),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_DATETIME_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_DATE', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_DAY', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_LOCAL_DATETIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_LOCAL_TIME', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_MINUTES', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_MONTH', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_SUBSECONDS', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('CHANGE_LITERAL_TemporalTypes_type_FROM_ZONED_TIME_TO_YEAR', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE KeyConstraint_IN_Label_(constraints)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE ListType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE NodeLabel_IN_PropertyGraph_(items)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE NumericType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE PropertyExistenceConstraint_IN_Label_(constraints)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE PropertyGraph', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE PropertyTypeConstraint_IN_Label_(constraints)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE Property_IN_EdgeType_(properties)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE Property_IN_Label_(properties)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE Property_IN_NodeType_(properties)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE UnionType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETEStringType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE_BinaryTypes', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE_BooleanType_executehhenshin', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE_EdgeLabel_IN_PropertyGraph_(items)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE_EdgeType_IN_PropertyGraph_(items)', #DELETE_EDGE_TYPE),
+  ('DELETE_NodeType_IN_PropertyGraph_(items)', #DELETE_NODE_TYPE),
+  ('DELETE_TemporalTypes', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('DELETE_UniqueConstraint_IN_Label_(constraints)', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE KeyConstraint_(properties)_TGT_Property', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE NodeLabel_(nodes)_TGT_NodeType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_EdgeLabel_(edges)_TGT_EdgeType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_EdgeType_(labels)_TGT_EdgeLabel', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_Label_Superlype)_TGT_Label', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_NodeType_(incoming)_TGT_EdgeType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_NodeType_(label)_TGT_NodeLabel', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_NodeType_(outgoing)_TGT_EdgeType', #REMOVE_REFERENCE_OR_CONSTRAINT),
+  ('REMOVE_UniqueConstraint_(properties)_TGT_Property', #REMOVE_REFERENCE_OR_CONSTRAINT)
+};
+
+
+
+helper def: notAutomaticallyResolvableEnumTypeGraph : Map(String, Migration!GraphNotAutomaticallyResolvableOperatorType) =
+Map{
+  ('MOVE_EdgeLabel_FROM PropertyGraph (items) TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_EdgeType FROM PropertyGraph_(items)_TO_PropertyGraph_(items)', #MOVE_EDGE_TYPE),
+  ('MOVE_KeyConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_LABEL),
+  ('MOVE_NodeLabel_ FROM PropertyGraph (items) TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_NodeType FROM PropertyGraph (items) TO_PropertyGraph_(items)', #MOVE_NODE_TYPE),
+  ('MOVE_Property FROM_EdgeType_(properties)_TO_EdgeType_(properties)', #MOVE_EDGE_TYPE),
+  ('MOVE_Property FROM_NodeType (properties) TO_NodeType_(properties)', #MOVE_NODE_TYPE),
+  ('MOVE_PropertyExistenceConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_LABEL),
+  ('MOVE_PropertyTypeConstraint FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_LABEL),
+  ('MOVE_REF_COMBI_EdgeLabel_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_EdgeType_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_KeyConstraint_FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_NodeLabel_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_NodeType_FROM_PropertyGraph_(items)_TO_PropertyGraph_(items)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property FROM_EdgeType_(properties) TO_EdgeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property FROM_Label_(properties)_TO_NodeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property FROM_NodeType_(properties)TO_EdgeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property FROM_NodeType_(properties)_TO_Label_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property FROM_NodeType_(properties)_TO_NodeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_PropertyExistenceConstraint_FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_PropertyTypeConstraint_ FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property_ FROM_EdgeType_(properties)_TO_Label_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property_FROM_EdgeType_(properties) TO_NodeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_EdgeType_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_Label_(properties)', #MOVE_COMBINED),
+  ('MOVE_REF_COMBI_UniqueConstraint_FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_COMBINED),
+  ('MOVE_UniqueConstraint_FROM_Label_(constraints)_TO_Label_(constraints)', #MOVE_LABEL)
+};
+			
+helper context Symmetric!SemanticChangeSet def :toSMO()
+    : Migration!SchemaModificationOperator =
+  if self.isResolvable() then thisModule.SemanticChangeSet2ResolvableSMO(self)
+  else if self.isPartiallyResolvable() then thisModule.SemanticChangeSet2PartiallyResolvableSMO(self)
+  else if self.isNotAutomaticallyResolvable() then thisModule.SemanticChangeSet2NotAutomaticallyResolvableSMO(self)
+  else if self.isResolvableGraph() then thisModule.SemanticChangeSet2GraphResolvableSMO(self)
+  else if self.isPartiallyResolvableGraph() then thisModule.SemanticChangeSet2GraphPartiallyResolvableSMO(self)
+  else thisModule.SemanticChangeSet2GraphNotAutomaticallyResolvableSMO(self)
+  endif endif endif endif endif;
+
+--let symmetricDifference : Sequence( Symmetric!SymmetricDifference) =
+--Symmetric!SymmetricDifference.allInstances()->asSequence().first() in
+		-- symmetricDifference.first();
+--
+
+--rule SymmetricDifference2Migration {
+--	from
+--		s: Symmetric!SymmetricDifference
+--	to
+--		migration: Migration!Migration (
+--			--SymmetricDifference <- s,
+--			uriSymetricDifferenceModel <- s.toString(),
+--			schemaModificationOperators <- s.changeSets -> collect(e | if e.
+--					isResolvable() then
+--							e.getResovableSMO()
+--						else
+--							if e.isPartiallyResolvable() then
+--								thisModule.SemanticChangeSet2PartiallyResolvableSMO(e)
+--							else
+--								thisModule.SemanticChangeSet2NotAutomaticallyResolvableSMO(e)
+--							endif
+--						endif) -> asSequence()
+--		)
+--}
+
+
+-- In der Hauptregel nur noch toSMO() aufrufen
 rule SymmetricDifference2Migration {
-	from
-		s : Symmetric!SymmetricDifference
-	to 
-		migration : Migration!Migration (
-			--SymmetricDifference <- s,
-			uriSymetricDifferenceModel <- s.toString(),
-			schemaModificationOperators <- s.changeSets -> 
-				collect( e | 
-					if e.isResolvable() then e.getResovableSMO() 
-					else 
-						if e.isPartiallyResolvable() then thisModule.SemanticChangeSet2PartiallyResolvableSMO(e)
-						else thisModule.SemanticChangeSet2NotAutomaticallyResolvableSMO(e) endif
-					endif) -> asSequence()
-			
-		)
-		
-		
+  from s : Symmetric!SymmetricDifference
+  to migration : Migration!Migration (
+    uriSymetricDifferenceModel <- s.toString(),
+    schemaModificationOperators <- s.changeSets->collect(e | e.toSMO())->asSequence()
+  )
 }
 
 --> collect( e | thisModule.SemanticChangeSet2SMO(e)) -> asSequence()
-
 unique lazy rule SemanticChangeSet2newTableSMO {
 	from
-		semanticChangeSet : Symmetric!SemanticChangeSet (semanticChangeSet.isNewTable())
+		semanticChangeSet: Symmetric!SemanticChangeSet (
+			semanticChangeSet.isNewTable()
+		)
 	
 	using {
-		tableName : String = 'verkehrsweg_grundstueck';
+		tableName: String = 'verkehrsweg_grundstueck';
 	}
-	to 
-		smo : Migration!ResolvableOperator (
+	to
+		smo: Migration!ResolvableOperator (
 			description <- semanticChangeSet.description,
 			processStatus <- #UNRESOLVED,
 			displayName <- thisModule.resolvableEnumType.get(semanticChangeSet.editRName),
-			semanticChangeSets <- thisModule.symmetric.changeSets -> select(e | e.dependsOnNewTable(tableName)) 
-			
+			semanticChangeSets <- thisModule.symmetric.changeSets -> select(e | e.
+					dependsOnNewTable(tableName))
 		)
 	
 }
 
 unique lazy rule SemanticChangeSet2ResolvableSMO {
 	from
-		semanticChangeSet : Symmetric!SemanticChangeSet (not semanticChangeSet.isNewTable())
-	to 
-		smo : Migration!ResolvableOperator (
+		semanticChangeSet: Symmetric!SemanticChangeSet (
+			not semanticChangeSet.isNewTable()
+		)
+	to
+		smo: Migration!ResolvableOperator (
 			description <- semanticChangeSet.description,
 			processStatus <- #UNRESOLVED,
 			displayName <- thisModule.resolvableEnumType.get(semanticChangeSet.editRName),
-			semanticChangeSets <- semanticChangeSet 
-			
+			semanticChangeSets <- semanticChangeSet
 		)
 	
 }
 
 unique lazy rule SemanticChangeSet2PartiallyResolvableSMO {
 	from
-		semanticChangeSet : Symmetric!SemanticChangeSet
-	to 
-		smo : Migration!PartiallyResolvable (
+		semanticChangeSet: Symmetric!SemanticChangeSet
+	to
+		smo: Migration!PartiallyResolvable (
 			description <- semanticChangeSet.description,
 			processStatus <- #UNRESOLVED,
-			displayName <- thisModule.partiallyResolvableEnumType.get(semanticChangeSet.editRName),
+			displayName <- thisModule.partiallyResolvableEnumType.get(semanticChangeSet.
+					editRName),
 			semanticChangeSets <- semanticChangeSet
-			
 		)
 }
 
 unique lazy rule SemanticChangeSet2NotAutomaticallyResolvableSMO {
 	from
-		semanticChangeSet : Symmetric!SemanticChangeSet
-	to 
-		smo : Migration!NotAutomaticallyResolvable (
+		semanticChangeSet: Symmetric!SemanticChangeSet
+	to
+		smo: Migration!NotAutomaticallyResolvable (
 			description <- semanticChangeSet.description,
 			processStatus <- #UNRESOLVED,
-			displayName <- thisModule.notAutomaticallyResolvableEnumType.get(semanticChangeSet.editRName),
+			displayName <- thisModule.notAutomaticallyResolvableEnumType.
+					get(semanticChangeSet.editRName),
 			semanticChangeSets <- semanticChangeSet
-			
 		)
 }
 
+unique lazy rule SemanticChangeSet2GraphResolvableSMO {
+  from semanticChangeSet : Symmetric!SemanticChangeSet (semanticChangeSet.isResolvableGraph())
+  to smo : Migration!GraphResolvableOperator (
+    description <- semanticChangeSet.description,
+    processStatus <- #UNRESOLVED,
+    displayName <- thisModule.resolvableEnumTypeGraph.get(semanticChangeSet.editRName),
+    semanticChangeSets <- semanticChangeSet
+  )
+}
 
+unique lazy rule SemanticChangeSet2GraphPartiallyResolvableSMO {
+  from semanticChangeSet : Symmetric!SemanticChangeSet (semanticChangeSet.isPartiallyResolvableGraph())
+  to smo : Migration!GraphPartiallyResolvableOperator (
+    description <- semanticChangeSet.description,
+    processStatus <- #UNRESOLVED,
+    displayName <- thisModule.partiallyResolvableEnumTypeGraph.get(semanticChangeSet.editRName),
+    semanticChangeSets <- semanticChangeSet
+  )
+}
 
+unique lazy rule SemanticChangeSet2GraphNotAutomaticallyResolvableSMO {
+  from semanticChangeSet : Symmetric!SemanticChangeSet (semanticChangeSet.isNotAutomaticallyResolvableGraph())
+  to smo : Migration!GraphNotAutomaticallyResolvableOperator (
+    description <- semanticChangeSet.description,
+    processStatus <- #UNRESOLVED,
+    displayName <- thisModule.notAutomaticallyResolvableEnumTypeGraph.get(semanticChangeSet.editRName),
+    semanticChangeSets <- semanticChangeSet
+  )
+}

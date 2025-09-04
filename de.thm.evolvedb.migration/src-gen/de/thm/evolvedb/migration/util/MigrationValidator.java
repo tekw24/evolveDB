@@ -103,6 +103,12 @@ public class MigrationValidator extends EObjectValidator {
 				return validatePartiallyResolvable((PartiallyResolvable)value, diagnostics, context);
 			case MigrationPackage.NOT_AUTOMATICALLY_RESOLVABLE:
 				return validateNotAutomaticallyResolvable((NotAutomaticallyResolvable)value, diagnostics, context);
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR:
+				return validateGraphResolvableOperator((GraphResolvableOperator)value, diagnostics, context);
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR:
+				return validateGraphPartiallyResolvableOperator((GraphPartiallyResolvableOperator)value, diagnostics, context);
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR:
+				return validateGraphNotAutomaticallyResolvableOperator((GraphNotAutomaticallyResolvableOperator)value, diagnostics, context);
 			case MigrationPackage.PROCESS_STATUS:
 				return validateProcessStatus((ProcessStatus)value, diagnostics, context);
 			case MigrationPackage.RESOLVABLE_OPERATOR_TYPE:
@@ -115,6 +121,12 @@ public class MigrationValidator extends EObjectValidator {
 				return validateColumnOptions((ColumnOptions)value, diagnostics, context);
 			case MigrationPackage.COMPLEX_RESOLVE_OPTIONS:
 				return validateComplexResolveOptions((ComplexResolveOptions)value, diagnostics, context);
+			case MigrationPackage.GRAPH_RESOLVABLE_OPERATOR_TYPE:
+				return validateGraphResolvableOperatorType((GraphResolvableOperatorType)value, diagnostics, context);
+			case MigrationPackage.GRAPH_PARTIALLY_RESOLVABLE_OPERATOR_TYPE:
+				return validateGraphPartiallyResolvableOperatorType((GraphPartiallyResolvableOperatorType)value, diagnostics, context);
+			case MigrationPackage.GRAPH_NOT_AUTOMATICALLY_RESOLVABLE_OPERATOR_TYPE:
+				return validateGraphNotAutomaticallyResolvableOperatorType((GraphNotAutomaticallyResolvableOperatorType)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -220,6 +232,63 @@ public class MigrationValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateGraphResolvableOperator(GraphResolvableOperator graphResolvableOperator, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(graphResolvableOperator, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(graphResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSchemaModificationOperator_validateSMO(graphResolvableOperator, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateGraphPartiallyResolvableOperator(GraphPartiallyResolvableOperator graphPartiallyResolvableOperator, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(graphPartiallyResolvableOperator, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(graphPartiallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSchemaModificationOperator_validateSMO(graphPartiallyResolvableOperator, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateGraphNotAutomaticallyResolvableOperator(GraphNotAutomaticallyResolvableOperator graphNotAutomaticallyResolvableOperator, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(graphNotAutomaticallyResolvableOperator, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSchemaModificationOperator_validateSMO(graphNotAutomaticallyResolvableOperator, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateProcessStatus(ProcessStatus processStatus, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
@@ -266,6 +335,33 @@ public class MigrationValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateComplexResolveOptions(ComplexResolveOptions complexResolveOptions, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateGraphResolvableOperatorType(GraphResolvableOperatorType graphResolvableOperatorType, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateGraphPartiallyResolvableOperatorType(GraphPartiallyResolvableOperatorType graphPartiallyResolvableOperatorType, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateGraphNotAutomaticallyResolvableOperatorType(GraphNotAutomaticallyResolvableOperatorType graphNotAutomaticallyResolvableOperatorType, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

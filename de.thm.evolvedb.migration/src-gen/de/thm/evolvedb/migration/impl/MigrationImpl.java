@@ -3,12 +3,13 @@
 package de.thm.evolvedb.migration.impl;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.Migration;
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -45,25 +45,19 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSymmetricDifference
- * <em>Symmetric Difference</em>}</li>
- * <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSchemaModificationOperators
- * <em>Schema Modification Operators</em>}</li>
- * <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSymetricDifferenceModel
- * <em>Symetric Difference Model</em>}</li>
- * <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getUriSymetricDifferenceModel
- * <em>Uri Symetric Difference Model</em>}</li>
- * <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getUnassignedChanges
- * <em>Unassigned Changes</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSymmetricDifference <em>Symmetric Difference</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSchemaModificationOperators <em>Schema Modification Operators</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getSymetricDifferenceModel <em>Symetric Difference Model</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getUriSymetricDifferenceModel <em>Uri Symetric Difference Model</em>}</li>
+ *   <li>{@link de.thm.evolvedb.migration.impl.MigrationImpl#getUnassignedChanges <em>Unassigned Changes</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class MigrationImpl extends MinimalEObjectImpl.Container implements Migration {
 	/**
-	 * The cached value of the '{@link #getSymmetricDifference() <em>Symmetric
-	 * Difference</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getSymmetricDifference() <em>Symmetric Difference</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getSymmetricDifference()
 	 * @generated
 	 * @ordered
@@ -71,10 +65,9 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 	protected SymmetricDifference symmetricDifference;
 
 	/**
-	 * The cached value of the '{@link #getSchemaModificationOperators() <em>Schema
-	 * Modification Operators</em>}' containment reference list. <!-- begin-user-doc
+	 * The cached value of the '{@link #getSchemaModificationOperators() <em>Schema Modification Operators</em>}' containment reference list.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @see #getSchemaModificationOperators()
 	 * @generated
 	 * @ordered
@@ -104,10 +97,9 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 	protected Resource symetricDifferenceModel = SYMETRIC_DIFFERENCE_MODEL_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getUriSymetricDifferenceModel() <em>Uri
-	 * Symetric Difference Model</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * The default value of the '{@link #getUriSymetricDifferenceModel() <em>Uri Symetric Difference Model</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #getUriSymetricDifferenceModel()
 	 * @generated
 	 * @ordered
@@ -115,10 +107,9 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 	protected static final String URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getUriSymetricDifferenceModel() <em>Uri
-	 * Symetric Difference Model</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * The cached value of the '{@link #getUriSymetricDifferenceModel() <em>Uri Symetric Difference Model</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #getUriSymetricDifferenceModel()
 	 * @generated
 	 * @ordered
@@ -127,7 +118,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected MigrationImpl() {
@@ -136,7 +126,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -146,19 +135,16 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public SymmetricDifference getSymmetricDifference() {
 		if (symmetricDifference != null && symmetricDifference.eIsProxy()) {
-			InternalEObject oldSymmetricDifference = (InternalEObject) symmetricDifference;
-			symmetricDifference = (SymmetricDifference) eResolveProxy(oldSymmetricDifference);
+			InternalEObject oldSymmetricDifference = (InternalEObject)symmetricDifference;
+			symmetricDifference = (SymmetricDifference)eResolveProxy(oldSymmetricDifference);
 			if (symmetricDifference != oldSymmetricDifference) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE, oldSymmetricDifference,
-							symmetricDifference));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE, oldSymmetricDifference, symmetricDifference));
 			}
 		}
 		return symmetricDifference;
@@ -166,7 +152,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public SymmetricDifference basicGetSymmetricDifference() {
@@ -175,7 +160,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -183,28 +167,23 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 		SymmetricDifference oldSymmetricDifference = symmetricDifference;
 		symmetricDifference = newSymmetricDifference;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE,
-					oldSymmetricDifference, symmetricDifference));
+			eNotify(new ENotificationImpl(this, Notification.SET, MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE, oldSymmetricDifference, symmetricDifference));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<SchemaModificationOperator> getSchemaModificationOperators() {
 		if (schemaModificationOperators == null) {
-			schemaModificationOperators = new EObjectContainmentWithInverseEList<SchemaModificationOperator>(
-					SchemaModificationOperator.class, this, MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS,
-					MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__MIGRATION);
+			schemaModificationOperators = new EObjectContainmentWithInverseEList<SchemaModificationOperator>(SchemaModificationOperator.class, this, MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS, MigrationPackage.SCHEMA_MODIFICATION_OPERATOR__MIGRATION);
 		}
 		return schemaModificationOperators;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -214,7 +193,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -222,13 +200,11 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 		Resource oldSymetricDifferenceModel = symetricDifferenceModel;
 		symetricDifferenceModel = newSymetricDifferenceModel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL,
-					oldSymetricDifferenceModel, symetricDifferenceModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL, oldSymetricDifferenceModel, symetricDifferenceModel));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -238,7 +214,6 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -246,9 +221,7 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 		String oldUriSymetricDifferenceModel = uriSymetricDifferenceModel;
 		uriSymetricDifferenceModel = newUriSymetricDifferenceModel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL, oldUriSymetricDifferenceModel,
-					uriSymetricDifferenceModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL, oldUriSymetricDifferenceModel, uriSymetricDifferenceModel));
 	}
 
 	/**
@@ -259,14 +232,14 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 	public EList<Change> getUnassignedChanges() {
 		// Keine Caches: immer frisch berechnen
 		// 1) Alle Changes aus der SymmetricDifference holen
-		final EList<Change> all = new BasicEList<>();
+		final EList<Change> all = new BasicEList<Change>();
 		SymmetricDifference diff = getSymmetricDifference();
 		if (diff != null) {
 			all.addAll(diff.getChanges()); // ggf. an dein API anpassen
 		}
 
 		// 2) Alle Changes, die in irgendeinem SCS sind, einsammeln
-		final Set<Change> assigned = new HashSet<>();
+		final Set<Change> assigned = new HashSet<Change>();
 		for (SchemaModificationOperator smo : getSchemaModificationOperators()) {
 			for (SemanticChangeSet scs : smo.getSemanticChangeSets()) {
 				assigned.addAll(scs.getChanges());
@@ -333,159 +306,152 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			return ((InternalEList<InternalEObject>) (InternalEList<?>) getSchemaModificationOperators())
-					.basicAdd(otherEnd, msgs);
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSchemaModificationOperators()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			return ((InternalEList<?>) getSchemaModificationOperators()).basicRemove(otherEnd, msgs);
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				return ((InternalEList<?>)getSchemaModificationOperators()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
-			if (resolve)
-				return getSymmetricDifference();
-			return basicGetSymmetricDifference();
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			return getSchemaModificationOperators();
-		case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
-			return getSymetricDifferenceModel();
-		case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
-			return getUriSymetricDifferenceModel();
-		case MigrationPackage.MIGRATION__UNASSIGNED_CHANGES:
-			return getUnassignedChanges();
+			case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
+				if (resolve) return getSymmetricDifference();
+				return basicGetSymmetricDifference();
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				return getSchemaModificationOperators();
+			case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
+				return getSymetricDifferenceModel();
+			case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
+				return getUriSymetricDifferenceModel();
+			case MigrationPackage.MIGRATION__UNASSIGNED_CHANGES:
+				return getUnassignedChanges();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
-			setSymmetricDifference((SymmetricDifference) newValue);
-			return;
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			getSchemaModificationOperators().clear();
-			getSchemaModificationOperators().addAll((Collection<? extends SchemaModificationOperator>) newValue);
-			return;
-		case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
-			setSymetricDifferenceModel((Resource) newValue);
-			return;
-		case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
-			setUriSymetricDifferenceModel((String) newValue);
-			return;
+			case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
+				setSymmetricDifference((SymmetricDifference)newValue);
+				return;
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				getSchemaModificationOperators().clear();
+				getSchemaModificationOperators().addAll((Collection<? extends SchemaModificationOperator>)newValue);
+				return;
+			case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
+				setSymetricDifferenceModel((Resource)newValue);
+				return;
+			case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
+				setUriSymetricDifferenceModel((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
-			setSymmetricDifference((SymmetricDifference) null);
-			return;
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			getSchemaModificationOperators().clear();
-			return;
-		case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
-			setSymetricDifferenceModel(SYMETRIC_DIFFERENCE_MODEL_EDEFAULT);
-			return;
-		case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
-			setUriSymetricDifferenceModel(URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT);
-			return;
+			case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
+				setSymmetricDifference((SymmetricDifference)null);
+				return;
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				getSchemaModificationOperators().clear();
+				return;
+			case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
+				setSymetricDifferenceModel(SYMETRIC_DIFFERENCE_MODEL_EDEFAULT);
+				return;
+			case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
+				setUriSymetricDifferenceModel(URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
-			return symmetricDifference != null;
-		case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
-			return schemaModificationOperators != null && !schemaModificationOperators.isEmpty();
-		case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
-			return SYMETRIC_DIFFERENCE_MODEL_EDEFAULT == null ? symetricDifferenceModel != null
-					: !SYMETRIC_DIFFERENCE_MODEL_EDEFAULT.equals(symetricDifferenceModel);
-		case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
-			return URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT == null ? uriSymetricDifferenceModel != null
-					: !URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT.equals(uriSymetricDifferenceModel);
-		case MigrationPackage.MIGRATION__UNASSIGNED_CHANGES:
-			return !getUnassignedChanges().isEmpty();
+			case MigrationPackage.MIGRATION__SYMMETRIC_DIFFERENCE:
+				return symmetricDifference != null;
+			case MigrationPackage.MIGRATION__SCHEMA_MODIFICATION_OPERATORS:
+				return schemaModificationOperators != null && !schemaModificationOperators.isEmpty();
+			case MigrationPackage.MIGRATION__SYMETRIC_DIFFERENCE_MODEL:
+				return SYMETRIC_DIFFERENCE_MODEL_EDEFAULT == null ? symetricDifferenceModel != null : !SYMETRIC_DIFFERENCE_MODEL_EDEFAULT.equals(symetricDifferenceModel);
+			case MigrationPackage.MIGRATION__URI_SYMETRIC_DIFFERENCE_MODEL:
+				return URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT == null ? uriSymetricDifferenceModel != null : !URI_SYMETRIC_DIFFERENCE_MODEL_EDEFAULT.equals(uriSymetricDifferenceModel);
+			case MigrationPackage.MIGRATION__UNASSIGNED_CHANGES:
+				return !getUnassignedChanges().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-		case MigrationPackage.MIGRATION___GET_RESOLVABLE_SMO:
-			return getResolvableSMO();
-		case MigrationPackage.MIGRATION___GET_PARTIALLY_RESOVABLE_SMO:
-			return getPartiallyResovableSMO();
-		case MigrationPackage.MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE:
-			return getNotAutimaticallyResolvable();
+			case MigrationPackage.MIGRATION___GET_RESOLVABLE_SMO:
+				return getResolvableSMO();
+			case MigrationPackage.MIGRATION___GET_PARTIALLY_RESOVABLE_SMO:
+				return getPartiallyResovableSMO();
+			case MigrationPackage.MIGRATION___GET_NOT_AUTIMATICALLY_RESOLVABLE:
+				return getNotAutimaticallyResolvable();
+			case MigrationPackage.MIGRATION___GET_GRAPH_RESOLVABLE_SMO:
+				return getGraphResolvableSMO();
+			case MigrationPackage.MIGRATION___GET_GRAPH_PARTIALLY_RESOVABLE_SMO:
+				return getGraphPartiallyResovableSMO();
+			case MigrationPackage.MIGRATION___GET_GRAPH_NOT_AUTIMATICALLY_RESOLVABLE:
+				return getGraphNotAutimaticallyResolvable();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (symetricDifferenceModel: ");
@@ -494,6 +460,24 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 		result.append(uriSymetricDifferenceModel);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public EList<GraphResolvableOperator> getGraphResolvableSMO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EList<GraphPartiallyResolvableOperator> getGraphPartiallyResovableSMO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EList<GraphNotAutomaticallyResolvableOperator> getGraphNotAutimaticallyResolvable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 } // MigrationImpl
