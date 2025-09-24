@@ -2,7 +2,6 @@
  */
 package de.thm.evolvedb.graph.impl;
 
-import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
@@ -127,15 +126,10 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 			name += label.getName() != null ? ":" + label.getName() : "";
 		}
 
-		if(name.equals(""))
-			name="noLabel";
+		if (name.equals(""))
+			name = "noLabel";
 		return name;
 	}
-	
-	
-
-	
-	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -337,14 +331,14 @@ public class NodeTypeImpl extends GraphItemImpl implements NodeType {
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
-		result.append(getName());
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null)
+		if (obj == null)
 			return super.equals(obj);
 		return toString().equals(obj.toString());
 	}

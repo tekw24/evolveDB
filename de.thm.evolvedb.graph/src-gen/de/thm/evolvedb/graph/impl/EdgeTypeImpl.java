@@ -131,12 +131,12 @@ public class EdgeTypeImpl extends GraphItemImpl implements EdgeType {
 		String name = "";
 		for (EdgeLabel label : getLabels()) {
 			name += label.getName() != null ? ":" + label.getName() : "";
-			name += "(" + getNodeTypeName(getSrc())+ ", " + getNodeTypeName(getTgt())+")";
+			name += "(" + getNodeTypeName(getSrc()) + ", " + getNodeTypeName(getTgt()) + ")";
 		}
 
 		return name;
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

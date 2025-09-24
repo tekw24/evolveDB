@@ -462,22 +462,49 @@ public class MigrationImpl extends MinimalEObjectImpl.Container implements Migra
 		return result.toString();
 	}
 
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@Override
 	public EList<GraphResolvableOperator> getGraphResolvableSMO() {
-		// TODO Auto-generated method stub
-		return null;
+		EList<SchemaModificationOperator> operators = getSchemaModificationOperators();
+		EList<GraphResolvableOperator> resolvableOperators = new BasicEList<GraphResolvableOperator>();
+		for (SchemaModificationOperator operator : operators) {
+			if (operator instanceof GraphResolvableOperator)
+				resolvableOperators.add((GraphResolvableOperator) operator);
+		}
+		return resolvableOperators;
 	}
 
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@Override
 	public EList<GraphPartiallyResolvableOperator> getGraphPartiallyResovableSMO() {
-		// TODO Auto-generated method stub
-		return null;
+		EList<SchemaModificationOperator> operators = getSchemaModificationOperators();
+		EList<GraphPartiallyResolvableOperator> resolvableOperators = new BasicEList<GraphPartiallyResolvableOperator>();
+		for (SchemaModificationOperator operator : operators) {
+			if (operator instanceof GraphPartiallyResolvableOperator)
+				resolvableOperators.add((GraphPartiallyResolvableOperator) operator);
+		}
+		return resolvableOperators;
 	}
 
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@Override
 	public EList<GraphNotAutomaticallyResolvableOperator> getGraphNotAutimaticallyResolvable() {
-		// TODO Auto-generated method stub
-		return null;
+		EList<SchemaModificationOperator> operators = getSchemaModificationOperators();
+		EList<GraphNotAutomaticallyResolvableOperator> resolvableOperators = new BasicEList<GraphNotAutomaticallyResolvableOperator>();
+		for (SchemaModificationOperator operator : operators) {
+			if (operator instanceof GraphNotAutomaticallyResolvableOperator)
+				resolvableOperators.add((GraphNotAutomaticallyResolvableOperator) operator);
+		}
+		return resolvableOperators;
 	}
 
 } // MigrationImpl

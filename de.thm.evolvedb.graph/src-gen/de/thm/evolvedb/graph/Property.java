@@ -47,12 +47,14 @@ public interface Property extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.thm.evolvedb.graph.PropertyValueType#getProperty <em>Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' containment reference.
 	 * @see #setValue(PropertyValueType)
 	 * @see de.thm.evolvedb.graph.GraphPackage#getProperty_Value()
-	 * @model containment="true" required="true"
+	 * @see de.thm.evolvedb.graph.PropertyValueType#getProperty
+	 * @model opposite="property" containment="true" required="true"
 	 * @generated
 	 */
 	PropertyValueType getValue();
@@ -89,5 +91,13 @@ public interface Property extends EObject {
 	 * @generated
 	 */
 	void setMandatory(boolean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	GraphItem getContainerElement();
 
 } // Property

@@ -47,9 +47,11 @@ Package graph <http://www.thm.de/graph>
     Attribute name : EString
     Reference value : PropertyValueType<<1..1>>
     Attribute mandatory : EBoolean
+    Operation getContainerElement() : GraphItem
 
   Class PropertyValueType
     Attribute nullable : EBoolean
+    Reference property : Property
 
   Class UnionType -> PropertyValueType
     Attribute type : DynamicUnionTypes<<1..1>>
@@ -138,3 +140,4 @@ Package graph <http://www.thm.de/graph>
   Enum BinaryDataTypes
     Literal VARBINARY = 3
     Literal BYTES = 4
+    Literal LITERAL2 = 2

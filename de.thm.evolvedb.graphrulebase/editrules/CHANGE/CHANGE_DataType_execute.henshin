@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_VPO4kBuOEfCiO5YsU3IcKQ" name="CHANGE_PropertyValueType" description="Changes one StringType">
+  <annotations xmi:id="_VPO4kRuOEfCiO5YsU3IcKQ" key="INVERSE" value=""/>
+  <imports href="http://www.thm.de/graph#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_VPO4khuOEfCiO5YsU3IcKQ" name="changePropertyValueType" description="changes one PropertyValueType">
+    <parameters xmi:id="_VPO4kxuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <parameters xmi:id="_RaRzMJSCEfCaFd7l-hmn-A" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <parameters xmi:id="_UmB9gJSCEfCaFd7l-hmn-A" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <lhs xmi:id="_VPO4lRuOEfCiO5YsU3IcKQ" name="Lhs">
+      <nodes xmi:id="_aUD3UJSCEfCaFd7l-hmn-A" name="Selected" incoming="__L2pAJSDEfCaFd7l-hmn-A" outgoing="_qkL24JSCEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <nodes xmi:id="_SyC3YJSCEfCaFd7l-hmn-A" name="ToBeDeleted" incoming="_qkL24JSCEfCaFd7l-hmn-A" outgoing="__L2pAJSDEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//PropertyValueType"/>
+      </nodes>
+      <edges xmi:id="_qkL24JSCEfCaFd7l-hmn-A" source="_aUD3UJSCEfCaFd7l-hmn-A" target="_SyC3YJSCEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+      <edges xmi:id="__L2pAJSDEfCaFd7l-hmn-A" source="_SyC3YJSCEfCaFd7l-hmn-A" target="_aUD3UJSCEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//PropertyValueType/property"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_VPO4lhuOEfCiO5YsU3IcKQ" name="Rhs">
+      <nodes xmi:id="_VPO4lxuOEfCiO5YsU3IcKQ" name="New" incoming="_3nJ98JSCEfCaFd7l-hmn-A" outgoing="_CI2loJSEEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//PropertyValueType"/>
+      </nodes>
+      <nodes xmi:id="_fLIT8JSCEfCaFd7l-hmn-A" name="Selected" incoming="_CI2loJSEEfCaFd7l-hmn-A" outgoing="_3nJ98JSCEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//Property"/>
+      </nodes>
+      <edges xmi:id="_3nJ98JSCEfCaFd7l-hmn-A" source="_fLIT8JSCEfCaFd7l-hmn-A" target="_VPO4lxuOEfCiO5YsU3IcKQ">
+        <type href="http://www.thm.de/graph#//Property/value"/>
+      </edges>
+      <edges xmi:id="_CI2loJSEEfCaFd7l-hmn-A" source="_VPO4lxuOEfCiO5YsU3IcKQ" target="_fLIT8JSCEfCaFd7l-hmn-A">
+        <type href="http://www.thm.de/graph#//PropertyValueType/property"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_fLI7AJSCEfCaFd7l-hmn-A" origin="_aUD3UJSCEfCaFd7l-hmn-A" image="_fLIT8JSCEfCaFd7l-hmn-A"/>
+  </units>
+  <units xsi:type="henshin:PriorityUnit" xmi:id="_VPO4mRuOEfCiO5YsU3IcKQ" name="mainUnit" subUnits="_VPO4khuOEfCiO5YsU3IcKQ">
+    <parameters xmi:id="_VPO4mhuOEfCiO5YsU3IcKQ" name="New" kind="OUT">
+      <annotations xmi:id="_VPO4mxuOEfCiO5YsU3IcKQ" key="INVERSE" value="ToBeDeleted"/>
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <parameters xmi:id="_N9PPIJSDEfCaFd7l-hmn-A" name="Selected" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//Property"/>
+    </parameters>
+    <parameters xmi:id="_QJYWkJSDEfCaFd7l-hmn-A" name="ToBeDeleted" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.thm.de/graph#//PropertyValueType"/>
+    </parameters>
+    <parameterMappings xmi:id="_VPO4nRuOEfCiO5YsU3IcKQ" source="_VPO4kxuOEfCiO5YsU3IcKQ" target="_VPO4mhuOEfCiO5YsU3IcKQ"/>
+    <parameterMappings xmi:id="_VPO4nhuOEfCiO5YsU3IcKQ" source="_N9PPIJSDEfCaFd7l-hmn-A" target="_UmB9gJSCEfCaFd7l-hmn-A"/>
+    <parameterMappings xmi:id="_ZtLoEJSDEfCaFd7l-hmn-A" source="_QJYWkJSDEfCaFd7l-hmn-A" target="_RaRzMJSCEfCaFd7l-hmn-A"/>
+  </units>
+</henshin:Module>

@@ -4,7 +4,6 @@ package de.thm.evolvedb.graph.provider;
 
 import de.thm.evolvedb.graph.GraphFactory;
 import de.thm.evolvedb.graph.GraphPackage;
-import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
 
@@ -168,10 +167,10 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 		if (object instanceof NodeType) {
 			NodeType type = (NodeType) object;
 			String name = "";
-//			for (NodeLabel label : type.getLabel()) {
-//				name += label.getName() != null ? ":" + label.getName() : "";
-//			}
-			
+			//			for (NodeLabel label : type.getLabel()) {
+			//				name += label.getName() != null ? ":" + label.getName() : "";
+			//			}
+
 			name = type.getName();
 
 			if (name.equals("") && type.getProperties().size() > 0) {
@@ -180,7 +179,7 @@ public class NodeTypeItemProvider extends GraphItemItemProvider {
 				}
 			}
 
-			return getString("_UI_NodeType_type") + " " +name;
+			return getString("_UI_NodeType_type") + " " + name;
 		}
 		return getString("_UI_NodeType_type");
 	}

@@ -106,7 +106,39 @@ public enum GraphResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	BINARY_ENCODING_CHANGE(8, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE");
+	BINARY_ENCODING_CHANGE(8, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE"), /**
+	 * The '<em><b>CREATE PROPERTY</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_PROPERTY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CREATE_PROPERTY(9, "CREATE_PROPERTY", "CREATE_PROPERTY"), /**
+	 * The '<em><b>ADD LABEL TO NODE TYPE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_LABEL_TO_NODE_TYPE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ADD_LABEL_TO_NODE_TYPE(10, "ADD_LABEL_TO_NODE_TYPE", "ADD_LABEL_TO_NODE_TYPE"), /**
+	 * The '<em><b>CHANGE TYPE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_TYPE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CHANGE_TYPE(11, "CHANGE_TYPE", "CHANGE_TYPE"), /**
+	 * The '<em><b>CHANGE NAME</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_NAME_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	CHANGE_NAME(12, "CHANGE_NAME", "CHANGE_NAME");
 
 	/**
 	 * The '<em><b>SET ATTRIBUTE OR REF</b></em>' literal value.
@@ -208,6 +240,50 @@ public enum GraphResolvableOperatorType implements Enumerator {
 	public static final int BINARY_ENCODING_CHANGE_VALUE = 8;
 
 	/**
+	 * The '<em><b>CREATE PROPERTY</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CREATE_PROPERTY
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CREATE_PROPERTY_VALUE = 9;
+
+	/**
+	 * The '<em><b>ADD LABEL TO NODE TYPE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADD_LABEL_TO_NODE_TYPE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ADD_LABEL_TO_NODE_TYPE_VALUE = 10;
+
+	/**
+	 * The '<em><b>CHANGE TYPE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_TYPE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CHANGE_TYPE_VALUE = 11;
+
+	/**
+	 * The '<em><b>CHANGE NAME</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #CHANGE_NAME
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CHANGE_NAME_VALUE = 12;
+
+	/**
 	 * An array of all the '<em><b>Graph Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -224,6 +300,10 @@ public enum GraphResolvableOperatorType implements Enumerator {
 			WIDEN_NUMERIC_TYPE,
 			WIDEN_TEMPORAL_TYPE,
 			BINARY_ENCODING_CHANGE,
+			CREATE_PROPERTY,
+			ADD_LABEL_TO_NODE_TYPE,
+			CHANGE_TYPE,
+			CHANGE_NAME,
 		};
 
 	/**
@@ -289,6 +369,10 @@ public enum GraphResolvableOperatorType implements Enumerator {
 			case WIDEN_NUMERIC_TYPE_VALUE: return WIDEN_NUMERIC_TYPE;
 			case WIDEN_TEMPORAL_TYPE_VALUE: return WIDEN_TEMPORAL_TYPE;
 			case BINARY_ENCODING_CHANGE_VALUE: return BINARY_ENCODING_CHANGE;
+			case CREATE_PROPERTY_VALUE: return CREATE_PROPERTY;
+			case ADD_LABEL_TO_NODE_TYPE_VALUE: return ADD_LABEL_TO_NODE_TYPE;
+			case CHANGE_TYPE_VALUE: return CHANGE_TYPE;
+			case CHANGE_NAME_VALUE: return CHANGE_NAME;
 		}
 		return null;
 	}

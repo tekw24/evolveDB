@@ -4,6 +4,8 @@
  */
 package de.thm.evolvedb.graph.validation;
 
+import de.thm.evolvedb.graph.Property;
+
 /**
  * A sample validator interface for {@link de.thm.evolvedb.graph.PropertyValueType}.
  * This doesn't really do anything, and it's not a real EMF artifact.
@@ -14,4 +16,6 @@ public interface PropertyValueTypeValidator {
 	boolean validate();
 
 	boolean validateNullable(boolean value);
+
+	boolean validateProperty(Property value);
 }

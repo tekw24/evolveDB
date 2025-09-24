@@ -20,7 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -74,6 +78,7 @@ import de.thm.evolvedb.migration.PartiallyResolvable;
 import de.thm.evolvedb.migration.ProcessStatus;
 import de.thm.evolvedb.migration.ResolvableOperator;
 import de.thm.evolvedb.migration.SchemaModificationOperator;
+import de.thm.evolvedb.migration.provider.MigrationItemProviderAdapterFactory;
 import de.thm.evolvedb.migration.provider.SchemaModificationOperatorItemProvider;
 import de.thm.mdde.migration.view.editor.action.ConfirmingDeleteActionBuilder;
 import de.thm.mdde.migration.view.editor.action.ResolvemasterDetailAction;
@@ -86,6 +91,8 @@ public class MigrationCustomEditor extends GenericEditor {
 	private boolean dirtyFlag;
 	private String filterText = "";
 	private TreeMasterDetailSWTBuilder builder;
+	
+	private AdapterFactory cachedAdapterFactory; // lazy fallback
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
@@ -229,7 +236,7 @@ public class MigrationCustomEditor extends GenericEditor {
 						SchemaModificationOperator t = (SchemaModificationOperator) element;
 						
 						
-						if(!getText(t).contains(filterText))
+						if(!getTextViaItemProvider(t).contains(filterText))
 							objects.remove(element);
 							
 					}else {
@@ -269,122 +276,32 @@ public class MigrationCustomEditor extends GenericEditor {
 		return super.customizeTree(builder);
 	}
 	
+
 	
-	/**
-	 * This returns the label text for the adapted class. <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public String getText(SchemaModificationOperator o) {
-		EList<SemanticChangeSet> s = o.getSemanticChangeSets();
+	
 
-		SemanticChangeSet semanticChangeSet = s.get(0);
-		EList<Change> changes = semanticChangeSet.getChanges();
-		Change change = null;
-
-		if (changes.size() == 1) {
-			change = changes.get(0);
-		} else {
-			change = changes.get(0);
-		}
-
-		String prefix = "";
-		if (change instanceof RemoveObject) {
-			prefix = getName((RemoveObject) change);
-		} else if (change instanceof AddObject) {
-			prefix = getName((AddObject) change);
-		} else if (change instanceof RemoveReference) {
-			prefix = getName((RemoveReference) change);
-		} else if (change instanceof AddReference) {
-			prefix = getName((AddReference) change);
-		} else if (change instanceof AttributeValueChange) {
-			prefix = getName((AttributeValueChange) change);
-		}
-		
-		
-		if (o instanceof ResolvableOperator)
-			return  "ResolvableOperator "  + ((ResolvableOperator) o).getDisplayName()+ " " + prefix;
-		else if (o instanceof PartiallyResolvable)
-			return "PartiallyResolvable " +((PartiallyResolvable) o).getDisplayName() + " " + prefix;
-		else if (o instanceof NotAutomaticallyResolvable)
-			return "NotAutomaticallyResolvable " + ((NotAutomaticallyResolvable) o).getDisplayName() + " " + prefix;
-		
-		return "";
-		
-
+	private AdapterFactory requireAdapterFactory() {
+	    EditingDomain ed = getEditingDomain();
+	    if (ed instanceof AdapterFactoryEditingDomain) {
+	        return ((AdapterFactoryEditingDomain) ed).getAdapterFactory();
+	    }
+	    if (cachedAdapterFactory == null) {
+	        cachedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+	            new MigrationItemProviderAdapterFactory(),
+	            new ReflectiveItemProviderAdapterFactory()
+	        });
+	    }
+	    return cachedAdapterFactory;
 	}
 
-	/**
-	 * @param change
-	 * @return
-	 * @generated NOT
-	 */
-	private String getName(AttributeValueChange change) {
-		if (change.getObjA() instanceof NamedElement) {
-			NamedElement n = (NamedElement) change.getObjA();
-			return n.getName();
-		}
-		return "";
+	private AdapterFactoryItemDelegator delegator() {
+	    return new AdapterFactoryItemDelegator(requireAdapterFactory());
 	}
 
-	/**
-	 * 
-	 * @param removeObject
-	 * @return
-	 * @generated NOT
-	 */
-	public String getName(RemoveObject removeObject) {
-		if (removeObject.getObj() instanceof NamedElement) {
-			NamedElement n = (NamedElement) removeObject.getObj();
-			return n.getName();
-		}
-		return "";
-	}
-
-	/**
-	 * 
-	 * @param removeObject
-	 * @return
-	 * @generated NOT
-	 */
-	public String getName(AddObject removeObject) {
-		if (removeObject.getObj() instanceof NamedElement) {
-			NamedElement n = (NamedElement) removeObject.getObj();
-			return n.getName();
-		}
-		return "";
-	}
-
-	/**
-	 * 
-	 * @param removeObject
-	 * @return
-	 * @generated NOT
-	 */
-	public String getName(RemoveReference removeObject) {
-		if (removeObject.getSrc() != null && removeObject.getSrc() instanceof NamedElement) {
-			NamedElement n = (NamedElement) removeObject.getSrc();
-			return n.getName();
-		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NamedElement) {
-			NamedElement n = (NamedElement) removeObject.getTgt();
-			return n.getName();
-		}
-		return "";
-	}
-
-	/**
-	 * 
-	 * @param removeObject
-	 * @return
-	 * @generated NOT
-	 */
-	public String getName(AddReference removeObject) {
-		if (removeObject.getSrc() instanceof NamedElement) {
-			NamedElement n = (NamedElement) removeObject.getSrc();
-			return n.getName();
-		}
-		return "";
+	// Beispiel-Nutzung (statt deiner eigenen getText-Logik):
+	public String getTextViaItemProvider(SchemaModificationOperator smo) {
+	    String txt = delegator().getText(smo);
+	    return (txt != null) ? txt : "";
 	}
 	
 	

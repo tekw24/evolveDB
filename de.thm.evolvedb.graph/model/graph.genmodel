@@ -51,6 +51,7 @@
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="graph.ecore#//BinaryDataTypes">
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BinaryDataTypes/VARBINARY"/>
       <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BinaryDataTypes/BYTES"/>
+      <genEnumLiterals ecoreEnumLiteral="graph.ecore#//BinaryDataTypes/LITERAL2"/>
     </genEnums>
     <genClasses ecoreClass="graph.ecore#//PropertyGraph">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyGraph/closed"/>
@@ -92,9 +93,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/name"/>
       <genFeatures property="Readonly" children="true" createChild="true" ecoreFeature="ecore:EReference graph.ecore#//Property/value"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//Property/mandatory"/>
+      <genOperations ecoreOperation="graph.ecore#//Property/getContainerElement"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graph.ecore#//PropertyValueType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//PropertyValueType/nullable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graph.ecore#//PropertyValueType/property"/>
     </genClasses>
     <genClasses ecoreClass="graph.ecore#//UnionType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graph.ecore#//UnionType/type"/>

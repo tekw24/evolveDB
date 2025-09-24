@@ -17,6 +17,10 @@
 package de.thm.xtend.ResourceFilter;
 
 import com.google.common.collect.Iterables;
+import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.Label;
+import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.Constraint;
@@ -27,6 +31,8 @@ import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.UniqueConstraint;
 import de.thm.evolvedb.migration.ColumnOptions;
+import de.thm.evolvedb.migration.GraphResolvableOperator;
+import de.thm.evolvedb.migration.GraphResolvableOperatorType;
 import de.thm.evolvedb.migration.Migration;
 import de.thm.evolvedb.migration.MigrationFactory;
 import de.thm.evolvedb.migration.MigrationPackage;
@@ -77,6 +83,9 @@ public class MigrationModelTransformation {
     this.transformUniqueConstraints(migration);
     this.transformNewIndexOperator(migration);
     this.transformDeleteIndexOperator(migration);
+    this.transformNewPropertyValueType(migration);
+    this.transformNewLabelOperator(migration);
+    this.transformNewEdgeType(migration);
     final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
       return Boolean.valueOf((it instanceof SymmetricDifference));
     };
@@ -703,6 +712,169 @@ public class MigrationModelTransformation {
     List<PartiallyResolvable> setMigrationOptionsList = IterableExtensions.<PartiallyResolvable>toList(IterableExtensions.<PartiallyResolvable>filter(partiallyResolvable, _function));
     for (final PartiallyResolvable setMigrationOptions : setMigrationOptionsList) {
       setMigrationOptions.setResolveOptions(ColumnOptions.MIGRATE_DATA);
+    }
+  }
+
+  /**
+   * Transforms new label operator.
+   */
+  public void transformNewLabelOperator(final Migration migration) {
+    EList<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
+    final Function1<GraphResolvableOperator, Boolean> _function = (GraphResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphResolvableOperatorType.CREATE_LABEL));
+    };
+    List<GraphResolvableOperator> createTable = IterableExtensions.<GraphResolvableOperator>toList(IterableExtensions.<GraphResolvableOperator>filter(resolvableOperators, _function));
+    resolvableOperators.removeAll(createTable);
+    final Function1<PartiallyResolvable, Boolean> _function_1 = (PartiallyResolvable it) -> {
+      return Boolean.valueOf((it.getDisplayName().equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) || 
+        it.getDisplayName().equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)));
+    };
+    List<PartiallyResolvable> createUniqueIndex = IterableExtensions.<PartiallyResolvable>toList(IterableExtensions.<PartiallyResolvable>filter(migration.getPartiallyResovableSMO(), _function_1));
+    for (final GraphResolvableOperator rO : createTable) {
+      {
+        final Function1<Change, Boolean> _function_2 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_2);
+        AddObject ad = ((AddObject) _findFirst);
+        EObject _obj = ad.getObj();
+        Label label = ((Label) _obj);
+        for (final GraphResolvableOperator resolvable : resolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_3 = (SemanticChangeSet it) -> {
+            final Function1<Change, Boolean> _function_4 = (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof AddObject));
+            };
+            return Boolean.valueOf(IterableExtensions.<Change>exists(it.getChanges(), _function_4));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_3);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_4 = (Change it) -> {
+                return Boolean.valueOf((it instanceof AddObject));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_4);
+              AddObject a = ((AddObject) _findFirst_1);
+              EObject _obj_1 = a.getObj();
+              if ((_obj_1 instanceof Property)) {
+                EObject _obj_2 = a.getObj();
+                Property c = ((Property) _obj_2);
+                boolean _equals = c.getContainerElement().equals(label);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformNewPropertyValueType(final Migration migration) {
+    EList<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
+    final Function1<GraphResolvableOperator, Boolean> _function = (GraphResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphResolvableOperatorType.CREATE_PROPERTY));
+    };
+    List<GraphResolvableOperator> createProperty = IterableExtensions.<GraphResolvableOperator>toList(IterableExtensions.<GraphResolvableOperator>filter(resolvableOperators, _function));
+    resolvableOperators.removeAll(createProperty);
+    for (final GraphResolvableOperator rO : createProperty) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        AddObject ad = ((AddObject) _findFirst);
+        EObject _obj = ad.getObj();
+        Property property = ((Property) _obj);
+        for (final GraphResolvableOperator resolvable : resolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+            final Function1<Change, Boolean> _function_3 = (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof AddObject));
+            };
+            return Boolean.valueOf(IterableExtensions.<Change>exists(it.getChanges(), _function_3));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                return Boolean.valueOf((it instanceof AddObject));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+              AddObject a = ((AddObject) _findFirst_1);
+              EObject _obj_1 = a.getObj();
+              if ((_obj_1 instanceof PropertyValueType)) {
+                EObject _obj_2 = a.getObj();
+                PropertyValueType c = ((PropertyValueType) _obj_2);
+                boolean _equals = c.getProperty().equals(property);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformNewEdgeType(final Migration migration) {
+    EList<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
+    final Function1<GraphResolvableOperator, Boolean> _function = (GraphResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphResolvableOperatorType.CREATE_EDGE_TYPE));
+    };
+    List<GraphResolvableOperator> createEdgeType = IterableExtensions.<GraphResolvableOperator>toList(IterableExtensions.<GraphResolvableOperator>filter(resolvableOperators, _function));
+    resolvableOperators.removeAll(createEdgeType);
+    for (final GraphResolvableOperator rO : createEdgeType) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        AddObject ad = ((AddObject) _findFirst);
+        EObject _obj = ad.getObj();
+        EdgeType newEdgeType = ((EdgeType) _obj);
+        for (final GraphResolvableOperator resolvable : resolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+            final Function1<Change, Boolean> _function_3 = (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof AddReference));
+            };
+            return Boolean.valueOf(IterableExtensions.<Change>exists(it.getChanges(), _function_3));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                return Boolean.valueOf((it instanceof AddReference));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+              AddReference a = ((AddReference) _findFirst_1);
+              EObject _src = a.getSrc();
+              if ((_src instanceof EdgeType)) {
+                EObject _src_1 = a.getSrc();
+                EdgeType c = ((EdgeType) _src_1);
+                boolean _equals = c.equals(newEdgeType);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              } else {
+                EObject _tgt = a.getTgt();
+                if ((_tgt instanceof EdgeType)) {
+                  EObject _tgt_1 = a.getTgt();
+                  EdgeType c_1 = ((EdgeType) _tgt_1);
+                  boolean _equals_1 = c_1.equals(newEdgeType);
+                  if (_equals_1) {
+                    rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                    migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

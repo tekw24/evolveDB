@@ -28,8 +28,15 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 
+import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.Label;
+import de.thm.evolvedb.graph.NodeType;
+import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.NamedElement;
+import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.MigrationPackage;
 import de.thm.evolvedb.migration.NotAutomaticallyResolvable;
 import de.thm.evolvedb.migration.PartiallyResolvable;
@@ -201,6 +208,12 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 			return "PR: " +((PartiallyResolvable) object).getDisplayName() + " " + prefix;
 		else if (o instanceof NotAutomaticallyResolvable)
 			return "NAR: " + ((NotAutomaticallyResolvable) object).getDisplayName() + " " + prefix;
+		else if (o instanceof GraphResolvableOperator)
+			return  "RO: "  + ((GraphResolvableOperator) object).getDisplayName()+ " " + prefix;
+		else if (o instanceof GraphPartiallyResolvableOperator)
+			return "PR: " +((GraphPartiallyResolvableOperator) object).getDisplayName() + " " + prefix;
+		else if (o instanceof GraphNotAutomaticallyResolvableOperator)
+			return "NAR: " + ((GraphNotAutomaticallyResolvableOperator) object).getDisplayName() + " " + prefix;
 
 		
 
@@ -219,6 +232,18 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		if (change.getObjA() instanceof NamedElement) {
 			NamedElement n = (NamedElement) change.getObjA();
 			return n.getName();
+		}else if(change.getObjA() instanceof Label) {
+			Label n = (Label) change.getObjA();
+			return n.getName();
+		}else if(change.getObjA() instanceof Property) {
+			Property n = (Property) change.getObjA();
+			return n.getName();
+		}else if(change.getObjA() instanceof NodeType) {
+			NodeType n = (NodeType) change.getObjA();
+			return n.getName();
+		}else if(change.getObjA() instanceof EdgeType) {
+			EdgeType n = (EdgeType)change.getObjA();
+			return n.getName();
 		}
 		return "";
 	}
@@ -236,6 +261,18 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		}else if(removeObject.getObj() instanceof ColumnConstraint) {
 			ColumnConstraint n = (ColumnConstraint) removeObject.getObj();
 			return n.getName();
+		}else if(removeObject.getObj() instanceof Label) {
+			Label n = (Label) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof Property) {
+			Property n = (Property) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof NodeType) {
+			NodeType n = (NodeType) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof EdgeType) {
+			EdgeType n = (EdgeType) removeObject.getObj();
+			return n.getName();
 		}
 		return "";
 	}
@@ -249,6 +286,18 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	public String getName(AddObject removeObject) {
 		if (removeObject.getObj() instanceof NamedElement) {
 			NamedElement n = (NamedElement) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof Label) {
+			Label n = (Label) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof Property) {
+			Property n = (Property) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof NodeType) {
+			NodeType n = (NodeType) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof EdgeType) {
+			EdgeType n = (EdgeType) removeObject.getObj();
 			return n.getName();
 		}
 		return "";
@@ -267,6 +316,18 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NamedElement) {
 			NamedElement n = (NamedElement) removeObject.getTgt();
 			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Label) {
+			Label n = (Label) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Label) {
+			Label n = (Label) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Property) {
+			Property n = (Property) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Property) {
+			Property n = (Property) removeObject.getTgt();
+			return n.getName();
 		}
 		return "";
 	}
@@ -280,6 +341,33 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 	public String getName(AddReference removeObject) {
 		if (removeObject.getSrc() instanceof NamedElement) {
 			NamedElement n = (NamedElement) removeObject.getSrc();
+			return n.getName();
+		}else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NamedElement) {
+			NamedElement n = (NamedElement) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Label) {
+			Label n = (Label) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Label) {
+			Label n = (Label) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Property) {
+			Property n = (Property) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Property) {
+			Property n = (Property) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof EdgeType) {
+			EdgeType n = (EdgeType) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof EdgeType) {
+			EdgeType n = (EdgeType) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof NodeType) {
+			NodeType n = (NodeType) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NodeType) {
+			NodeType n = (NodeType) removeObject.getTgt();
 			return n.getName();
 		}
 		return "";

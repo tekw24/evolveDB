@@ -5,6 +5,7 @@ package de.thm.evolvedb.graph;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -615,13 +616,22 @@ public interface GraphPackage extends EPackage {
 	int PROPERTY_FEATURE_COUNT = 3;
 
 	/**
+	 * The operation id for the '<em>Get Container Element</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY___GET_CONTAINER_ELEMENT = 0;
+
+	/**
 	 * The number of operations of the '<em>Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_OPERATION_COUNT = 0;
+	int PROPERTY_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link de.thm.evolvedb.graph.impl.PropertyValueTypeImpl <em>Property Value Type</em>}' class.
@@ -643,13 +653,22 @@ public interface GraphPackage extends EPackage {
 	int PROPERTY_VALUE_TYPE__NULLABLE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_VALUE_TYPE__PROPERTY = 1;
+
+	/**
 	 * The number of structural features of the '<em>Property Value Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_VALUE_TYPE_FEATURE_COUNT = 1;
+	int PROPERTY_VALUE_TYPE_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Property Value Type</em>' class.
@@ -678,6 +697,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNION_TYPE__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION_TYPE__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -724,6 +752,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int NUMERIC_TYPE__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMERIC_TYPE__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -790,6 +827,15 @@ public interface GraphPackage extends EPackage {
 	int STRING_TYPE__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
 
 	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TYPE__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
+
+	/**
 	 * The feature id for the '<em><b>Min Length</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -854,6 +900,15 @@ public interface GraphPackage extends EPackage {
 	int BOOLEAN_TYPE__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
 
 	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOLEAN_TYPE__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
+
+	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -898,6 +953,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int BINARY_TYPES__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_TYPES__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -964,6 +1028,15 @@ public interface GraphPackage extends EPackage {
 	int LIST_TYPE__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
 
 	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
+
+	/**
 	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1026,6 +1099,15 @@ public interface GraphPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEMPORAL_TYPES__NULLABLE = PROPERTY_VALUE_TYPE__NULLABLE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPORAL_TYPES__PROPERTY = PROPERTY_VALUE_TYPE__PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1755,6 +1837,16 @@ public interface GraphPackage extends EPackage {
 	EAttribute getProperty_Mandatory();
 
 	/**
+	 * Returns the meta object for the '{@link de.thm.evolvedb.graph.Property#getContainerElement() <em>Get Container Element</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Container Element</em>' operation.
+	 * @see de.thm.evolvedb.graph.Property#getContainerElement()
+	 * @generated
+	 */
+	EOperation getProperty__GetContainerElement();
+
+	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.PropertyValueType <em>Property Value Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1774,6 +1866,17 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPropertyValueType_Nullable();
+
+	/**
+	 * Returns the meta object for the container reference '{@link de.thm.evolvedb.graph.PropertyValueType#getProperty <em>Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Property</em>'.
+	 * @see de.thm.evolvedb.graph.PropertyValueType#getProperty()
+	 * @see #getPropertyValueType()
+	 * @generated
+	 */
+	EReference getPropertyValueType_Property();
 
 	/**
 	 * Returns the meta object for class '{@link de.thm.evolvedb.graph.UnionType <em>Union Type</em>}'.
@@ -2511,6 +2614,14 @@ public interface GraphPackage extends EPackage {
 		EAttribute PROPERTY__MANDATORY = eINSTANCE.getProperty_Mandatory();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Container Element</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PROPERTY___GET_CONTAINER_ELEMENT = eINSTANCE.getProperty__GetContainerElement();
+
+		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.PropertyValueTypeImpl <em>Property Value Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2527,6 +2638,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PROPERTY_VALUE_TYPE__NULLABLE = eINSTANCE.getPropertyValueType_Nullable();
+
+		/**
+		 * The meta object literal for the '<em><b>Property</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPERTY_VALUE_TYPE__PROPERTY = eINSTANCE.getPropertyValueType_Property();
 
 		/**
 		 * The meta object literal for the '{@link de.thm.evolvedb.graph.impl.UnionTypeImpl <em>Union Type</em>}' class.

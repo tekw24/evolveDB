@@ -36,6 +36,7 @@ import de.thm.evolvedb.graph.UniqueConstraint;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -610,6 +611,15 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getProperty__GetContainerElement() {
+		return propertyEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPropertyValueType() {
 		return propertyValueTypeEClass;
 	}
@@ -621,6 +631,15 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 */
 	public EAttribute getPropertyValueType_Nullable() {
 		return (EAttribute) propertyValueTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropertyValueType_Property() {
+		return (EReference) propertyValueTypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1061,9 +1080,11 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		createEAttribute(propertyEClass, PROPERTY__NAME);
 		createEReference(propertyEClass, PROPERTY__VALUE);
 		createEAttribute(propertyEClass, PROPERTY__MANDATORY);
+		createEOperation(propertyEClass, PROPERTY___GET_CONTAINER_ELEMENT);
 
 		propertyValueTypeEClass = createEClass(PROPERTY_VALUE_TYPE);
 		createEAttribute(propertyValueTypeEClass, PROPERTY_VALUE_TYPE__NULLABLE);
+		createEReference(propertyValueTypeEClass, PROPERTY_VALUE_TYPE__PROPERTY);
 
 		unionTypeEClass = createEClass(UNION_TYPE);
 		createEAttribute(unionTypeEClass, UNION_TYPE__TYPE);
@@ -1253,17 +1274,23 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 				IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getProperty_Name(), ecorePackage.getEString(), "name", null, 0, 1, Property.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProperty_Value(), this.getPropertyValueType(), null, "value", null, 1, 1, Property.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProperty_Value(), this.getPropertyValueType(), this.getPropertyValueType_Property(), "value",
+				null, 1, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProperty_Mandatory(), ecorePackage.getEBoolean(), "mandatory", "false", 0, 1, Property.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getProperty__GetContainerElement(), this.getGraphItem(), "getContainerElement", 0, 1, IS_UNIQUE,
+				IS_ORDERED);
 
 		initEClass(propertyValueTypeEClass, PropertyValueType.class, "PropertyValueType", IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPropertyValueType_Nullable(), ecorePackage.getEBoolean(), "nullable", "false", 0, 1,
 				PropertyValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 				!IS_DERIVED, IS_ORDERED);
+		initEReference(getPropertyValueType_Property(), this.getProperty(), this.getProperty_Value(), "property", null,
+				0, 1, PropertyValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(unionTypeEClass, UnionType.class, "UnionType", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
@@ -1396,6 +1423,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEEnum(binaryDataTypesEEnum, BinaryDataTypes.class, "BinaryDataTypes");
 		addEEnumLiteral(binaryDataTypesEEnum, BinaryDataTypes.VARBINARY);
 		addEEnumLiteral(binaryDataTypesEEnum, BinaryDataTypes.BYTES);
+		addEEnumLiteral(binaryDataTypesEEnum, BinaryDataTypes.LITERAL2);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -2,7 +2,6 @@
  */
 package de.thm.evolvedb.graph.provider;
 
-import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphFactory;
 import de.thm.evolvedb.graph.GraphPackage;
@@ -167,12 +166,12 @@ public class EdgeTypeItemProvider extends GraphItemItemProvider {
 	public String getText(Object object) {
 		if (object instanceof EdgeType) {
 			EdgeType type = (EdgeType) object;
-//			String name = "";
-//			for (EdgeLabel label : type.getLabels()) {
-//				name += label.getName() != null ? ":" + label.getName() : "";
-//			}
-//			return getString("_UI_EdgeType_type") + " " + name;
-			return getString("_UI_EdgeType_type") + " " +type.getName();
+			//			String name = "";
+			//			for (EdgeLabel label : type.getLabels()) {
+			//				name += label.getName() != null ? ":" + label.getName() : "";
+			//			}
+			//			return getString("_UI_EdgeType_type") + " " + name;
+			return getString("_UI_EdgeType_type") + " " + type.getName();
 		}
 		return getString("_UI_EdgeType_type");
 	}

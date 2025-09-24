@@ -855,6 +855,10 @@ public class MigrationPackageImpl extends EPackageImpl implements MigrationPacka
 		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.WIDEN_NUMERIC_TYPE);
 		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.WIDEN_TEMPORAL_TYPE);
 		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.BINARY_ENCODING_CHANGE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CREATE_PROPERTY);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.ADD_LABEL_TO_NODE_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CHANGE_TYPE);
+		addEEnumLiteral(graphResolvableOperatorTypeEEnum, GraphResolvableOperatorType.CHANGE_NAME);
 
 		initEEnum(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.class, "GraphPartiallyResolvableOperatorType");
 		addEEnumLiteral(graphPartiallyResolvableOperatorTypeEEnum, GraphPartiallyResolvableOperatorType.DELETE_NODE_TYPE);

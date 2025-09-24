@@ -63,15 +63,18 @@
         eType="#//NodeType" eOpposite="#//NodeType/label"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property">
+    <eOperations name="getContainerElement" eType="#//GraphItem"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//PropertyValueType"
-        containment="true"/>
+        containment="true" eOpposite="#//PropertyValueType/property"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyValueType" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"
+        eOpposite="#//Property/value"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnionType" eSuperTypes="#//PropertyValueType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//DynamicUnionTypes"/>

@@ -4,7 +4,6 @@ package de.thm.evolvedb.migration.provider;
 
 
 import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
-import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType;
 import de.thm.evolvedb.migration.MigrationPackage;
 
 import java.util.Collection;
@@ -77,26 +76,27 @@ public class GraphPartiallyResolvableOperatorItemProvider extends SchemaModifica
 	 * This returns GraphPartiallyResolvableOperator.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/GraphPartiallyResolvableOperator"));
+		return super.getImage(object);
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		GraphPartiallyResolvableOperatorType labelValue = ((GraphPartiallyResolvableOperator)object).getDisplayName();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPartiallyResolvableOperator_type") :
-			getString("_UI_GraphPartiallyResolvableOperator_type") + " " + label;
+//		GraphPartiallyResolvableOperatorType labelValue = ((GraphPartiallyResolvableOperator)object).getDisplayName();
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_GraphPartiallyResolvableOperator_type") :
+//			getString("_UI_GraphPartiallyResolvableOperator_type") + " " + label;
+		return super.getText(object);
 	}
 
 

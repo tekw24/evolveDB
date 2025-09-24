@@ -51,6 +51,12 @@ import java.util.TreeMap
 import java.util.Map
 import java.util.Comparator
 import de.thm.evolvedb.mdde.PrimaryKey
+import de.thm.evolvedb.migration.GraphResolvableOperator
+import de.thm.evolvedb.migration.GraphResolvableOperatorType
+import de.thm.evolvedb.graph.Label
+import de.thm.evolvedb.graph.Property
+import de.thm.evolvedb.graph.PropertyValueType
+import de.thm.evolvedb.graph.EdgeType
 
 class MigrationModelTransformation {
 
@@ -60,6 +66,8 @@ class MigrationModelTransformation {
 	def runMigrtaionTransformation(Resource resXtendModelFile, Resource resSymmetricModel) {
 
 		var Migration migration = resXtendModelFile.allContents.findFirst[it instanceof Migration] as Migration
+
+		// Relational Model
 		migration.transformNewTableOperator
 		migration.transformRenameOperator
 		migration.transformDeleteTableOperator
@@ -70,13 +78,17 @@ class MigrationModelTransformation {
 		migration.transformUniqueConstraints
 		migration.transformNewIndexOperator
 		migration.transformDeleteIndexOperator
+		// graphModel
+		migration.transformNewPropertyValueType
+		migration.transformNewLabelOperator
+		migration.transformNewEdgeType
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
 			it instanceof SymmetricDifference
 		] as SymmetricDifference
 		migration.symmetricDifference = symmetricDifference
 		migration.uriSymetricDifferenceModel = resSymmetricModel.URI.toString;
-	// migration.symetricDifferenceModel = resSymmetricModel
+// migration.symetricDifferenceModel = resSymmetricModel
 	}
 
 	/**
@@ -265,7 +277,7 @@ class MigrationModelTransformation {
 
 								if (removeReference.src.equals(columnConstraint) ||
 									removeReference.tgt.equals(columnConstraint)) {
-									//TODO Operatoren werden vereinheitlicht	
+									// TODO Operatoren werden vereinheitlicht	
 									resolvable.semanticChangeSets.addAll(reference.semanticChangeSets)
 									migration.schemaModificationOperators.remove(reference);
 
@@ -328,9 +340,8 @@ class MigrationModelTransformation {
 		}
 
 	}
-	
-	
-		/**
+
+	/**
 	 * 
 	 */
 	def transformDeleteTableOperator(Migration migration) {
@@ -346,7 +357,8 @@ class MigrationModelTransformation {
 
 		for (PartiallyResolvable rO : deleteTable) {
 
-			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof RemoveObject] as RemoveObject;
+			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.
+				findFirst[it instanceof RemoveObject] as RemoveObject;
 			var Table table = ad.obj as Table
 
 			for (PartiallyResolvable resolvable : partiallyResolvable) {
@@ -361,7 +373,7 @@ class MigrationModelTransformation {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
 							// Remove the Operator
 							migration.schemaModificationOperators.remove(resolvable)
-							// If it is a foreignKey a setReferenceOperator should exist
+						// If it is a foreignKey a setReferenceOperator should exist
 //							if (c instanceof ForeignKey) {
 //								var PartiallyResolvable partiallyResolvable = findSetReferenceOperatorForForeignKey(
 //									migration, (c as ForeignKey))
@@ -400,8 +412,6 @@ class MigrationModelTransformation {
 		}
 
 	}
-	
-	
 
 	/**
 	 * 
@@ -414,8 +424,8 @@ class MigrationModelTransformation {
 		resolvableOperators.removeAll(createTable);
 
 		var List<PartiallyResolvable> createUniqueIndex = migration.partiallyResovableSMO.filter [
-			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) || 
-			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) ||
+				it.displayName.equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)
 		].toList
 
 		for (ResolvableOperator rO : createTable) {
@@ -495,8 +505,7 @@ class MigrationModelTransformation {
 						// If it is a foreignKey a setReferenceOperator should exist
 						}
 
-					}
-					else if (a.obj instanceof PrimaryKey) {
+					} else if (a.obj instanceof PrimaryKey) {
 						var PrimaryKey c = a.obj as PrimaryKey;
 						if (c.table.equals(table)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
@@ -568,19 +577,19 @@ class MigrationModelTransformation {
 		].toList
 
 		var List<ResolvableOperator> deleteIndex = new ArrayList
-		var Map<Constraint, ResolvableOperator> map = new TreeMap(new Comparator(){
-			
+		var Map<Constraint, ResolvableOperator> map = new TreeMap(new Comparator() {
+
 			override compare(Object o1, Object o2) {
 				var Constraint constraint1 = o1 as Constraint
 				var Constraint constraint2 = o2 as Constraint
-				
-				if(constraint1.equals(constraint2))
+
+				if (constraint1.equals(constraint2))
 					return 0;
-				
+
 				return constraint1.toString.compareTo(constraint2.toString)
-				
+
 			}
-			
+
 		})
 		for (ResolvableOperator rO : removeIndex) {
 			var SemanticChangeSet defaultValue = rO.semanticChangeSets.get(0);
@@ -598,7 +607,6 @@ class MigrationModelTransformation {
 
 							var objA = a.obj as Constraint
 							map.put(objA, rO);
-							
 
 						}
 
@@ -621,7 +629,7 @@ class MigrationModelTransformation {
 						var objA = a.obj as ColumnConstraint
 						var constraint = objA.constraint
 
-						if(map.keySet.contains(constraint)){
+						if (map.keySet.contains(constraint)) {
 							var ResolvableOperator delete = map.get(constraint);
 							delete.semanticChangeSets.addAll(rO.semanticChangeSets)
 							// Remove the Operator
@@ -695,4 +703,172 @@ class MigrationModelTransformation {
 		}
 	}
 
+	/**
+	 * Transforms new label operator. 
+	 */
+	def transformNewLabelOperator(Migration migration) {
+		var EList<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO;
+		var List<GraphResolvableOperator> createTable = resolvableOperators.filter [
+			it.displayName.equals(GraphResolvableOperatorType.CREATE_LABEL)
+		].toList
+		resolvableOperators.removeAll(createTable);
+
+		var List<PartiallyResolvable> createUniqueIndex = migration.partiallyResovableSMO.filter [
+			it.displayName.equals(PartiallyResolvableOperatorType.CREATE_UNIQUE_CONSTRAINT) ||
+				it.displayName.equals(PartiallyResolvableOperatorType.CREATE_PRIMARY_KEY)
+		].toList
+
+		for (GraphResolvableOperator rO : createTable) {
+
+			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
+			var Label label = ad.obj as Label
+
+			for (GraphResolvableOperator resolvable : resolvableOperators) {
+
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof AddObject]
+				]) {
+					var AddObject a = s.changes.findFirst[it instanceof AddObject] as AddObject
+					if (a.obj instanceof Property) {
+						var Property c = a.obj as Property;
+						if (c.getContainerElement().equals(label)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					}
+//					else if (a.obj instanceof Constraint) {
+//						var Constraint c = a.obj as Constraint;
+//						if (c.table.equals(table)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						// If it is a foreignKey a setReferenceOperator should exist
+//						}
+//
+//					} else if (a.obj instanceof ColumnConstraint) {
+//						var ColumnConstraint c = a.obj as ColumnConstraint;
+//						if (c.constraint.table.equals(table)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						// If it is a foreignKey a setReferenceOperator should exist
+//						}
+//
+//					}
+				}
+
+			// filter[it instanceof AddObject]
+			}
+
+//			for (PartiallyResolvable resolvable : createUniqueIndex) {
+//
+//				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+//					it.changes.exists[it instanceof AddObject]
+//				]) {
+//					var AddObject a = s.changes.findFirst[it instanceof AddObject] as AddObject
+//					if (a.obj instanceof Constraint) {
+//						var Constraint c = a.obj as Constraint;
+//						if (c.table.equals(table)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						// If it is a foreignKey a setReferenceOperator should exist
+//						}
+//
+//					} else if (a.obj instanceof ColumnConstraint) {
+//						var ColumnConstraint c = a.obj as ColumnConstraint;
+//						if (c.constraint.table.equals(table)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						// If it is a foreignKey a setReferenceOperator should exist
+//						}
+//
+//					}
+//					else if (a.obj instanceof PrimaryKey) {
+//						var PrimaryKey c = a.obj as PrimaryKey;
+//						if (c.table.equals(table)) {
+//							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+//							// Remove the Operator
+//							migration.schemaModificationOperators.remove(resolvable)
+//						}
+//
+//					}
+//				}
+//
+//			}
+		}
+
+	}
+
+	def transformNewPropertyValueType(Migration migration) {
+		var EList<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO;
+		var List<GraphResolvableOperator> createProperty = resolvableOperators.filter [
+			it.displayName.equals(GraphResolvableOperatorType.CREATE_PROPERTY)
+		].toList
+		resolvableOperators.removeAll(createProperty);
+
+		for (GraphResolvableOperator rO : createProperty) {
+			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
+			var Property property = ad.obj as Property
+
+			for (GraphResolvableOperator resolvable : resolvableOperators) {
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof AddObject]
+				]) {
+					var AddObject a = s.changes.findFirst[it instanceof AddObject] as AddObject
+					if (a.obj instanceof PropertyValueType) {
+						var PropertyValueType c = a.obj as PropertyValueType;
+						if (c.property.equals(property)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					}
+
+				}
+			}
+		}
+	}
+
+	def transformNewEdgeType(Migration migration) {
+		var EList<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO;
+		var List<GraphResolvableOperator> createEdgeType = resolvableOperators.filter [
+			it.displayName.equals(GraphResolvableOperatorType.CREATE_EDGE_TYPE)
+		].toList
+		resolvableOperators.removeAll(createEdgeType);
+
+		for (GraphResolvableOperator rO : createEdgeType) {
+			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
+			var EdgeType newEdgeType = ad.obj as EdgeType
+
+			for (GraphResolvableOperator resolvable : resolvableOperators) {
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof AddReference]
+				]) {
+					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
+					if (a.src instanceof EdgeType) {
+						var EdgeType c = a.src as EdgeType;
+						if (c.equals(newEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					}else if(a.tgt instanceof EdgeType){
+						var EdgeType c = a.tgt as EdgeType;
+						if (c.equals(newEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+					}
+
+				}
+			}
+		}
+	}
 }

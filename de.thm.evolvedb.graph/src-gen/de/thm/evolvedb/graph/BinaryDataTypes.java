@@ -36,7 +36,16 @@ public enum BinaryDataTypes implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	BYTES(4, "BYTES", "BYTES");
+	BYTES(4, "BYTES", "BYTES"),
+	/**
+	 * The '<em><b>LITERAL2</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	* <!-- end-user-doc -->
+	 * @see #LITERAL2_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	LITERAL2(2, "LITERAL2", "LITERAL2");
 
 	/**
 	 * The '<em><b>VARBINARY</b></em>' literal value.
@@ -61,12 +70,23 @@ public enum BinaryDataTypes implements Enumerator {
 	public static final int BYTES_VALUE = 4;
 
 	/**
+	 * The '<em><b>LITERAL2</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #LITERAL2
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LITERAL2_VALUE = 2;
+
+	/**
 	 * An array of all the '<em><b>Binary Data Types</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final BinaryDataTypes[] VALUES_ARRAY = new BinaryDataTypes[] { VARBINARY, BYTES, };
+	private static final BinaryDataTypes[] VALUES_ARRAY = new BinaryDataTypes[] { VARBINARY, BYTES, LITERAL2, };
 
 	/**
 	 * A public read-only list of all the '<em><b>Binary Data Types</b></em>' enumerators.
@@ -126,6 +146,8 @@ public enum BinaryDataTypes implements Enumerator {
 			return VARBINARY;
 		case BYTES_VALUE:
 			return BYTES;
+		case LITERAL2_VALUE:
+			return LITERAL2;
 		}
 		return null;
 	}

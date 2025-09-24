@@ -4,7 +4,6 @@ package de.thm.evolvedb.migration.provider;
 
 
 import de.thm.evolvedb.migration.GraphResolvableOperator;
-import de.thm.evolvedb.migration.GraphResolvableOperatorType;
 import de.thm.evolvedb.migration.MigrationPackage;
 
 import java.util.Collection;
@@ -77,26 +76,27 @@ public class GraphResolvableOperatorItemProvider extends SchemaModificationOpera
 	 * This returns GraphResolvableOperator.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	@Override
+	@Override 
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/GraphResolvableOperator"));
+		return super.getImage(object);
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		GraphResolvableOperatorType labelValue = ((GraphResolvableOperator)object).getDisplayName();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphResolvableOperator_type") :
-			getString("_UI_GraphResolvableOperator_type") + " " + label;
+//		GraphResolvableOperatorType labelValue = ((GraphResolvableOperator)object).getDisplayName();
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_GraphResolvableOperator_type") :
+//			getString("_UI_GraphResolvableOperator_type") + " " + label;
+		return super.getText(object);
 	}
 
 

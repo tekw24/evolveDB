@@ -2,13 +2,16 @@
  */
 package de.thm.evolvedb.graph.impl;
 
+import de.thm.evolvedb.graph.GraphItem;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.graph.PropertyValueType;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -16,9 +19,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Property</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Property</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -32,9 +34,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class PropertyImpl extends MinimalEObjectImpl.Container implements Property {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -42,9 +44,9 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -53,8 +55,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
@@ -63,8 +64,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 
 	/**
 	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
@@ -73,8 +73,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 
 	/**
 	 * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
@@ -82,8 +81,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	protected boolean mandatory = MANDATORY_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected PropertyImpl() {
@@ -91,8 +89,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -101,8 +98,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -110,8 +106,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -122,8 +117,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public PropertyValueType getValue() {
@@ -131,8 +125,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetValue(PropertyValueType newValue, NotificationChain msgs) {
@@ -150,19 +143,18 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setValue(PropertyValueType newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject) value).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - GraphPackage.PROPERTY__VALUE, null, msgs);
+				msgs = ((InternalEObject) value).eInverseRemove(this, GraphPackage.PROPERTY_VALUE_TYPE__PROPERTY,
+						PropertyValueType.class, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject) newValue).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE - GraphPackage.PROPERTY__VALUE, null, msgs);
+				msgs = ((InternalEObject) newValue).eInverseAdd(this, GraphPackage.PROPERTY_VALUE_TYPE__PROPERTY,
+						PropertyValueType.class, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -171,8 +163,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isMandatory() {
@@ -180,8 +171,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
@@ -193,8 +183,36 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public GraphItem getContainerElement() {
+		if (this.eContainer() != null && this.eContainer() instanceof GraphItem)
+			return (GraphItem) this.eContainer();
+		else
+			return null;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case GraphPackage.PROPERTY__VALUE:
+			if (value != null)
+				msgs = ((InternalEObject) value).eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE - GraphPackage.PROPERTY__VALUE, null, msgs);
+			return basicSetValue((PropertyValueType) otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -207,8 +225,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -225,8 +242,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -246,8 +262,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -267,8 +282,7 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -285,8 +299,20 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+		case GraphPackage.PROPERTY___GET_CONTAINER_ELEMENT:
+			return getContainerElement();
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -303,4 +329,4 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
 		return result.toString();
 	}
 
-} //PropertyImpl
+} // PropertyImpl
