@@ -23,6 +23,8 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -357,7 +359,7 @@ public class GraphUIHelper {
 
 	private static void renderHyperlink(Composite area, EObject target, String title, String labeltext,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
-		UIHelper.createHyperlink(area, target, title, labeltext, afd, refService, key);
+		UIHelper.createHyperlink(area, target, title, labeltext, afd, refService, key, false);
 	}
 
 	private static void renderRefSingle(Composite parent, String caption, EObject target,
@@ -393,7 +395,7 @@ public class GraphUIHelper {
 
 		// erste Zelle schon belegt -> zwei Spalten für die Links
 		final Composite links = new Composite(area, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(links);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(links);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).span(2, 1).applyTo(links);
 
 		for (final EObject obj : list) {
@@ -443,22 +445,24 @@ public class GraphUIHelper {
 		EStructuralFeature es, String labeltext, AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		ReferenceService referenceService, String key) {
 
-		final Composite area = newArea(composite);
+		final Composite border = createBorder(composite);
+
+		final Composite area = newArea(border);
 
 		// Kopf-Link auf das Property selbst
-		renderHyperlink(area, property, "Property " + safe(property.getName()), labeltext,
-			adapterFactoryItemDelegator, referenceService, key);
+		UIHelper.createHyperlink(area, property, "Property: " + safe(property.getName()), labeltext,
+			adapterFactoryItemDelegator, referenceService, key, true);
 
 		if (es != null) {
 			renderAttr(area, label, property.eGet(es));
 		}
 
 		// Standardfelder (falls gewünscht direkt mit anzeigen)
-		renderAttr(area, "name", property.getName());
-		renderAttr(area, "mandatory", property.isMandatory());
+		renderAttr(area, "Name:", property.getName());
+		renderAttr(area, "Mandatory:", property.isMandatory());
 
 		// Value-Typ (einzeln)
-		renderRefSingle(composite, "value", property.getValue(),
+		renderRefSingle(border, "Value:", property.getValue(),
 			adapterFactoryItemDelegator, referenceService, key);
 	}
 
@@ -471,22 +475,24 @@ public class GraphUIHelper {
 	public static void createCompositeForPropertyGraph(Composite composite, PropertyGraph graph,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
-		final Composite area = newArea(composite);
-		renderHyperlink(area, graph, getTitleFor(graph), "graph", afd, refService, key);
+		final Composite border = createBorder(composite);
 
-		renderAttr(area, "name", graph.getName());
-		renderAttr(area, "closed", graph.isClosed());
-		renderAttr(area, "graphtype", graph.getGraphtype());
-		renderAttr(area, "location", graph.getLocation());
+		final Composite area = newArea(border);
+		renderHyperlink(area, graph, getTitleFor(graph), "Graph:", afd, refService, key);
+
+		renderAttr(area, "Name:", graph.getName());
+		renderAttr(area, "Closed:", graph.isClosed());
+		renderAttr(area, "Graphtype:", graph.getGraphtype());
+		renderAttr(area, "Location:", graph.getLocation());
 
 		// Items (heterogen): wir zeigen alle mit Hyperlink
-		renderRefList(composite, "items", graph.getItems(), afd, refService, key);
+		renderRefList(border, "items", graph.getItems(), afd, refService, key);
 	}
 
 	/** Gemeinsamer Teil für GraphItem (zeigt den übergeordneten Graph). */
 	private static void renderGraphBackref(Composite composite, GraphItem item,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
-		renderRefSingle(composite, "graph", item.getGraph(), afd, refService, key);
+		renderRefSingle(composite, "Graph:", item.getGraph(), afd, refService, key);
 	}
 
 	/*
@@ -498,31 +504,35 @@ public class GraphUIHelper {
 	public static void createCompositeForNodeType(Composite composite, NodeType nodeType,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
-		final Composite area = newArea(composite);
-		renderHyperlink(area, nodeType, getTitleFor(nodeType), "nodeType", afd, refService, key);
+		final Composite border = createBorder(composite);
 
-		renderAttr(area, "name", nodeType.getName()); // derived
-		renderGraphBackref(composite, nodeType, afd, refService, key);
+		final Composite area = newArea(border);
+		renderHyperlink(area, nodeType, getTitleFor(nodeType), "NodeType:", afd, refService, key);
 
-		renderRefList(composite, "label", nodeType.getLabel(), afd, refService, key);
-		renderRefList(composite, "outgoing", nodeType.getOutgoing(), afd, refService, key);
-		renderRefList(composite, "incoming", nodeType.getIncoming(), afd, refService, key);
-		renderRefList(composite, "properties", nodeType.getProperties(), afd, refService, key);
+		renderAttr(area, "Name:", nodeType.getName()); // derived
+		renderGraphBackref(border, nodeType, afd, refService, key);
+
+		renderRefList(border, "Label:", nodeType.getLabel(), afd, refService, key);
+		renderRefList(border, "Outgoing:", nodeType.getOutgoing(), afd, refService, key);
+		renderRefList(border, "Incoming:", nodeType.getIncoming(), afd, refService, key);
+		renderRefList(border, "Properties:", nodeType.getProperties(), afd, refService, key);
 	}
 
 	public static void createCompositeForEdgeType(Composite composite, EdgeType edgeType,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
-		final Composite area = newArea(composite);
-		renderHyperlink(area, edgeType, getTitleFor(edgeType), "edgeType", afd, refService, key);
+		final Composite border = createBorder(composite);
 
-		renderAttr(area, "name", edgeType.getName()); // derived
-		renderGraphBackref(composite, edgeType, afd, refService, key);
+		final Composite area = newArea(border);
+		renderHyperlink(area, edgeType, getTitleFor(edgeType), "EdgeType:", afd, refService, key);
 
-		renderRefList(composite, "labels", edgeType.getLabels(), afd, refService, key);
-		renderRefList(composite, "properties", edgeType.getProperties(), afd, refService, key);
-		renderRefSingle(composite, "src", edgeType.getSrc(), afd, refService, key);
-		renderRefSingle(composite, "tgt", edgeType.getTgt(), afd, refService, key);
+		renderAttr(area, "Name:", edgeType.getName()); // derived
+		renderGraphBackref(border, edgeType, afd, refService, key);
+
+		renderRefList(border, "Labels:", edgeType.getLabels(), afd, refService, key);
+		renderRefList(border, "Properties:", edgeType.getProperties(), afd, refService, key);
+		renderRefSingle(border, "Src:", edgeType.getSrc(), afd, refService, key);
+		renderRefSingle(border, "Tgt:", edgeType.getTgt(), afd, refService, key);
 	}
 
 	/*
@@ -535,26 +545,41 @@ public class GraphUIHelper {
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
 		final Composite area = newArea(composite);
-		renderHyperlink(area, label, getTitleFor(label), "label", afd, refService, key);
 
-		renderAttr(area, "name", label.getName());
+		// With Caption
+		UIHelper.createHyperlink(area, label, getTitleFor(label), "Label:", afd, refService, key, true);
+
+		renderAttr(area, "Name:", label.getName());
 		renderGraphBackref(composite, label, afd, refService, key);
 
-		renderRefList(composite, "properties", label.getProperties(), afd, refService, key);
-		renderRefList(composite, "superTypes", label.getSuperType(), afd, refService, key);
-		renderRefList(composite, "constraints", label.getConstraints(), afd, refService, key);
+		renderRefList(composite, "Properties:", label.getProperties(), afd, refService, key);
+		renderRefList(composite, "SuperTypes:", label.getSuperType(), afd, refService, key);
+		renderRefList(composite, "Constraints:", label.getConstraints(), afd, refService, key);
 	}
 
 	public static void createCompositeForNodeLabel(Composite composite, NodeLabel nodeLabel,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
-		createCompositeForLabel(composite, nodeLabel, afd, refService, key);
-		renderRefList(composite, "nodes", nodeLabel.getNodes(), afd, refService, key);
+
+		final Composite border = createBorder(composite);
+		createCompositeForLabel(border, nodeLabel, afd, refService, key);
+		renderRefList(border, "Nodes:", nodeLabel.getNodes(), afd, refService, key);
 	}
 
 	public static void createCompositeForEdgeLabel(Composite composite, EdgeLabel edgeLabel,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
-		createCompositeForLabel(composite, edgeLabel, afd, refService, key);
-		renderRefList(composite, "edges", edgeLabel.getEdges(), afd, refService, key);
+
+		final Composite border = createBorder(composite);
+
+		createCompositeForLabel(border, edgeLabel, afd, refService, key);
+		renderRefList(border, "Edges:", edgeLabel.getEdges(), afd, refService, key);
+	}
+
+	public static Composite createBorder(Composite composite) {
+
+		final Composite border = new Composite(composite, SWT.BORDER);
+		border.setLayout(new GridLayout(1, false));
+		border.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		return border;
 	}
 
 	/*
@@ -566,38 +591,40 @@ public class GraphUIHelper {
 	public static void createCompositeForPropertyValueType(Composite composite, PropertyValueType pvt,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
-		final Composite area = newArea(composite);
-		renderHyperlink(area, pvt, pvt.eClass().getName(), "valueType", afd, refService, key);
+		final Composite border = createBorder(composite);
 
-		renderAttr(area, "nullable", pvt.isNullable());
-		renderRefSingle(composite, "property", pvt.getProperty(), afd, refService, key);
+		final Composite area = newArea(border);
+		renderHyperlink(area, pvt, pvt.eClass().getName(), "ValueType:", afd, refService, key);
+
+		renderAttr(area, "Nullable:", pvt.isNullable());
+		renderRefSingle(border, "Property:", pvt.getProperty(), afd, refService, key);
 
 		if (pvt instanceof StringType) {
 			final StringType s = (StringType) pvt;
-			renderAttr(composite, "type", s.getType());
-			renderAttr(composite, "minLength", s.getMinLength());
-			renderAttr(composite, "maxLength", s.getMaxLength());
+			renderAttr(border, "Type:", s.getType());
+			renderAttr(border, "MinLength:", s.getMinLength());
+			renderAttr(border, "MaxLength:", s.getMaxLength());
 		} else if (pvt instanceof NumericType) {
 			final NumericType n = (NumericType) pvt;
-			renderAttr(composite, "type", n.getType());
-			renderAttr(composite, "integralPart", n.getIntegralPart());
-			renderAttr(composite, "fractionalPart", n.getFractionalPart());
+			renderAttr(border, "Type:", n.getType());
+			renderAttr(border, "IntegralPart:", n.getIntegralPart());
+			renderAttr(border, "FractionalPart:", n.getFractionalPart());
 		} else if (pvt instanceof TemporalTypes) {
-			renderAttr(composite, "type", ((TemporalTypes) pvt).getType());
+			renderAttr(border, "Type:", ((TemporalTypes) pvt).getType());
 		} else if (pvt instanceof BooleanType) {
-			renderAttr(composite, "type", ((BooleanType) pvt).getType());
+			renderAttr(border, "Type:", ((BooleanType) pvt).getType());
 		} else if (pvt instanceof BinaryTypes) {
 			final BinaryTypes b = (BinaryTypes) pvt;
-			renderAttr(composite, "type", b.getType());
-			renderAttr(composite, "minLength", b.getMinLength());
-			renderAttr(composite, "maxLength", b.getMaxLength());
+			renderAttr(border, "Type:", b.getType());
+			renderAttr(border, "MinLength:", b.getMinLength());
+			renderAttr(border, "MaxLength:", b.getMaxLength());
 		} else if (pvt instanceof UnionType) {
-			renderAttr(composite, "type", ((UnionType) pvt).getType());
+			renderAttr(border, "Type:", ((UnionType) pvt).getType());
 		} else if (pvt instanceof ListType) {
 			final ListType l = (ListType) pvt;
-			renderAttr(composite, "lowerBound", l.getLowerBound());
-			renderAttr(composite, "upperBound", l.getUpperBound());
-			renderRefSingle(composite, "type", l.getType(), afd, refService, key);
+			renderAttr(border, "LowerBound:", l.getLowerBound());
+			renderAttr(border, "UpperBound:", l.getUpperBound());
+			renderRefSingle(border, "Type:", l.getType(), afd, refService, key);
 		}
 	}
 
@@ -610,22 +637,24 @@ public class GraphUIHelper {
 	public static void createCompositeForConstraint(Composite composite, Constraint c,
 		AdapterFactoryItemDelegator afd, ReferenceService refService, String key) {
 
-		final Composite area = newArea(composite);
-		renderHyperlink(area, c, getTitleFor(c), "constraint", afd, refService, key);
-		renderAttr(area, "name", c.getName());
-		renderRefSingle(composite, "label", c.getLabel(), afd, refService, key);
+		final Composite border = createBorder(composite);
+
+		final Composite area = newArea(border);
+		renderHyperlink(area, c, getTitleFor(c), "Constraint:", afd, refService, key);
+		renderAttr(area, "Name:", c.getName());
+		renderRefSingle(border, "Label:", c.getLabel(), afd, refService, key);
 
 		if (c instanceof UniqueConstraint) {
-			renderRefList(composite, "properties", ((UniqueConstraint) c).getProperties(), afd, refService, key);
+			renderRefList(border, "Properties:", ((UniqueConstraint) c).getProperties(), afd, refService, key);
 		} else if (c instanceof PropertyTypeConstraint) {
 			final PropertyTypeConstraint ptc = (PropertyTypeConstraint) c;
-			renderRefSingle(composite, "properties", ptc.getProperties(), afd, refService, key);
-			renderRefSingle(composite, "type", ptc.getType(), afd, refService, key);
+			renderRefSingle(border, "Properties:", ptc.getProperties(), afd, refService, key);
+			renderRefSingle(border, "Type:", ptc.getType(), afd, refService, key);
 		} else if (c instanceof PropertyExistenceConstraint) {
-			renderRefSingle(composite, "properties", ((PropertyExistenceConstraint) c).getProperties(), afd, refService,
+			renderRefSingle(border, "Properties:", ((PropertyExistenceConstraint) c).getProperties(), afd, refService,
 				key);
 		} else if (c instanceof KeyConstraint) {
-			renderRefList(composite, "properties", ((KeyConstraint) c).getProperties(), afd, refService, key);
+			renderRefList(border, "Properties:", ((KeyConstraint) c).getProperties(), afd, refService, key);
 		}
 	}
 

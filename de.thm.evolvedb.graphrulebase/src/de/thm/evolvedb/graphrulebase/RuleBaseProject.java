@@ -15,7 +15,7 @@ public class RuleBaseProject extends AbstractRuleBaseProject {
 
 	@Override
 	public String getName() {
-		return "Graphrulebase (2025-10-02 09:54:30)";
+		return "Graphrulebase (2025-10-02 10:23:44)";
 	}
 
 	@Override

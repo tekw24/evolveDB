@@ -106,6 +106,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		referenceService = getReferenceService();
 		this.emfFormsEditSupport = emfFormsEditSupport;
 		super.applyEnable();
 	}
@@ -1353,6 +1354,15 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 				}
 
 			} else {
+
+				final Optional<SemanticChangeSet> optionalGraph = object.stream()
+					.filter(n -> GraphUIHelper.GRAPH_RULES.contains(n.getEditRName())).findFirst();
+
+				if (optionalGraph.isPresent()) {
+
+					// TODO Currently only create label?
+					renderGraphSemanticChangeSet(object.getFirst(), composite);
+				}
 
 				// All Create and delete operations could have mor than one semantic change set
 				final Optional<SemanticChangeSet> optional4 = object.stream()

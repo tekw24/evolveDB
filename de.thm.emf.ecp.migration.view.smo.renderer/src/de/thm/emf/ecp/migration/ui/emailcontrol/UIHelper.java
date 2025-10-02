@@ -33,6 +33,12 @@ import org.eclipse.swt.widgets.Link;
  */
 public class UIHelper {
 
+	protected static void createHyperlink(Composite linkComposite, EObject eObject, String text, String labelText,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, ReferenceService referenceService, String key) {
+		createHyperlink(linkComposite, eObject, text, labelText, adapterFactoryItemDelegator, referenceService, key,
+			true);
+	}
+
 	/**
 	 * Creates a link object targeting the EObject.
 	 *
@@ -42,11 +48,15 @@ public class UIHelper {
 	 * @param labelText
 	 */
 	protected static void createHyperlink(Composite linkComposite, EObject eObject, String text, String labelText,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, ReferenceService referenceService, String key) {
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, ReferenceService referenceService, String key,
+		boolean withCaption) {
 
-		final Label labelhyper = new Label(linkComposite, SWT.NONE);
-		labelhyper.setBackground(linkComposite.getBackground());
-		labelhyper.setText(labelText);
+		if (withCaption) {
+			final Label labelhyper = new Label(linkComposite, SWT.NONE);
+			labelhyper.setBackground(linkComposite.getBackground());
+			labelhyper.setText(labelText);
+			GridDataFactory.fillDefaults().grab(true, false).align(SWT.LEFT, SWT.BEGINNING).applyTo(labelhyper);
+		}
 
 		final Label imageHyperlink = new Label(linkComposite, SWT.NONE);
 		imageHyperlink.setBackground(linkComposite.getBackground());
@@ -77,7 +87,7 @@ public class UIHelper {
 		});
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.LEFT, SWT.BEGINNING).applyTo(hyperlink);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.LEFT, SWT.BEGINNING).applyTo(imageHyperlink);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.LEFT, SWT.BEGINNING).applyTo(labelhyper);
+
 	}
 
 	/**

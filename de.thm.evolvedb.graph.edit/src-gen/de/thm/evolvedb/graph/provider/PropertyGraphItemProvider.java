@@ -166,7 +166,7 @@ public class PropertyGraphItemProvider extends ItemProviderAdapter implements IE
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyGraph"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyGraph.png"));
 	}
 
 	/**
