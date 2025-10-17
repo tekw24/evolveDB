@@ -107,7 +107,7 @@ public class NumericTypeItemProvider extends PropertyValueTypeItemProvider {
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NumericType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyValueType.png"));
 	}
 
 	/**

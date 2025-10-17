@@ -66,11 +66,11 @@ public class KeyConstraintItemProvider extends ConstraintItemProvider {
 	 * This returns KeyConstraint.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/KeyConstraint"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Constraint.png"));
 	}
 
 	/**

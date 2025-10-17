@@ -142,11 +142,11 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 	 * This returns Property.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Property"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Property.png"));
 	}
 
 	/**

@@ -86,7 +86,7 @@ public class PropertyTypeConstraintItemProvider extends ConstraintItemProvider {
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyTypeConstraint"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Constraint.png"));
 	}
 
 	/**

@@ -103,11 +103,11 @@ public class StringTypeItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns StringType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/StringType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyValueType.png"));
 	}
 
 	/**

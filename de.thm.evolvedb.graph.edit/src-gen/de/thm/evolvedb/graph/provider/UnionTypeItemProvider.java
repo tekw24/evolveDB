@@ -69,11 +69,11 @@ public class UnionTypeItemProvider extends PropertyValueTypeItemProvider {
 	 * This returns UnionType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/UnionType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyValueType.png"));
 	}
 
 	/**
