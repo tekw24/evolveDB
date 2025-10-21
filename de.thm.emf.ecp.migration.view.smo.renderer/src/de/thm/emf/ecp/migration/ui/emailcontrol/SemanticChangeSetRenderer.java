@@ -68,9 +68,11 @@ import org.sidiff.difference.symmetric.SemanticChangeSet;
 
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.Constraint;
@@ -92,6 +94,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private ReferenceService referenceService;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private ComposedAdapterFactory composedAdapterFactory;
+	private boolean fallback;
 
 	/**
 	 * @param vElement
@@ -243,7 +246,8 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 						for (final Change change : set.getChanges()) {
 							if (change instanceof AttributeValueChange) {
 								final AttributeValueChange avc = (AttributeValueChange) change;
-								createForAttributeValueChange(avc, composite);
+								// createForAttributeValueChange(avc, composite); TODO
+								renderGraphSemanticChangeSet(set, composite);
 
 							}
 
@@ -301,7 +305,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 									"Existing Constraint:"); //$NON-NLS-1$
 
 								final Label label = new Label(composite, SWT.NONE);
-								label.setText("Adds the following column to the existing constraint:");
+								label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
 
 								final Composite area = new Composite(composite, SWT.NONE);
 								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
@@ -349,7 +353,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 									"Existing Constraint:"); //$NON-NLS-1$
 
 								final Label label = new Label(composite, SWT.NONE);
-								label.setText("Adds the following column to the existing constraint:");
+								label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
 
 								final Composite area = new Composite(composite, SWT.NONE);
 								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
@@ -1503,7 +1507,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 						if (constraint instanceof Index) {
 
 							final Label label2 = new Label(area, SWT.NONE);
-							label2.setText(Messages.SemanticChangeSetRenderer_2 + " " + constraint.getName());
+							label2.setText(Messages.SemanticChangeSetRenderer_2 + " " + constraint.getName()); //$NON-NLS-1$
 							GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 								.align(SWT.FILL, SWT.BEGINNING).applyTo(label2);
 
@@ -1693,7 +1697,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 			}
 
-			createBoldLabel(composite, "Atomic Changes");
+			createBoldLabel(composite, "Atomic Changes"); //$NON-NLS-1$
 			// Table
 			final TableViewer viewer = new TableViewer(composite,
 				SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -1832,8 +1836,8 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			GridDataFactory.fillDefaults().grab(true, false)
 				.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-			UIHelper.createHyperlink(area, constraintB.getTable(), "Table " + constraintB.getTable().getName(),
-				"Table:", adapterFactoryItemDelegator,
+			UIHelper.createHyperlink(area, constraintB.getTable(), "Table " + constraintB.getTable().getName(), //$NON-NLS-1$
+				"Table:", adapterFactoryItemDelegator, //$NON-NLS-1$
 				referenceService, CUSTOM_VARIANT);
 			createCompositeForConstraint(composite, constraintA, "Old Value:", eAttribute, "Constraint in Model A:"); //$NON-NLS-1$ //$NON-NLS-2$
 			createCompositeForConstraint(composite, constraintB, "New Value:", eAttribute, "Constraint in Model B:"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1980,7 +1984,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-		UIHelper.createHyperlink(area, column, "Column " + column.getName(), labeltext, adapterFactoryItemDelegator,
+		UIHelper.createHyperlink(area, column, "Column " + column.getName(), labeltext, adapterFactoryItemDelegator, //$NON-NLS-1$
 			referenceService, CUSTOM_VARIANT);
 
 		if (es != null) {
@@ -2034,7 +2038,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-		UIHelper.createHyperlink(area, column, "Column " + column.getName(), labeltext, adapterFactoryItemDelegator,
+		UIHelper.createHyperlink(area, column, "Column " + column.getName(), labeltext, adapterFactoryItemDelegator, //$NON-NLS-1$
 			referenceService, CUSTOM_VARIANT);
 
 		final Label header = new Label(area, SWT.NONE);
@@ -2061,7 +2065,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-		UIHelper.createHyperlink(area, objA, "Column " + objA.getName(), labeltext, adapterFactoryItemDelegator,
+		UIHelper.createHyperlink(area, objA, "Column " + objA.getName(), labeltext, adapterFactoryItemDelegator, //$NON-NLS-1$
 			referenceService, CUSTOM_VARIANT);
 
 		if (es != null) {
@@ -2159,90 +2163,102 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 		// häufige "CREATE/DELETE/ADD/REMOVE/SET_ATTRIBUTE/SET_REFERENCE" Fälle
 		if (isRule(rule,
-			"CREATE_PropertyGraph")) {
+			"CREATE_PropertyGraph")) { //$NON-NLS-1$
 			renderCreatePropertyGraph(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"CREATE_NodeType_IN_PropertyGraph_(items)")) {
+			"CREATE_NodeType_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderCreateNodeType(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"DELETE_NodeType_IN_PropertyGraph_(items)")) {
+			"DELETE_NodeType_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderDeleteNodeType(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"CREATE_EdgeType_IN_PropertyGraph_(items)")) {
+			"CREATE_EdgeType_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderCreateEdgeType(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"DELETE_EdgeType_IN_PropertyGraph_(items)")) {
+			"DELETE_EdgeType_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderDeleteEdgeType(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"CREATE_NodeLabel_IN_PropertyGraph_(items)")) {
+			"CREATE_NodeLabel_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderCreateNodeLabel(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"DELETE_NodeLabel_IN_PropertyGraph_(items)")) {
+			"DELETE_NodeLabel_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderDeleteNodeLabel(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"CREATE_EdgeLabel_IN_PropertyGraph_(items)")) {
+			"CREATE_EdgeLabel_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderCreateEdgeLabel(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"DELETE_EdgeLabel_IN_PropertyGraph_(items)")) {
+			"DELETE_EdgeLabel_IN_PropertyGraph_(items)")) { //$NON-NLS-1$
 			renderDeleteEdgeLabel(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"ADD_NodeLabel_(nodes)_TGT_NodeType")) {
+			"ADD_NodeLabel_(nodes)_TGT_NodeType")) { //$NON-NLS-1$
 			renderAddNodeLabelToNodeType(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"REMOVE_NodeLabel_(nodes)_TGT_NodeType")) {
+			"REMOVE_NodeLabel_(nodes)_TGT_NodeType")) { //$NON-NLS-1$
 			renderRemoveNodeLabelFromNodeType(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"ADD_EdgeLabel_(edges)_TGT_EdgeType")) {
+			"ADD_EdgeLabel_(edges)_TGT_EdgeType")) { //$NON-NLS-1$
 			renderAddEdgeLabelToEdgeType(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"REMOVE_EdgeLabel_(edges)_TGT_EdgeType")) {
+			"REMOVE_EdgeLabel_(edges)_TGT_EdgeType")) { //$NON-NLS-1$
 			renderRemoveEdgeLabelFromEdgeType(set, composite);
 			return;
 		}
 
 		if (isRule(rule,
-			"SET_REFERENCE_EdgeType_(src)_TGT_NodeType")) {
+			"SET_REFERENCE_EdgeType_(src)_TGT_NodeType")) { //$NON-NLS-1$
 			renderSetEdgeSrc(set, composite);
 			return;
 		}
 		if (isRule(rule,
-			"SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) {
+			"SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) { //$NON-NLS-1$
 			renderSetEdgeTgt(set, composite);
 			return;
 		}
 
+		if (isRule(rule,
+			"MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_Label_(properties)")) { //$NON-NLS-1$
+			renderMoveRefPropertyFromLabelToLabel(set, composite);
+			return;
+		}
+
+		// if (isRule(rule,
+		// "ADD_NodeType_(label)_TGT_NodeLabel")) { //$NON-NLS-1$
+		// renderMoveRefPropertyFromLabelToLabel(set, composite);
+		// return;
+		// }
+
 		// Generischer Attribut-Wechsel (alle SET_ATTRIBUTE_* oder CHANGE_* Typänderungen)
-		if (rule.startsWith("SET_ATTRIBUTE_") || rule.startsWith("CHANGE_")) {
+		if (rule.startsWith("SET_ATTRIBUTE_") || rule.startsWith("CHANGE_")) { //$NON-NLS-1$ //$NON-NLS-2$
 			renderGenericAttributeOrTypeChange(set, composite);
 			return;
 		}
@@ -2279,7 +2295,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderCreatePropertyGraph(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, AddObject.class).ifPresent(add -> {
 			if (add.getObj() instanceof final de.thm.evolvedb.graph.PropertyGraph g) {
-				section(parent, "Create PropertyGraph");
+				section(parent, "Create PropertyGraph"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForPropertyGraph(parent, g, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 			}
@@ -2291,7 +2307,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderCreateNodeType(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, AddObject.class).ifPresent(add -> {
 			if (add.getObj() instanceof final NodeType nt) {
-				section(parent, "Create NodeType");
+				section(parent, "Create NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeType(parent, nt, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
 			}
@@ -2301,7 +2317,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderDeleteNodeType(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, RemoveObject.class).ifPresent(rem -> {
 			if (rem.getObj() instanceof final NodeType nt) {
-				section(parent, "Delete NodeType");
+				section(parent, "Delete NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeType(parent, nt, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
 			}
@@ -2313,7 +2329,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderCreateEdgeType(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, AddObject.class).ifPresent(add -> {
 			if (add.getObj() instanceof final EdgeType et) {
-				section(parent, "Create EdgeType");
+				section(parent, "Create EdgeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, et, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
 			}
@@ -2323,7 +2339,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderDeleteEdgeType(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, RemoveObject.class).ifPresent(rem -> {
 			if (rem.getObj() instanceof final EdgeType et) {
-				section(parent, "Delete EdgeType");
+				section(parent, "Delete EdgeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, et, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
 			}
@@ -2335,7 +2351,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderCreateNodeLabel(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, AddObject.class).ifPresent(add -> {
 			if (add.getObj() instanceof final NodeLabel nl) {
-				section(parent, "Create NodeLabel");
+				section(parent, "Create NodeLabel"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeLabel(parent, nl, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 			}
@@ -2345,7 +2361,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderDeleteNodeLabel(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, RemoveObject.class).ifPresent(rem -> {
 			if (rem.getObj() instanceof final NodeLabel nl) {
-				section(parent, "Delete NodeLabel");
+				section(parent, "Delete NodeLabel"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeLabel(parent, nl, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 			}
@@ -2361,7 +2377,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final NodeLabel lbl = a instanceof NodeLabel ? (NodeLabel) a
 				: (NodeLabel) (b instanceof NodeLabel ? b : null);
 			if (node != null && lbl != null) {
-				section(parent, "Add NodeLabel → NodeType");
+				section(parent, "Add NodeLabel → NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeType(parent, node, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForNodeLabel(parent, lbl, adapterFactoryItemDelegator,
@@ -2378,7 +2394,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final NodeLabel lbl = a instanceof NodeLabel ? (NodeLabel) a
 				: (NodeLabel) (b instanceof NodeLabel ? b : null);
 			if (node != null && lbl != null) {
-				section(parent, "Remove NodeLabel from NodeType");
+				section(parent, "Remove NodeLabel from NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForNodeType(parent, node, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForNodeLabel(parent, lbl, adapterFactoryItemDelegator,
@@ -2392,7 +2408,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderCreateEdgeLabel(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, AddObject.class).ifPresent(add -> {
 			if (add.getObj() instanceof final EdgeLabel el) {
-				section(parent, "Create EdgeLabel");
+				section(parent, "Create EdgeLabel"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeLabel(parent, el, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 			}
@@ -2402,7 +2418,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	private void renderDeleteEdgeLabel(SemanticChangeSet set, Composite parent) {
 		firstChangeOfType(set, RemoveObject.class).ifPresent(rem -> {
 			if (rem.getObj() instanceof final EdgeLabel el) {
-				section(parent, "Delete EdgeLabel");
+				section(parent, "Delete EdgeLabel"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeLabel(parent, el, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 			}
@@ -2417,7 +2433,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final EdgeLabel lbl = a instanceof EdgeLabel ? (EdgeLabel) a
 				: (EdgeLabel) (b instanceof EdgeLabel ? b : null);
 			if (edge != null && lbl != null) {
-				section(parent, "Add EdgeLabel → EdgeType");
+				section(parent, "Add EdgeLabel → EdgeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, edge, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForEdgeLabel(parent, lbl, adapterFactoryItemDelegator,
@@ -2434,7 +2450,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final EdgeLabel lbl = a instanceof EdgeLabel ? (EdgeLabel) a
 				: (EdgeLabel) (b instanceof EdgeLabel ? b : null);
 			if (edge != null && lbl != null) {
-				section(parent, "Remove EdgeLabel from EdgeType");
+				section(parent, "Remove EdgeLabel from EdgeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, edge, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForEdgeLabel(parent, lbl, adapterFactoryItemDelegator,
@@ -2452,7 +2468,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final NodeType node = ar.getSrc() instanceof NodeType ? (NodeType) ar.getSrc()
 				: ar.getTgt() instanceof NodeType ? (NodeType) ar.getTgt() : null;
 			if (edge != null && node != null) {
-				section(parent, "Set EdgeType.src → NodeType");
+				section(parent, "Set EdgeType.src → NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, edge, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForNodeType(parent, node, adapterFactoryItemDelegator,
@@ -2468,7 +2484,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			final NodeType node = ar.getSrc() instanceof NodeType ? (NodeType) ar.getSrc()
 				: ar.getTgt() instanceof NodeType ? (NodeType) ar.getTgt() : null;
 			if (edge != null && node != null) {
-				section(parent, "Set EdgeType.tgt → NodeType");
+				section(parent, "Set EdgeType.tgt → NodeType"); //$NON-NLS-1$
 				GraphUIHelper.createCompositeForEdgeType(parent, edge, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForNodeType(parent, node, adapterFactoryItemDelegator,
@@ -2477,29 +2493,114 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		});
 	}
 
+	// -------------- Move
+	/**
+	 * @param set
+	 * @param composite
+	 */
+	private void renderMoveRefPropertyFromLabelToLabel(SemanticChangeSet set, Composite parent) {
+		firstChangeOfType(set, RemoveReference.class).ifPresent(rr -> {
+			final EObject a = rr.getSrc();
+			final EObject b = rr.getTgt();
+			final NodeLabel nodeLabel = a instanceof NodeLabel ? (NodeLabel) a
+				: (NodeLabel) (b instanceof NodeLabel ? b : null);
+			final Property property = a instanceof Property ? (Property) a
+				: (Property) (b instanceof Property ? b : null);
+			if (nodeLabel != null && property != null) {
+				section(parent, "Previous Label"); //$NON-NLS-1$
+				GraphUIHelper.createCompositeForNodeLabel(parent, nodeLabel, adapterFactoryItemDelegator,
+					referenceService, CUSTOM_VARIANT);
+				section(parent, "Moved Property"); //$NON-NLS-1$
+				GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+					GraphPackage.Literals.PROPERTY__VALUE,
+					"Value", adapterFactoryItemDelegator,
+					getReferenceService(), CUSTOM_VARIANT);
+			}
+		});
+
+		firstChangeOfType(set, AddReference.class).ifPresent(rr -> {
+			final EObject a = rr.getSrc();
+			final EObject b = rr.getTgt();
+			final NodeLabel nodeLabel = a instanceof NodeLabel ? (NodeLabel) a
+				: (NodeLabel) (b instanceof NodeLabel ? b : null);
+			final Property property = a instanceof Property ? (Property) a
+				: (Property) (b instanceof Property ? b : null);
+			if (nodeLabel != null && property != null) {
+				section(parent, "New Label"); //$NON-NLS-1$
+				GraphUIHelper.createCompositeForNodeLabel(parent, nodeLabel, adapterFactoryItemDelegator,
+					referenceService, CUSTOM_VARIANT);
+			}
+
+		});
+
+	}
+
+	/**
+	 * @param set
+	 * @param composite
+	 */
+	private void renderChangeType(SemanticChangeSet set, Composite parent) {
+
+		fallback = true;
+		firstChangeOfType(set, RemoveObject.class).ifPresent(rem -> {
+			if (rem.getObj() instanceof final PropertyValueType et) {
+				final PropertyValueType a = (PropertyValueType) rem.getObj();
+
+				section(parent, "Property");
+				GraphUIHelper.createCompositeForProperty(parent, a.getProperty(), "Property:", //$NON-NLS-1$
+					GraphPackage.Literals.PROPERTY__VALUE,
+					"Value", adapterFactoryItemDelegator,
+					getReferenceService(), CUSTOM_VARIANT);
+
+				section(parent, "Previous PropertyValueType"); //$NON-NLS-1$
+				GraphUIHelper.createCompositeForPropertyValueType(parent, et, adapterFactoryItemDelegator,
+					referenceService, CUSTOM_VARIANT);
+				fallback = false;
+			}
+		});
+
+		firstChangeOfType(set, AddObject.class).ifPresent(rem -> {
+			if (rem.getObj() instanceof final PropertyValueType et) {
+				final PropertyValueType a = (PropertyValueType) rem.getObj();
+
+				section(parent, "New PropertyValueType"); //$NON-NLS-1$
+				GraphUIHelper.createCompositeForPropertyValueType(parent, et, adapterFactoryItemDelegator,
+					referenceService, CUSTOM_VARIANT);
+				fallback = false;
+			}
+		});
+		if (fallback) {
+			renderGraphFallback(set, parent);
+		}
+	}
+
 	// -------- Generische Attribut/Typ-Änderungen
 
 	private void renderGenericAttributeOrTypeChange(SemanticChangeSet set, Composite parent) {
 		// Zeig alle AttributeValueChanges und deren Objekte mit dem GraphUIHelper
 		final List<AttributeValueChange> avcs = allChangesOfType(set, AttributeValueChange.class);
 		if (avcs.isEmpty()) {
-			renderGraphFallback(set, parent);
+			renderChangeType(set, parent);
 			return;
 		}
-		section(parent, "Attribute / Type Changes");
+		section(parent, "Attribute / Type Changes"); //$NON-NLS-1$
 		for (final AttributeValueChange avc : avcs) {
 			final Object a = avc.getObjA();
 			final Object b = avc.getObjB();
 			if (a instanceof final EObject eoA) {
+
+				section(parent, "Previous State");
 				GraphUIHelper.createCompositeForAny(parent, eoA, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
 				// alte/nNeue Werte zeilenweise
-				GraphUIHelper.createFeatureRow(parent, eoA, avc.getType(), "Old Value");
+				GraphUIHelper.createFeatureRow(parent, eoA, avc.getType(), "Old Value"); //$NON-NLS-1$
 			}
 			if (b instanceof final EObject eoB) {
+
+				section(parent, "New State");
 				GraphUIHelper.createCompositeForAny(parent, eoB, adapterFactoryItemDelegator, getReferenceService(),
 					CUSTOM_VARIANT);
-				GraphUIHelper.createFeatureRow(parent, eoB, avc.getType(), "New Value");
+				GraphUIHelper.createFeatureRow(parent, eoB, avc.getType(), "New Value"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -2507,7 +2608,7 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 	// -------- Fallback
 
 	private void renderGraphFallback(SemanticChangeSet set, Composite parent) {
-		section(parent, "Graph Change");
+		section(parent, "Graph Change"); //$NON-NLS-1$
 		// Zeig alle beteiligten Objekte generisch
 		for (final Change c : set.getChanges()) {
 			if (c instanceof final AddObject ao && ao.getObj() instanceof final EObject eo) {

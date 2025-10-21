@@ -32,6 +32,7 @@ import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.Label;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.NamedElement;
 import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator;
@@ -273,7 +274,11 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		}else if(removeObject.getObj() instanceof EdgeType) {
 			EdgeType n = (EdgeType) removeObject.getObj();
 			return n.getName();
+		} else if(removeObject.getObj() instanceof PropertyValueType) {
+			PropertyValueType n = (PropertyValueType) removeObject.getObj();
+			return n.getProperty().getName();
 		}
+		
 		return "";
 	}
 

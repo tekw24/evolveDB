@@ -56,6 +56,7 @@ import de.thm.commonui.util.UIUtil;
 import de.thm.evolvedb.graph.language.Language;
 import de.thm.evolvedb.graph.presentation.GraphEditorPlugin;
 import de.thm.mdde.commonui.exception.handler.ErrorHandler;
+import de.thm.mdde.migration.api.MigrationApi;
 
 public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 
@@ -211,8 +212,8 @@ public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 						protected void execute(IProgressMonitor progressMonitor) {
 							try {
 								URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
-//								MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
-//										filename, migrationFileName);
+								MigrationApi.createMigrationModel(fileURI.toString(), modelFile,
+										filename, migrationFileName);
 
 							} catch (Exception e) {
 								ErrorHandler.openErrorDialogWithStatus("ModelDrivenSchemaEvolution",
