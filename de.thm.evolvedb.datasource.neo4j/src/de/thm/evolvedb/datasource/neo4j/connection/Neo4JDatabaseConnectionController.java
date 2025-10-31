@@ -42,6 +42,7 @@ public class Neo4JDatabaseConnectionController {
 	private User user;
 	private String host;
 	private String port;
+	private String dbName;
 
 	public Neo4JDatabaseConnectionController(Driver driver) {
 
@@ -50,7 +51,7 @@ public class Neo4JDatabaseConnectionController {
 	}
 
 	public EObject createModel() {
-		Connection con = connector.createConnection(user, host, port);
+		Connection con = connector.createConnection(user, host, port, dbName);
 		Neo4jModelCreator modelCreator = new Neo4jModelCreator();
 
 		EObject root = modelCreator.create(con);
@@ -84,6 +85,9 @@ public class Neo4JDatabaseConnectionController {
 				connectionWizardPage_1.setHost(rdm.getHost());
 				connectionWizardPage_1.setPort( rdm.getPort());
 				connectionWizardPage_1.setUser( rdm.getUser());
+				connectionWizardPage_1.setDbName( rdm.getSchema());
+				
+		
 				
 				
 			} catch (ParserConfigurationException e) {
@@ -123,11 +127,11 @@ public class Neo4JDatabaseConnectionController {
 	
 	
 	
-	public void testConnection(User user, String host, String port) {
+	public void testConnection(User user, String host, String port, String dbName) {
 		this.user = user;
 		this.host = host;
 		this.port = port;
-		//this.schema = schema;
+		this.dbName = dbName;
 
 		Job job = new Job("Test Connection") {
 
@@ -135,7 +139,7 @@ public class Neo4JDatabaseConnectionController {
 			protected IStatus run(IProgressMonitor monitor) {
 				monitor.beginTask("Test Connection", monitor.UNKNOWN);
 
-				if (connector.testConnection(user, host, port))
+				if (connector.testConnection(user, host, port, dbName))
 					return new Status(Status.OK, "unknown", 1, "Connection Successful", null);
 				else {
 
@@ -217,6 +221,11 @@ public class Neo4JDatabaseConnectionController {
 
 	public void setConnectionWizardPage_1(Neo4jDatabaseConnectionWizardPage_1 connectionWizardPage_1) {
 		this.connectionWizardPage_1 = connectionWizardPage_1;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
+		
 	}
 
 	

@@ -68,6 +68,7 @@ import org.sidiff.difference.symmetric.SemanticChangeSet;
 
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.GraphItem;
 import de.thm.evolvedb.graph.GraphPackage;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
@@ -2244,6 +2245,11 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			renderSetEdgeTgt(set, composite);
 			return;
 		}
+		if (isRule(rule,
+			"CREATE_Property_IN_LABEL_(properties)")) { //$NON-NLS-1$
+			renderCreateProperty(set, composite);
+			return;
+		}
 
 		if (isRule(rule,
 			"MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_Label_(properties)")) { //$NON-NLS-1$
@@ -2438,6 +2444,73 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 					getReferenceService(), CUSTOM_VARIANT);
 				GraphUIHelper.createCompositeForEdgeLabel(parent, lbl, adapterFactoryItemDelegator,
 					getReferenceService(), CUSTOM_VARIANT);
+			}
+		});
+	}
+
+	private void renderCreateProperty(SemanticChangeSet set, Composite parent) {
+		firstChangeOfType(set, AddObject.class).ifPresent(ar -> {
+			final EObject a = ar.getObj();
+			final Property property = a instanceof Property ? (Property) a : null;
+
+			if (property != null) {
+
+				final GraphItem graphItem = property.getContainerElement();
+				if (graphItem instanceof EdgeLabel) {
+					section(parent, "CreateProperty → EdgeLabel"); //$NON-NLS-1$
+
+					section(parent, "New Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "EdgeLabel");
+					GraphUIHelper.createCompositeForEdgeLabel(parent, (EdgeLabel) graphItem,
+						adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof NodeLabel) {
+					section(parent, "CreateProperty → NodeLabel"); //$NON-NLS-1$
+
+					section(parent, "New Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "NodeLabel");
+					GraphUIHelper.createCompositeForNodeLabel(parent, (NodeLabel) graphItem,
+						adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof NodeType) {
+					section(parent, "CreateProperty → NodeType"); //$NON-NLS-1$
+
+					section(parent, "New Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "NodeType");
+					GraphUIHelper.createCompositeForNodeType(parent, (NodeType) graphItem, adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof EdgeType) {
+					section(parent, "CreateProperty → EdgeType"); //$NON-NLS-1$
+
+					section(parent, "New Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "EdgeLabel");
+					GraphUIHelper.createCompositeForEdgeType(parent, (EdgeType) graphItem, adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				}
 			}
 		});
 	}

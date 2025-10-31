@@ -1120,6 +1120,9 @@ public class UIUtils {
 
 	@NotNull
 	public static IDialogSettings getDialogSettings(@NotNull String dialogId) {
+		
+		//Comment to future me --> If this line fails with a null pointer exception, 
+		//check the driver path in the preferences
 		IDialogSettings workbenchSettings = UIActivator.getDefault().getDialogSettings();
 		return getSettingsSection(workbenchSettings, dialogId);
 	}

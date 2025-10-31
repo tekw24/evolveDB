@@ -83,6 +83,8 @@ public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 
 	private ProgressMonitorDialog dialog;
 
+	private MddeDifferenceBuilderMatchingPagePropertyType propertyValuePage;
+
 	private GraphDifferenceBuilderWizard() {
 		super();
 	}
@@ -354,6 +356,11 @@ public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 		nodeTypePage.setTitle(Language.WIZARD_MODEL_COMPARISON);
 		nodeTypePage.setDescription(Language.WIZARD_COMPARE_DIRECTION);
 		addPage(nodeTypePage);
+		
+		propertyValuePage = new MddeDifferenceBuilderMatchingPagePropertyType(Language.WIZARD_COMPARE_MODELS, controller);
+		propertyValuePage.setTitle(Language.WIZARD_MODEL_COMPARISON);
+		propertyValuePage.setDescription(Language.WIZARD_COMPARE_DIRECTION);
+		addPage(propertyValuePage);
 
 		// Third page
 		builderNewFilePage = new MddeDifferenceBuilderNewFilePage("Test", selection);

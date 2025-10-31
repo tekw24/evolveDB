@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
@@ -51,9 +52,9 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 	private Text hostname;
 	private Spinner portSpinner;
 	private Text usernameText;
-//	private Text textSchema;
 //	private Button checkSchema;
 	private Button btnSaveConfiguration;
+	private Text textSchema;
 
 	protected Neo4jDatabaseConnectionWizardPage_1(String pageName, IStructuredSelection selection,
 			Neo4JDatabaseConnectionController controller) {
@@ -110,7 +111,7 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fileDialog = new FileDialog(getShell());
 				// Set the text
-				//fileDialog.setText(Messages.MddeDatabaseConnectionWizardPage_1_Select_FILE);
+				// fileDialog.setText(Messages.MddeDatabaseConnectionWizardPage_1_Select_FILE);
 				fileDialog.setText("This is a Text");
 				// Set filter on .txt files
 				fileDialog.setFilterExtensions(new String[] { Messages.Neo4jDatabaseConnectionWizardPage_1_1 });
@@ -137,7 +138,9 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 		btnWorkspaceFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ResourceFileSelectionDialog dialog = new ResourceFileSelectionDialog(Messages.Neo4jDatabaseConnectionWizardPage_1_SELECT_FILE, Messages.Neo4jDatabaseConnectionWizardPage_1_SELECT_CONFIGURATION_TEXT,
+				ResourceFileSelectionDialog dialog = new ResourceFileSelectionDialog(
+						Messages.Neo4jDatabaseConnectionWizardPage_1_SELECT_FILE,
+						Messages.Neo4jDatabaseConnectionWizardPage_1_SELECT_CONFIGURATION_TEXT,
 						new String[] { Messages.Neo4jDatabaseConnectionWizardPage_1_6 });
 				if (dialog.open() == Window.OK) {
 					Object[] result = dialog.getResult();
@@ -163,10 +166,10 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 		hostname = new Text(composite, SWT.BORDER | SWT.LEAD | SWT.SINGLE);
 		hostname.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		hostname.addModifyListener(new ModifyListener() {
-			  public void modifyText(ModifyEvent e) {
-				  enableExportConfigButton();
-			    }
-			
+			public void modifyText(ModifyEvent e) {
+				enableExportConfigButton();
+			}
+
 		});
 
 		// Label for the port spinner
@@ -185,9 +188,9 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				enableExportConfigButton();
 			}
-		
+
 		});
-		
+
 		// Default Value for testing
 		// portSpinner.setSelection(3306);
 		hostname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -201,12 +204,11 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 		usernameText = new Text(composite, SWT.BORDER | SWT.LEAD | SWT.SINGLE);
 		usernameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		usernameText.addModifyListener(new ModifyListener() {
-			  public void modifyText(ModifyEvent e) {
-				  enableExportConfigButton();
-			    }
-			
+			public void modifyText(ModifyEvent e) {
+				enableExportConfigButton();
+			}
+
 		});
-			
 
 		// Label for the username textfield
 		Label labelPassword = new Label(composite, SWT.NONE);
@@ -226,15 +228,15 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 //				Messages.Neo4jDatabaseConnectionWizardPage_1_PRESELECT_SCHEMA);
 //
 //		// Label for the schema textfield
-//		Label labelSchema = new Label(composite, SWT.NONE);
-//		labelSchema.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-//		labelSchema.setText(Language.WIZARD_SCHEMA);
-//
-//		// Textfield for the Schema
-//		textSchema = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
-//		textSchema.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-//		textSchema.setEnabled(false);
-//
+		Label labelSchema = new Label(composite, SWT.NONE);
+		labelSchema.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		labelSchema.setText(Language.WIZARD_SCHEMA);
+
+		// Textfield for the Schema
+		textSchema = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+		textSchema.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		textSchema.setEnabled(true);
+
 //		checkSchema.addSelectionListener(new SelectionAdapter() {
 //			@Override
 //			public void widgetSelected(SelectionEvent e) {
@@ -254,26 +256,24 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 				String port = "" + portSpinner.getSelection(); //$NON-NLS-1$
 				String username = usernameText.getText();
 				String password = passwordField.getText();
-				//String schema = checkSchema.getSelection() ? textSchema.getText() : ""; //$NON-NLS-1$
+				String schema = textSchema.getText(); // $NON-NLS-1$
 
 				User user = new User(username, password);
-				controller.testConnection(user, host, port);
+				controller.testConnection(user, host, port, schema);
 
 			}
 		});
-		
+
 		// Save Configuration file
 		btnSaveConfiguration = new Button(composite, SWT.PUSH);
-		btnSaveConfiguration.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1,1));
+		btnSaveConfiguration.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
 		btnSaveConfiguration.setEnabled(false);
-		//btnSaveConfiguration.setText(Language.WIZARD_SAVE_CONFIG);
+		// btnSaveConfiguration.setText(Language.WIZARD_SAVE_CONFIG);
 		btnSaveConfiguration.setText(Messages.Neo4jDatabaseConnectionWizardPage_1_EXPORT_CONFIGURATION);
 		btnSaveConfiguration.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-				
-				
+
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
 				String[] extensions = { Messages.Neo4jDatabaseConnectionWizardPage_1_11 };
 				fileDialog.setFilterExtensions(extensions);
@@ -281,9 +281,9 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 				fileDialog.setFilterPath(Platform.getLocation().toOSString());
 				String filename = fileDialog.open();
 				if (filename != null) {
-					
+
 					controller.saveConfigFile(filename);
-					
+
 				}
 			}
 		});
@@ -307,34 +307,30 @@ public class Neo4jDatabaseConnectionWizardPage_1 extends WizardPage {
 
 	}
 
-//	protected void setSchema(String schema) {
-//		if (schema != null && !schema.equals("")) { //$NON-NLS-1$
-//			checkSchema.setSelection(true);
-//			textSchema.setEnabled(true);
-//			textSchema.setText(schema);
-//		}
-//
-//	}
-	
+	protected void setSchema(String schema) {
+
+		textSchema.setText(schema);
+
+	}
+
 	private void enableExportConfigButton() {
-		boolean enable = !usernameText.getText().isEmpty() && !hostname.getText().isEmpty() && portSpinner.getSelection() != 0;
-		if(enable) {
+		boolean enable = !usernameText.getText().isEmpty() && !hostname.getText().isEmpty()
+				&& portSpinner.getSelection() != 0;
+		if (enable) {
 			controller.setHost(hostname.getText());
 			controller.setUser(new User(usernameText.getText(), ""));
-			controller.setPort(""+portSpinner.getSelection());
-			//TODO 
-//			if(isSchemaSelected())
-//				controller.setSchema(textSchema.getText());
+			controller.setPort("" + portSpinner.getSelection());
+
+			controller.setDbName(textSchema.getText());
 		}
 		btnSaveConfiguration.setEnabled(enable);
-			
+
 	}
-	
-	
-	
-	
-	
-	
+
+	public void setDbName(String schema) {
+		// TODO Auto-generated method stub
+
+	}
 
 //	/**
 //	 * Returns whether the user has preselected a schema.
