@@ -1,6 +1,7 @@
 package de.thm.evolvedb.graph.xtend;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
@@ -11,8 +12,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
  * - Parameters supply all needed data; no global state required
  * 
  * Notes
- * - These are *text* templates (Xtend template expressions) that you can feed into your own GEO parser/executor.
- * - If you prefer emitting Cypher/APOC directly, see the CypherTemplates class below.
+ * - These are *text* templates (Xtend template expressions) for the GEO-DSL.
  */
 @SuppressWarnings("all")
 public class GEOTemplates {
@@ -40,218 +40,920 @@ public class GEOTemplates {
   }
 
   /**
-   * Add a node label (entity type)
+   * GEO: Add node with label <label_name>
    */
   public static CharSequence addNodeLabel(final String label) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO AddLabel {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("target: Node");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("label: ");
-    String _q = GEOTemplates.q(label);
-    _builder.append(_q, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
-  }
-
-  /**
-   * Add a relationship type (edge type)
-   */
-  public static CharSequence addRelationshipType(final String relType) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO AddRelationshipType {");
-    _builder.newLine();
-    _builder.append("type: ");
-    String _q = GEOTemplates.q(relType);
-    _builder.append(_q);
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
-  }
-
-  /**
-   * Add a property to all nodes of a label
-   */
-  public static CharSequence addNodeProperty(final String label, final String property, final String type, final String defaultValue) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO AddProperty {");
-    _builder.newLine();
-    _builder.append("target: Node(label=");
+    _builder.append("Add node with label ");
     String _q = GEOTemplates.q(label);
     _builder.append(_q);
-    _builder.append(")");
     _builder.newLineIfNotEmpty();
-    _builder.append("property { name: ");
-    String _q_1 = GEOTemplates.q(property);
-    _builder.append(_q_1);
-    _builder.append(", dtype: ");
-    String _q_2 = GEOTemplates.q(type);
-    _builder.append(_q_2);
-    _builder.append(", default: ");
-    String _q_3 = GEOTemplates.q(defaultValue);
-    _builder.append(_q_3);
-    _builder.append(" }");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Add a property to all relationships of a type
+   * GEO:
+   * Add label <label_name_to_add> to node with label <node_label>
    */
-  public static CharSequence addRelationshipProperty(final String relType, final String property, final String type, final String defaultValue) {
+  public static CharSequence addLabelToNode(final String labelToAdd, final String nodeLabel) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO AddProperty {");
-    _builder.newLine();
-    _builder.append("target: Relationship(type=");
-    String _q = GEOTemplates.q(relType);
+    _builder.append("Add label ");
+    String _q = GEOTemplates.q(labelToAdd);
     _builder.append(_q);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("property { name: ");
-    String _q_1 = GEOTemplates.q(property);
+    _builder.append(" to node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
-    _builder.append(", dtype: ");
-    String _q_2 = GEOTemplates.q(type);
-    _builder.append(_q_2);
-    _builder.append(", default: ");
-    String _q_3 = GEOTemplates.q(defaultValue);
-    _builder.append(_q_3);
-    _builder.append(" }");
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Rename a node label
+   * GEO:
+   * Delete label <label_name_to_delete> of node with label <node_label>
    */
-  public static CharSequence renameNodeLabel(final String oldLabel, final String newLabel) {
+  public static CharSequence deleteLabelFromNode(final String labelToDelete, final String nodeLabel) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO RenameLabel {");
-    _builder.newLine();
-    _builder.append("target: Node");
-    _builder.newLine();
-    _builder.append("from: ");
+    _builder.append("Delete label ");
+    String _q = GEOTemplates.q(labelToDelete);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename label <old_label> of node with label <node_label>
+   *     to label <new_label>
+   */
+  public static CharSequence renameLabelOfNode(final String oldLabel, final String nodeLabel, final String newLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename label ");
     String _q = GEOTemplates.q(oldLabel);
     _builder.append(_q);
-    _builder.newLineIfNotEmpty();
-    _builder.append("to: ");
-    String _q_1 = GEOTemplates.q(newLabel);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
+    _builder.append(" to label ");
+    String _q_2 = GEOTemplates.q(newLabel);
+    _builder.append(_q_2);
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Rename a relationship type
+   * GEO:
+   * Add property <property_name> to node with label <node_label>
    */
-  public static CharSequence renameRelationshipType(final String oldType, final String newType) {
+  public static CharSequence addSimpleNodeProperty(final String nodeLabel, final String propertyName) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO RenameRelationshipType {");
-    _builder.newLine();
-    _builder.append("from: ");
-    String _q = GEOTemplates.q(oldType);
+    _builder.append("Add property ");
+    String _q = GEOTemplates.q(propertyName);
     _builder.append(_q);
-    _builder.newLineIfNotEmpty();
-    _builder.append("to: ");
-    String _q_1 = GEOTemplates.q(newType);
+    _builder.append(" to node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Rename a property on nodes of a given label
+   * GEO:
+   * Delete property <property_name> of node with label <node_label>
    */
-  public static CharSequence renameNodeProperty(final String label, final String fromProp, final String toProp) {
+  public static CharSequence deleteNodeProperty(final String nodeLabel, final String propertyName) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO RenameProperty {");
-    _builder.newLine();
-    _builder.append("target: Node(label=");
-    String _q = GEOTemplates.q(label);
+    _builder.append("Delete property ");
+    String _q = GEOTemplates.q(propertyName);
     _builder.append(_q);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("from: ");
-    String _q_1 = GEOTemplates.q(fromProp);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
     _builder.newLineIfNotEmpty();
-    _builder.append("to: ");
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename property <fromProp> of node with label <node_label>
+   *     to property <toProp>
+   */
+  public static CharSequence renameSimpleNodeProperty(final String nodeLabel, final String fromProp, final String toProp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename property ");
+    String _q = GEOTemplates.q(fromProp);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" to property ");
     String _q_2 = GEOTemplates.q(toProp);
     _builder.append(_q_2);
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Rename a property on relationships of a given type
+   * Pfad-Variante aus deiner Definition:
+   * (Add | Delete | Rename) (label | property) ... starting at relationship with type ..., ending at relationship with type ...
+   * 
+   * Add label:
+   * Add label <labelToAdd> to node with label <nodeLabel>
+   *     starting at relationship with type <startRelType>, ending at relationship with type <endRelType>
+   */
+  public static CharSequence addLabelToNodeOnPath(final String labelToAdd, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add label ");
+    String _q = GEOTemplates.q(labelToAdd);
+    _builder.append(_q);
+    _builder.append(" to node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_2 = GEOTemplates.q(startRelType);
+    _builder.append(_q_2, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_3 = GEOTemplates.q(endRelType);
+    _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Delete label ... on path
+   */
+  public static CharSequence deleteLabelFromNodeOnPath(final String labelToDelete, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete label ");
+    String _q = GEOTemplates.q(labelToDelete);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_2 = GEOTemplates.q(startRelType);
+    _builder.append(_q_2, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_3 = GEOTemplates.q(endRelType);
+    _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Rename label ... on path
+   */
+  public static CharSequence renameLabelOfNodeOnPath(final String oldLabel, final String newLabel, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename label ");
+    String _q = GEOTemplates.q(oldLabel);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" to label ");
+    String _q_2 = GEOTemplates.q(newLabel);
+    _builder.append(_q_2);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_3 = GEOTemplates.q(startRelType);
+    _builder.append(_q_3, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_4 = GEOTemplates.q(endRelType);
+    _builder.append(_q_4, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Add property ... on path
+   */
+  public static CharSequence addPropertyToNodeOnPath(final String propertyName, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add property ");
+    String _q = GEOTemplates.q(propertyName);
+    _builder.append(_q);
+    _builder.append(" to node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_2 = GEOTemplates.q(startRelType);
+    _builder.append(_q_2, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_3 = GEOTemplates.q(endRelType);
+    _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Delete property ... on path
+   */
+  public static CharSequence deletePropertyFromNodeOnPath(final String propertyName, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete property ");
+    String _q = GEOTemplates.q(propertyName);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_2 = GEOTemplates.q(startRelType);
+    _builder.append(_q_2, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_3 = GEOTemplates.q(endRelType);
+    _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Rename property ... on path
+   */
+  public static CharSequence renamePropertyOfNodeOnPath(final String fromProp, final String toProp, final String nodeLabel, final String startRelType, final String endRelType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename property ");
+    String _q = GEOTemplates.q(fromProp);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" to property ");
+    String _q_2 = GEOTemplates.q(toProp);
+    _builder.append(_q_2);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("starting at relationship with type ");
+    String _q_3 = GEOTemplates.q(startRelType);
+    _builder.append(_q_3, "    ");
+    _builder.append(", ending at relationship with type ");
+    String _q_4 = GEOTemplates.q(endRelType);
+    _builder.append(_q_4, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename label <old_label> of node with label <old_label> to label <new_label>
+   */
+  public static CharSequence renameNodeLabel(final String oldLabel, final String newLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename label ");
+    String _q = GEOTemplates.q(oldLabel);
+    _builder.append(_q);
+    _builder.append(" of node with label ");
+    String _q_1 = GEOTemplates.q(oldLabel);
+    _builder.append(_q_1);
+    _builder.append(" to label ");
+    String _q_2 = GEOTemplates.q(newLabel);
+    _builder.append(_q_2);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename type <old_type> of relationship with type <old_type> to type <new_type>
+   */
+  public static CharSequence renameRelationshipType(final String oldType, final String newType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename type ");
+    String _q = GEOTemplates.q(oldType);
+    _builder.append(_q);
+    _builder.append(" of relationship with type ");
+    String _q_1 = GEOTemplates.q(oldType);
+    _builder.append(_q_1);
+    _builder.append(" to type ");
+    String _q_2 = GEOTemplates.q(newType);
+    _builder.append(_q_2);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Delete node with label <label_name> with/without connecting relationships
+   */
+  public static CharSequence deleteNode(final String label, final boolean withConnectingRelationships) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete node with label ");
+    String _q = GEOTemplates.q(label);
+    _builder.append(_q);
+    _builder.append(" ");
+    {
+      if (withConnectingRelationships) {
+        _builder.append("with");
+      } else {
+        _builder.append("without");
+      }
+    }
+    _builder.append(" connecting relationships");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Einfache Variante:
+   * Add relationship with type <type_name>
+   */
+  public static CharSequence addRelationshipType(final String relType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add relationship with type ");
+    String _q = GEOTemplates.q(relType);
+    _builder.append(_q);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Vollständiger laut Definition:
+   * Add relationship with type <type_name> starting at node with label <startLabel>, ending at node with label <endLabel>
+   */
+  public static CharSequence addRelationship(final String relType, final String startNodeLabel, final String endNodeLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add relationship with type ");
+    String _q = GEOTemplates.q(relType);
+    _builder.append(_q);
+    _builder.append(" starting at node with label ");
+    String _q_1 = GEOTemplates.q(startNodeLabel);
+    _builder.append(_q_1);
+    _builder.append(", ending at node with label ");
+    String _q_2 = GEOTemplates.q(endNodeLabel);
+    _builder.append(_q_2);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Delete relationship with type <type_name> starting at node with label <startLabel>, ending at node with label <endLabel>
+   */
+  public static CharSequence deleteRelationship(final String relType, final String startNodeLabel, final String endNodeLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete relationship with type ");
+    String _q = GEOTemplates.q(relType);
+    _builder.append(_q);
+    _builder.append(" starting at node with label ");
+    String _q_1 = GEOTemplates.q(startNodeLabel);
+    _builder.append(_q_1);
+    _builder.append(", ending at node with label ");
+    String _q_2 = GEOTemplates.q(endNodeLabel);
+    _builder.append(_q_2);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename relationship with type <old_type> starting at node with label <startLabel>, ending at node with label <endLabel>
+   *     to relationship with type <new_type>
+   */
+  public static CharSequence renameRelationshipBetween(final String oldType, final String newType, final String startNodeLabel, final String endNodeLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename relationship with type ");
+    String _q = GEOTemplates.q(oldType);
+    _builder.append(_q);
+    _builder.append(" starting at node with label ");
+    String _q_1 = GEOTemplates.q(startNodeLabel);
+    _builder.append(_q_1);
+    _builder.append(", ending at node with label ");
+    String _q_2 = GEOTemplates.q(endNodeLabel);
+    _builder.append(_q_2);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("to relationship with type ");
+    String _q_3 = GEOTemplates.q(newType);
+    _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Add property <property> of type <type> with default <default> to relationship with type <relType>
+   */
+  public static CharSequence addRelationshipProperty(final String relType, final String property, final String type, final String defaultValue) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add property ");
+    String _q = GEOTemplates.q(property);
+    _builder.append(_q);
+    _builder.append(" of type ");
+    String _q_1 = GEOTemplates.q(type);
+    _builder.append(_q_1);
+    _builder.append(" with default ");
+    String _q_2 = GEOTemplates.q(defaultValue);
+    _builder.append(_q_2);
+    _builder.append(" to relationship with type ");
+    String _q_3 = GEOTemplates.q(relType);
+    _builder.append(_q_3);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Delete property <property> of relationship with type <relType>
+   */
+  public static CharSequence deleteRelationshipProperty(final String relType, final String property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete property ");
+    String _q = GEOTemplates.q(property);
+    _builder.append(_q);
+    _builder.append(" of relationship with type ");
+    String _q_1 = GEOTemplates.q(relType);
+    _builder.append(_q_1);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Rename property <fromProp> of relationship with type <relType> to property <toProp>
+   */
+  public static CharSequence renameRelationshipProperty(final String relType, final String fromProp, final String toProp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Rename property ");
+    String _q = GEOTemplates.q(fromProp);
+    _builder.append(_q);
+    _builder.append(" of relationship with type ");
+    String _q_1 = GEOTemplates.q(relType);
+    _builder.append(_q_1);
+    _builder.append(" to property ");
+    String _q_2 = GEOTemplates.q(toProp);
+    _builder.append(_q_2);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Copy label <featureName> of node with label <fromId> to node with label <toId>
+   * Copy property <featureName> of relationship with type <fromId> to node with label <toId>
+   * 
+   * Parameter:
+   *  featureKind : "label" or "property"
+   *  fromKind    : "node" or "relationship"
+   *  toKind      : "node" or "relationship"
+   *  fromId      : Labelname (bei node) oder Typname (bei relationship)
+   *  toId        : Labelname (bei node) oder Typname (bei relationship)
+   */
+  public static CharSequence copyFeature(final String featureKind, final String featureName, final String fromKind, final String fromId, final String toKind, final String toId) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Copy ");
+    _builder.append(featureKind);
+    _builder.append(" ");
+    String _q = GEOTemplates.q(featureName);
+    _builder.append(_q);
+    _builder.append(" of ");
+    _builder.append(fromKind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(fromKind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q_1 = GEOTemplates.q(fromId);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("to ");
+    _builder.append(toKind, "    ");
+    _builder.append(" with ");
+    {
+      boolean _equals_1 = Objects.equals(toKind, "node");
+      if (_equals_1) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q_2 = GEOTemplates.q(toId);
+    _builder.append(_q_2, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Move <featureKind> <featureName> of <fromKind> with label/type <fromId>
+   *     to <toKind> with label/type <toId>
+   */
+  public static CharSequence moveFeature(final String featureKind, final String featureName, final String fromKind, final String fromId, final String toKind, final String toId) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Move ");
+    _builder.append(featureKind);
+    _builder.append(" ");
+    String _q = GEOTemplates.q(featureName);
+    _builder.append(_q);
+    _builder.append(" of ");
+    _builder.append(fromKind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(fromKind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q_1 = GEOTemplates.q(fromId);
+    _builder.append(_q_1);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("to ");
+    _builder.append(toKind, "    ");
+    _builder.append(" with ");
+    {
+      boolean _equals_1 = Objects.equals(toKind, "node");
+      if (_equals_1) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q_2 = GEOTemplates.q(toId);
+    _builder.append(_q_2, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * relationHandling:
+   *  - "keep"
+   *  - "delete"
+   *  - "keepOfPartA"
+   *  - "keepOfPartB"
+   * 
+   * GEO (Beispiele):
+   * Split node with label "Person" at property "status" keep relations
+   * Split relationship with type "KNOWS" at property "since" delete relations
+   * Split node with label "Person" at property "status" keep relations "of" partA
+   */
+  public static CharSequence splitElement(final String kind, final String id, final String propertyName, final String relationHandling, final String partALabel, final String partBLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Split ");
+    _builder.append(kind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(kind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q = GEOTemplates.q(id);
+    _builder.append(_q);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("at property ");
+    String _q_1 = GEOTemplates.q(propertyName);
+    _builder.append(_q_1, "    ");
+    _builder.append(" ");
+    {
+      boolean _equals_1 = Objects.equals(relationHandling, "keep");
+      if (_equals_1) {
+        _builder.append("keep relations");
+      } else {
+        boolean _equals_2 = Objects.equals(relationHandling, "delete");
+        if (_equals_2) {
+          _builder.append("delete relations");
+        } else {
+          boolean _equals_3 = Objects.equals(relationHandling, "keepOfPartA");
+          if (_equals_3) {
+            _builder.append("keep relations \"of\" ");
+            String _q_2 = GEOTemplates.q(partALabel);
+            _builder.append(_q_2, "    ");
+          } else {
+            boolean _equals_4 = Objects.equals(relationHandling, "keepOfPartB");
+            if (_equals_4) {
+              _builder.append("keep relations \"of\" ");
+              String _q_3 = GEOTemplates.q(partBLabel);
+              _builder.append(_q_3, "    ");
+            }
+          }
+        }
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("into ");
+    _builder.append(kind, "    ");
+    _builder.append(" with label/type ");
+    String _q_4 = GEOTemplates.q(partALabel);
+    _builder.append(_q_4, "    ");
+    _builder.append(" and ");
+    String _q_5 = GEOTemplates.q(partBLabel);
+    _builder.append(_q_5, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Transform node with label <label> to relationship with type <relType>
+   */
+  public static CharSequence transformNodeToRelationship(final String nodeLabel, final String relType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Transform node with label ");
+    String _q = GEOTemplates.q(nodeLabel);
+    _builder.append(_q);
+    _builder.append(" to relationship with type ");
+    String _q_1 = GEOTemplates.q(relType);
+    _builder.append(_q_1);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * GEO:
+   * Transform relationship with type <relType> to node with label <label>
+   */
+  public static CharSequence transformRelationshipToNode(final String relType, final String nodeLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Transform relationship with type ");
+    String _q = GEOTemplates.q(relType);
+    _builder.append(_q);
+    _builder.append(" to node with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * propertyKind : "duplicate" or "different"
+   * elementKind  : "node" or "relationship"
+   * deleteStrategy : "cascadeDelete" or "restrictedDelete"
+   * joinType       : "inner" or "full outer exclusive"
+   * 
+   * GEO:
+   * Merge <propertyKind> properties of <elementKind> with label/type <id>,
+   *     (add label <extraLabels>)* and <deleteStrategy> originals -> <joinType> join
+   */
+  public static CharSequence mergeProperties(final String propertyKind, final String elementKind, final String id, final List<String> extraLabels, final String deleteStrategy, final String joinType) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Merge ");
+    _builder.append(propertyKind);
+    _builder.append(" properties of ");
+    _builder.append(elementKind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(elementKind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q = GEOTemplates.q(id);
+    _builder.append(_q);
+    {
+      if (((extraLabels != null) && (!extraLabels.isEmpty()))) {
+        _builder.newLineIfNotEmpty();
+        _builder.append(", add label(s) [");
+        {
+          boolean _hasElements = false;
+          for(final String l : extraLabels) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            String _q_1 = GEOTemplates.q(l);
+            _builder.append(_q_1);
+          }
+        }
+        _builder.append("]");
+      }
+    }
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("and ");
+    _builder.append(deleteStrategy, "    ");
+    _builder.append(" originals -> ");
+    _builder.append(joinType, "    ");
+    _builder.append(" join");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * keepSide    : "left" or "right"
+   * elementKind : "node" or "relationship"
+   * 
+   * GEO:
+   * Keep all features of <keepSide> <elementKind> with label/type <leftId/rightId>
+   *     add duplicates from <otherSide> <elementKind> with label/type <...> -> left/right join
+   */
+  public static CharSequence keepAllFeaturesJoin(final String keepSide, final String elementKind, final String leftId, final String rightId) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Keep all features of ");
+    _builder.append(keepSide);
+    _builder.append(" ");
+    _builder.append(elementKind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(elementKind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    {
+      boolean _equals_1 = Objects.equals(keepSide, "left");
+      if (_equals_1) {
+        String _q = GEOTemplates.q(leftId);
+        _builder.append(_q);
+      } else {
+        String _q_1 = GEOTemplates.q(rightId);
+        _builder.append(_q_1);
+      }
+    }
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("add duplicates from ");
+    {
+      boolean _equals_2 = Objects.equals(keepSide, "left");
+      if (_equals_2) {
+        _builder.append("right");
+      } else {
+        _builder.append("left");
+      }
+    }
+    _builder.append(" ");
+    _builder.append(elementKind, "    ");
+    _builder.append(" with ");
+    {
+      boolean _equals_3 = Objects.equals(elementKind, "node");
+      if (_equals_3) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    {
+      boolean _equals_4 = Objects.equals(keepSide, "left");
+      if (_equals_4) {
+        String _q_2 = GEOTemplates.q(rightId);
+        _builder.append(_q_2, "    ");
+      } else {
+        String _q_3 = GEOTemplates.q(leftId);
+        _builder.append(_q_3, "    ");
+      }
+    }
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("-> ");
+    {
+      boolean _equals_5 = Objects.equals(keepSide, "left");
+      if (_equals_5) {
+        _builder.append("left");
+      } else {
+        _builder.append("right");
+      }
+    }
+    _builder.append(" join");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * deleteStrategy : "cascadeDelete" or "restrictedDelete"
+   * 
+   * GEO:
+   * copy properties of <fromKind> with label/type <fromId> to <toKind> with label/type <toId>
+   *     and <deleteStrategy> originals -> full outer inclusive
+   */
+  public static CharSequence copyPropertiesAndDeleteOriginals(final String fromKind, final String fromId, final String toKind, final String toId, final String deleteStrategy) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("copy properties of ");
+    _builder.append(fromKind);
+    _builder.append(" with ");
+    {
+      boolean _equals = Objects.equals(fromKind, "node");
+      if (_equals) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q = GEOTemplates.q(fromId);
+    _builder.append(_q);
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("to ");
+    _builder.append(toKind, "    ");
+    _builder.append(" with ");
+    {
+      boolean _equals_1 = Objects.equals(toKind, "node");
+      if (_equals_1) {
+        _builder.append("label");
+      } else {
+        _builder.append("type");
+      }
+    }
+    _builder.append(" ");
+    String _q_1 = GEOTemplates.q(toId);
+    _builder.append(_q_1, "    ");
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("and ");
+    _builder.append(deleteStrategy, "    ");
+    _builder.append(" originals -> full outer inclusive");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Spezielle Merge-Variante aus deiner ursprünglichen Klasse.
+   * Passt nicht 1:1 in die neue Kurzsyntax, bleibt aber als Komfort-Template bestehen.
    */
   public static CharSequence mergeNodes(final String label, final List<String> keyProperties, final String conflictStrategy) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO MergeNodes {");
-    _builder.newLine();
-    _builder.append("label: ");
+    _builder.append("Merge duplicate properties of node with label ");
     String _q = GEOTemplates.q(label);
     _builder.append(_q);
+    _builder.append(" ");
     _builder.newLineIfNotEmpty();
-    _builder.append("keys: [ ");
+    _builder.append("    ");
+    _builder.append("using keys [");
     {
       boolean _hasElements = false;
       for(final String k : keyProperties) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
-          _builder.appendImmediate(", ", "");
+          _builder.appendImmediate(", ", "    ");
         }
         String _q_1 = GEOTemplates.q(k);
-        _builder.append(_q_1);
+        _builder.append(_q_1, "    ");
       }
     }
-    _builder.append(" ]");
+    _builder.append("] ");
     _builder.newLineIfNotEmpty();
-    _builder.append("conflict: ");
+    _builder.append("    ");
+    _builder.append("and conflict strategy ");
     String _q_2 = GEOTemplates.q(conflictStrategy);
-    _builder.append(_q_2);
+    _builder.append(_q_2, "    ");
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Copy a subgraph outward from nodes with a label up to a depth, optionally filter relationship types.
+   * Eigenständige Copy-Subgraph-Operation (nicht explizit in der Liste, aber hilfreich).
    */
   public static CharSequence copySubgraph(final String rootLabel, final int depth, final Set<String> includeRelTypes) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO CopySubgraph {");
-    _builder.newLine();
-    _builder.append("roots: Node(label=");
+    _builder.append("Copy subgraph of nodes with label ");
     String _q = GEOTemplates.q(rootLabel);
     _builder.append(_q);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("depth: ");
+    _builder.append(" up to depth ");
     _builder.append(depth);
-    _builder.newLineIfNotEmpty();
     {
       if (((includeRelTypes != null) && (!includeRelTypes.isEmpty()))) {
-        _builder.append("includeRels: [ ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("including relationships with types [");
         {
           boolean _hasElements = false;
           for(final String t : includeRelTypes) {
@@ -264,69 +966,55 @@ public class GEOTemplates {
             _builder.append(_q_1);
           }
         }
-        _builder.append(" ]");
-        _builder.newLineIfNotEmpty();
+        _builder.append("]");
       }
     }
-    _builder.append("}");
-    _builder.newLine();
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
 
   /**
-   * Split a node set by a predicate into two labels; predicate is a DSL/Cypher-like expression you decide.
+   * Split node – ursprüngliche Variante mit Prädikat und zwei Labels.
    */
   public static CharSequence splitNode(final String label, final String predicateExpr, final String newLabelTrue, final String newLabelFalse) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO SplitNode {");
-    _builder.newLine();
-    _builder.append("source: Node(label=");
+    _builder.append("Split node with label ");
     String _q = GEOTemplates.q(label);
     _builder.append(_q);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("when: ");
+    _builder.append(" using predicate ");
     String _q_1 = GEOTemplates.q(predicateExpr);
     _builder.append(_q_1);
+    _builder.append(" ");
     _builder.newLineIfNotEmpty();
-    _builder.append("then: Node(label=");
+    _builder.append("    ");
+    _builder.append("into node with label ");
     String _q_2 = GEOTemplates.q(newLabelTrue);
-    _builder.append(_q_2);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("else: Node(label=");
+    _builder.append(_q_2, "    ");
+    _builder.append(" and node with label ");
     String _q_3 = GEOTemplates.q(newLabelFalse);
-    _builder.append(_q_3);
-    _builder.append(")");
+    _builder.append(_q_3, "    ");
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 
   /**
-   * Move a subgraph selected by a path pattern under a new root/label (logical relocation)
+   * Move subgraph – ursprüngliche Variante mit Pfad.
    */
   public static CharSequence moveSubgraph(final String startLabel, final String pathPattern, final String newRootLabel) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("GEO MoveSubgraph {");
-    _builder.newLine();
-    _builder.append("start: Node(label=");
+    _builder.append("Move subgraph starting at node with label ");
     String _q = GEOTemplates.q(startLabel);
     _builder.append(_q);
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("path: ");
+    _builder.append(" along path ");
     String _q_1 = GEOTemplates.q(pathPattern);
     _builder.append(_q_1);
+    _builder.append(" ");
     _builder.newLineIfNotEmpty();
-    _builder.append("targetRoot: Node(label=");
+    _builder.append("    ");
+    _builder.append("to node with label ");
     String _q_2 = GEOTemplates.q(newRootLabel);
-    _builder.append(_q_2);
-    _builder.append(")");
+    _builder.append(_q_2, "    ");
     _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
 }

@@ -2,7 +2,9 @@ package de.thm.evolvedb.graph.xtend;
 
 import de.thm.evolvedb.graph.PropertyGraph;
 import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperatorType;
 import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType;
 import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.GraphResolvableOperatorType;
 import de.thm.evolvedb.migration.Migration;
@@ -95,14 +97,12 @@ public class GraphGEOGenerator {
     if (_displayName != null) {
       switch (_displayName) {
         case ADD_LABEL_TO_NODE_TYPE:
-          _switchResult = null;
-          break;
+          return GraphChangeOperator.addLabelToNodeType(operator);
         case ADD_REFERENCE_OR_MEMBER:
           _switchResult = null;
           break;
         case CHANGE_NAME:
-          _switchResult = null;
-          break;
+          return GraphChangeOperator.changeName(operator);
         case CHANGE_TYPE:
           _switchResult = null;
           break;
@@ -113,17 +113,52 @@ public class GraphGEOGenerator {
           _switchResult = null;
           break;
         case CREATE_NODE_TYPE:
-          _switchResult = null;
-          break;
+          return GraphCreateOperator.createNodeType(operator);
         case CREATE_PROPERTY:
-          _switchResult = null;
-          break;
+          return GraphCreateOperator.createProperty(operator);
         case CREATE_LABEL:
           return GraphCreateOperator.createLabel(operator);
         case WIDEN_NUMERIC_TYPE:
           _switchResult = null;
           break;
         case WIDEN_TEMPORAL_TYPE:
+          _switchResult = null;
+          break;
+        default:
+          String _name = operator.getDisplayName().name();
+          return ("Operator unknown: " + _name);
+      }
+    } else {
+      String _name = operator.getDisplayName().name();
+      return ("Operator unknown: " + _name);
+    }
+    return ((String)_switchResult);
+  }
+
+  public String processPartiallyResolvableOperator(final GraphPartiallyResolvableOperator operator) {
+    Object _switchResult = null;
+    GraphPartiallyResolvableOperatorType _displayName = operator.getDisplayName();
+    if (_displayName != null) {
+      switch (_displayName) {
+        case DELETE_EDGE_TYPE:
+          return GraphDeleteOperator.deleteEdgeType(operator);
+        case DELETE_LABEL:
+          return GraphDeleteOperator.deleteLabel(operator);
+        case DELETE_NODE_TYPE:
+          return GraphDeleteOperator.deleteNodeType(operator);
+        case REMOVE_PROPERTY_LABEL:
+          return GraphDeleteOperator.deletePropertyLabel(operator);
+        case REMOVE_PROPERTY_EDGE_TYPE:
+          return GraphDeleteOperator.deletePropertyEdgeType(operator);
+        case REMOVE_PROPERTY_NODE_TYPE:
+          return GraphDeleteOperator.deletePropertyNodeType(operator);
+        case NARROW_NUMERIC_TYPE:
+          _switchResult = null;
+          break;
+        case NARROW_TEMPORAL_TYPE:
+          _switchResult = null;
+          break;
+        case REMOVE_REFERENCE_OR_CONSTRAINT:
           _switchResult = null;
           break;
         case BINARY_ENCODING_CHANGE:
@@ -138,5 +173,29 @@ public class GraphGEOGenerator {
       return ("Operator unknown: " + _name);
     }
     return ((String)_switchResult);
+  }
+
+  public String processNotAutomaticallyResolvableOperator(final GraphNotAutomaticallyResolvableOperator operator) {
+    GraphNotAutomaticallyResolvableOperatorType _displayName = operator.getDisplayName();
+    if (_displayName != null) {
+      switch (_displayName) {
+        case MOVE_COMBINED:
+          return GraphChangeOperator.moveCombined(operator);
+        case MOVE_EDGE_TYPE:
+          return GraphChangeOperator.moveEdgeType(operator);
+        case MOVE_LABEL:
+          return GraphChangeOperator.moveLabel(operator);
+        case MOVE_NODE_TYPE:
+          return GraphChangeOperator.moveNodeType(operator);
+        case MOVE_PROPERTY:
+          return GraphChangeOperator.moveProperty(operator);
+        default:
+          String _name = operator.getDisplayName().name();
+          return ("Operator unknown: " + _name);
+      }
+    } else {
+      String _name = operator.getDisplayName().name();
+      return ("Operator unknown: " + _name);
+    }
   }
 }

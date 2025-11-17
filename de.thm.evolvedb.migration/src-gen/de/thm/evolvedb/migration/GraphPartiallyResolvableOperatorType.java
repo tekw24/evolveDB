@@ -86,7 +86,39 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	NARROW_TEMPORAL_TYPE(6, "NARROW_TEMPORAL_TYPE", "NARROW_TEMPORAL_TYPE");
+	NARROW_TEMPORAL_TYPE(6, "NARROW_TEMPORAL_TYPE", "NARROW_TEMPORAL_TYPE"), /**
+	 * The '<em><b>REMOVE PROPERTY LABEL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_LABEL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	REMOVE_PROPERTY_LABEL(7, "REMOVE_PROPERTY_LABEL", "REMOVE_PROPERTY_LABEL"), /**
+	 * The '<em><b>REMOVE PROPERTY EDGE TYPE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_EDGE_TYPE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	REMOVE_PROPERTY_EDGE_TYPE(8, "REMOVE_PROPERTY_EDGE_TYPE", "REMOVE_PROPERTY_EDGE_TYPE"), /**
+	 * The '<em><b>REMOVE PROPERTY NODE TYPE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_NODE_TYPE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	REMOVE_PROPERTY_NODE_TYPE(9, "REMOVE_PROPERTY_NODE_TYPE", "REMOVE_PROPERTY_NODE_TYPE"), /**
+	 * The '<em><b>BINARY ENCODING CHANGE</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #BINARY_ENCODING_CHANGE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	BINARY_ENCODING_CHANGE(10, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE");
 
 	/**
 	 * The '<em><b>DELETE NODE TYPE</b></em>' literal value.
@@ -166,6 +198,50 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 	public static final int NARROW_TEMPORAL_TYPE_VALUE = 6;
 
 	/**
+	 * The '<em><b>REMOVE PROPERTY LABEL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_LABEL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REMOVE_PROPERTY_LABEL_VALUE = 7;
+
+	/**
+	 * The '<em><b>REMOVE PROPERTY EDGE TYPE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_EDGE_TYPE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REMOVE_PROPERTY_EDGE_TYPE_VALUE = 8;
+
+	/**
+	 * The '<em><b>REMOVE PROPERTY NODE TYPE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_PROPERTY_NODE_TYPE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REMOVE_PROPERTY_NODE_TYPE_VALUE = 9;
+
+	/**
+	 * The '<em><b>BINARY ENCODING CHANGE</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #BINARY_ENCODING_CHANGE
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BINARY_ENCODING_CHANGE_VALUE = 10;
+
+	/**
 	 * An array of all the '<em><b>Graph Partially Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -180,6 +256,10 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 			DELETE_PROPERTY_GRAPH,
 			NARROW_NUMERIC_TYPE,
 			NARROW_TEMPORAL_TYPE,
+			REMOVE_PROPERTY_LABEL,
+			REMOVE_PROPERTY_EDGE_TYPE,
+			REMOVE_PROPERTY_NODE_TYPE,
+			BINARY_ENCODING_CHANGE,
 		};
 
 	/**
@@ -243,6 +323,10 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 			case DELETE_PROPERTY_GRAPH_VALUE: return DELETE_PROPERTY_GRAPH;
 			case NARROW_NUMERIC_TYPE_VALUE: return NARROW_NUMERIC_TYPE;
 			case NARROW_TEMPORAL_TYPE_VALUE: return NARROW_TEMPORAL_TYPE;
+			case REMOVE_PROPERTY_LABEL_VALUE: return REMOVE_PROPERTY_LABEL;
+			case REMOVE_PROPERTY_EDGE_TYPE_VALUE: return REMOVE_PROPERTY_EDGE_TYPE;
+			case REMOVE_PROPERTY_NODE_TYPE_VALUE: return REMOVE_PROPERTY_NODE_TYPE;
+			case BINARY_ENCODING_CHANGE_VALUE: return BINARY_ENCODING_CHANGE;
 		}
 		return null;
 	}

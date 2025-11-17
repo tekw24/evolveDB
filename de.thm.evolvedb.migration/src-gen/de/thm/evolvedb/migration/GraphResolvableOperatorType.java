@@ -99,14 +99,6 @@ public enum GraphResolvableOperatorType implements Enumerator {
 	WIDEN_TEMPORAL_TYPE(7, "WIDEN_TEMPORAL_TYPE", "WIDEN_TEMPORAL_TYPE"),
 
 	/**
-	 * The '<em><b>BINARY ENCODING CHANGE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #BINARY_ENCODING_CHANGE_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	BINARY_ENCODING_CHANGE(8, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE"), /**
 	 * The '<em><b>CREATE PROPERTY</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -229,17 +221,6 @@ public enum GraphResolvableOperatorType implements Enumerator {
 	public static final int WIDEN_TEMPORAL_TYPE_VALUE = 7;
 
 	/**
-	 * The '<em><b>BINARY ENCODING CHANGE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #BINARY_ENCODING_CHANGE
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int BINARY_ENCODING_CHANGE_VALUE = 8;
-
-	/**
 	 * The '<em><b>CREATE PROPERTY</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -299,7 +280,6 @@ public enum GraphResolvableOperatorType implements Enumerator {
 			ADD_REFERENCE_OR_MEMBER,
 			WIDEN_NUMERIC_TYPE,
 			WIDEN_TEMPORAL_TYPE,
-			BINARY_ENCODING_CHANGE,
 			CREATE_PROPERTY,
 			ADD_LABEL_TO_NODE_TYPE,
 			CHANGE_TYPE,
@@ -368,7 +348,6 @@ public enum GraphResolvableOperatorType implements Enumerator {
 			case ADD_REFERENCE_OR_MEMBER_VALUE: return ADD_REFERENCE_OR_MEMBER;
 			case WIDEN_NUMERIC_TYPE_VALUE: return WIDEN_NUMERIC_TYPE;
 			case WIDEN_TEMPORAL_TYPE_VALUE: return WIDEN_TEMPORAL_TYPE;
-			case BINARY_ENCODING_CHANGE_VALUE: return BINARY_ENCODING_CHANGE;
 			case CREATE_PROPERTY_VALUE: return CREATE_PROPERTY;
 			case ADD_LABEL_TO_NODE_TYPE_VALUE: return ADD_LABEL_TO_NODE_TYPE;
 			case CHANGE_TYPE_VALUE: return CHANGE_TYPE;

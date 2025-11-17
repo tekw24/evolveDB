@@ -13,6 +13,7 @@ import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator
 import de.thm.evolvedb.migration.GraphNotAutomaticallyResolvableOperator
 import de.thm.evolvedb.migration.ProcessStatus
 import de.thm.evolvedb.migration.SchemaModificationOperator
+import java.awt.GraphicsDevice
 
 class GraphGEOGenerator {
 
@@ -81,39 +82,128 @@ class GraphGEOGenerator {
 	def String processResolvableOperator(GraphResolvableOperator operator) {
 		switch (operator.displayName) {
 			case ADD_LABEL_TO_NODE_TYPE: {
+				return GraphChangeOperator.addLabelToNodeType(operator);
+				
 				
 			}
 			case ADD_REFERENCE_OR_MEMBER: {
+				//TODO
 				
 			}
 			case CHANGE_NAME: {
+				return GraphChangeOperator.changeName(operator);
 				
 			}
 			case CHANGE_TYPE: {
+				//TODO
 				
 			}
 			case CREATE_CONSTRAINT_IN_LABEL: {
-				
+				//TODO
 			}
 			case CREATE_EDGE_TYPE: {
-				
+				//TODO
 			}
 			case CREATE_NODE_TYPE: {
-				
+				return GraphCreateOperator.createNodeType(operator);
 			}
 			case CREATE_PROPERTY: {
-				
+				return GraphCreateOperator.createProperty(operator);
 			}
 			case CREATE_LABEL: {
 				return GraphCreateOperator.createLabel(operator);
 			}
 			case WIDEN_NUMERIC_TYPE: {
 				
+				//TODO
+				
 			}
 			case WIDEN_TEMPORAL_TYPE: {
 				
+				//TODO
+				
 			}
+			
+			default: {
+				return 'Operator unknown: ' + operator.displayName.name()
+			}
+		}
+	}
+	
+	def String processPartiallyResolvableOperator(GraphPartiallyResolvableOperator operator) {
+		
+		switch (operator.displayName) {
+			case DELETE_EDGE_TYPE: {
+				return GraphDeleteOperator.deleteEdgeType(operator);
+				
+			}
+			case DELETE_LABEL: {
+				
+				return GraphDeleteOperator.deleteLabel(operator);
+				
+			}
+			case DELETE_NODE_TYPE: {
+				return GraphDeleteOperator.deleteNodeType(operator);
+				
+			}
+			case REMOVE_PROPERTY_LABEL: {
+				return GraphDeleteOperator.deletePropertyLabel(operator);
+				
+			}
+			
+			case REMOVE_PROPERTY_EDGE_TYPE: {
+				return GraphDeleteOperator.deletePropertyEdgeType(operator);
+				
+			}
+			
+			case REMOVE_PROPERTY_NODE_TYPE: {
+				return GraphDeleteOperator.deletePropertyNodeType(operator);
+				
+			}
+			case NARROW_NUMERIC_TYPE: {
+				//TODO
+				
+				
+			}
+			case NARROW_TEMPORAL_TYPE: {
+				//TODO
+				
+			}
+			case REMOVE_REFERENCE_OR_CONSTRAINT: {
+				//TODO 
+				
+			}
+			
 			case BINARY_ENCODING_CHANGE: {
+				
+				//TODO
+				
+			}
+			default: {
+				return 'Operator unknown: ' + operator.displayName.name()
+			}
+		}
+		
+	}
+	
+	def String processNotAutomaticallyResolvableOperator(GraphNotAutomaticallyResolvableOperator operator) {
+		switch (operator.displayName) {
+			case MOVE_COMBINED: {
+				return GraphChangeOperator.moveCombined(operator);
+				
+			}
+			case MOVE_EDGE_TYPE: {
+				return GraphChangeOperator.moveEdgeType(operator);
+			}
+			case MOVE_LABEL: {
+				return GraphChangeOperator.moveLabel(operator);
+			}
+			case MOVE_NODE_TYPE: {
+				return GraphChangeOperator.moveNodeType(operator);
+				
+			}
+			case MOVE_PROPERTY: {
+				return GraphChangeOperator.moveProperty(operator);
 				
 			}
 			default: {

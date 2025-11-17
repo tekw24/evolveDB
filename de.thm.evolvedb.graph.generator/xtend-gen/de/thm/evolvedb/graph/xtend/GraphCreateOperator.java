@@ -90,9 +90,9 @@ public class GraphCreateOperator {
           EObject _obj_3 = a_1.getObj();
           Property property = ((Property) _obj_3);
           String _content_1 = content;
-          CharSequence _addNodeProperty = GEOTemplates.addNodeProperty(nodelabel.getName(), property.getName(), GeoTypeMapper.toGeoType(property.getValue()), 
-            "");
-          content = (_content_1 + _addNodeProperty);
+          CharSequence _addPropertyToNodeOnPath = GEOTemplates.addPropertyToNodeOnPath(nodelabel.getName(), property.getName(), 
+            GeoTypeMapper.toGeoType(property.getValue()), "");
+          content = (_content_1 + _addPropertyToNodeOnPath);
         }
       }
       return content;
@@ -154,5 +154,59 @@ public class GraphCreateOperator {
       return content;
     }
     return "";
+  }
+
+  public static String createNodeType(final GraphResolvableOperator operator) {
+    Object _xifexpression = null;
+    ProcessStatus _processStatus = operator.getProcessStatus();
+    boolean _tripleEquals = (_processStatus == ProcessStatus.RESOLVED);
+    if (_tripleEquals) {
+      _xifexpression = null;
+    } else {
+      return "";
+    }
+    return ((String)_xifexpression);
+  }
+
+  public static String createProperty(final GraphResolvableOperator operator) {
+    ProcessStatus _processStatus = operator.getProcessStatus();
+    boolean _tripleEquals = (_processStatus == ProcessStatus.RESOLVED);
+    if (_tripleEquals) {
+      final Function1<SemanticChangeSet, Boolean> _function = (SemanticChangeSet it) -> {
+        return Boolean.valueOf(it.getEditRName().equals("CREATE_Property_IN_LABEL_(properties)"));
+      };
+      List<SemanticChangeSet> addProperties = IterableExtensions.<SemanticChangeSet>toList(IterableExtensions.<SemanticChangeSet>filter(operator.getSemanticChangeSets(), _function));
+      List<AddObject> properties = CollectionLiterals.<AddObject>newArrayList();
+      StringConcatenation _builder = new StringConcatenation();
+      String content = _builder.toString();
+      for (final SemanticChangeSet scs : addProperties) {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        final Function1<Change, AddObject> _function_2 = (Change it) -> {
+          return ((AddObject) it);
+        };
+        List<AddObject> _list = IterableExtensions.<AddObject>toList(IterableExtensions.<Change, AddObject>map(IterableExtensions.<Change>filter(scs.getChanges(), _function_1), _function_2));
+        for (final AddObject ad : _list) {
+          EObject _obj = ad.getObj();
+          if ((_obj instanceof Property)) {
+            properties.add(ad);
+          }
+        }
+      }
+      for (final AddObject a : properties) {
+        {
+          EObject _obj_1 = a.getObj();
+          Property property = ((Property) _obj_1);
+          String _content = content;
+          CharSequence _addPropertyToNodeOnPath = GEOTemplates.addPropertyToNodeOnPath(property.getName(), GEOHelper.getPropertyParent(property), 
+            GeoTypeMapper.toGeoType(property.getValue()), "");
+          content = (_content + _addPropertyToNodeOnPath);
+        }
+      }
+      return content;
+    } else {
+      return "";
+    }
   }
 }

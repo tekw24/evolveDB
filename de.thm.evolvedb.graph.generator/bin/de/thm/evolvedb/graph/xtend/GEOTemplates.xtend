@@ -11,8 +11,7 @@ import java.util.Set
  * - Parameters supply all needed data; no global state required
  * 
  * Notes
- * - These are *text* templates (Xtend template expressions) that you can feed into your own GEO parser/executor.
- * - If you prefer emitting Cypher/APOC directly, see the CypherTemplates class below.
+ * - These are *text* templates (Xtend template expressions) for the GEO-DSL.
  */
 class GEOTemplates {
 
@@ -27,132 +26,443 @@ class GEOTemplates {
 		parts.join(sep)
 	}
 
-// =====================
-// SIMPLE-TYPE OPERATORS
-// =====================
-	/** Add a node label (entity type) */
+	// =====================
+	// SINGLE-TYPE OPERATORS
+	// =====================
+
+	// ---- 1) Add node with label label_name ----
+
+	/** GEO: Add node with label <label_name> */
 	def static CharSequence addNodeLabel(String label) {
 		'''
-			GEO AddLabel {
-				target: Node
-				label: «q(label)»
-			}
-		'''
-
-	}
-
-	/** Add a relationship type (edge type) */
-	def static CharSequence addRelationshipType(String relType) {
-		'''
-			GEO AddRelationshipType {
-			type: «q(relType)»
-			}
+		Add node with label «q(label)»
 		'''
 	}
 
-	/** Add a property to all nodes of a label */
-	def static CharSequence addNodeProperty(String label, String property, String type, String defaultValue) {
-		'''
-			GEO AddProperty {
-			target: Node(label=«q(label)»)
-			property { name: «q(property)», dtype: «q(type)», default: «q(defaultValue)» }
-			}
-		'''
+	// ---- 2) (Add | Delete | Rename) label/property to node with label ... [optional Pfad-Variante] ----
 
-	}
-
-	/** Add a property to all relationships of a type */
-	def static CharSequence addRelationshipProperty(String relType, String property, String type, String defaultValue) {
+	/**
+	 * GEO:
+	 * Add label <label_name_to_add> to node with label <node_label>
+	 */
+	def static CharSequence addLabelToNode(String labelToAdd, String nodeLabel) {
 		'''
-			GEO AddProperty {
-			target: Relationship(type=«q(relType)»)
-			property { name: «q(property)», dtype: «q(type)», default: «q(defaultValue)» }
-			}
+		Add label «q(labelToAdd)» to node with label «q(nodeLabel)»
 		'''
 	}
 
-	/** Rename a node label */
+	/**
+	 * GEO:
+	 * Delete label <label_name_to_delete> of node with label <node_label>
+	 */
+	def static CharSequence deleteLabelFromNode(String labelToDelete, String nodeLabel) {
+		'''
+		Delete label «q(labelToDelete)» of node with label «q(nodeLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Rename label <old_label> of node with label <node_label>
+	 *     to label <new_label>
+	 */
+	def static CharSequence renameLabelOfNode(String oldLabel, String nodeLabel, String newLabel) {
+		'''
+		Rename label «q(oldLabel)» of node with label «q(nodeLabel)» to label «q(newLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Add property <property_name> to node with label <node_label>
+	 */
+	def static CharSequence addSimpleNodeProperty(String nodeLabel, String propertyName) {
+		'''
+		Add property «q(propertyName)» to node with label «q(nodeLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Delete property <property_name> of node with label <node_label>
+	 */
+	def static CharSequence deleteNodeProperty(String nodeLabel, String propertyName) {
+		'''
+		Delete property «q(propertyName)» of node with label «q(nodeLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Rename property <fromProp> of node with label <node_label>
+	 *     to property <toProp>
+	 */
+	def static CharSequence renameSimpleNodeProperty(String nodeLabel, String fromProp, String toProp) {
+		'''
+		Rename property «q(fromProp)» of node with label «q(nodeLabel)» to property «q(toProp)»
+		'''
+	}
+
+	/**
+	 * Pfad-Variante aus deiner Definition:
+	 * (Add | Delete | Rename) (label | property) ... starting at relationship with type ..., ending at relationship with type ...
+	 *
+	 * Add label:
+	 * Add label <labelToAdd> to node with label <nodeLabel>
+	 *     starting at relationship with type <startRelType>, ending at relationship with type <endRelType>
+	 */
+	def static CharSequence addLabelToNodeOnPath(String labelToAdd, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Add label «q(labelToAdd)» to node with label «q(nodeLabel)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	/** Delete label ... on path */
+	def static CharSequence deleteLabelFromNodeOnPath(String labelToDelete, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Delete label «q(labelToDelete)» of node with label «q(nodeLabel)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	/** Rename label ... on path */
+	def static CharSequence renameLabelOfNodeOnPath(String oldLabel, String newLabel, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Rename label «q(oldLabel)» of node with label «q(nodeLabel)» to label «q(newLabel)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	/** Add property ... on path */
+	def static CharSequence addPropertyToNodeOnPath(String propertyName, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Add property «q(propertyName)» to node with label «q(nodeLabel)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	/** Delete property ... on path */
+	def static CharSequence deletePropertyFromNodeOnPath(String propertyName, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Delete property «q(propertyName)» of node with label «q(nodeLabel)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	/** Rename property ... on path */
+	def static CharSequence renamePropertyOfNodeOnPath(String fromProp, String toProp, String nodeLabel, String startRelType, String endRelType) {
+		'''
+		Rename property «q(fromProp)» of node with label «q(nodeLabel)» to property «q(toProp)» 
+		    starting at relationship with type «q(startRelType)», ending at relationship with type «q(endRelType)»
+		'''
+	}
+
+	// ---- 3) Rename label / type ----
+
+	/**
+	 * GEO:
+	 * Rename label <old_label> of node with label <old_label> to label <new_label>
+	 */
 	def static CharSequence renameNodeLabel(String oldLabel, String newLabel) {
 		'''
-			GEO RenameLabel {
-			target: Node
-			from: «q(oldLabel)»
-			to: «q(newLabel)»
-			}
+		Rename label «q(oldLabel)» of node with label «q(oldLabel)» to label «q(newLabel)»
 		'''
-
 	}
 
-	/** Rename a relationship type */
+	/**
+	 * GEO:
+	 * Rename type <old_type> of relationship with type <old_type> to type <new_type>
+	 */
 	def static CharSequence renameRelationshipType(String oldType, String newType) {
 		'''
-			GEO RenameRelationshipType {
-			from: «q(oldType)»
-			to: «q(newType)»
-			}
+		Rename type «q(oldType)» of relationship with type «q(oldType)» to type «q(newType)»
 		'''
 	}
 
-	/** Rename a property on nodes of a given label */
-	def static CharSequence renameNodeProperty(String label, String fromProp, String toProp) {
+	// ---- 4) Delete node with label ... (with | without) connecting relationships ----
+
+	/**
+	 * GEO:
+	 * Delete node with label <label_name> with/without connecting relationships
+	 */
+	def static CharSequence deleteNode(String label, boolean withConnectingRelationships) {
 		'''
-			GEO RenameProperty {
-			target: Node(label=«q(label)»)
-			from: «q(fromProp)»
-			to: «q(toProp)»
-			}
+		Delete node with label «q(label)» «IF withConnectingRelationships»with«ELSE»without«ENDIF» connecting relationships
 		'''
 	}
 
-	/** Rename a property on relationships of a given type */
+	// ---- 5) Relationship-Typ + Properties ----
+
+	/**
+	 * Einfache Variante:
+	 * Add relationship with type <type_name>
+	 */
+	def static CharSequence addRelationshipType(String relType) {
+		'''
+		Add relationship with type «q(relType)»
+		'''
+	}
+
+	/**
+	 * Vollständiger laut Definition:
+	 * Add relationship with type <type_name> starting at node with label <startLabel>, ending at node with label <endLabel>
+	 */
+	def static CharSequence addRelationship(String relType, String startNodeLabel, String endNodeLabel) {
+		'''
+		Add relationship with type «q(relType)» starting at node with label «q(startNodeLabel)», ending at node with label «q(endNodeLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Delete relationship with type <type_name> starting at node with label <startLabel>, ending at node with label <endLabel>
+	 */
+	def static CharSequence deleteRelationship(String relType, String startNodeLabel, String endNodeLabel) {
+		'''
+		Delete relationship with type «q(relType)» starting at node with label «q(startNodeLabel)», ending at node with label «q(endNodeLabel)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Rename relationship with type <old_type> starting at node with label <startLabel>, ending at node with label <endLabel>
+	 *     to relationship with type <new_type>
+	 */
+	def static CharSequence renameRelationshipBetween(String oldType, String newType, String startNodeLabel, String endNodeLabel) {
+		'''
+		Rename relationship with type «q(oldType)» starting at node with label «q(startNodeLabel)», ending at node with label «q(endNodeLabel)» 
+		    to relationship with type «q(newType)»
+		'''
+	}
+
+	// ---- Properties auf Beziehungen ----
+
+	/**
+	 * GEO:
+	 * Add property <property> of type <type> with default <default> to relationship with type <relType>
+	 */
+	def static CharSequence addRelationshipProperty(String relType, String property, String type, String defaultValue) {
+		'''
+		Add property «q(property)» of type «q(type)» with default «q(defaultValue)» to relationship with type «q(relType)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Delete property <property> of relationship with type <relType>
+	 */
+	def static CharSequence deleteRelationshipProperty(String relType, String property) {
+		'''
+		Delete property «q(property)» of relationship with type «q(relType)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Rename property <fromProp> of relationship with type <relType> to property <toProp>
+	 */
+	def static CharSequence renameRelationshipProperty(String relType, String fromProp, String toProp) {
+		'''
+		Rename property «q(fromProp)» of relationship with type «q(relType)» to property «q(toProp)»
+		'''
+	}
+
+	// =====================
+	// MULTI-TYPE OPERATIONS
+	// =====================
+
+	// ---- Copy (label | property) of (node | relationship) to (node | relationship) ----
+
+	/**
+	 * GEO:
+	 * Copy label <featureName> of node with label <fromId> to node with label <toId>
+	 * Copy property <featureName> of relationship with type <fromId> to node with label <toId>
+	 *
+	 * Parameter:
+	 *  featureKind : "label" or "property"
+	 *  fromKind    : "node" or "relationship"
+	 *  toKind      : "node" or "relationship"
+	 *  fromId      : Labelname (bei node) oder Typname (bei relationship)
+	 *  toId        : Labelname (bei node) oder Typname (bei relationship)
+	 */
+	def static CharSequence copyFeature(String featureKind, String featureName,
+		String fromKind, String fromId,
+		String toKind, String toId) {
+
+		'''
+		Copy «featureKind» «q(featureName)» of «fromKind» with «IF fromKind == "node"»label«ELSE»type«ENDIF» «q(fromId)» 
+		    to «toKind» with «IF toKind == "node"»label«ELSE»type«ENDIF» «q(toId)»
+		'''
+	}
+
+	// ---- Move (label | property) ... ----
+
+	/**
+	 * GEO:
+	 * Move <featureKind> <featureName> of <fromKind> with label/type <fromId>
+	 *     to <toKind> with label/type <toId>
+	 */
+	def static CharSequence moveFeature(String featureKind, String featureName,
+		String fromKind, String fromId,
+		String toKind, String toId) {
+
+		'''
+		Move «featureKind» «q(featureName)» of «fromKind» with «IF fromKind == "node"»label«ELSE»type«ENDIF» «q(fromId)» 
+		    to «toKind» with «IF toKind == "node"»label«ELSE»type«ENDIF» «q(toId)»
+		'''
+	}
+
+	// ---- Split (node | relationship) at property ... (keep/delete relations) ----
+
+	/**
+	 * relationHandling:
+	 *  - "keep"
+	 *  - "delete"
+	 *  - "keepOfPartA"
+	 *  - "keepOfPartB"
+	 *
+	 * GEO (Beispiele):
+	 * Split node with label "Person" at property "status" keep relations
+	 * Split relationship with type "KNOWS" at property "since" delete relations
+	 * Split node with label "Person" at property "status" keep relations "of" partA
+	 */
+	def static CharSequence splitElement(String kind, String id, String propertyName,
+		String relationHandling, String partALabel, String partBLabel) {
+
+		'''
+		Split «kind» with «IF kind == "node"»label«ELSE»type«ENDIF» «q(id)» 
+		    at property «q(propertyName)» «IF relationHandling == "keep"»keep relations«ELSEIF relationHandling == "delete"»delete relations«ELSEIF relationHandling == "keepOfPartA"»keep relations "of" «q(partALabel)»«ELSEIF relationHandling == "keepOfPartB"»keep relations "of" «q(partBLabel)»«ENDIF»
+		    into «kind» with label/type «q(partALabel)» and «q(partBLabel)»
+		'''
+	}
+
+	// ---- Transform (node -> relationship | relationship -> node) ----
+
+	/**
+	 * GEO:
+	 * Transform node with label <label> to relationship with type <relType>
+	 */
+	def static CharSequence transformNodeToRelationship(String nodeLabel, String relType) {
+		'''
+		Transform node with label «q(nodeLabel)» to relationship with type «q(relType)»
+		'''
+	}
+
+	/**
+	 * GEO:
+	 * Transform relationship with type <relType> to node with label <label>
+	 */
+	def static CharSequence transformRelationshipToNode(String relType, String nodeLabel) {
+		'''
+		Transform relationship with type «q(relType)» to node with label «q(nodeLabel)»
+		'''
+	}
+
+	// ---- Merge (duplicate | different) properties ... ----
+
+	/**
+	 * propertyKind : "duplicate" or "different"
+	 * elementKind  : "node" or "relationship"
+	 * deleteStrategy : "cascadeDelete" or "restrictedDelete"
+	 * joinType       : "inner" or "full outer exclusive"
+	 *
+	 * GEO:
+	 * Merge <propertyKind> properties of <elementKind> with label/type <id>,
+	 *     (add label <extraLabels>)* and <deleteStrategy> originals -> <joinType> join
+	 */
+	def static CharSequence mergeProperties(String propertyKind, String elementKind, String id,
+		List<String> extraLabels, String deleteStrategy, String joinType) {
+
+		'''
+		Merge «propertyKind» properties of «elementKind» with «IF elementKind == "node"»label«ELSE»type«ENDIF» «q(id)»«IF extraLabels !== null && !extraLabels.empty»
+		    , add label(s) [«FOR l : extraLabels SEPARATOR ', '»«q(l)»«ENDFOR»]«ENDIF» 
+		    and «deleteStrategy» originals -> «joinType» join
+		'''
+	}
+
+	// ---- Keep all features of (left | right) ... -> left/right join ----
+
+	/**
+	 * keepSide    : "left" or "right"
+	 * elementKind : "node" or "relationship"
+	 *
+	 * GEO:
+	 * Keep all features of <keepSide> <elementKind> with label/type <leftId/rightId>
+	 *     add duplicates from <otherSide> <elementKind> with label/type <...> -> left/right join
+	 */
+	def static CharSequence keepAllFeaturesJoin(String keepSide, String elementKind,
+		String leftId, String rightId) {
+
+		'''
+		Keep all features of «keepSide» «elementKind» with «IF elementKind == "node"»label«ELSE»type«ENDIF» «IF keepSide == "left"»«q(leftId)»«ELSE»«q(rightId)»«ENDIF» 
+		    add duplicates from «IF keepSide == "left"»right«ELSE»left«ENDIF» «elementKind» with «IF elementKind == "node"»label«ELSE»type«ENDIF» «IF keepSide == "left"»«q(rightId)»«ELSE»«q(leftId)»«ENDIF» 
+		    -> «IF keepSide == "left"»left«ELSE»right«ENDIF» join
+		'''
+	}
+
+	// ---- copy properties ... and (cascadeDelete | restrictedDelete) originals -> full outer inclusive ----
+
+	/**
+	 * deleteStrategy : "cascadeDelete" or "restrictedDelete"
+	 *
+	 * GEO:
+	 * copy properties of <fromKind> with label/type <fromId> to <toKind> with label/type <toId>
+	 *     and <deleteStrategy> originals -> full outer inclusive
+	 */
+	def static CharSequence copyPropertiesAndDeleteOriginals(String fromKind, String fromId,
+		String toKind, String toId, String deleteStrategy) {
+
+		'''
+		copy properties of «fromKind» with «IF fromKind == "node"»label«ELSE»type«ENDIF» «q(fromId)» 
+		    to «toKind» with «IF toKind == "node"»label«ELSE»type«ENDIF» «q(toId)» 
+		    and «deleteStrategy» originals -> full outer inclusive
+		'''
+	}
+
+	// ====================================
+	// BEREITS VORHANDENE SPEZIAL-OPERATIONEN
+	// ====================================
+
+	/**
+	 * Spezielle Merge-Variante aus deiner ursprünglichen Klasse.
+	 * Passt nicht 1:1 in die neue Kurzsyntax, bleibt aber als Komfort-Template bestehen.
+	 */
 	def static CharSequence mergeNodes(String label, List<String> keyProperties, String conflictStrategy) {
-
 		'''
-			GEO MergeNodes {
-			label: «q(label)»
-			keys: [ «FOR k : keyProperties SEPARATOR ', '»«q(k)»«ENDFOR» ]
-			conflict: «q(conflictStrategy)»
-			}
-			
+		Merge duplicate properties of node with label «q(label)» 
+		    using keys [«FOR k : keyProperties SEPARATOR ', '»«q(k)»«ENDFOR»] 
+		    and conflict strategy «q(conflictStrategy)»
 		'''
-
 	}
 
-	/** Copy a subgraph outward from nodes with a label up to a depth, optionally filter relationship types. */
+	/**
+	 * Eigenständige Copy-Subgraph-Operation (nicht explizit in der Liste, aber hilfreich).
+	 */
 	def static CharSequence copySubgraph(String rootLabel, int depth, Set<String> includeRelTypes) {
 		'''
-			GEO CopySubgraph {
-			roots: Node(label=«q(rootLabel)»)
-			depth: «depth»
-			«IF includeRelTypes !== null && !includeRelTypes.empty»
-				includeRels: [ «FOR t : includeRelTypes SEPARATOR ', '»«q(t)»«ENDFOR» ]
-			«ENDIF»
-			}
+		Copy subgraph of nodes with label «q(rootLabel)» up to depth «depth»«IF includeRelTypes !== null && !includeRelTypes.empty»
+		    including relationships with types [«FOR t : includeRelTypes SEPARATOR ', '»«q(t)»«ENDFOR»]«ENDIF»
 		'''
-
 	}
 
-	/** Split a node set by a predicate into two labels; predicate is a DSL/Cypher-like expression you decide. */
+	/**
+	 * Split node – ursprüngliche Variante mit Prädikat und zwei Labels.
+	 */
 	def static CharSequence splitNode(String label, String predicateExpr, String newLabelTrue, String newLabelFalse) {
 		'''
-			GEO SplitNode {
-			source: Node(label=«q(label)»)
-			when: «q(predicateExpr)»
-			then: Node(label=«q(newLabelTrue)»)
-			else: Node(label=«q(newLabelFalse)»)
-			}
+		Split node with label «q(label)» using predicate «q(predicateExpr)» 
+		    into node with label «q(newLabelTrue)» and node with label «q(newLabelFalse)»
 		'''
-
 	}
 
-	/** Move a subgraph selected by a path pattern under a new root/label (logical relocation) */
+	/**
+	 * Move subgraph – ursprüngliche Variante mit Pfad.
+	 */
 	def static CharSequence moveSubgraph(String startLabel, String pathPattern, String newRootLabel) {
 		'''
-			GEO MoveSubgraph {
-			start: Node(label=«q(startLabel)»)
-			path: «q(pathPattern)»
-			targetRoot: Node(label=«q(newRootLabel)»)
-			}
+		Move subgraph starting at node with label «q(startLabel)» along path «q(pathPattern)» 
+		    to node with label «q(newRootLabel)»
 		'''
 	}
 }
