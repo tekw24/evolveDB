@@ -118,7 +118,15 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	BINARY_ENCODING_CHANGE(10, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE");
+	BINARY_ENCODING_CHANGE(10, "BINARY_ENCODING_CHANGE", "BINARY_ENCODING_CHANGE"), /**
+	 * The '<em><b>REMOVE CONSTRAINT</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_CONSTRAINT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	REMOVE_CONSTRAINT(11, "REMOVE_CONSTRAINT", "REMOVE_CONSTRAINT");
 
 	/**
 	 * The '<em><b>DELETE NODE TYPE</b></em>' literal value.
@@ -242,6 +250,17 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 	public static final int BINARY_ENCODING_CHANGE_VALUE = 10;
 
 	/**
+	 * The '<em><b>REMOVE CONSTRAINT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REMOVE_CONSTRAINT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REMOVE_CONSTRAINT_VALUE = 11;
+
+	/**
 	 * An array of all the '<em><b>Graph Partially Resolvable Operator Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,6 +279,7 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 			REMOVE_PROPERTY_EDGE_TYPE,
 			REMOVE_PROPERTY_NODE_TYPE,
 			BINARY_ENCODING_CHANGE,
+			REMOVE_CONSTRAINT,
 		};
 
 	/**
@@ -327,6 +347,7 @@ public enum GraphPartiallyResolvableOperatorType implements Enumerator {
 			case REMOVE_PROPERTY_EDGE_TYPE_VALUE: return REMOVE_PROPERTY_EDGE_TYPE;
 			case REMOVE_PROPERTY_NODE_TYPE_VALUE: return REMOVE_PROPERTY_NODE_TYPE;
 			case BINARY_ENCODING_CHANGE_VALUE: return BINARY_ENCODING_CHANGE;
+			case REMOVE_CONSTRAINT_VALUE: return REMOVE_CONSTRAINT;
 		}
 		return null;
 	}

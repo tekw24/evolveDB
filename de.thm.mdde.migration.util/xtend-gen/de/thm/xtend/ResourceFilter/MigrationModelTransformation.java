@@ -91,6 +91,8 @@ public class MigrationModelTransformation {
     this.transformNewEdgeType(migration);
     this.transformAddNodeType(migration);
     this.transformDeleteEdgeType(migration);
+    this.transformDeleteNodeType(migration);
+    this.transformDeleteConstraint(migration);
     final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
       return Boolean.valueOf((it instanceof SymmetricDifference));
     };
@@ -844,8 +846,11 @@ public class MigrationModelTransformation {
           final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof AddReference));
-            })) && 
-              ((((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || it.getName().equals("ADD_NodeType_(incoming)_TGT_EdgeType")) || it.getName().equals("ADD_NodeType_(outgoing)_TGT_EdgeType")) || it.getName().equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) || it.getName().equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))));
+            })) && ((((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || 
+              it.getName().equals("ADD_NodeType_(incoming)_TGT_EdgeType")) || 
+              it.getName().equals("ADD_NodeType_(outgoing)_TGT_EdgeType")) || 
+              it.getName().equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) || 
+              it.getName().equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {
@@ -903,8 +908,9 @@ public class MigrationModelTransformation {
           final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof RemoveReference));
-            })) && 
-              ((it.getName().equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") || it.getName().equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType")) || it.getName().equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))));
+            })) && ((it.getName().equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") || 
+              it.getName().equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType")) || 
+              it.getName().equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {
@@ -942,6 +948,125 @@ public class MigrationModelTransformation {
     }
   }
 
+  public void transformDeleteNodeType(final Migration migration) {
+    EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.getGraphPartiallyResovableSMO();
+    final Function1<GraphPartiallyResolvableOperator, Boolean> _function = (GraphPartiallyResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphPartiallyResolvableOperatorType.DELETE_NODE_TYPE));
+    };
+    List<GraphPartiallyResolvableOperator> deleteNodeType = IterableExtensions.<GraphPartiallyResolvableOperator>toList(IterableExtensions.<GraphPartiallyResolvableOperator>filter(partiallayResolvableOperators, _function));
+    partiallayResolvableOperators.removeAll(deleteNodeType);
+    for (final GraphPartiallyResolvableOperator rO : deleteNodeType) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof RemoveObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        RemoveObject ad = ((RemoveObject) _findFirst);
+        EObject _obj = ad.getObj();
+        NodeType removeNodeType = ((NodeType) _obj);
+        for (final GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+            return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof RemoveReference));
+            })) && ((it.getName().equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") || 
+              it.getName().equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType")) || 
+              it.getName().equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                return Boolean.valueOf((it instanceof RemoveReference));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+              RemoveReference a = ((RemoveReference) _findFirst_1);
+              EObject _src = a.getSrc();
+              if ((_src instanceof NodeType)) {
+                EObject _src_1 = a.getSrc();
+                NodeType c = ((NodeType) _src_1);
+                boolean _equals = c.equals(removeNodeType);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              } else {
+                EObject _tgt = a.getTgt();
+                if ((_tgt instanceof NodeType)) {
+                  EObject _tgt_1 = a.getTgt();
+                  NodeType c_1 = ((NodeType) _tgt_1);
+                  boolean _equals_1 = c_1.equals(removeNodeType);
+                  if (_equals_1) {
+                    rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                    migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformDeleteConstraint(final Migration migration) {
+    EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.getGraphPartiallyResovableSMO();
+    final Function1<GraphPartiallyResolvableOperator, Boolean> _function = (GraphPartiallyResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphPartiallyResolvableOperatorType.REMOVE_CONSTRAINT));
+    };
+    List<GraphPartiallyResolvableOperator> deleteConstraint = IterableExtensions.<GraphPartiallyResolvableOperator>toList(IterableExtensions.<GraphPartiallyResolvableOperator>filter(partiallayResolvableOperators, _function));
+    partiallayResolvableOperators.removeAll(deleteConstraint);
+    for (final GraphPartiallyResolvableOperator rO : deleteConstraint) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof RemoveObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        RemoveObject ad = ((RemoveObject) _findFirst);
+        EObject _obj = ad.getObj();
+        de.thm.evolvedb.graph.Constraint removeConstraint = ((de.thm.evolvedb.graph.Constraint) _obj);
+        for (final GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+            return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof RemoveReference));
+            })) && (it.getName().equals("REMOVE_UniqueConstraint_(properties)_TGT_Property") || 
+              it.getName().equals("REMOVE_KeyConstraint_(properties)_TGT_Property"))));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                return Boolean.valueOf((it instanceof RemoveReference));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+              RemoveReference a = ((RemoveReference) _findFirst_1);
+              EObject _src = a.getSrc();
+              if ((_src instanceof de.thm.evolvedb.graph.Constraint)) {
+                EObject _src_1 = a.getSrc();
+                de.thm.evolvedb.graph.Constraint c = ((de.thm.evolvedb.graph.Constraint) _src_1);
+                boolean _equals = c.equals(removeConstraint);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              } else {
+                EObject _tgt = a.getTgt();
+                if ((_tgt instanceof de.thm.evolvedb.graph.Constraint)) {
+                  EObject _tgt_1 = a.getTgt();
+                  de.thm.evolvedb.graph.Constraint c_1 = ((de.thm.evolvedb.graph.Constraint) _tgt_1);
+                  boolean _equals_1 = c_1.equals(removeConstraint);
+                  if (_equals_1) {
+                    rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                    migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   public void transformAddNodeType(final Migration migration) {
     EList<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
     final Function1<GraphResolvableOperator, Boolean> _function = (GraphResolvableOperator it) -> {
@@ -962,7 +1087,8 @@ public class MigrationModelTransformation {
           final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof AddReference));
-            })) && it.getName().equals("ADD_NodeLabel_(nodes)_TGT_NodeType")));
+            })) && 
+              it.getName().equals("ADD_NodeLabel_(nodes)_TGT_NodeType")));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {

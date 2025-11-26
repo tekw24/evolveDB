@@ -87,7 +87,8 @@ class MigrationModelTransformation {
 		migration.transformNewEdgeType
 		migration.transformAddNodeType
 		migration.transformDeleteEdgeType
-		migration.transformDeleteUniqueConstraint
+		migration.transformDeleteNodeType
+		migration.transformDeleteConstraint
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
 			it instanceof SymmetricDifference
@@ -927,19 +928,19 @@ class MigrationModelTransformation {
 			}
 		}
 	}
-
-	def transformDeleteUniqueConstraint(Migration migration) {
+	
+	def transformDeleteNodeType(Migration migration) {
 		var EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.
 			graphPartiallyResovableSMO;
-		var List<GraphPartiallyResolvableOperator> deleteEdgeType = partiallayResolvableOperators.filter [
-			it.displayName.equals(GraphPartiallyResolvableOperatorType.REMOVE_REFERENCE_OR_CONSTRAINT)
+		var List<GraphPartiallyResolvableOperator> deleteNodeType = partiallayResolvableOperators.filter [
+			it.displayName.equals(GraphPartiallyResolvableOperatorType.DELETE_NODE_TYPE)
 		].toList
-		partiallayResolvableOperators.removeAll(deleteEdgeType);
+		partiallayResolvableOperators.removeAll(deleteNodeType);
 
-		for (GraphPartiallyResolvableOperator rO : deleteEdgeType) {
+		for (GraphPartiallyResolvableOperator rO : deleteNodeType) {
 			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.
 				findFirst[it instanceof RemoveObject] as RemoveObject;
-			var EdgeType removeEdgeType = ad.obj as EdgeType
+			var NodeType removeNodeType = ad.obj as NodeType
 
 			for (GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
 				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
@@ -950,17 +951,60 @@ class MigrationModelTransformation {
 
 				]) {
 					var RemoveReference a = s.changes.findFirst[it instanceof RemoveReference] as RemoveReference
-					if (a.src instanceof EdgeType) {
-						var EdgeType c = a.src as EdgeType;
-						if (c.equals(removeEdgeType)) {
+					if (a.src instanceof NodeType) {
+						var NodeType c = a.src as NodeType;
+						if (c.equals(removeNodeType)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
 							// Remove the Operator
 							migration.schemaModificationOperators.remove(resolvable)
 						}
 
-					} else if (a.tgt instanceof EdgeType) {
-						var EdgeType c = a.tgt as EdgeType;
-						if (c.equals(removeEdgeType)) {
+					} else if (a.tgt instanceof NodeType) {
+						var NodeType c = a.tgt as NodeType;
+						if (c.equals(removeNodeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	def transformDeleteConstraint(Migration migration) {
+		var EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.
+			graphPartiallyResovableSMO;
+		var List<GraphPartiallyResolvableOperator> deleteConstraint = partiallayResolvableOperators.filter [
+			it.displayName.equals(GraphPartiallyResolvableOperatorType.REMOVE_CONSTRAINT)
+		].toList
+		partiallayResolvableOperators.removeAll(deleteConstraint);
+
+		for (GraphPartiallyResolvableOperator rO : deleteConstraint) {
+			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.
+				findFirst[it instanceof RemoveObject] as RemoveObject;
+			var de.thm.evolvedb.graph.Constraint removeConstraint = ad.obj as de.thm.evolvedb.graph.Constraint
+
+			for (GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof RemoveReference] &&
+						(it.name.equals("REMOVE_UniqueConstraint_(properties)_TGT_Property") ||
+							it.name.equals("REMOVE_KeyConstraint_(properties)_TGT_Property") )
+
+				]) {
+					var RemoveReference a = s.changes.findFirst[it instanceof RemoveReference] as RemoveReference
+					if (a.src instanceof de.thm.evolvedb.graph.Constraint) {
+						var de.thm.evolvedb.graph.Constraint c = a.src as de.thm.evolvedb.graph.Constraint;
+						if (c.equals(removeConstraint)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					} else if (a.tgt instanceof de.thm.evolvedb.graph.Constraint) {
+						var de.thm.evolvedb.graph.Constraint c = a.tgt as de.thm.evolvedb.graph.Constraint;
+						if (c.equals(removeConstraint)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
 							// Remove the Operator
 							migration.schemaModificationOperators.remove(resolvable)

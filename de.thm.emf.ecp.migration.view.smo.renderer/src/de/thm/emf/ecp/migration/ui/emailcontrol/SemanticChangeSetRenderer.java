@@ -70,10 +70,14 @@ import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.GraphItem;
 import de.thm.evolvedb.graph.GraphPackage;
+import de.thm.evolvedb.graph.KeyConstraint;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyExistenceConstraint;
+import de.thm.evolvedb.graph.PropertyTypeConstraint;
 import de.thm.evolvedb.graph.PropertyValueType;
+import de.thm.evolvedb.graph.UniqueConstraint;
 import de.thm.evolvedb.mdde.Column;
 import de.thm.evolvedb.mdde.ColumnConstraint;
 import de.thm.evolvedb.mdde.Constraint;
@@ -2295,6 +2299,22 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			return;
 		}
 
+		if (isRule(rule,
+			"DELETE_UniqueConstraint_IN_Label_(constraints)", "DELETE_PropertyTypeConstraint_IN_Label_(constraints)", //$NON-NLS-1$ //$NON-NLS-2$
+			"DELETE_PropertyExistenceConstraint_IN_Label_(constraints)", //$NON-NLS-1$
+			"DELETE_KeyConstraint_IN_Label_(constraints)")) { //$NON-NLS-1$
+			renderRemoveConstraint(set, composite);
+			return;
+		}
+
+		if (isRule(rule,
+			"CREATE_UniqueConstraint_IN_Label_(constraints)", "CREATE_PropertyTypeConstraint_IN_Label_(constraints)", //$NON-NLS-1$ //$NON-NLS-2$
+			"CREATE_PropertyExistenceConstraint_IN_Label_(constraints)", //$NON-NLS-1$
+			"CREATE_KeyConstraint_IN_Label_(constraints)")) { //$NON-NLS-1$
+			renderCreateConstraint(set, composite);
+			return;
+		}
+
 		// if (isRule(rule,
 		// "ADD_NodeType_(label)_TGT_NodeLabel")) { //$NON-NLS-1$
 		// renderMoveRefPropertyFromLabelToLabel(set, composite);
@@ -2552,6 +2572,98 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 					section(parent, "EdgeLabel");
 					GraphUIHelper.createCompositeForEdgeType(parent, (EdgeType) graphItem, adapterFactoryItemDelegator,
 						getReferenceService(), CUSTOM_VARIANT);
+
+				}
+			}
+		});
+	}
+
+	private void renderCreateConstraint(SemanticChangeSet set, Composite parent) {
+		firstChangeOfType(set, AddObject.class).ifPresent(ar -> {
+			final EObject a = ar.getObj();
+			final de.thm.evolvedb.graph.Constraint constraint = a instanceof de.thm.evolvedb.graph.Constraint
+				? (de.thm.evolvedb.graph.Constraint) a
+				: null;
+
+			if (constraint != null) {
+
+				if (constraint instanceof PropertyExistenceConstraint) {
+					section(parent, "Create Property Existence Constraint"); //$NON-NLS-1$
+
+					final PropertyExistenceConstraint pConstraint = (PropertyExistenceConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof KeyConstraint) {
+					section(parent, "Create Key Constraint"); //$NON-NLS-1$
+
+					final KeyConstraint pConstraint = (KeyConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof UniqueConstraint) {
+					section(parent, "Create Unique Constraint"); //$NON-NLS-1$
+
+					final UniqueConstraint pConstraint = (UniqueConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof PropertyTypeConstraint) {
+					section(parent, "Create Property Type Constraint"); //$NON-NLS-1$
+
+					final PropertyTypeConstraint pConstraint = (PropertyTypeConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				}
+			}
+		});
+	}
+
+	private void renderRemoveConstraint(SemanticChangeSet set, Composite parent) {
+		firstChangeOfType(set, RemoveObject.class).ifPresent(ar -> {
+			final EObject a = ar.getObj();
+			final de.thm.evolvedb.graph.Constraint constraint = a instanceof de.thm.evolvedb.graph.Constraint
+				? (de.thm.evolvedb.graph.Constraint) a
+				: null;
+
+			if (constraint != null) {
+
+				if (constraint instanceof PropertyExistenceConstraint) {
+					section(parent, "Remove Property Existence Constraint"); //$NON-NLS-1$
+
+					final PropertyExistenceConstraint pConstraint = (PropertyExistenceConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof KeyConstraint) {
+					section(parent, "Remove Key Constraint"); //$NON-NLS-1$
+
+					final KeyConstraint pConstraint = (KeyConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof UniqueConstraint) {
+					section(parent, "Remove Unique Constraint"); //$NON-NLS-1$
+
+					final UniqueConstraint pConstraint = (UniqueConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
+
+				} else if (constraint instanceof PropertyTypeConstraint) {
+					section(parent, "Remove Property Type Constraint"); //$NON-NLS-1$
+
+					final PropertyTypeConstraint pConstraint = (PropertyTypeConstraint) constraint;
+
+					GraphUIHelper.createCompositeForConstraint(parent, pConstraint, adapterFactoryItemDelegator,
+						referenceService, CUSTOM_VARIANT);
 
 				}
 			}
