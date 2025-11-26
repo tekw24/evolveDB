@@ -58,6 +58,8 @@ import de.thm.evolvedb.graph.Property
 import de.thm.evolvedb.graph.PropertyValueType
 import de.thm.evolvedb.graph.EdgeType
 import de.thm.evolvedb.graph.NodeType
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType
 
 class MigrationModelTransformation {
 
@@ -84,6 +86,8 @@ class MigrationModelTransformation {
 		migration.transformNewLabelOperator
 		migration.transformNewEdgeType
 		migration.transformAddNodeType
+		migration.transformDeleteEdgeType
+		migration.transformDeleteUniqueConstraint
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
 			it instanceof SymmetricDifference
@@ -846,15 +850,16 @@ class MigrationModelTransformation {
 		for (GraphResolvableOperator rO : createEdgeType) {
 			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
 			var EdgeType newEdgeType = ad.obj as EdgeType
-			
-			
 
 			for (GraphResolvableOperator resolvable : resolvableOperators) {
 				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
-					it.changes.exists[it instanceof AddReference] && (it.name.equals("ADD_EdgeType_(labels)_TGT_EdgeLabel")
-					|| it.name.equals("ADD_NodeType_(incoming)_TGT_EdgeType")|| it.name.equals("ADD_NodeType_(outgoing)_TGT_EdgeType"))
-					
-					
+					it.changes.exists[it instanceof AddReference] &&
+						(it.name.equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") ||
+							it.name.equals("ADD_NodeType_(incoming)_TGT_EdgeType") ||
+							it.name.equals("ADD_NodeType_(outgoing)_TGT_EdgeType") ||
+							it.name.equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType") ||
+							it.name.equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))
+
 				]) {
 					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
 					if (a.src instanceof EdgeType) {
@@ -865,7 +870,7 @@ class MigrationModelTransformation {
 							migration.schemaModificationOperators.remove(resolvable)
 						}
 
-					}else if(a.tgt instanceof EdgeType){
+					} else if (a.tgt instanceof EdgeType) {
 						var EdgeType c = a.tgt as EdgeType;
 						if (c.equals(newEdgeType)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
@@ -878,7 +883,95 @@ class MigrationModelTransformation {
 			}
 		}
 	}
-	
+
+	def transformDeleteEdgeType(Migration migration) {
+		var EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.
+			graphPartiallyResovableSMO;
+		var List<GraphPartiallyResolvableOperator> deleteEdgeType = partiallayResolvableOperators.filter [
+			it.displayName.equals(GraphPartiallyResolvableOperatorType.DELETE_EDGE_TYPE)
+		].toList
+		partiallayResolvableOperators.removeAll(deleteEdgeType);
+
+		for (GraphPartiallyResolvableOperator rO : deleteEdgeType) {
+			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.
+				findFirst[it instanceof RemoveObject] as RemoveObject;
+			var EdgeType removeEdgeType = ad.obj as EdgeType
+
+			for (GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof RemoveReference] &&
+						(it.name.equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") ||
+							it.name.equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType") ||
+							it.name.equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))
+
+				]) {
+					var RemoveReference a = s.changes.findFirst[it instanceof RemoveReference] as RemoveReference
+					if (a.src instanceof EdgeType) {
+						var EdgeType c = a.src as EdgeType;
+						if (c.equals(removeEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					} else if (a.tgt instanceof EdgeType) {
+						var EdgeType c = a.tgt as EdgeType;
+						if (c.equals(removeEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	def transformDeleteUniqueConstraint(Migration migration) {
+		var EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.
+			graphPartiallyResovableSMO;
+		var List<GraphPartiallyResolvableOperator> deleteEdgeType = partiallayResolvableOperators.filter [
+			it.displayName.equals(GraphPartiallyResolvableOperatorType.REMOVE_REFERENCE_OR_CONSTRAINT)
+		].toList
+		partiallayResolvableOperators.removeAll(deleteEdgeType);
+
+		for (GraphPartiallyResolvableOperator rO : deleteEdgeType) {
+			var RemoveObject ad = rO.semanticChangeSets.get(0).changes.
+				findFirst[it instanceof RemoveObject] as RemoveObject;
+			var EdgeType removeEdgeType = ad.obj as EdgeType
+
+			for (GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+					it.changes.exists[it instanceof RemoveReference] &&
+						(it.name.equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") ||
+							it.name.equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType") ||
+							it.name.equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))
+
+				]) {
+					var RemoveReference a = s.changes.findFirst[it instanceof RemoveReference] as RemoveReference
+					if (a.src instanceof EdgeType) {
+						var EdgeType c = a.src as EdgeType;
+						if (c.equals(removeEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+
+					} else if (a.tgt instanceof EdgeType) {
+						var EdgeType c = a.tgt as EdgeType;
+						if (c.equals(removeEdgeType)) {
+							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+							// Remove the Operator
+							migration.schemaModificationOperators.remove(resolvable)
+						}
+					}
+
+				}
+			}
+		}
+	}
+
 	def transformAddNodeType(Migration migration) {
 		var EList<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO;
 		var List<GraphResolvableOperator> createNodeType = resolvableOperators.filter [
@@ -887,13 +980,14 @@ class MigrationModelTransformation {
 		resolvableOperators.removeAll(createNodeType);
 
 		for (GraphResolvableOperator rO : createNodeType) {
-			
+
 			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
 			var NodeType newNodeType = ad.obj as NodeType
 
 			for (GraphResolvableOperator resolvable : resolvableOperators) {
 				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
-					it.changes.exists[it instanceof AddReference] && it.name.equals("ADD_NodeLabel_(nodes)_TGT_NodeType")
+					it.changes.exists[it instanceof AddReference] &&
+						it.name.equals("ADD_NodeLabel_(nodes)_TGT_NodeType")
 				]) {
 					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
 					if (a.src instanceof NodeType) {
@@ -904,7 +998,7 @@ class MigrationModelTransformation {
 							migration.schemaModificationOperators.remove(resolvable)
 						}
 
-					}else if(a.tgt instanceof NodeType){
+					} else if (a.tgt instanceof NodeType) {
 						var NodeType c = a.tgt as NodeType;
 						if (c.equals(newNodeType)) {
 							rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)

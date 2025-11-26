@@ -238,17 +238,17 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			if (object.size() == 1) {
 
 				for (final SemanticChangeSet set : object) {
-					final Label label2 = new Label(composite, SWT.NONE);
-					label2.setText(set.getDescription());
-					GridDataFactory.fillDefaults().grab(true, false)
-						.align(SWT.FILL, SWT.BEGINNING).applyTo(label2);
 
 					if (set.getChanges().size() == 1) {
 						for (final Change change : set.getChanges()) {
 							if (change instanceof AttributeValueChange) {
 								final AttributeValueChange avc = (AttributeValueChange) change;
-								// createForAttributeValueChange(avc, composite); TODO
-								renderGraphSemanticChangeSet(set, composite);
+
+								if (GraphUIHelper.GRAPH_RULES.contains(set.getEditRName())) {
+									renderGraphSemanticChangeSet(set, composite);
+								} else {
+									createForAttributeValueChange(avc, composite);
+								}
 
 							}
 
@@ -257,794 +257,434 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 
 						if (GraphUIHelper.GRAPH_RULES.contains(set.getEditRName())) {
 							renderGraphSemanticChangeSet(set, composite);
-						} else
+						} else {
 
-						if (set.getEditRName().equals("CREATE_Column_IN_Table_(columns)")) { //$NON-NLS-1$
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).findFirst();
-							if (optional2.isPresent()) {
+							final Label label2 = new Label(composite, SWT.NONE);
+							label2.setText(set.getDescription());
+							GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
+								.applyTo(label2);
 
-								final AddObject addObject = (AddObject) optional2.get();
+							if (set.getEditRName().equals("CREATE_Column_IN_Table_(columns)")) { //$NON-NLS-1$
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).findFirst();
+								if (optional2.isPresent()) {
 
-								final Column columnA = (Column) addObject.getObj();
+									final AddObject addObject = (AddObject) optional2.get();
 
-								createCompositeForColumn(composite, columnA, null, null, "New Column:"); //$NON-NLS-1$
+									final Column columnA = (Column) addObject.getObj();
 
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("CREATE_ColumnConstraint_IN_Constraint_(columns)")) { //$NON-NLS-1$
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final AddObject addObject = (AddObject) optional2.get();
-
-								final ColumnConstraint columnConstraint = (ColumnConstraint) addObject.getObj();
-
-								createCompositeForConstraint(composite, columnConstraint.getConstraint(),
-									columnConstraint.getConstraint().getName(), null,
-									"Existing Constraint:"); //$NON-NLS-1$
-
-								final Label label = new Label(composite, SWT.NONE);
-								label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Column columnA = columnConstraint.getColumn();
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("SET_REFERENCE_ColumnConstraint_(column)_TGT_Column")) { //$NON-NLS-1$
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddReference).findFirst();
-							if (optional2.isPresent()) {
-
-								final AddReference addObject = (AddReference) optional2.get();
-
-								ColumnConstraint columnConstraint = null;
-								Column columnA = null;
-								if (addObject.getSrc() instanceof ColumnConstraint) {
-									columnConstraint = (ColumnConstraint) addObject.getSrc();
-									columnA = (Column) addObject.getTgt();
-								} else {
-									columnConstraint = (ColumnConstraint) addObject.getTgt();
-									columnA = (Column) addObject.getSrc();
-								}
-
-								createCompositeForConstraint(composite, columnConstraint.getConstraint(),
-									columnConstraint.getConstraint().getName(), null,
-									"Existing Constraint:"); //$NON-NLS-1$
-
-								final Label label = new Label(composite, SWT.NONE);
-								label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								// createDescription(composite, eAttribute, columnA, columnB)
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("CREATE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final AddObject addObject = (AddObject) optional2.get();
-
-								final Column columnA = (Column) addObject.getObj();
-
-								createCompositeForColumn(composite, columnA, null, null, "New Primary Key:"); //$NON-NLS-1$
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("CREATE_ForeignKey_IN_Table_(columns)")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final AddObject addObject = (AddObject) optional2.get();
-
-								final ForeignKey columnA = (ForeignKey) addObject.getObj();
-
-								createCompositeForColumn(composite, columnA, null, null, "New Column:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								UIHelper.createHyperlink(area, columnA.getReferencedTable(),
-									Messages.SemanticChangeSetRenderer_Table + columnA.getReferencedTable().getName(),
-									Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-								UIHelper.createHyperlink(area, columnA.getReferencedKeyColumn(),
-									Messages.SemanticChangeSetRenderer_Primary
-										+ columnA.getReferencedKeyColumn().getName(),
-									Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("DELETE_ForeignKey_IN_Table_(columns)")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final RemoveObject addObject = (RemoveObject) optional2.get();
-
-								final ForeignKey columnA = (ForeignKey) addObject.getObj();
-
-								createCompositeForColumn(composite, columnA, null, null, "Remove Foreign Key:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								UIHelper.createHyperlink(area, columnA.getReferencedTable(),
-									Messages.SemanticChangeSetRenderer_Table + columnA.getReferencedTable().getName(),
-									Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-								UIHelper.createHyperlink(area, columnA.getReferencedKeyColumn(),
-									Messages.SemanticChangeSetRenderer_Primary
-										+ columnA.getReferencedKeyColumn().getName(),
-									Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("DELETE_Column_IN_Table_(columns)")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final RemoveObject addObject = (RemoveObject) optional2.get();
-
-								final Column columnA = (Column) addObject.getObj();
-
-								createCompositeForColumn(composite, columnA, null, null, "Remove Column:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								UIHelper.createHyperlink(area, columnA.getTable(),
-									Messages.SemanticChangeSetRenderer_Table + columnA.getTable().getName(),
-									Messages.SemanticChangeSetRenderer_Table, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("DELETE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).findFirst();
-							if (optional2.isPresent()) {
-
-								final RemoveObject addObject = (RemoveObject) optional2.get();
-
-								final PrimaryKey columnA = (PrimaryKey) addObject.getObj();
-
-								createCompositeForColumn(composite, columnA, null, null, "Remove Column:"); //$NON-NLS-1$
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								UIHelper.createHyperlink(area, columnA.getTable(),
-									Messages.SemanticChangeSetRenderer_Table + columnA.getTable().getName(),
-									Messages.SemanticChangeSetRenderer_Table, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						}
-
-						else if (set.getEditRName().equals("MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)")) { //$NON-NLS-1$
-
-							final List<RemoveReference> removeReference = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
-								.collect(Collectors.toList());
-							final List<AddReference> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddReference).map(n -> (AddReference) n)
-								.collect(Collectors.toList());
-
-							if (removeReference.size() > 0 && addReference.size() > 0) {
-
-								final Optional<AddReference> addReferenceOptional = addReference.stream()
-									.filter(n -> n.getSrc() instanceof Column).findFirst();
-								final Optional<RemoveReference> removeReferenceOptional = removeReference.stream()
-									.filter(n -> n.getSrc() instanceof Column).findFirst();
-
-								if (addReferenceOptional.isPresent() && removeReferenceOptional.isPresent()) {
-									final Column columnAdd = (Column) addReferenceOptional.get().getSrc();
-									final Column columnRemove = (Column) removeReferenceOptional.get().getSrc();
-
-									createCompositeForColumn(composite, columnAdd, null, null,
-										Messages.SemanticChangeSetRenderer_Column);
-
-									// createCompositeForTable(composite, columnRemove.getTable(), "Old Table:", null,
-									// //$NON-NLS-1$
-									// "New Column:");
+									createCompositeForColumn(composite, columnA, null, null, "New Column:"); //$NON-NLS-1$
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									UIHelper.createHyperlink(area, columnAdd.getTable(),
-										Messages.SemanticChangeSetRenderer_Table
-											+ columnAdd.getTable().getName(),
-										Messages.SemanticChangeSetRenderer_Old_Table, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-									UIHelper.createHyperlink(area, columnRemove.getTable(),
-										Messages.SemanticChangeSetRenderer_Table
-											+ columnRemove.getTable().getName(),
-										Messages.SemanticChangeSetRenderer_New_Table, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-
-								}
-							}
-
-						}
-
-						else if (set.getEditRName().equals("CHANGE_1N_INTO_NM")) { //$NON-NLS-1$
-
-							final List<RemoveObject> removeReference = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
-								.collect(Collectors.toList());
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
-
-							if (removeReference.size() > 0 && addReference.size() > 0) {
-
-								final Optional<AddObject> addTable = addReference.stream()
-									.filter(n -> n.getObj() instanceof Table).findFirst();
-								final Optional<RemoveObject> removeForeignKey = removeReference.stream()
-									.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
-
-								if (addTable.isPresent() && removeForeignKey.isPresent()) {
-
-									final Table tableAdd = (Table) addTable.get().getObj();
-									final ForeignKey columnRemove = (ForeignKey) removeForeignKey.get().getObj();
-
-									createCompositeForColumn(composite, columnRemove, null, null,
-										Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
-
-									final Composite area = new Composite(composite, SWT.NONE);
-									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-									GridDataFactory.fillDefaults().grab(true, false)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-									final Label label = new Label(area, SWT.NONE);
-									label.setText(Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
-
-									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
-									// setStyle method returns a new font descriptor for the given style
-									descriptor = descriptor.setStyle(SWT.BOLD);
-									label.setFont(descriptor.createFont(label.getDisplay()));
-
-									UIHelper.createHyperlink(area, tableAdd,
-										Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
-										Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
+									// createDescription(composite, eAttribute, columnA, columnB);
 
 									final Grid grid = createGrid(area, 3, 1);
 
-									for (final Column column : tableAdd.getColumns()) {
-										final GridItem item = new GridItem(grid, SWT.NONE);
-										item.setText(column.getName());
-										item.setText(1, column.eClass().getName());
-										item.setText(2, column.getType().getName());
-										item.setText(3, column.getSize() != null ? column.getSize()
-											: Messages.SemanticChangeSetRenderer_null);
-										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-											: Messages.SemanticChangeSetRenderer_null);
-										// item.setChecked(5, column.getUnique() != null ? column.getUnique()
-										// : false);
-										item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
-											: false);
-
-									}
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
 								}
-							}
 
-						} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_MOVE")) { //$NON-NLS-1$
+							} else if (set.getEditRName().equals("CREATE_ColumnConstraint_IN_Constraint_(columns)")) { //$NON-NLS-1$
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).findFirst();
+								if (optional2.isPresent()) {
 
-							final List<RemoveReference> removeReference = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
-								.collect(Collectors.toList());
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
+									final AddObject addObject = (AddObject) optional2.get();
 
-							if (removeReference.size() > 0 && addReference.size() > 0) {
+									final ColumnConstraint columnConstraint = (ColumnConstraint) addObject.getObj();
 
-								final Optional<AddObject> addTable = addReference.stream()
-									.filter(n -> n.getObj() instanceof Table).findFirst();
-								final Optional<RemoveReference> moveForeignKey = removeReference.stream()
-									.filter(n -> n.getSrc() instanceof Column).findFirst();
+									createCompositeForConstraint(composite, columnConstraint.getConstraint(),
+										columnConstraint.getConstraint().getName(), null,
+										"Existing Constraint:"); //$NON-NLS-1$
 
-								if (addTable.isPresent() && moveForeignKey.isPresent()) {
-
-									final Table tableAdd = (Table) addTable.get().getObj();
-									final ForeignKey columnRemove = (ForeignKey) moveForeignKey.get().getSrc();
-
-									createCompositeForColumn(composite, columnRemove, null, null,
-										Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+									final Label label = new Label(composite, SWT.NONE);
+									label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									final Label label = new Label(area, SWT.NONE);
-									label.setText(Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+									// createDescription(composite, eAttribute, columnA, columnB);
 
-									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
-									// setStyle method returns a new font descriptor for the given style
-									descriptor = descriptor.setStyle(SWT.BOLD);
-									label.setFont(descriptor.createFont(label.getDisplay()));
-
-									UIHelper.createHyperlink(area, tableAdd,
-										Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
-										Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
+									final Column columnA = columnConstraint.getColumn();
 
 									final Grid grid = createGrid(area, 3, 1);
 
-									for (final Column column : tableAdd.getColumns()) {
-										final GridItem item = new GridItem(grid, SWT.NONE);
-										item.setText(column.getName());
-										item.setText(1, column.eClass().getName());
-										item.setText(2, column.getType().getName());
-										item.setText(3, column.getSize() != null ? column.getSize()
-											: Messages.SemanticChangeSetRenderer_null);
-										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-											: Messages.SemanticChangeSetRenderer_null);
-										// item.setChecked(5, column.getUnique() != null ? column.getUnique()
-										// : false);
-										item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
-											: false);
-
-									}
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
 								}
-							}
 
-						} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_PRESERVE")) { //$NON-NLS-1$
+							} else if (set.getEditRName()
+								.equals("SET_REFERENCE_ColumnConstraint_(column)_TGT_Column")) { //$NON-NLS-1$
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddReference).findFirst();
+								if (optional2.isPresent()) {
 
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
+									final AddReference addObject = (AddReference) optional2.get();
 
-							if (addReference.size() > 0) {
+									ColumnConstraint columnConstraint = null;
+									Column columnA = null;
+									if (addObject.getSrc() instanceof ColumnConstraint) {
+										columnConstraint = (ColumnConstraint) addObject.getSrc();
+										columnA = (Column) addObject.getTgt();
+									} else {
+										columnConstraint = (ColumnConstraint) addObject.getTgt();
+										columnA = (Column) addObject.getSrc();
+									}
 
-								final Optional<AddObject> addTable = addReference.stream()
-									.filter(n -> n.getObj() instanceof Table).findFirst();
+									createCompositeForConstraint(composite, columnConstraint.getConstraint(),
+										columnConstraint.getConstraint().getName(), null,
+										"Existing Constraint:"); //$NON-NLS-1$
 
-								if (addTable.isPresent()) {
-
-									final Table tableAdd = (Table) addTable.get().getObj();
-
-									// The column isn't removed.
-									// createCompositeForColumn(composite, columnRemove, null, null,
-									// Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+									final Label label = new Label(composite, SWT.NONE);
+									label.setText("Adds the following column to the existing constraint:"); //$NON-NLS-1$
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									final Label label = new Label(area, SWT.NONE);
-									label.setText(Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
-
-									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
-									// setStyle method returns a new font descriptor for the given style
-									descriptor = descriptor.setStyle(SWT.BOLD);
-									label.setFont(descriptor.createFont(label.getDisplay()));
-
-									UIHelper.createHyperlink(area, tableAdd,
-										Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
-										Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
+									// createDescription(composite, eAttribute, columnA, columnB)
 
 									final Grid grid = createGrid(area, 3, 1);
 
-									for (final Column column : tableAdd.getColumns()) {
-										final GridItem item = new GridItem(grid, SWT.NONE);
-										item.setText(column.getName());
-										item.setText(1, column.eClass().getName());
-										item.setText(2, column.getType().getName());
-										item.setText(3, column.getSize() != null ? column.getSize()
-											: Messages.SemanticChangeSetRenderer_null);
-										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-											: Messages.SemanticChangeSetRenderer_null);
-										// item.setChecked(5, column.getUnique() != null ? column.getUnique()
-										// : false);
-										item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
-											: false);
-
-									}
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
 								}
-							}
 
-						}
+							} else if (set.getEditRName().equals("CREATE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
 
-						else if (set.getEditRName().equals("CHANGE_NM_INTO_1N")) { //$NON-NLS-1$
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).findFirst();
+								if (optional2.isPresent()) {
 
-							final List<RemoveObject> removeReference = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
-								.collect(Collectors.toList());
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
+									final AddObject addObject = (AddObject) optional2.get();
 
-							if (removeReference.size() > 0 && addReference.size() > 0) {
+									final Column columnA = (Column) addObject.getObj();
 
-								final Optional<AddObject> addForeign = addReference.stream()
-									.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
-								final Optional<RemoveObject> removeTable = removeReference.stream()
-									.filter(n -> n.getObj() instanceof Table).findFirst();
+									createCompositeForColumn(composite, columnA, null, null, "New Primary Key:"); //$NON-NLS-1$
 
-								if (addForeign.isPresent() && removeTable.isPresent()) {
-
-									final Table tableRemove = (Table) removeTable.get().getObj();
-									final ForeignKey columnAdd = (ForeignKey) addForeign.get().getObj();
-
-									createCompositeForColumn(composite, columnAdd, null, null,
-										Messages.SemanticChangeSetRenderer_newOBJ);
+									// createDescription(composite, eAttribute, columnA, columnB);
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									UIHelper.createHyperlink(area, columnAdd.getReferencedTable(),
+									final Grid grid = createGrid(area, 3, 1);
+
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
+
+								}
+
+							} else if (set.getEditRName().equals("CREATE_ForeignKey_IN_Table_(columns)")) { //$NON-NLS-1$
+
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).findFirst();
+								if (optional2.isPresent()) {
+
+									final AddObject addObject = (AddObject) optional2.get();
+
+									final ForeignKey columnA = (ForeignKey) addObject.getObj();
+
+									createCompositeForColumn(composite, columnA, null, null, "New Column:"); //$NON-NLS-1$
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									UIHelper.createHyperlink(area, columnA.getReferencedTable(),
 										Messages.SemanticChangeSetRenderer_Table
-											+ columnAdd.getReferencedTable().getName(),
+											+ columnA.getReferencedTable().getName(),
 										Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
-									UIHelper.createHyperlink(area, columnAdd.getReferencedKeyColumn(),
+									UIHelper.createHyperlink(area, columnA.getReferencedKeyColumn(),
 										Messages.SemanticChangeSetRenderer_Primary
-											+ columnAdd.getReferencedKeyColumn().getName(),
+											+ columnA.getReferencedKeyColumn().getName(),
 										Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
 
-									final Label label = new Label(area, SWT.NONE);
-									label.setText(Messages.SemanticChangeSetRenderer_Removed_Elements);
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
-
-									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
-									// setStyle method returns a new font descriptor for the given style
-									descriptor = descriptor.setStyle(SWT.BOLD);
-									label.setFont(descriptor.createFont(label.getDisplay()));
-
-									UIHelper.createHyperlink(area, tableRemove,
-										Messages.SemanticChangeSetRenderer_Table + tableRemove.getName(),
-										Messages.SemanticChangeSetRenderer_Old_Table, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
+									// createDescription(composite, eAttribute, columnA, columnB);
 
 									final Grid grid = createGrid(area, 3, 1);
 
-									for (final Column column : tableRemove.getColumns()) {
-										final GridItem item = new GridItem(grid, SWT.NONE);
-										item.setText(column.getName());
-										item.setText(1, column.eClass().getName());
-										item.setText(2, column.getType().getName());
-										item.setText(3, column.getSize() != null ? column.getSize()
-											: Messages.SemanticChangeSetRenderer_null);
-										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-											: Messages.SemanticChangeSetRenderer_null);
-										// item.setChecked(5, column.getUnique() != null ? column.getUnique()
-										// : false);
-										item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
-											: false);
-
-									}
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
 								}
-							}
 
-						}
+							} else if (set.getEditRName().equals("DELETE_ForeignKey_IN_Table_(columns)")) { //$NON-NLS-1$
 
-						else if (set.getEditRName().equals("CHANGE_NM_INTO_1N_PRESERVE")) { //$NON-NLS-1$
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).findFirst();
+								if (optional2.isPresent()) {
 
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
+									final RemoveObject addObject = (RemoveObject) optional2.get();
 
-							if (addReference.size() > 0) {
+									final ForeignKey columnA = (ForeignKey) addObject.getObj();
 
-								final Optional<AddObject> addForeign = addReference.stream()
-									.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
-
-								if (addForeign.isPresent()) {
-
-									final ForeignKey columnAdd = (ForeignKey) addForeign.get().getObj();
-
-									createCompositeForColumn(composite, columnAdd, null, null,
-										Messages.SemanticChangeSetRenderer_newOBJ);
+									createCompositeForColumn(composite, columnA, null, null, "Remove Foreign Key:"); //$NON-NLS-1$
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									UIHelper.createHyperlink(area, columnAdd.getReferencedTable(),
+									UIHelper.createHyperlink(area, columnA.getReferencedTable(),
 										Messages.SemanticChangeSetRenderer_Table
-											+ columnAdd.getReferencedTable().getName(),
+											+ columnA.getReferencedTable().getName(),
 										Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
-									UIHelper.createHyperlink(area, columnAdd.getReferencedKeyColumn(),
+									UIHelper.createHyperlink(area, columnA.getReferencedKeyColumn(),
 										Messages.SemanticChangeSetRenderer_Primary
-											+ columnAdd.getReferencedKeyColumn().getName(),
+											+ columnA.getReferencedKeyColumn().getName(),
 										Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
 
-								}
-							}
+									// createDescription(composite, eAttribute, columnA, columnB);
 
-						} else if (set.getEditRName().equals("SET_ATTRIBUTE_Column_Size_and_Type")) { //$NON-NLS-1$
-							// Operator consists of two attribute value changes
-							AttributeValueChange changeSize = null;
-							AttributeValueChange changeType = null;
+									final Grid grid = createGrid(area, 3, 1);
 
-							for (final Change change : set.getChanges()) {
-
-								if (change instanceof AttributeValueChange) {
-									final AttributeValueChange avc = (AttributeValueChange) change;
-									if (avc.getType().equals(MddePackage.eINSTANCE.getColumn_Size())) {
-										changeSize = avc;
-									}
-									if (avc.getType().equals(MddePackage.eINSTANCE.getColumn_Type())) {
-										changeType = avc;
-									}
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
 								}
-							}
 
-							final Object objA = changeType.getObjA();
-							final Object objB = changeType.getObjB();
+							} else if (set.getEditRName().equals("DELETE_Column_IN_Table_(columns)")) { //$NON-NLS-1$
 
-							if (objA instanceof Column) {
-								final Column columnA = (Column) objA;
-								final Column columnB = (Column) objB;
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).findFirst();
+								if (optional2.isPresent()) {
 
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+									final RemoveObject addObject = (RemoveObject) optional2.get();
 
-								UIHelper.createHyperlink(area, columnA, "Column " + columnA.getName(), //$NON-NLS-1$
-									Messages.SemanticChangeSetRenderer_COLUMN_MODELA, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-								UIHelper.createHyperlink(area, columnB,
-									Messages.SemanticChangeSetRenderer_ColumnDES + columnB.getName(),
-									Messages.SemanticChangeSetRenderer_COLUMN_MODELB, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
+									final Column columnA = (Column) addObject.getObj();
 
-								// Type
-								createBoldLabel(composite, Messages.SemanticChangeSetRenderer_DataType);
-
-								createCompositeForValue(composite, columnA, Messages.SemanticChangeSetRenderer_OLD_TYPE,
-									changeType.getType());
-								createCompositeForValue(composite, columnB, Messages.SemanticChangeSetRenderer_NEW_TYPE,
-									changeType.getType());
-
-								// Size
-								createBoldLabel(composite, Messages.SemanticChangeSetRenderer_Size);
-
-								createCompositeForValue(composite, columnA, Messages.SemanticChangeSetRenderer_OLD_SIZE,
-									changeSize.getType());
-								createCompositeForValue(composite, columnB, Messages.SemanticChangeSetRenderer_NEW_SIZE,
-									changeSize.getType());
-
-								createDescription(composite, changeSize.getType(), columnA, columnB);
-
-							}
-
-						} else if (set.getEditRName().equals("JOIN_tables")) { //$NON-NLS-1$
-							// Operator consists of two attribute value changes
-							final List<RemoveObject> removeReference = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
-								.collect(Collectors.toList());
-							final List<AddObject> addReference = set.getChanges().stream()
-								.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
-								.collect(Collectors.toList());
-
-							if (removeReference.size() > 0 && addReference.size() > 0) {
-
-								// New Table
-								final Optional<AddObject> addTable = addReference.stream()
-									.filter(n -> n.getObj() instanceof Table).findFirst();
-
-								// List old tables
-								final List<RemoveObject> removeTables = removeReference.stream()
-									.filter(n -> n.getObj() instanceof Table).collect(Collectors.toList());
-
-								if (addTable.isPresent() && removeTables.size() == 2) {
-
-									final Table newTable = (Table) addTable.get().getObj();
+									createCompositeForColumn(composite, columnA, null, null, "Remove Column:"); //$NON-NLS-1$
 
 									final Composite area = new Composite(composite, SWT.NONE);
 									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
 										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									final Label label = new Label(area, SWT.NONE);
-									label.setText(Messages.SemanticChangeSetRenderer_Removed_Elements);
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+									UIHelper.createHyperlink(area, columnA.getTable(),
+										Messages.SemanticChangeSetRenderer_Table + columnA.getTable().getName(),
+										Messages.SemanticChangeSetRenderer_Table, adapterFactoryItemDelegator,
+										referenceService, CUSTOM_VARIANT);
 
-									FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
-									// setStyle method returns a new font descriptor for the given style
-									descriptor = descriptor.setStyle(SWT.BOLD);
-									label.setFont(descriptor.createFont(label.getDisplay()));
+									// createDescription(composite, eAttribute, columnA, columnB);
 
-									for (final RemoveObject removeObject : removeTables) {
+									final Grid grid = createGrid(area, 3, 1);
 
-										final Table removeTable = (Table) removeObject.getObj();
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
 
-										UIHelper.createHyperlink(area, removeTable,
+								}
+
+							} else if (set.getEditRName().equals("DELETE_PrimaryKey_IN_Table_(columns)")) { //$NON-NLS-1$
+
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).findFirst();
+								if (optional2.isPresent()) {
+
+									final RemoveObject addObject = (RemoveObject) optional2.get();
+
+									final PrimaryKey columnA = (PrimaryKey) addObject.getObj();
+
+									createCompositeForColumn(composite, columnA, null, null, "Remove Column:"); //$NON-NLS-1$
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									UIHelper.createHyperlink(area, columnA.getTable(),
+										Messages.SemanticChangeSetRenderer_Table + columnA.getTable().getName(),
+										Messages.SemanticChangeSetRenderer_Table, adapterFactoryItemDelegator,
+										referenceService, CUSTOM_VARIANT);
+
+									// createDescription(composite, eAttribute, columnA, columnB);
+
+									final Grid grid = createGrid(area, 3, 1);
+
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(columnA.getName());
+									item.setText(1, columnA.eClass().getName());
+									item.setText(2, columnA.getType().getName());
+									item.setText(3, columnA.getSize() != null ? columnA.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, columnA.getAutoIncrement());
+
+								}
+
+							}
+
+							else if (set.getEditRName().equals("MOVE_Column_FROM_Table_(columns)_TO_Table_(columns)")) { //$NON-NLS-1$
+
+								final List<RemoveReference> removeReference = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
+									.collect(Collectors.toList());
+								final List<AddReference> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddReference).map(n -> (AddReference) n)
+									.collect(Collectors.toList());
+
+								if (removeReference.size() > 0 && addReference.size() > 0) {
+
+									final Optional<AddReference> addReferenceOptional = addReference.stream()
+										.filter(n -> n.getSrc() instanceof Column).findFirst();
+									final Optional<RemoveReference> removeReferenceOptional = removeReference.stream()
+										.filter(n -> n.getSrc() instanceof Column).findFirst();
+
+									if (addReferenceOptional.isPresent() && removeReferenceOptional.isPresent()) {
+										final Column columnAdd = (Column) addReferenceOptional.get().getSrc();
+										final Column columnRemove = (Column) removeReferenceOptional.get().getSrc();
+
+										createCompositeForColumn(composite, columnAdd, null, null,
+											Messages.SemanticChangeSetRenderer_Column);
+
+										// createCompositeForTable(composite, columnRemove.getTable(), "Old Table:",
+										// null,
+										// //$NON-NLS-1$
+										// "New Column:");
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										UIHelper.createHyperlink(area, columnAdd.getTable(),
 											Messages.SemanticChangeSetRenderer_Table
-												+ removeTable.getName(),
+												+ columnAdd.getTable().getName(),
 											Messages.SemanticChangeSetRenderer_Old_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+										UIHelper.createHyperlink(area, columnRemove.getTable(),
+											Messages.SemanticChangeSetRenderer_Table
+												+ columnRemove.getTable().getName(),
+											Messages.SemanticChangeSetRenderer_New_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+									}
+								}
+
+							}
+
+							else if (set.getEditRName().equals("CHANGE_1N_INTO_NM")) { //$NON-NLS-1$
+
+								final List<RemoveObject> removeReference = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
+									.collect(Collectors.toList());
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
+
+								if (removeReference.size() > 0 && addReference.size() > 0) {
+
+									final Optional<AddObject> addTable = addReference.stream()
+										.filter(n -> n.getObj() instanceof Table).findFirst();
+									final Optional<RemoveObject> removeForeignKey = removeReference.stream()
+										.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
+
+									if (addTable.isPresent() && removeForeignKey.isPresent()) {
+
+										final Table tableAdd = (Table) addTable.get().getObj();
+										final ForeignKey columnRemove = (ForeignKey) removeForeignKey.get().getObj();
+
+										createCompositeForColumn(composite, columnRemove, null, null,
+											Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										final Label label = new Label(area, SWT.NONE);
+										label.setText(
+											Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+										// setStyle method returns a new font descriptor for the given style
+										descriptor = descriptor.setStyle(SWT.BOLD);
+										label.setFont(descriptor.createFont(label.getDisplay()));
+
+										UIHelper.createHyperlink(area, tableAdd,
+											Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
+											Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
 											referenceService, CUSTOM_VARIANT);
 
 										final Grid grid = createGrid(area, 3, 1);
 
-										for (final Column column : removeTable.getColumns()) {
+										for (final Column column : tableAdd.getColumns()) {
 											final GridItem item = new GridItem(grid, SWT.NONE);
 											item.setText(column.getName());
 											item.setText(1, column.eClass().getName());
@@ -1062,149 +702,470 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 										}
 
 									}
+								}
 
-									final Label labelNew = new Label(area, SWT.NONE);
-									labelNew.setText(Messages.SemanticChangeSetRenderer_New_Table);
-									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+							} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_MOVE")) { //$NON-NLS-1$
 
-									labelNew.setFont(descriptor.createFont(label.getDisplay()));
+								final List<RemoveReference> removeReference = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveReference).map(n -> (RemoveReference) n)
+									.collect(Collectors.toList());
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
 
-									final Composite linkparent = new Composite(area, SWT.NONE);
-									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false)
-										.applyTo(linkparent);
+								if (removeReference.size() > 0 && addReference.size() > 0) {
+
+									final Optional<AddObject> addTable = addReference.stream()
+										.filter(n -> n.getObj() instanceof Table).findFirst();
+									final Optional<RemoveReference> moveForeignKey = removeReference.stream()
+										.filter(n -> n.getSrc() instanceof Column).findFirst();
+
+									if (addTable.isPresent() && moveForeignKey.isPresent()) {
+
+										final Table tableAdd = (Table) addTable.get().getObj();
+										final ForeignKey columnRemove = (ForeignKey) moveForeignKey.get().getSrc();
+
+										createCompositeForColumn(composite, columnRemove, null, null,
+											Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										final Label label = new Label(area, SWT.NONE);
+										label.setText(
+											Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+										// setStyle method returns a new font descriptor for the given style
+										descriptor = descriptor.setStyle(SWT.BOLD);
+										label.setFont(descriptor.createFont(label.getDisplay()));
+
+										UIHelper.createHyperlink(area, tableAdd,
+											Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
+											Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+										final Grid grid = createGrid(area, 3, 1);
+
+										for (final Column column : tableAdd.getColumns()) {
+											final GridItem item = new GridItem(grid, SWT.NONE);
+											item.setText(column.getName());
+											item.setText(1, column.eClass().getName());
+											item.setText(2, column.getType().getName());
+											item.setText(3, column.getSize() != null ? column.getSize()
+												: Messages.SemanticChangeSetRenderer_null);
+											item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+												: Messages.SemanticChangeSetRenderer_null);
+											// item.setChecked(5, column.getUnique() != null ? column.getUnique()
+											// : false);
+											item.setChecked(5,
+												column.getAutoIncrement() != null ? column.getAutoIncrement()
+													: false);
+
+										}
+
+									}
+								}
+
+							} else if (set.getEditRName().equals("CHANGE_1N_INTO_NM_PRESERVE")) { //$NON-NLS-1$
+
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
+
+								if (addReference.size() > 0) {
+
+									final Optional<AddObject> addTable = addReference.stream()
+										.filter(n -> n.getObj() instanceof Table).findFirst();
+
+									if (addTable.isPresent()) {
+
+										final Table tableAdd = (Table) addTable.get().getObj();
+
+										// The column isn't removed.
+										// createCompositeForColumn(composite, columnRemove, null, null,
+										// Messages.SemanticChangeSetRenderer_OLD_FOREIGNKEY);
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										final Label label = new Label(area, SWT.NONE);
+										label.setText(
+											Messages.SemanticChangeSetRenderer_CreateTable + tableAdd.getName());
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+										// setStyle method returns a new font descriptor for the given style
+										descriptor = descriptor.setStyle(SWT.BOLD);
+										label.setFont(descriptor.createFont(label.getDisplay()));
+
+										UIHelper.createHyperlink(area, tableAdd,
+											Messages.SemanticChangeSetRenderer_Table + tableAdd.getName(),
+											Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+										final Grid grid = createGrid(area, 3, 1);
+
+										for (final Column column : tableAdd.getColumns()) {
+											final GridItem item = new GridItem(grid, SWT.NONE);
+											item.setText(column.getName());
+											item.setText(1, column.eClass().getName());
+											item.setText(2, column.getType().getName());
+											item.setText(3, column.getSize() != null ? column.getSize()
+												: Messages.SemanticChangeSetRenderer_null);
+											item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+												: Messages.SemanticChangeSetRenderer_null);
+											// item.setChecked(5, column.getUnique() != null ? column.getUnique()
+											// : false);
+											item.setChecked(5,
+												column.getAutoIncrement() != null ? column.getAutoIncrement()
+													: false);
+
+										}
+
+									}
+								}
+
+							}
+
+							else if (set.getEditRName().equals("CHANGE_NM_INTO_1N")) { //$NON-NLS-1$
+
+								final List<RemoveObject> removeReference = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
+									.collect(Collectors.toList());
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
+
+								if (removeReference.size() > 0 && addReference.size() > 0) {
+
+									final Optional<AddObject> addForeign = addReference.stream()
+										.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
+									final Optional<RemoveObject> removeTable = removeReference.stream()
+										.filter(n -> n.getObj() instanceof Table).findFirst();
+
+									if (addForeign.isPresent() && removeTable.isPresent()) {
+
+										final Table tableRemove = (Table) removeTable.get().getObj();
+										final ForeignKey columnAdd = (ForeignKey) addForeign.get().getObj();
+
+										createCompositeForColumn(composite, columnAdd, null, null,
+											Messages.SemanticChangeSetRenderer_newOBJ);
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										UIHelper.createHyperlink(area, columnAdd.getReferencedTable(),
+											Messages.SemanticChangeSetRenderer_Table
+												+ columnAdd.getReferencedTable().getName(),
+											Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+										UIHelper.createHyperlink(area, columnAdd.getReferencedKeyColumn(),
+											Messages.SemanticChangeSetRenderer_Primary
+												+ columnAdd.getReferencedKeyColumn().getName(),
+											Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+										final Label label = new Label(area, SWT.NONE);
+										label.setText(Messages.SemanticChangeSetRenderer_Removed_Elements);
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+										// setStyle method returns a new font descriptor for the given style
+										descriptor = descriptor.setStyle(SWT.BOLD);
+										label.setFont(descriptor.createFont(label.getDisplay()));
+
+										UIHelper.createHyperlink(area, tableRemove,
+											Messages.SemanticChangeSetRenderer_Table + tableRemove.getName(),
+											Messages.SemanticChangeSetRenderer_Old_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+										final Grid grid = createGrid(area, 3, 1);
+
+										for (final Column column : tableRemove.getColumns()) {
+											final GridItem item = new GridItem(grid, SWT.NONE);
+											item.setText(column.getName());
+											item.setText(1, column.eClass().getName());
+											item.setText(2, column.getType().getName());
+											item.setText(3, column.getSize() != null ? column.getSize()
+												: Messages.SemanticChangeSetRenderer_null);
+											item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+												: Messages.SemanticChangeSetRenderer_null);
+											// item.setChecked(5, column.getUnique() != null ? column.getUnique()
+											// : false);
+											item.setChecked(5,
+												column.getAutoIncrement() != null ? column.getAutoIncrement()
+													: false);
+
+										}
+
+									}
+								}
+
+							}
+
+							else if (set.getEditRName().equals("CHANGE_NM_INTO_1N_PRESERVE")) { //$NON-NLS-1$
+
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
+
+								if (addReference.size() > 0) {
+
+									final Optional<AddObject> addForeign = addReference.stream()
+										.filter(n -> n.getObj() instanceof ForeignKey).findFirst();
+
+									if (addForeign.isPresent()) {
+
+										final ForeignKey columnAdd = (ForeignKey) addForeign.get().getObj();
+
+										createCompositeForColumn(composite, columnAdd, null, null,
+											Messages.SemanticChangeSetRenderer_newOBJ);
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										UIHelper.createHyperlink(area, columnAdd.getReferencedTable(),
+											Messages.SemanticChangeSetRenderer_Table
+												+ columnAdd.getReferencedTable().getName(),
+											Messages.SemanticChangeSetRenderer_Ref_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+										UIHelper.createHyperlink(area, columnAdd.getReferencedKeyColumn(),
+											Messages.SemanticChangeSetRenderer_Primary
+												+ columnAdd.getReferencedKeyColumn().getName(),
+											Messages.SemanticChangeSetRenderer_Ref_Key, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+									}
+								}
+
+							} else if (set.getEditRName().equals("SET_ATTRIBUTE_Column_Size_and_Type")) { //$NON-NLS-1$
+								// Operator consists of two attribute value changes
+								AttributeValueChange changeSize = null;
+								AttributeValueChange changeType = null;
+
+								for (final Change change : set.getChanges()) {
+
+									if (change instanceof AttributeValueChange) {
+										final AttributeValueChange avc = (AttributeValueChange) change;
+										if (avc.getType().equals(MddePackage.eINSTANCE.getColumn_Size())) {
+											changeSize = avc;
+										}
+										if (avc.getType().equals(MddePackage.eINSTANCE.getColumn_Type())) {
+											changeType = avc;
+										}
+
+									}
+								}
+
+								final Object objA = changeType.getObjA();
+								final Object objB = changeType.getObjB();
+
+								if (objA instanceof Column) {
+									final Column columnA = (Column) objA;
+									final Column columnB = (Column) objB;
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
 									GridDataFactory.fillDefaults().grab(true, false)
-										.align(SWT.FILL, SWT.BEGINNING).span(3, 1).applyTo(linkparent);
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-									UIHelper.createHyperlink(linkparent, newTable,
-										Messages.SemanticChangeSetRenderer_Table + newTable.getName(),
-										Messages.SemanticChangeSetRenderer_New_Table, adapterFactoryItemDelegator,
+									UIHelper.createHyperlink(area, columnA, "Column " + columnA.getName(), //$NON-NLS-1$
+										Messages.SemanticChangeSetRenderer_COLUMN_MODELA, adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
+									UIHelper.createHyperlink(area, columnB,
+										Messages.SemanticChangeSetRenderer_ColumnDES + columnB.getName(),
+										Messages.SemanticChangeSetRenderer_COLUMN_MODELB, adapterFactoryItemDelegator,
+										referenceService, CUSTOM_VARIANT);
+
+									// Type
+									createBoldLabel(composite, Messages.SemanticChangeSetRenderer_DataType);
+
+									createCompositeForValue(composite, columnA,
+										Messages.SemanticChangeSetRenderer_OLD_TYPE,
+										changeType.getType());
+									createCompositeForValue(composite, columnB,
+										Messages.SemanticChangeSetRenderer_NEW_TYPE,
+										changeType.getType());
+
+									// Size
+									createBoldLabel(composite, Messages.SemanticChangeSetRenderer_Size);
+
+									createCompositeForValue(composite, columnA,
+										Messages.SemanticChangeSetRenderer_OLD_SIZE,
+										changeSize.getType());
+									createCompositeForValue(composite, columnB,
+										Messages.SemanticChangeSetRenderer_NEW_SIZE,
+										changeSize.getType());
+
+									createDescription(composite, changeSize.getType(), columnA, columnB);
+
+								}
+
+							} else if (set.getEditRName().equals("JOIN_tables")) { //$NON-NLS-1$
+								// Operator consists of two attribute value changes
+								final List<RemoveObject> removeReference = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).map(n -> (RemoveObject) n)
+									.collect(Collectors.toList());
+								final List<AddObject> addReference = set.getChanges().stream()
+									.filter(n -> n instanceof AddObject).map(n -> (AddObject) n)
+									.collect(Collectors.toList());
+
+								if (removeReference.size() > 0 && addReference.size() > 0) {
+
+									// New Table
+									final Optional<AddObject> addTable = addReference.stream()
+										.filter(n -> n.getObj() instanceof Table).findFirst();
+
+									// List old tables
+									final List<RemoveObject> removeTables = removeReference.stream()
+										.filter(n -> n.getObj() instanceof Table).collect(Collectors.toList());
+
+									if (addTable.isPresent() && removeTables.size() == 2) {
+
+										final Table newTable = (Table) addTable.get().getObj();
+
+										final Composite area = new Composite(composite, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+										final Label label = new Label(area, SWT.NONE);
+										label.setText(Messages.SemanticChangeSetRenderer_Removed_Elements);
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										FontDescriptor descriptor = FontDescriptor.createFrom(label.getFont());
+										// setStyle method returns a new font descriptor for the given style
+										descriptor = descriptor.setStyle(SWT.BOLD);
+										label.setFont(descriptor.createFont(label.getDisplay()));
+
+										for (final RemoveObject removeObject : removeTables) {
+
+											final Table removeTable = (Table) removeObject.getObj();
+
+											UIHelper.createHyperlink(area, removeTable,
+												Messages.SemanticChangeSetRenderer_Table
+													+ removeTable.getName(),
+												Messages.SemanticChangeSetRenderer_Old_Table,
+												adapterFactoryItemDelegator,
+												referenceService, CUSTOM_VARIANT);
+
+											final Grid grid = createGrid(area, 3, 1);
+
+											for (final Column column : removeTable.getColumns()) {
+												final GridItem item = new GridItem(grid, SWT.NONE);
+												item.setText(column.getName());
+												item.setText(1, column.eClass().getName());
+												item.setText(2, column.getType().getName());
+												item.setText(3, column.getSize() != null ? column.getSize()
+													: Messages.SemanticChangeSetRenderer_null);
+												item.setText(4,
+													column.getDefaultValue() != null ? column.getDefaultValue()
+														: Messages.SemanticChangeSetRenderer_null);
+												// item.setChecked(5, column.getUnique() != null ? column.getUnique()
+												// : false);
+												item.setChecked(5,
+													column.getAutoIncrement() != null ? column.getAutoIncrement()
+														: false);
+
+											}
+
+										}
+
+										final Label labelNew = new Label(area, SWT.NONE);
+										labelNew.setText(Messages.SemanticChangeSetRenderer_New_Table);
+										GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+											.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+										labelNew.setFont(descriptor.createFont(label.getDisplay()));
+
+										final Composite linkparent = new Composite(area, SWT.NONE);
+										GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false)
+											.applyTo(linkparent);
+										GridDataFactory.fillDefaults().grab(true, false)
+											.align(SWT.FILL, SWT.BEGINNING).span(3, 1).applyTo(linkparent);
+
+										UIHelper.createHyperlink(linkparent, newTable,
+											Messages.SemanticChangeSetRenderer_Table + newTable.getName(),
+											Messages.SemanticChangeSetRenderer_New_Table, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+
+										final Grid grid = createGrid(area, 3, 1);
+
+										for (final Column column : newTable.getColumns()) {
+											final GridItem item = new GridItem(grid, SWT.NONE);
+											item.setText(column.getName());
+											item.setText(1, column.eClass().getName());
+											item.setText(2, column.getType().getName());
+											item.setText(3, column.getSize() != null ? column.getSize()
+												: Messages.SemanticChangeSetRenderer_null);
+											item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+												: Messages.SemanticChangeSetRenderer_null);
+											// item.setChecked(5, column.getUnique() != null ? column.getUnique()
+											// : false);
+											item.setChecked(5,
+												column.getAutoIncrement() != null ? column.getAutoIncrement()
+													: false);
+
+										}
+
+									}
+								}
+
+							} else if (set.getEditRName().equals("ADD_Constraint_(columns)_TGT_Column") //$NON-NLS-1$
+								|| set.getEditRName().equals("ADD_Column_(constraints)_TGT_ColumnConstraint")) { //$NON-NLS-1$
+
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof AddReference).findFirst();
+								if (optional2.isPresent()) {
+
+									final AddReference addObject = (AddReference) optional2.get();
+
+									final EObject eObject = addObject.getSrc();
+
+									ColumnConstraint constraint;
+
+									if (eObject instanceof Constraint) {
+										constraint = (ColumnConstraint) eObject;
+									} else {
+										constraint = (ColumnConstraint) addObject.getTgt();
+									}
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									if (constraint instanceof Index) {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									} else {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									}
+
+									// createDescription(composite, eAttribute, columnA, columnB);
 
 									final Grid grid = createGrid(area, 3, 1);
 
-									for (final Column column : newTable.getColumns()) {
-										final GridItem item = new GridItem(grid, SWT.NONE);
-										item.setText(column.getName());
-										item.setText(1, column.eClass().getName());
-										item.setText(2, column.getType().getName());
-										item.setText(3, column.getSize() != null ? column.getSize()
-											: Messages.SemanticChangeSetRenderer_null);
-										item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-											: Messages.SemanticChangeSetRenderer_null);
-										// item.setChecked(5, column.getUnique() != null ? column.getUnique()
-										// : false);
-										item.setChecked(5, column.getAutoIncrement() != null ? column.getAutoIncrement()
-											: false);
-
-									}
-
-								}
-							}
-
-						} else if (set.getEditRName().equals("ADD_Constraint_(columns)_TGT_Column") //$NON-NLS-1$
-							|| set.getEditRName().equals("ADD_Column_(constraints)_TGT_ColumnConstraint")) { //$NON-NLS-1$
-
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof AddReference).findFirst();
-							if (optional2.isPresent()) {
-
-								final AddReference addObject = (AddReference) optional2.get();
-
-								final EObject eObject = addObject.getSrc();
-
-								ColumnConstraint constraint;
-
-								if (eObject instanceof Constraint) {
-									constraint = (ColumnConstraint) eObject;
-								} else {
-									constraint = (ColumnConstraint) addObject.getTgt();
-								}
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								if (constraint instanceof Index) {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								} else {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_newOBJ, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								}
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final Column columnA = constraint.getColumn();
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(columnA.getName());
-								item.setText(1, columnA.eClass().getName());
-								item.setText(2, columnA.getType().getName());
-								item.setText(3, columnA.getSize() != null ? columnA.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, columnA.getAutoIncrement());
-
-							}
-
-						} else if (set.getEditRName().equals("DELETE_UniqueConstraint_IN_Table_(constraints)") //$NON-NLS-1$
-							|| set.getEditRName().equals("DELETE_Index_IN_Table_(constraints)")) { //$NON-NLS-1$
-
-							final List<Change> removeObjects = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
-
-							if (removeObjects.size() > 0) {
-
-								Constraint constraint = null;
-
-								for (final Change rO : removeObjects) {
-									final RemoveObject remove = (RemoveObject) rO;
-									if (remove.getObj() instanceof Constraint) {
-										constraint = (Constraint) remove.getObj();
-									}
-								}
-
-								if (constraint == null) {
-
-									return composite;
-								}
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								if (constraint instanceof Index) {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_Removed_Elements,
-										adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								} else {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_Removed_Elements,
-										adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								}
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								for (final ColumnConstraint columnConstraint : constraint.getColumns()) {
-
-									final Column columnA = columnConstraint.getColumn();
+									final Column columnA = constraint.getColumn();
 
 									final GridItem item = new GridItem(grid, SWT.NONE);
 									item.setText(columnA.getName());
@@ -1216,146 +1177,211 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 										: Messages.SemanticChangeSetRenderer_null);
 									// item.setChecked(5, columnA.getUnique());
 									item.setChecked(5, columnA.getAutoIncrement());
+
 								}
 
-							}
+							} else if (set.getEditRName().equals("DELETE_UniqueConstraint_IN_Table_(constraints)") //$NON-NLS-1$
+								|| set.getEditRName().equals("DELETE_Index_IN_Table_(constraints)")) { //$NON-NLS-1$
 
-						} else if (set.getEditRName().equals("REMOVE_Column_(constraints)_TGT_ColumnConstraint")) { //$NON-NLS-1$
+								final List<Change> removeObjects = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveObject).collect(Collectors.toList());
 
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveReference).findFirst();
-							if (optional2.isPresent()) {
+								if (removeObjects.size() > 0) {
 
-								final RemoveReference removeObject = (RemoveReference) optional2.get();
-								final EObject eObject = removeObject.getSrc();
+									Constraint constraint = null;
 
-								ColumnConstraint constraint;
-								Column column;
+									for (final Change rO : removeObjects) {
+										final RemoveObject remove = (RemoveObject) rO;
+										if (remove.getObj() instanceof Constraint) {
+											constraint = (Constraint) remove.getObj();
+										}
+									}
 
-								if (eObject instanceof Constraint) {
-									constraint = (ColumnConstraint) eObject;
-									column = (Column) removeObject.getTgt();
-								} else {
-									constraint = (ColumnConstraint) removeObject.getTgt();
-									column = (Column) removeObject.getSrc();
+									if (constraint == null) {
+
+										return composite;
+									}
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									if (constraint instanceof Index) {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_Removed_Elements,
+											adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									} else {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_Removed_Elements,
+											adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									}
+
+									// createDescription(composite, eAttribute, columnA, columnB);
+
+									final Grid grid = createGrid(area, 3, 1);
+
+									for (final ColumnConstraint columnConstraint : constraint.getColumns()) {
+
+										final Column columnA = columnConstraint.getColumn();
+
+										final GridItem item = new GridItem(grid, SWT.NONE);
+										item.setText(columnA.getName());
+										item.setText(1, columnA.eClass().getName());
+										item.setText(2, columnA.getType().getName());
+										item.setText(3, columnA.getSize() != null ? columnA.getSize()
+											: Messages.SemanticChangeSetRenderer_null);
+										item.setText(4, columnA.getDefaultValue() != null ? columnA.getDefaultValue()
+											: Messages.SemanticChangeSetRenderer_null);
+										// item.setChecked(5, columnA.getUnique());
+										item.setChecked(5, columnA.getAutoIncrement());
+									}
+
 								}
 
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+							} else if (set.getEditRName().equals("REMOVE_Column_(constraints)_TGT_ColumnConstraint")) { //$NON-NLS-1$
 
-								final Label label = new Label(area, SWT.NONE);
-								label.setText(Messages.SemanticChangeSetRenderer_Column_Index_Remove);
-								GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveReference).findFirst();
+								if (optional2.isPresent()) {
 
-								UIHelper.createHyperlink(area, column,
-									Messages.SemanticChangeSetRenderer_Column + column.getName(),
-									Messages.SemanticChangeSetRenderer_Removed_Elements, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
+									final RemoveReference removeObject = (RemoveReference) optional2.get();
+									final EObject eObject = removeObject.getSrc();
 
-								if (constraint.getConstraint() instanceof Index) {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_0, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								} else {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+									ColumnConstraint constraint;
+									Column column;
+
+									if (eObject instanceof Constraint) {
+										constraint = (ColumnConstraint) eObject;
+										column = (Column) removeObject.getTgt();
+									} else {
+										constraint = (ColumnConstraint) removeObject.getTgt();
+										column = (Column) removeObject.getSrc();
+									}
+
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
+
+									final Label label = new Label(area, SWT.NONE);
+									label.setText(Messages.SemanticChangeSetRenderer_Column_Index_Remove);
+									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+
+									UIHelper.createHyperlink(area, column,
+										Messages.SemanticChangeSetRenderer_Column + column.getName(),
 										Messages.SemanticChangeSetRenderer_Removed_Elements,
 										adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
+
+									if (constraint.getConstraint() instanceof Index) {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_0, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									} else {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_Removed_Elements,
+											adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									}
+
+									// createDescription(composite, eAttribute, columnA, columnB);
+
+									final Grid grid = createGrid(area, 3, 1);
+
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(column.getName());
+									item.setText(1, column.eClass().getName());
+									item.setText(2, column.getType().getName());
+									item.setText(3, column.getSize() != null ? column.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, column.getAutoIncrement());
+
 								}
 
-								// createDescription(composite, eAttribute, columnA, columnB);
+							} else if (set.getEditRName().equals("DELETE_ColumnConstraint_IN_Constraint_(columns)")) { //$NON-NLS-1$
 
-								final Grid grid = createGrid(area, 3, 1);
+								final Optional<Change> optional2 = set.getChanges().stream()
+									.filter(n -> n instanceof RemoveReference).findFirst();
+								if (optional2.isPresent()) {
 
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(column.getName());
-								item.setText(1, column.eClass().getName());
-								item.setText(2, column.getType().getName());
-								item.setText(3, column.getSize() != null ? column.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, column.getAutoIncrement());
+									final RemoveReference removeObject = (RemoveReference) optional2.get();
+									final EObject eObject = removeObject.getSrc();
 
-							}
+									Constraint constraint;
+									final ColumnConstraint columnConstraint;
 
-						} else if (set.getEditRName().equals("DELETE_ColumnConstraint_IN_Constraint_(columns)")) { //$NON-NLS-1$
+									if (eObject instanceof Constraint) {
+										constraint = (Constraint) eObject;
+										columnConstraint = (ColumnConstraint) removeObject.getTgt();
+									} else {
+										constraint = (Constraint) removeObject.getTgt();
+										columnConstraint = (ColumnConstraint) removeObject.getSrc();
+									}
 
-							final Optional<Change> optional2 = set.getChanges().stream()
-								.filter(n -> n instanceof RemoveReference).findFirst();
-							if (optional2.isPresent()) {
+									final Column column = columnConstraint.getColumn();
 
-								final RemoveReference removeObject = (RemoveReference) optional2.get();
-								final EObject eObject = removeObject.getSrc();
+									final Composite area = new Composite(composite, SWT.NONE);
+									GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
+									GridDataFactory.fillDefaults().grab(true, false)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
 
-								Constraint constraint;
-								final ColumnConstraint columnConstraint;
+									final Label label = new Label(area, SWT.NONE);
+									label.setText(Messages.SemanticChangeSetRenderer_Column_Index_Remove);
+									GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+										.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
 
-								if (eObject instanceof Constraint) {
-									constraint = (Constraint) eObject;
-									columnConstraint = (ColumnConstraint) removeObject.getTgt();
-								} else {
-									constraint = (Constraint) removeObject.getTgt();
-									columnConstraint = (ColumnConstraint) removeObject.getSrc();
-								}
-
-								final Column column = columnConstraint.getColumn();
-
-								final Composite area = new Composite(composite, SWT.NONE);
-								GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(area);
-								GridDataFactory.fillDefaults().grab(true, false)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(area);
-
-								final Label label = new Label(area, SWT.NONE);
-								label.setText(Messages.SemanticChangeSetRenderer_Column_Index_Remove);
-								GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-									.align(SWT.FILL, SWT.BEGINNING).applyTo(label);
-
-								UIHelper.createHyperlink(area, column,
-									Messages.SemanticChangeSetRenderer_Column + column.getName(),
-									Messages.SemanticChangeSetRenderer_Removed_Elements, adapterFactoryItemDelegator,
-									referenceService, CUSTOM_VARIANT);
-
-								if (constraint instanceof Index) {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
-										Messages.SemanticChangeSetRenderer_0, adapterFactoryItemDelegator,
-										referenceService, CUSTOM_VARIANT);
-								} else {
-									UIHelper.createHyperlink(area, constraint,
-										Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+									UIHelper.createHyperlink(area, column,
+										Messages.SemanticChangeSetRenderer_Column + column.getName(),
 										Messages.SemanticChangeSetRenderer_Removed_Elements,
 										adapterFactoryItemDelegator,
 										referenceService, CUSTOM_VARIANT);
+
+									if (constraint instanceof Index) {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_0 + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_0, adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									} else {
+										UIHelper.createHyperlink(area, constraint,
+											Messages.SemanticChangeSetRenderer_uniqueConstraint + constraint.getName(),
+											Messages.SemanticChangeSetRenderer_Removed_Elements,
+											adapterFactoryItemDelegator,
+											referenceService, CUSTOM_VARIANT);
+									}
+
+									// createDescription(composite, eAttribute, columnA, columnB);
+
+									final Grid grid = createGrid(area, 3, 1);
+
+									final GridItem item = new GridItem(grid, SWT.NONE);
+									item.setText(column.getName());
+									item.setText(1, column.eClass().getName());
+									item.setText(2, column.getType().getName());
+									item.setText(3, column.getSize() != null ? column.getSize()
+										: Messages.SemanticChangeSetRenderer_null);
+									item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
+										: Messages.SemanticChangeSetRenderer_null);
+									// item.setChecked(5, columnA.getUnique());
+									item.setChecked(5, column.getAutoIncrement());
+
 								}
-
-								// createDescription(composite, eAttribute, columnA, columnB);
-
-								final Grid grid = createGrid(area, 3, 1);
-
-								final GridItem item = new GridItem(grid, SWT.NONE);
-								item.setText(column.getName());
-								item.setText(1, column.eClass().getName());
-								item.setText(2, column.getType().getName());
-								item.setText(3, column.getSize() != null ? column.getSize()
-									: Messages.SemanticChangeSetRenderer_null);
-								item.setText(4, column.getDefaultValue() != null ? column.getDefaultValue()
-									: Messages.SemanticChangeSetRenderer_null);
-								// item.setChecked(5, columnA.getUnique());
-								item.setChecked(5, column.getAutoIncrement());
 
 							}
 
 						}
 
 					}
-
 				}
 
 			} else {
@@ -2257,6 +2283,18 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 			return;
 		}
 
+		if (isRule(rule,
+			"ADD_NodeType_(label)_TGT_NodeLabel")) { //$NON-NLS-1$
+			renderAddNodeLabelToNodeType(set, composite);
+			return;
+		}
+		if (isRule(rule,
+			"DELETE_Property_IN_NodeType_(properties)", "DELETE_Property_IN_Label_(properties)", //$NON-NLS-1$ //$NON-NLS-2$
+			"DELETE_Property_IN_EdgeType_(properties)")) { //$NON-NLS-1$
+			renderRemoveProperty(set, composite);
+			return;
+		}
+
 		// if (isRule(rule,
 		// "ADD_NodeType_(label)_TGT_NodeLabel")) { //$NON-NLS-1$
 		// renderMoveRefPropertyFromLabelToLabel(set, composite);
@@ -2272,6 +2310,11 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 		// Fallback: zeig die betroffenen Objekte generisch an
 		renderGraphFallback(set, composite);
 	}
+
+	/**
+	 * @param set
+	 * @param composite
+	 */
 
 	private boolean isRule(String actual, String... expected) {
 		for (final String e : expected) {
@@ -2501,6 +2544,73 @@ public class SemanticChangeSetRenderer extends AbstractControlSWTRenderer<VContr
 					section(parent, "CreateProperty → EdgeType"); //$NON-NLS-1$
 
 					section(parent, "New Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "EdgeLabel");
+					GraphUIHelper.createCompositeForEdgeType(parent, (EdgeType) graphItem, adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				}
+			}
+		});
+	}
+
+	private void renderRemoveProperty(SemanticChangeSet set, Composite parent) {
+		firstChangeOfType(set, RemoveObject.class).ifPresent(ar -> {
+			final EObject a = ar.getObj();
+			final Property property = a instanceof Property ? (Property) a : null;
+
+			if (property != null) {
+
+				final GraphItem graphItem = property.getContainerElement();
+				if (graphItem instanceof EdgeLabel) {
+					section(parent, "Remove Property → EdgeLabel"); //$NON-NLS-1$
+
+					section(parent, "Remove Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "EdgeLabel");
+					GraphUIHelper.createCompositeForEdgeLabel(parent, (EdgeLabel) graphItem,
+						adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof NodeLabel) {
+					section(parent, "Remove Property → NodeLabel"); //$NON-NLS-1$
+
+					section(parent, "Remove Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "NodeLabel");
+					GraphUIHelper.createCompositeForNodeLabel(parent, (NodeLabel) graphItem,
+						adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof NodeType) {
+					section(parent, "Remove Property → NodeType"); //$NON-NLS-1$
+
+					section(parent, "Remove Property");
+					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
+						GraphPackage.Literals.PROPERTY__VALUE,
+						"Value", adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+					section(parent, "NodeType");
+					GraphUIHelper.createCompositeForNodeType(parent, (NodeType) graphItem, adapterFactoryItemDelegator,
+						getReferenceService(), CUSTOM_VARIANT);
+
+				} else if (graphItem instanceof EdgeType) {
+					section(parent, "Remove Property → EdgeType"); //$NON-NLS-1$
+
+					section(parent, "Remove Property");
 					GraphUIHelper.createCompositeForProperty(parent, property, "Property:", //$NON-NLS-1$
 						GraphPackage.Literals.PROPERTY__VALUE,
 						"Value", adapterFactoryItemDelegator,

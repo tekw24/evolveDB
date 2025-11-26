@@ -32,6 +32,8 @@ import de.thm.evolvedb.mdde.PrimaryKey;
 import de.thm.evolvedb.mdde.Table;
 import de.thm.evolvedb.mdde.UniqueConstraint;
 import de.thm.evolvedb.migration.ColumnOptions;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
+import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType;
 import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.GraphResolvableOperatorType;
 import de.thm.evolvedb.migration.Migration;
@@ -88,6 +90,7 @@ public class MigrationModelTransformation {
     this.transformNewLabelOperator(migration);
     this.transformNewEdgeType(migration);
     this.transformAddNodeType(migration);
+    this.transformDeleteEdgeType(migration);
     final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
       return Boolean.valueOf((it instanceof SymmetricDifference));
     };
@@ -842,7 +845,7 @@ public class MigrationModelTransformation {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof AddReference));
             })) && 
-              ((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || it.getName().equals("ADD_NodeType_(incoming)_TGT_EdgeType")) || it.getName().equals("ADD_NodeType_(outgoing)_TGT_EdgeType"))));
+              ((((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || it.getName().equals("ADD_NodeType_(incoming)_TGT_EdgeType")) || it.getName().equals("ADD_NodeType_(outgoing)_TGT_EdgeType")) || it.getName().equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) || it.getName().equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {
@@ -867,6 +870,65 @@ public class MigrationModelTransformation {
                   EObject _tgt_1 = a.getTgt();
                   EdgeType c_1 = ((EdgeType) _tgt_1);
                   boolean _equals_1 = c_1.equals(newEdgeType);
+                  if (_equals_1) {
+                    rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                    migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformDeleteEdgeType(final Migration migration) {
+    EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.getGraphPartiallyResovableSMO();
+    final Function1<GraphPartiallyResolvableOperator, Boolean> _function = (GraphPartiallyResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphPartiallyResolvableOperatorType.DELETE_EDGE_TYPE));
+    };
+    List<GraphPartiallyResolvableOperator> deleteEdgeType = IterableExtensions.<GraphPartiallyResolvableOperator>toList(IterableExtensions.<GraphPartiallyResolvableOperator>filter(partiallayResolvableOperators, _function));
+    partiallayResolvableOperators.removeAll(deleteEdgeType);
+    for (final GraphPartiallyResolvableOperator rO : deleteEdgeType) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof RemoveObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        RemoveObject ad = ((RemoveObject) _findFirst);
+        EObject _obj = ad.getObj();
+        EdgeType removeEdgeType = ((EdgeType) _obj);
+        for (final GraphPartiallyResolvableOperator resolvable : partiallayResolvableOperators) {
+          final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+            return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
+              return Boolean.valueOf((it_1 instanceof RemoveReference));
+            })) && 
+              ((it.getName().equals("REMOVE_NodeType_(incoming)_TGT_EdgeType") || it.getName().equals("REMOVE_NodeType_(outgoing)_TGT_EdgeType")) || it.getName().equals("REMOVE_EdgeType_(labels)_TGT_EdgeLabel"))));
+          };
+          Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+          for (final SemanticChangeSet s : _filter) {
+            {
+              final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                return Boolean.valueOf((it instanceof RemoveReference));
+              };
+              Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+              RemoveReference a = ((RemoveReference) _findFirst_1);
+              EObject _src = a.getSrc();
+              if ((_src instanceof EdgeType)) {
+                EObject _src_1 = a.getSrc();
+                EdgeType c = ((EdgeType) _src_1);
+                boolean _equals = c.equals(removeEdgeType);
+                if (_equals) {
+                  rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                  migration.getSchemaModificationOperators().remove(resolvable);
+                }
+              } else {
+                EObject _tgt = a.getTgt();
+                if ((_tgt instanceof EdgeType)) {
+                  EObject _tgt_1 = a.getTgt();
+                  EdgeType c_1 = ((EdgeType) _tgt_1);
+                  boolean _equals_1 = c_1.equals(removeEdgeType);
                   if (_equals_1) {
                     rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
                     migration.getSchemaModificationOperators().remove(resolvable);

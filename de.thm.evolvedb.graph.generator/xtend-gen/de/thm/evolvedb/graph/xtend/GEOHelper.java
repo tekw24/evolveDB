@@ -5,7 +5,6 @@ import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
-import java.util.Objects;
 import org.eclipse.emf.ecore.EObject;
 
 @SuppressWarnings("all")
@@ -16,24 +15,24 @@ public class GEOHelper {
   public static String getPropertyParent(final Property property) {
     EObject parent = property.eContainer();
     boolean _matched = false;
-    if (Objects.equals(parent, EdgeLabel.class)) {
+    if (parent instanceof EdgeLabel) {
       _matched=true;
       return ((EdgeLabel) parent).getName();
     }
     if (!_matched) {
-      if (Objects.equals(parent, NodeLabel.class)) {
+      if (parent instanceof NodeLabel) {
         _matched=true;
         return ((NodeLabel) parent).getName();
       }
     }
     if (!_matched) {
-      if (Objects.equals(parent, NodeType.class)) {
+      if (parent instanceof NodeType) {
         _matched=true;
         return ((NodeType) parent).getName();
       }
     }
     if (!_matched) {
-      if (Objects.equals(parent, EdgeType.class)) {
+      if (parent instanceof EdgeType) {
         _matched=true;
         return ((EdgeType) parent).getName();
       }

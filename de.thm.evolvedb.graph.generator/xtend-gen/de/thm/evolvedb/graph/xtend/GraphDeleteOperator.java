@@ -9,7 +9,6 @@ import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator;
 import de.thm.evolvedb.migration.ProcessStatus;
 import java.util.List;
-import java.util.Objects;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -93,20 +92,20 @@ public class GraphDeleteOperator {
           EObject _obj_1 = a.getObj();
           Label label = ((Label) _obj_1);
           boolean _matched = false;
-          if (Objects.equals(label, EdgeLabel.class)) {
+          if (label instanceof EdgeLabel) {
             _matched=true;
-            String _string = label.toString();
+            String _string = ((EdgeLabel)label).toString();
             return ("not implemented: " + _string);
           }
           if (!_matched) {
-            if (Objects.equals(label, NodeLabel.class)) {
+            if (label instanceof NodeLabel) {
               _matched=true;
-              String _string_1 = label.toString();
-              return ("not implemented: " + _string_1);
+              String _string = ((NodeLabel)label).toString();
+              return ("not implemented: " + _string);
             }
           }
-          String _string_2 = label.toString();
-          return ("not implemented: " + _string_2);
+          String _string = label.toString();
+          return ("not implemented: " + _string);
         }
       }
       return content;
