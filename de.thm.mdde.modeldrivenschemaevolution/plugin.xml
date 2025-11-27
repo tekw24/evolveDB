@@ -78,6 +78,11 @@
                   label="Count Structural Elements"
                   style="push">
             </command>
+            <command
+                  commandId="de.thm.mdde.openaiconnect"
+                  label="Connect to OpenAI API"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -155,6 +160,11 @@
                   label="Count Structural Elements"
                   style="push">
             </command>
+            <command
+                  commandId="de.thm.mdde.openaiconnect"
+                  label="Connect to OpenAI API"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -213,6 +223,11 @@
             description="Count Structural Elements"
             id="de.thm.mdde.countStructuralElements"
             name="Count Structural Elements">
+      </command>
+      <command
+            description="Connect to OpenAI API"
+            id="de.thm.mdde.openaiconnect"
+            name="Connect to OpenAI API">
       </command>
    </extension>
    <extension
@@ -382,6 +397,15 @@
                </iterate>
             </with>
          </enabledWhen>
+      </handler>
+      <handler
+            class="de.thm.commands.ConnectToOpenAiApi"
+            commandId="de.thm.mdde.openaiconnect">
+         <activeWhen>
+            <reference
+                  definitionId="de.thm.difference.lifting.ui.definition.modelFiles">
+            </reference>
+         </activeWhen>
       </handler>
    </extension>
    <extension
