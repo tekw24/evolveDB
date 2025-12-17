@@ -8,6 +8,7 @@ import java.util.List
 import de.thm.evolvedb.graph.NodeLabel
 import de.thm.evolvedb.graph.Property
 import de.thm.evolvedb.graph.EdgeLabel
+import de.thm.evolvedb.graph.EdgeType
 
 class GraphCreateOperator {
 
@@ -71,11 +72,16 @@ class GraphCreateOperator {
 
 		if (nodelabel !== null) {
 			content += GEOTemplates.addNodeLabel(nodelabel.name)
-			for (AddObject a : properties) {
-				var property = a.obj as Property
+//			for (AddObject a : properties) {
+//				var property = a.obj as Property
+//				content +=
+//					GEOTemplates.addPropertyToNodeOnPath(nodelabel.name, property.name,
+//						GeoTypeMapper.toGeoType(property.value), ''); // TODO
+//			}
+			for (Property property : nodelabel.properties) {
 				content +=
-					GEOTemplates.addPropertyToNodeOnPath(nodelabel.name, property.name,
-						GeoTypeMapper.toGeoType(property.value), ''); // TODO
+					GEOTemplates.addPropertyToNode(property.name, nodelabel.name,
+						GeoTypeMapper.toGeoType(property.value)); // TODO
 			}
 			return content;
 
@@ -112,8 +118,7 @@ class GraphCreateOperator {
 			}
 		}
 
-		var content = '''
-		'''
+		var content = ''''''
 
 		if (edgelabel !== null) {
 			content += GEOTemplates.addRelationshipType(edgelabel.name)
@@ -123,6 +128,44 @@ class GraphCreateOperator {
 					GEOTemplates.addRelationshipProperty(edgelabel.name, property.name,
 						GeoTypeMapper.toGeoType(property.value), '');
 			}
+			return content;
+
+		}
+
+		return '';
+
+	}
+
+	/**
+	 * Creates the GEO for a new Edge Label with Properties
+	 */
+	def static String createEdgeType(GraphResolvableOperator operator) {
+		if (operator.processStatus === ProcessStatus.RESOLVED) {
+		} else
+			return '';
+		var SemanticChangeSet addEdgeType = operator.semanticChangeSets.findFirst [
+			editRName.equals('CREATE_EdgeType_IN_PropertyGraph_(items)')
+		]
+
+		var List<AddObject> addObjects = addEdgeType.changes.filter[it instanceof AddObject].map[it as AddObject].toList
+		var EdgeType edgetype = null;
+
+		for (AddObject a : addObjects) {
+			if (a.obj instanceof EdgeType) {
+				edgetype = a.obj as EdgeType
+			}
+		}
+
+		var content = ''''''
+
+		var List<String> labelNames = newArrayList;
+		if (edgetype !== null) {
+			for (EdgeLabel edgeLabel : edgetype.labels) {
+				labelNames.add(edgeLabel.name)
+			}
+
+			content += GEOTemplates.addEdgeType(edgetype.name, labelNames, edgetype.src.name, edgetype.tgt.name);
+
 			return content;
 
 		}
@@ -145,7 +188,7 @@ class GraphCreateOperator {
 			].toList
 			var List<AddObject> properties = newArrayList
 			var content = '''''';
-			
+
 			for (SemanticChangeSet scs : addProperties) {
 
 				for (AddObject ad : scs.changes.filter[it instanceof AddObject].map[it as AddObject].toList) {
@@ -159,14 +202,12 @@ class GraphCreateOperator {
 
 			for (AddObject a : properties) {
 				var property = a.obj as Property
-				
+
 				// String propertyName, String nodeLabel, String startRelType, String endRelType
 				content +=
 					GEOTemplates.addPropertyToNodeOnPath(property.name, GEOHelper.getPropertyParent(property),
 						GeoTypeMapper.toGeoType(property.value), '');
 			}
-
-		
 
 			return content;
 		} else

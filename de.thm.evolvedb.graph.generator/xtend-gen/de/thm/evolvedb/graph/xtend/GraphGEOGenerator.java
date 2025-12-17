@@ -70,7 +70,10 @@ public class GraphGEOGenerator {
     for (final GraphResolvableOperator resolvable : resolvableOperators) {
       {
         if ((Objects.equals(resolvable.getProcessStatus(), ProcessStatus.RESOLVED) && (!this.processed.contains(resolvable)))) {
-          String c = this.processResolvableOperator(resolvable);
+          GraphResolvableOperatorType _displayName = resolvable.getDisplayName();
+          String _plus = (_displayName + ": ");
+          String _processResolvableOperator = this.processResolvableOperator(resolvable);
+          String c = (_plus + _processResolvableOperator);
           String _content = content;
           String _xifexpression = null;
           if ((c != null)) {
@@ -81,8 +84,6 @@ public class GraphGEOGenerator {
           content = (_content + _xifexpression);
           String _content_1 = content;
           StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("\t\t\t\t");
-          _builder_1.newLine();
           content = (_content_1 + _builder_1);
         }
         this.processed.add(resolvable);
@@ -104,14 +105,12 @@ public class GraphGEOGenerator {
         case CHANGE_NAME:
           return GraphChangeOperator.changeName(operator);
         case CHANGE_TYPE:
-          _switchResult = null;
-          break;
+          return GraphChangeOperator.changeType(operator);
         case CREATE_CONSTRAINT_IN_LABEL:
           _switchResult = null;
           break;
         case CREATE_EDGE_TYPE:
-          _switchResult = null;
-          break;
+          return GraphCreateOperator.createEdgeType(operator);
         case CREATE_NODE_TYPE:
           return GraphCreateOperator.createNodeType(operator);
         case CREATE_PROPERTY:

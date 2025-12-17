@@ -65,11 +65,10 @@ class GraphGEOGenerator {
 		for (GraphResolvableOperator resolvable : resolvableOperators) {
 
 			if (resolvable.processStatus == ProcessStatus.RESOLVED && !processed.contains(resolvable)) {
-				var String c = processResolvableOperator(resolvable);
+				var String c = resolvable.displayName + ": " + processResolvableOperator(resolvable);
 				content += c !== null ? c : "";
 				content += 
 				'''
-				
 				'''
 			}
 
@@ -95,14 +94,14 @@ class GraphGEOGenerator {
 				
 			}
 			case CHANGE_TYPE: {
-				//TODO
+				return GraphChangeOperator.changeType(operator);
 				
 			}
 			case CREATE_CONSTRAINT_IN_LABEL: {
 				//TODO
 			}
 			case CREATE_EDGE_TYPE: {
-				//TODO
+				return GraphCreateOperator.createEdgeType(operator);
 			}
 			case CREATE_NODE_TYPE: {
 				return GraphCreateOperator.createNodeType(operator);

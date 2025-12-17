@@ -26,8 +26,8 @@ public class GEOTemplates {
         return "null";
       }
       String _replace = s.replace("\"", "\\\"");
-      String _plus = ("\"" + _replace);
-      _xblockexpression = (_plus + "\"");
+      String _plus = ("" + _replace);
+      _xblockexpression = (_plus + "");
     }
     return _xblockexpression;
   }
@@ -44,7 +44,7 @@ public class GEOTemplates {
    */
   public static CharSequence addNodeLabel(final String label) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Add node with label ");
+    _builder.append("Add nodelabel ");
     String _q = GEOTemplates.q(label);
     _builder.append(_q);
     _builder.newLineIfNotEmpty();
@@ -156,6 +156,25 @@ public class GEOTemplates {
   }
 
   /**
+   * GEO:
+   * Change property type <fromProp> of property with label <node_label>
+   *     to property <toProp>
+   */
+  public static CharSequence changeType(final String property, final String oldType, final String newType, final String labelName) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Change datatype of property ");
+    _builder.append(property);
+    _builder.append(" with ");
+    _builder.append(labelName);
+    _builder.append(" from ");
+    _builder.append(oldType);
+    _builder.append(" to ");
+    _builder.append(newType);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
    * Pfad-Variante aus deiner Definition:
    * (Add | Delete | Rename) (label | property) ... starting at relationship with type ..., ending at relationship with type ...
    * 
@@ -209,6 +228,30 @@ public class GEOTemplates {
   }
 
   /**
+   * Add label to nodetype
+   */
+  public static CharSequence addNodeLabelToNodeType(final List<String> nodeTypeLabels, final String newLabel) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add nodelabel ");
+    String _q = GEOTemplates.q(newLabel);
+    _builder.append(_q);
+    _builder.append(" to nodetype ");
+    {
+      boolean _hasElements = false;
+      for(final String s : nodeTypeLabels) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        _builder.append(s);
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
    * Rename label ... on path
    */
   public static CharSequence renameLabelOfNodeOnPath(final String oldLabel, final String newLabel, final String nodeLabel, final String startRelType, final String endRelType) {
@@ -255,6 +298,24 @@ public class GEOTemplates {
     _builder.append(", ending at relationship with type ");
     String _q_3 = GEOTemplates.q(endRelType);
     _builder.append(_q_3, "    ");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  /**
+   * Add property ... on path
+   */
+  public static CharSequence addPropertyToNode(final String propertyName, final String nodeLabel, final String datatype) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add property ");
+    String _q = GEOTemplates.q(propertyName);
+    _builder.append(_q);
+    _builder.append(" with datatype ");
+    _builder.append(datatype);
+    _builder.append(" to nodelabel with label ");
+    String _q_1 = GEOTemplates.q(nodeLabel);
+    _builder.append(_q_1);
+    _builder.append(" ");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -379,6 +440,31 @@ public class GEOTemplates {
     _builder.append("Add relationship with type ");
     String _q = GEOTemplates.q(relType);
     _builder.append(_q);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  public static CharSequence addEdgeType(final String edgeType, final List<String> labelNames, final String srcName, final String tgtName) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Add relationship_type ");
+    String _q = GEOTemplates.q(edgeType);
+    _builder.append(_q);
+    _builder.append(" with label ");
+    {
+      boolean _hasElements = false;
+      for(final String s : labelNames) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        _builder.append(s);
+      }
+    }
+    _builder.append(" starting from ");
+    _builder.append(srcName);
+    _builder.append(" ending at ");
+    _builder.append(tgtName);
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -760,11 +846,11 @@ public class GEOTemplates {
     }
     _builder.append(" ");
     _builder.newLineIfNotEmpty();
-    _builder.append("    ");
+    _builder.append("\t");
     _builder.append("and ");
-    _builder.append(deleteStrategy, "    ");
+    _builder.append(deleteStrategy, "\t");
     _builder.append(" originals -> ");
-    _builder.append(joinType, "    ");
+    _builder.append(joinType, "\t");
     _builder.append(" join");
     _builder.newLineIfNotEmpty();
     return _builder;

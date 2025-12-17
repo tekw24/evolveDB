@@ -1,11 +1,13 @@
 package de.thm.evolvedb.graph.xtend;
 
 import de.thm.evolvedb.graph.EdgeLabel;
+import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.ProcessStatus;
 import java.util.List;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -85,15 +87,12 @@ public class GraphCreateOperator {
       String _content = content;
       CharSequence _addNodeLabel = GEOTemplates.addNodeLabel(nodelabel.getName());
       content = (_content + _addNodeLabel);
-      for (final AddObject a_1 : properties) {
-        {
-          EObject _obj_3 = a_1.getObj();
-          Property property = ((Property) _obj_3);
-          String _content_1 = content;
-          CharSequence _addPropertyToNodeOnPath = GEOTemplates.addPropertyToNodeOnPath(nodelabel.getName(), property.getName(), 
-            GeoTypeMapper.toGeoType(property.getValue()), "");
-          content = (_content_1 + _addPropertyToNodeOnPath);
-        }
+      EList<Property> _properties = nodelabel.getProperties();
+      for (final Property property : _properties) {
+        String _content_1 = content;
+        CharSequence _addPropertyToNode = GEOTemplates.addPropertyToNode(property.getName(), nodelabel.getName(), 
+          GeoTypeMapper.toGeoType(property.getValue()));
+        content = (_content_1 + _addPropertyToNode);
       }
       return content;
     }
@@ -151,6 +150,51 @@ public class GraphCreateOperator {
           content = (_content_1 + _addRelationshipProperty);
         }
       }
+      return content;
+    }
+    return "";
+  }
+
+  /**
+   * Creates the GEO for a new Edge Label with Properties
+   */
+  public static String createEdgeType(final GraphResolvableOperator operator) {
+    ProcessStatus _processStatus = operator.getProcessStatus();
+    boolean _tripleEquals = (_processStatus == ProcessStatus.RESOLVED);
+    if (_tripleEquals) {
+    } else {
+      return "";
+    }
+    final Function1<SemanticChangeSet, Boolean> _function = (SemanticChangeSet it) -> {
+      return Boolean.valueOf(it.getEditRName().equals("CREATE_EdgeType_IN_PropertyGraph_(items)"));
+    };
+    SemanticChangeSet addEdgeType = IterableExtensions.<SemanticChangeSet>findFirst(operator.getSemanticChangeSets(), _function);
+    final Function1<Change, Boolean> _function_1 = (Change it) -> {
+      return Boolean.valueOf((it instanceof AddObject));
+    };
+    final Function1<Change, AddObject> _function_2 = (Change it) -> {
+      return ((AddObject) it);
+    };
+    List<AddObject> addObjects = IterableExtensions.<AddObject>toList(IterableExtensions.<Change, AddObject>map(IterableExtensions.<Change>filter(addEdgeType.getChanges(), _function_1), _function_2));
+    EdgeType edgetype = null;
+    for (final AddObject a : addObjects) {
+      EObject _obj = a.getObj();
+      if ((_obj instanceof EdgeType)) {
+        EObject _obj_1 = a.getObj();
+        edgetype = ((EdgeType) _obj_1);
+      }
+    }
+    StringConcatenation _builder = new StringConcatenation();
+    String content = _builder.toString();
+    List<String> labelNames = CollectionLiterals.<String>newArrayList();
+    if ((edgetype != null)) {
+      EList<EdgeLabel> _labels = edgetype.getLabels();
+      for (final EdgeLabel edgeLabel : _labels) {
+        labelNames.add(edgeLabel.getName());
+      }
+      String _content = content;
+      CharSequence _addEdgeType = GEOTemplates.addEdgeType(edgetype.getName(), labelNames, edgetype.getSrc().getName(), edgetype.getTgt().getName());
+      content = (_content + _addEdgeType);
       return content;
     }
     return "";

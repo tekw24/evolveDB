@@ -14,6 +14,11 @@ import de.thm.evolvedb.graph.Label
 import de.thm.evolvedb.graph.impl.PropertyImpl
 import de.thm.evolvedb.graph.impl.EdgeLabelImpl
 import de.thm.evolvedb.graph.impl.NodeLabelImpl
+import org.sidiff.difference.symmetric.RemoveObject
+import de.thm.evolvedb.graph.PropertyValueType
+import de.thm.evolvedb.graph.EdgeType
+import de.thm.evolvedb.graph.NodeType
+import org.sidiff.difference.symmetric.AddReference
 
 class GraphChangeOperator {
 
@@ -42,20 +47,19 @@ class GraphChangeOperator {
 					EdgeLabel: {
 						var edgeLabelA = a.objA as EdgeLabel;
 						var edgeLabelB = a.objB as EdgeLabel;
-						content +=
-							GEOTemplates.renameRelationshipType(edgeLabelA.name, edgeLabelB.name);
+						content += GEOTemplates.renameRelationshipType(edgeLabelA.name, edgeLabelB.name);
 					}
 					NodeLabel: {
 						var nodeLabelA = a.objA as NodeLabel;
 						var nodeLabelB = a.objB as NodeLabel;
-						content +=
-							GEOTemplates.renameNodeLabel(nodeLabelA.name, nodeLabelB.name);
+						content += GEOTemplates.renameNodeLabel(nodeLabelA.name, nodeLabelB.name);
 					}
 					Property: {
 						var propertyA = a.objA as Property;
 						var propertyB = a.objB as Property;
 						content +=
-							GEOTemplates.renameSimpleNodeProperty(GEOHelper.getPropertyParent(propertyA), propertyA.name, propertyB.name)
+							GEOTemplates.renameSimpleNodeProperty(GEOHelper.getPropertyParent(propertyA),
+								propertyA.name, propertyB.name)
 					}
 					default: {
 						return 'Error'
@@ -71,30 +75,36 @@ class GraphChangeOperator {
 	def static String addLabelToNodeType(GraphResolvableOperator operator) {
 		if (operator.processStatus === ProcessStatus.RESOLVED) {
 			var List<SemanticChangeSet> addProperties = operator.semanticChangeSets.filter [
-				editRName.equals('CREATE_Property_IN_LABEL_(properties)')
+				editRName.equals('ADD_NodeLabel_(nodes)_TGT_NodeType')
 			].toList
-			var List<AddObject> properties = newArrayList
+
 			var content = '''''';
+			var NodeType nodeType;
+			var NodeLabel nodeLabel;
 
 			for (SemanticChangeSet scs : addProperties) {
 
-				for (AddObject ad : scs.changes.filter[it instanceof AddObject].map[it as AddObject].toList) {
+				var AddReference ad = scs.changes.findFirst[it instanceof AddReference] as AddReference;
 
-					if (ad.obj instanceof Property) {
-						properties.add(ad)
-					}
-
+				if (ad.src instanceof NodeType && ad.tgt instanceof NodeLabel) {
+					nodeType = ad.src as NodeType
+					nodeLabel = ad.tgt as NodeLabel
+				} else if (ad.src instanceof NodeLabel && ad.tgt instanceof NodeType) {
+					nodeType = ad.tgt as NodeType
+					nodeLabel = ad.src as NodeLabel
 				}
+
 			}
 
-			for (AddObject a : properties) {
-				var property = a.obj as Property
+			var List<String> labelNames = newArrayList;
 
-				// String propertyName, String nodeLabel, String startRelType, String endRelType
-				content +=
-					GEOTemplates.addPropertyToNodeOnPath(property.name, GEOHelper.getPropertyParent(property),
-						GeoTypeMapper.toGeoType(property.value), '');
+			for (NodeLabel label : nodeType.label) {
+				if (!label.name.equals(nodeLabel.name))
+					labelNames.add(label.name);
 			}
+
+			// String propertyName, String nodeLabel, String startRelType, String endRelType
+			content += GEOTemplates.addNodeLabelToNodeType(labelNames, nodeLabel.name);
 
 			return content;
 		} else
@@ -260,6 +270,54 @@ class GraphChangeOperator {
 					GEOTemplates.addPropertyToNodeOnPath(property.name, GEOHelper.getPropertyParent(property),
 						GeoTypeMapper.toGeoType(property.value), '');
 			}
+
+			return content;
+		} else
+			return '';
+	}
+
+	def static String changeType(GraphResolvableOperator operator) {
+		if (operator.processStatus === ProcessStatus.RESOLVED) {
+			var SemanticChangeSet changeType = operator.semanticChangeSets.findFirst [
+				editRName.equals('CHANGE_NumericType') || editRName.equals('CHANGE_StringType') ||
+					editRName.equals('CHANGE_PropertyValueType') || editRName.equals('CHANGE_TemporalType') ||
+					editRName.equals('CREATE_BinaryTypes') || editRName.equals('CREATE_BooleanType')
+			]
+
+			var AddObject addObject = changeType.changes.findFirst[it instanceof AddObject] as AddObject
+			var RemoveObject removeObject = changeType.changes.findFirst[it instanceof RemoveObject] as RemoveObject
+
+			var PropertyValueType newtype = addObject.obj as PropertyValueType;
+			var PropertyValueType oldtype = removeObject.obj as PropertyValueType;
+			var Property property = oldtype.property;
+			var labelName = "";
+			switch property.containerElement {
+				EdgeLabel: {
+					var a = property.containerElement as EdgeLabel;
+					labelName = "edgelabel " + a.name
+				}
+				NodeLabel: {
+					var a = property.containerElement as NodeLabel;
+					labelName = "nodelabel " + a.name
+				}
+				EdgeType: {
+					var a = property.containerElement as Property;
+					labelName = "edgetype " + a.name
+				}
+				NodeType: {
+					var a = property.containerElement as NodeType;
+					labelName = "nodetype " + a.name
+				}
+				default: {
+					labelName = "No Value"
+				}
+			}
+
+			var content = '''''';
+
+			content +=
+				GEOTemplates.changeType(property.name, GeoTypeMapper.toGeoType(oldtype),
+					GeoTypeMapper.toGeoType(newtype), labelName);
 
 			return content;
 		} else
