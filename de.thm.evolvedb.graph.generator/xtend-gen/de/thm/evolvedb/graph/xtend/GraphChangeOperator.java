@@ -134,7 +134,11 @@ public class GraphChangeOperator {
       List<String> labelNames = CollectionLiterals.<String>newArrayList();
       EList<NodeLabel> _label = nodeType.getLabel();
       for (final NodeLabel label : _label) {
-        labelNames.add(label.getName());
+        boolean _equals = label.getName().equals(nodeLabel.getName());
+        boolean _not = (!_equals);
+        if (_not) {
+          labelNames.add(label.getName());
+        }
       }
       String _content = content;
       CharSequence _addNodeLabelToNodeType = GEOTemplates.addNodeLabelToNodeType(labelNames, nodeLabel.getName());

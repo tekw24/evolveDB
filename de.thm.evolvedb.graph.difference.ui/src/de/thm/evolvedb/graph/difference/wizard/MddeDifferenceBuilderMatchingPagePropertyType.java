@@ -62,7 +62,9 @@ import de.thm.evolvedb.graph.PropertyValueType;
 import de.thm.evolvedb.graph.StringType;
 import de.thm.evolvedb.graph.TemporalTypes;
 import de.thm.evolvedb.graph.UnionType;
+import de.thm.evolvedb.graph.impl.ListTypeImpl;
 import de.thm.evolvedb.graph.PropertyGraph;
+import de.thm.evolvedb.graph.PropertyTypeConstraint;
 
 public class MddeDifferenceBuilderMatchingPagePropertyType extends WizardPage {
 
@@ -81,7 +83,8 @@ public class MddeDifferenceBuilderMatchingPagePropertyType extends WizardPage {
 
 	private ProgressMonitorDialog dialog;
 
-	protected MddeDifferenceBuilderMatchingPagePropertyType(String pageName, MddeDifferenceBuilderController controller) {
+	protected MddeDifferenceBuilderMatchingPagePropertyType(String pageName,
+			MddeDifferenceBuilderController controller) {
 		super(pageName);
 		this.controller = controller;
 	}
@@ -171,10 +174,10 @@ public class MddeDifferenceBuilderMatchingPagePropertyType extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				List<EObject> matchingA = matching.getUnmatchedA().stream().filter(e1 -> e1 instanceof PropertyValueType)
-						.collect(Collectors.toList());
-				List<EObject> matchingB = matching.getUnmatchedB().stream().filter(e1 -> e1 instanceof PropertyValueType)
-						.collect(Collectors.toList());
+				List<EObject> matchingA = matching.getUnmatchedA().stream()
+						.filter(e1 -> e1 instanceof PropertyValueType).collect(Collectors.toList());
+				List<EObject> matchingB = matching.getUnmatchedB().stream()
+						.filter(e1 -> e1 instanceof PropertyValueType).collect(Collectors.toList());
 
 				CorrespondenceDialog dialog = new CorrespondenceDialog(Display.getCurrent().getActiveShell(), matchingA,
 						matchingB);
@@ -419,54 +422,66 @@ public class MddeDifferenceBuilderMatchingPagePropertyType extends WizardPage {
 
 		String name = "";
 		Property property = propertyValueType.getProperty();
-		name += property.getName() != null ? ":" + property.getName() : "";
-		
-		if(propertyValueType instanceof StringType) {
-			
-			StringType type = (StringType) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
-		}else if(propertyValueType instanceof BinaryTypes) {
-			BinaryTypes type = (BinaryTypes) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
-		}else if(propertyValueType instanceof BooleanType) {
-			BooleanType type = (BooleanType) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
-		}else if(propertyValueType instanceof ListType) {
-			ListType type = (ListType) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  "(List)" : "";  //TODO List Type
-			name+=")";
-			
-		}else if(propertyValueType instanceof NumericType) {
-			NumericType type = (NumericType) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
-		}else if(propertyValueType instanceof TemporalTypes) {
-			TemporalTypes type = (TemporalTypes) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
-		}else if(propertyValueType instanceof UnionType) {
-			UnionType type = (UnionType) propertyValueType;
-			name+=" (";
-			name += type.getType() != null ? ":" +  type.getType().name() : "";
-			name+=")";
-			
+
+		if (property == null) {
+
+			if (propertyValueType.eContainer() instanceof PropertyTypeConstraint) {
+				PropertyTypeConstraint constraint = (PropertyTypeConstraint) propertyValueType.eContainer();
+				name = constraint.getName();
+			}else if(propertyValueType.eContainer() instanceof ListTypeImpl) {
+				ListTypeImpl listTypeImpl = (ListTypeImpl) propertyValueType.eContainer();
+				name = listTypeImpl.getProperty().getName();
+			}
+		} else {
+
+			name += property.getName() != null ? ":" + property.getName() : "";
+
 		}
-			
-		
+
+		if (propertyValueType instanceof StringType) {
+
+			StringType type = (StringType) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		} else if (propertyValueType instanceof BinaryTypes) {
+			BinaryTypes type = (BinaryTypes) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		} else if (propertyValueType instanceof BooleanType) {
+			BooleanType type = (BooleanType) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		} else if (propertyValueType instanceof ListType) {
+			ListType type = (ListType) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + "(List)" : ""; // TODO List Type
+			name += ")";
+
+		} else if (propertyValueType instanceof NumericType) {
+			NumericType type = (NumericType) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		} else if (propertyValueType instanceof TemporalTypes) {
+			TemporalTypes type = (TemporalTypes) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		} else if (propertyValueType instanceof UnionType) {
+			UnionType type = (UnionType) propertyValueType;
+			name += " (";
+			name += type.getType() != null ? ":" + type.getType().name() : "";
+			name += ")";
+
+		}
 
 		return name;
 	}
