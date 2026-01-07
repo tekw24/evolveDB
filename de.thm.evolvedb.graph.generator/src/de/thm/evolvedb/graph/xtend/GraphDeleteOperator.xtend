@@ -13,6 +13,11 @@ import de.thm.evolvedb.graph.Label
 import de.thm.evolvedb.graph.EdgeType
 import de.thm.evolvedb.graph.NodeType
 import de.thm.evolvedb.graph.Property
+import de.thm.evolvedb.graph.KeyConstraint
+import de.thm.evolvedb.graph.UniqueConstraint
+import de.thm.evolvedb.graph.PropertyExistenceConstraint
+import de.thm.evolvedb.graph.PropertyTypeConstraint
+import de.thm.evolvedb.graph.Constraint
 
 class GraphDeleteOperator {
 
@@ -217,6 +222,57 @@ class GraphDeleteOperator {
 			return content;
 		} else
 			return '';
+	}
+	
+	def static String deleteConstraintInLabel(GraphPartiallyResolvableOperator operator) {
+	
+		if (operator.processStatus === ProcessStatus.RESOLVED) {
+			var content = '''''';
+
+			for (SemanticChangeSet scs : operator.semanticChangeSets) {
+
+				var List<RemoveObject> removeConstraints = newArrayList
+
+				for (RemoveObject ad : scs.changes.filter[it instanceof RemoveObject].map[it as RemoveObject].toList) {
+
+					if (ad.obj instanceof Constraint) {
+						removeConstraints.add(ad)
+					}
+
+				}
+
+				for (RemoveObject a : removeConstraints) {
+					if (a.obj instanceof KeyConstraint) {
+						var constraint = a.obj as KeyConstraint
+
+						content +=
+							GEOTemplates.deleteKeyConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof UniqueConstraint) {
+						var constraint = a.obj as UniqueConstraint
+						content +=
+							GEOTemplates.deleteUniqueConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof PropertyExistenceConstraint) {
+						var constraint = a.obj as PropertyExistenceConstraint
+						content +=
+							GEOTemplates.deletePropertyExistenceConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof PropertyTypeConstraint) {
+						var constraint = a.obj as PropertyTypeConstraint
+						content +=
+							GEOTemplates.deletePropertyTypeConstraint(constraint.name, constraint.label, constraint.properties);
+
+					}
+
+				}
+
+			}
+
+			return content;
+
+		}
+
 	}
 
 }

@@ -98,7 +98,7 @@ class GraphGEOGenerator {
 				
 			}
 			case CREATE_CONSTRAINT_IN_LABEL: {
-				//TODO
+				return GraphCreateOperator.createConstraintInLabel(operator);
 			}
 			case CREATE_EDGE_TYPE: {
 				return GraphCreateOperator.createEdgeType(operator);
@@ -169,7 +169,7 @@ class GraphGEOGenerator {
 				
 			}
 			case REMOVE_REFERENCE_OR_CONSTRAINT: {
-				//TODO 
+				return GraphDeleteOperator.deleteConstraintInLabel(operator);
 				
 			}
 			

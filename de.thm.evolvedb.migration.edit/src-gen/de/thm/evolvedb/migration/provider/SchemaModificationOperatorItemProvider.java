@@ -28,6 +28,7 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 
+import de.thm.evolvedb.graph.Constraint;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.Label;
 import de.thm.evolvedb.graph.NodeType;
@@ -277,6 +278,9 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 		} else if(removeObject.getObj() instanceof PropertyValueType) {
 			PropertyValueType n = (PropertyValueType) removeObject.getObj();
 			return n.getProperty().getName();
+		}else if(removeObject.getObj() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getObj();
+			return n.getName();
 		}
 		
 		return "";
@@ -303,6 +307,9 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 			return n.getName();
 		}else if(removeObject.getObj() instanceof EdgeType) {
 			EdgeType n = (EdgeType) removeObject.getObj();
+			return n.getName();
+		}else if(removeObject.getObj() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getObj();
 			return n.getName();
 		}
 		return "";
@@ -332,6 +339,12 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 			return n.getName();
 		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Property) {
 			Property n = (Property) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getTgt();
 			return n.getName();
 		}
 		return "";
@@ -373,6 +386,12 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 			return n.getName();
 		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof NodeType) {
 			NodeType n = (NodeType) removeObject.getTgt();
+			return n.getName();
+		}else if (removeObject.getSrc() != null && removeObject.getSrc() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getSrc();
+			return n.getName();
+		} else if (removeObject.getTgt() != null && removeObject.getTgt() instanceof Constraint) {
+			Constraint n = (Constraint) removeObject.getTgt();
 			return n.getName();
 		}
 		return "";

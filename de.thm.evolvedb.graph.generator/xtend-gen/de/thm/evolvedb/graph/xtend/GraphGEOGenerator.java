@@ -107,8 +107,7 @@ public class GraphGEOGenerator {
         case CHANGE_TYPE:
           return GraphChangeOperator.changeType(operator);
         case CREATE_CONSTRAINT_IN_LABEL:
-          _switchResult = null;
-          break;
+          return GraphCreateOperator.createConstraintInLabel(operator);
         case CREATE_EDGE_TYPE:
           return GraphCreateOperator.createEdgeType(operator);
         case CREATE_NODE_TYPE:
@@ -158,8 +157,7 @@ public class GraphGEOGenerator {
           _switchResult = null;
           break;
         case REMOVE_REFERENCE_OR_CONSTRAINT:
-          _switchResult = null;
-          break;
+          return GraphDeleteOperator.deleteConstraintInLabel(operator);
         case BINARY_ENCODING_CHANGE:
           _switchResult = null;
           break;

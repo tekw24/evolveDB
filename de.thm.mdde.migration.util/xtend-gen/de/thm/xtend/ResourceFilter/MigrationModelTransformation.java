@@ -18,6 +18,7 @@ package de.thm.xtend.ResourceFilter;
 
 import com.google.common.collect.Iterables;
 import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.KeyConstraint;
 import de.thm.evolvedb.graph.Label;
 import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
@@ -93,6 +94,7 @@ public class MigrationModelTransformation {
     this.transformDeleteEdgeType(migration);
     this.transformDeleteNodeType(migration);
     this.transformDeleteConstraint(migration);
+    this.transformNewConstraints(migration);
     final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
       return Boolean.valueOf((it instanceof SymmetricDifference));
     };
@@ -1116,6 +1118,111 @@ public class MigrationModelTransformation {
                   if (_equals_1) {
                     rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
                     migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void transformNewConstraints(final Migration migration) {
+    EList<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
+    final Function1<GraphResolvableOperator, Boolean> _function = (GraphResolvableOperator it) -> {
+      return Boolean.valueOf(it.getDisplayName().equals(GraphResolvableOperatorType.CREATE_CONSTRAINT_IN_LABEL));
+    };
+    List<GraphResolvableOperator> createConstraint = IterableExtensions.<GraphResolvableOperator>toList(IterableExtensions.<GraphResolvableOperator>filter(resolvableOperators, _function));
+    resolvableOperators.removeAll(createConstraint);
+    for (final GraphResolvableOperator rO : createConstraint) {
+      {
+        final Function1<Change, Boolean> _function_1 = (Change it) -> {
+          return Boolean.valueOf((it instanceof AddObject));
+        };
+        Change _findFirst = IterableExtensions.<Change>findFirst(rO.getSemanticChangeSets().get(0).getChanges(), _function_1);
+        AddObject ad = ((AddObject) _findFirst);
+        EObject _obj = ad.getObj();
+        de.thm.evolvedb.graph.Constraint newConstraint = ((de.thm.evolvedb.graph.Constraint) _obj);
+        if ((newConstraint instanceof KeyConstraint)) {
+          KeyConstraint keyConstraint = ((KeyConstraint)newConstraint);
+          for (final GraphResolvableOperator resolvable : resolvableOperators) {
+            final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
+              return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
+                return Boolean.valueOf((it_1 instanceof AddReference));
+              })) && 
+                it.getName().equals("ADD_KeyConstraint_(properties)_TGT_Property")));
+            };
+            Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
+            for (final SemanticChangeSet s : _filter) {
+              {
+                final Function1<Change, Boolean> _function_3 = (Change it) -> {
+                  return Boolean.valueOf((it instanceof AddReference));
+                };
+                Change _findFirst_1 = IterableExtensions.<Change>findFirst(s.getChanges(), _function_3);
+                AddReference a = ((AddReference) _findFirst_1);
+                EObject _src = a.getSrc();
+                if ((_src instanceof KeyConstraint)) {
+                  EObject _src_1 = a.getSrc();
+                  KeyConstraint c = ((KeyConstraint) _src_1);
+                  boolean _equals = c.equals(keyConstraint);
+                  if (_equals) {
+                    rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                    migration.getSchemaModificationOperators().remove(resolvable);
+                  }
+                } else {
+                  EObject _tgt = a.getTgt();
+                  if ((_tgt instanceof KeyConstraint)) {
+                    EObject _tgt_1 = a.getTgt();
+                    KeyConstraint c_1 = ((KeyConstraint) _tgt_1);
+                    boolean _equals_1 = c_1.equals(keyConstraint);
+                    if (_equals_1) {
+                      rO.getSemanticChangeSets().addAll(resolvable.getSemanticChangeSets());
+                      migration.getSchemaModificationOperators().remove(resolvable);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          if ((newConstraint instanceof de.thm.evolvedb.graph.UniqueConstraint)) {
+            de.thm.evolvedb.graph.UniqueConstraint keyConstraint_1 = ((de.thm.evolvedb.graph.UniqueConstraint)newConstraint);
+            for (final GraphResolvableOperator resolvable_1 : resolvableOperators) {
+              final Function1<SemanticChangeSet, Boolean> _function_3 = (SemanticChangeSet it) -> {
+                return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
+                  return Boolean.valueOf((it_1 instanceof AddReference));
+                })) && 
+                  it.getName().equals("ADD_UniqueConstraint_(properties)_TGT_Property")));
+              };
+              Iterable<SemanticChangeSet> _filter_1 = IterableExtensions.<SemanticChangeSet>filter(resolvable_1.getSemanticChangeSets(), _function_3);
+              for (final SemanticChangeSet s_1 : _filter_1) {
+                {
+                  final Function1<Change, Boolean> _function_4 = (Change it) -> {
+                    return Boolean.valueOf((it instanceof AddReference));
+                  };
+                  Change _findFirst_1 = IterableExtensions.<Change>findFirst(s_1.getChanges(), _function_4);
+                  AddReference a = ((AddReference) _findFirst_1);
+                  EObject _src = a.getSrc();
+                  if ((_src instanceof de.thm.evolvedb.graph.UniqueConstraint)) {
+                    EObject _src_1 = a.getSrc();
+                    de.thm.evolvedb.graph.UniqueConstraint c = ((de.thm.evolvedb.graph.UniqueConstraint) _src_1);
+                    boolean _equals = c.equals(keyConstraint_1);
+                    if (_equals) {
+                      rO.getSemanticChangeSets().addAll(resolvable_1.getSemanticChangeSets());
+                      migration.getSchemaModificationOperators().remove(resolvable_1);
+                    }
+                  } else {
+                    EObject _tgt = a.getTgt();
+                    if ((_tgt instanceof de.thm.evolvedb.graph.UniqueConstraint)) {
+                      EObject _tgt_1 = a.getTgt();
+                      de.thm.evolvedb.graph.UniqueConstraint c_1 = ((de.thm.evolvedb.graph.UniqueConstraint) _tgt_1);
+                      boolean _equals_1 = c_1.equals(keyConstraint_1);
+                      if (_equals_1) {
+                        rO.getSemanticChangeSets().addAll(resolvable_1.getSemanticChangeSets());
+                        migration.getSchemaModificationOperators().remove(resolvable_1);
+                      }
+                    }
                   }
                 }
               }

@@ -60,6 +60,7 @@ import de.thm.evolvedb.graph.EdgeType
 import de.thm.evolvedb.graph.NodeType
 import de.thm.evolvedb.migration.GraphPartiallyResolvableOperator
 import de.thm.evolvedb.migration.GraphPartiallyResolvableOperatorType
+import de.thm.evolvedb.graph.KeyConstraint
 
 class MigrationModelTransformation {
 
@@ -89,6 +90,7 @@ class MigrationModelTransformation {
 		migration.transformDeleteEdgeType
 		migration.transformDeleteNodeType
 		migration.transformDeleteConstraint
+		migration.transformNewConstraints
 
 		var SymmetricDifference symmetricDifference = resSymmetricModel.allContents.findFirst [
 			it instanceof SymmetricDifference
@@ -928,7 +930,7 @@ class MigrationModelTransformation {
 			}
 		}
 	}
-	
+
 	def transformDeleteNodeType(Migration migration) {
 		var EList<GraphPartiallyResolvableOperator> partiallayResolvableOperators = migration.
 			graphPartiallyResovableSMO;
@@ -1052,6 +1054,81 @@ class MigrationModelTransformation {
 					}
 
 				}
+			}
+		}
+	}
+
+	def transformNewConstraints(Migration migration) {
+		var EList<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO;
+		var List<GraphResolvableOperator> createConstraint = resolvableOperators.filter [
+			it.displayName.equals(GraphResolvableOperatorType.CREATE_CONSTRAINT_IN_LABEL)
+		].toList
+		resolvableOperators.removeAll(createConstraint);
+
+		for (GraphResolvableOperator rO : createConstraint) {
+
+			var AddObject ad = rO.semanticChangeSets.get(0).changes.findFirst[it instanceof AddObject] as AddObject;
+			var de.thm.evolvedb.graph.Constraint newConstraint = ad.obj as de.thm.evolvedb.graph.Constraint
+
+			if (newConstraint instanceof KeyConstraint) {
+
+				var KeyConstraint keyConstraint = newConstraint
+
+				for (GraphResolvableOperator resolvable : resolvableOperators) {
+					for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+						it.changes.exists[it instanceof AddReference] &&
+							it.name.equals("ADD_KeyConstraint_(properties)_TGT_Property")
+					]) {
+						var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
+						if (a.src instanceof KeyConstraint) {
+							var KeyConstraint c = a.src as KeyConstraint;
+							if (c.equals(keyConstraint)) {
+								rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+								// Remove the Operator
+								migration.schemaModificationOperators.remove(resolvable)
+							}
+
+						} else if (a.tgt instanceof KeyConstraint) {
+							var KeyConstraint c = a.tgt as KeyConstraint;
+							if (c.equals(keyConstraint)) {
+								rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+								// Remove the Operator
+								migration.schemaModificationOperators.remove(resolvable)
+							}
+						}
+
+					}
+				}
+			} else if (newConstraint instanceof de.thm.evolvedb.graph.UniqueConstraint) {
+
+				var de.thm.evolvedb.graph.UniqueConstraint keyConstraint = newConstraint
+
+				for (GraphResolvableOperator resolvable : resolvableOperators) {
+					for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
+						it.changes.exists[it instanceof AddReference] &&
+							it.name.equals("ADD_UniqueConstraint_(properties)_TGT_Property")
+					]) {
+						var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
+						if (a.src instanceof de.thm.evolvedb.graph.UniqueConstraint) {
+							var de.thm.evolvedb.graph.UniqueConstraint c = a.src as de.thm.evolvedb.graph.UniqueConstraint;
+							if (c.equals(keyConstraint)) {
+								rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+								// Remove the Operator
+								migration.schemaModificationOperators.remove(resolvable)
+							}
+
+						} else if (a.tgt instanceof de.thm.evolvedb.graph.UniqueConstraint) {
+							var de.thm.evolvedb.graph.UniqueConstraint c = a.tgt as de.thm.evolvedb.graph.UniqueConstraint;
+							if (c.equals(keyConstraint)) {
+								rO.semanticChangeSets.addAll(resolvable.semanticChangeSets)
+								// Remove the Operator
+								migration.schemaModificationOperators.remove(resolvable)
+							}
+						}
+
+					}
+				}
+
 			}
 		}
 	}

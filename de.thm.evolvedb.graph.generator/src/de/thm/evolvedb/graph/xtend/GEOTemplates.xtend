@@ -3,6 +3,9 @@ package de.thm.evolvedb.graph.xtend
 import java.util.List
 import java.util.Map
 import java.util.Set
+import de.thm.evolvedb.graph.Label
+import org.eclipse.emf.common.util.EList
+import de.thm.evolvedb.graph.Property
 
 /**
  * GeoTemplates
@@ -482,6 +485,55 @@ class GEOTemplates {
 		'''
 			Move subgraph starting at node with label «q(startLabel)» along path «q(pathPattern)» 
 			    to node with label «q(newRootLabel)»
+		'''
+	}
+	
+	def static String createKeyConstraint(String string, Label label, EList<Property> list) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+		'''
+	}
+	
+	def static String createUniqueConstraint(String string, Label label, EList<Property> list) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+		'''
+	}
+	
+	def static String createPropertyExistenceConstraint(String string, Label label, Property property) {
+		'''
+			mandatory property «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» and unique values
+		'''
+	}
+	
+	def static String createPropertyTypeConstraint(String string, Label label, Property property) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+		'''
+	}
+	
+	
+		def static String deleteKeyConstraint(String string, Label label, EList<Property> list) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+		'''
+	}
+	
+	def static String deleteUniqueConstraint(String string, Label label, EList<Property> list) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+		'''
+	}
+	
+	def static String deletePropertyExistenceConstraint(String string, Label label, Property property) {
+		'''
+			mandatory property «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» and unique values
+		'''
+	}
+	
+	def static String deletePropertyTypeConstraint(String string, Label label, Property property) {
+		'''
+			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
 		'''
 	}
 

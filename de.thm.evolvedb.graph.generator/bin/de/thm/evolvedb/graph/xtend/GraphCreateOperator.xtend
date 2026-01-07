@@ -9,6 +9,11 @@ import de.thm.evolvedb.graph.NodeLabel
 import de.thm.evolvedb.graph.Property
 import de.thm.evolvedb.graph.EdgeLabel
 import de.thm.evolvedb.graph.EdgeType
+import de.thm.evolvedb.graph.KeyConstraint
+import de.thm.evolvedb.graph.UniqueConstraint
+import de.thm.evolvedb.graph.PropertyExistenceConstraint
+import de.thm.evolvedb.graph.PropertyTypeConstraint
+import de.thm.evolvedb.graph.Constraint
 
 class GraphCreateOperator {
 
@@ -212,6 +217,56 @@ class GraphCreateOperator {
 			return content;
 		} else
 			return '';
+	}
+
+	def static String createConstraintInLabel(GraphResolvableOperator operator) {
+		if (operator.processStatus === ProcessStatus.RESOLVED) {
+			var content = '''''';
+
+			for (SemanticChangeSet scs : operator.semanticChangeSets) {
+
+				var List<AddObject> newConstraints = newArrayList
+
+				for (AddObject ad : scs.changes.filter[it instanceof AddObject].map[it as AddObject].toList) {
+
+					if (ad.obj instanceof Constraint) {
+						newConstraints.add(ad)
+					}
+
+				}
+
+				for (AddObject a : newConstraints) {
+					if (a.obj instanceof KeyConstraint) {
+						var constraint = a.obj as KeyConstraint
+
+						content +=
+							GEOTemplates.createKeyConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof UniqueConstraint) {
+						var constraint = a.obj as UniqueConstraint
+						content +=
+							GEOTemplates.createUniqueConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof PropertyExistenceConstraint) {
+						var constraint = a.obj as PropertyExistenceConstraint
+						content +=
+							GEOTemplates.createPropertyExistenceConstraint(constraint.name, constraint.label, constraint.properties);
+
+					} else if (a.obj instanceof PropertyTypeConstraint) {
+						var constraint = a.obj as PropertyTypeConstraint
+						content +=
+							GEOTemplates.createPropertyTypeConstraint(constraint.name, constraint.label, constraint.properties);
+
+					}
+
+				}
+
+			}
+
+			return content;
+
+		}
+
 	}
 
 }

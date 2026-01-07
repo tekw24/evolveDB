@@ -1,9 +1,14 @@
 package de.thm.evolvedb.graph.xtend;
 
+import de.thm.evolvedb.graph.Constraint;
 import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.KeyConstraint;
 import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.Property;
+import de.thm.evolvedb.graph.PropertyExistenceConstraint;
+import de.thm.evolvedb.graph.PropertyTypeConstraint;
+import de.thm.evolvedb.graph.UniqueConstraint;
 import de.thm.evolvedb.migration.GraphResolvableOperator;
 import de.thm.evolvedb.migration.ProcessStatus;
 import java.util.List;
@@ -252,5 +257,72 @@ public class GraphCreateOperator {
     } else {
       return "";
     }
+  }
+
+  public static String createConstraintInLabel(final GraphResolvableOperator operator) {
+    ProcessStatus _processStatus = operator.getProcessStatus();
+    boolean _tripleEquals = (_processStatus == ProcessStatus.RESOLVED);
+    if (_tripleEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      String content = _builder.toString();
+      EList<SemanticChangeSet> _semanticChangeSets = operator.getSemanticChangeSets();
+      for (final SemanticChangeSet scs : _semanticChangeSets) {
+        {
+          List<AddObject> newConstraints = CollectionLiterals.<AddObject>newArrayList();
+          final Function1<Change, Boolean> _function = (Change it) -> {
+            return Boolean.valueOf((it instanceof AddObject));
+          };
+          final Function1<Change, AddObject> _function_1 = (Change it) -> {
+            return ((AddObject) it);
+          };
+          List<AddObject> _list = IterableExtensions.<AddObject>toList(IterableExtensions.<Change, AddObject>map(IterableExtensions.<Change>filter(scs.getChanges(), _function), _function_1));
+          for (final AddObject ad : _list) {
+            EObject _obj = ad.getObj();
+            if ((_obj instanceof Constraint)) {
+              newConstraints.add(ad);
+            }
+          }
+          for (final AddObject a : newConstraints) {
+            EObject _obj_1 = a.getObj();
+            if ((_obj_1 instanceof KeyConstraint)) {
+              EObject _obj_2 = a.getObj();
+              KeyConstraint constraint = ((KeyConstraint) _obj_2);
+              String _content = content;
+              String _createKeyConstraint = GEOTemplates.createKeyConstraint(constraint.getName(), constraint.getLabel(), constraint.getProperties());
+              content = (_content + _createKeyConstraint);
+            } else {
+              EObject _obj_3 = a.getObj();
+              if ((_obj_3 instanceof UniqueConstraint)) {
+                EObject _obj_4 = a.getObj();
+                UniqueConstraint constraint_1 = ((UniqueConstraint) _obj_4);
+                String _content_1 = content;
+                String _createUniqueConstraint = GEOTemplates.createUniqueConstraint(constraint_1.getName(), constraint_1.getLabel(), constraint_1.getProperties());
+                content = (_content_1 + _createUniqueConstraint);
+              } else {
+                EObject _obj_5 = a.getObj();
+                if ((_obj_5 instanceof PropertyExistenceConstraint)) {
+                  EObject _obj_6 = a.getObj();
+                  PropertyExistenceConstraint constraint_2 = ((PropertyExistenceConstraint) _obj_6);
+                  String _content_2 = content;
+                  String _createPropertyExistenceConstraint = GEOTemplates.createPropertyExistenceConstraint(constraint_2.getName(), constraint_2.getLabel(), constraint_2.getProperties());
+                  content = (_content_2 + _createPropertyExistenceConstraint);
+                } else {
+                  EObject _obj_7 = a.getObj();
+                  if ((_obj_7 instanceof PropertyTypeConstraint)) {
+                    EObject _obj_8 = a.getObj();
+                    PropertyTypeConstraint constraint_3 = ((PropertyTypeConstraint) _obj_8);
+                    String _content_3 = content;
+                    String _createPropertyTypeConstraint = GEOTemplates.createPropertyTypeConstraint(constraint_3.getName(), constraint_3.getLabel(), constraint_3.getProperties());
+                    content = (_content_3 + _createPropertyTypeConstraint);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      return content;
+    }
+    return null;
   }
 }

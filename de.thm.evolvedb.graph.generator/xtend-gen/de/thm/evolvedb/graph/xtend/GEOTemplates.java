@@ -1,8 +1,11 @@
 package de.thm.evolvedb.graph.xtend;
 
+import de.thm.evolvedb.graph.Label;
+import de.thm.evolvedb.graph.Property;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
 /**
@@ -1102,5 +1105,73 @@ public class GEOTemplates {
     _builder.append(_q_2, "    ");
     _builder.newLineIfNotEmpty();
     return _builder;
+  }
+
+  public static String createKeyConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
+  }
+
+  public static String createUniqueConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
+  }
+
+  public static String createPropertyExistenceConstraint(final String string, final Label label, final Property property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property ");
+    String _name = property.getName();
+    _builder.append(_name);
+    _builder.append(" with dataype ");
+    String _geoType = GeoTypeMapper.toGeoType(property.getValue());
+    _builder.append(_geoType);
+    _builder.append(" and unique values");
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+
+  public static String createPropertyTypeConstraint(final String string, final Label label, final Property property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
+  }
+
+  public static String deleteKeyConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
+  }
+
+  public static String deleteUniqueConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
+  }
+
+  public static String deletePropertyExistenceConstraint(final String string, final Label label, final Property property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property ");
+    String _name = property.getName();
+    _builder.append(_name);
+    _builder.append(" with dataype ");
+    String _geoType = GeoTypeMapper.toGeoType(property.getValue());
+    _builder.append(_geoType);
+    _builder.append(" and unique values");
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+
+  public static String deletePropertyTypeConstraint(final String string, final Label label, final Property property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
+    _builder.newLine();
+    return _builder.toString();
   }
 }
