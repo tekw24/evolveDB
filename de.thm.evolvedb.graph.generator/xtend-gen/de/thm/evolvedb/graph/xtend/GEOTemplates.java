@@ -1,6 +1,7 @@
 package de.thm.evolvedb.graph.xtend;
 
 import de.thm.evolvedb.graph.Label;
+import de.thm.evolvedb.graph.NodeLabel;
 import de.thm.evolvedb.graph.Property;
 import java.util.List;
 import java.util.Objects;
@@ -1109,69 +1110,211 @@ public class GEOTemplates {
 
   public static String createKeyConstraint(final String string, final Label label, final EList<Property> list) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
+    _builder.append("ADD unique and mandatory property ");
+    {
+      boolean _hasElements = false;
+      for(final Property p : list) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _name = p.getName();
+        _builder.append(_name);
+      }
+    }
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.append(" with unique values");
+    _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
 
   public static String createUniqueConstraint(final String string, final Label label, final EList<Property> list) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
+    _builder.append("ADD ");
+    {
+      boolean _hasElements = false;
+      for(final Property p : list) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _name = p.getName();
+        _builder.append(_name);
+      }
+    }
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.append(" with unique values");
+    _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
 
   public static String createPropertyExistenceConstraint(final String string, final Label label, final Property property) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property ");
+    _builder.append("ADD mandatory property ");
     String _name = property.getName();
     _builder.append(_name);
-    _builder.append(" with dataype ");
-    String _geoType = GeoTypeMapper.toGeoType(property.getValue());
-    _builder.append(_geoType);
-    _builder.append(" and unique values");
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
     _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
 
   public static String createPropertyTypeConstraint(final String string, final Label label, final Property property) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
-    return _builder.toString();
-  }
-
-  public static String deleteKeyConstraint(final String string, final Label label, final EList<Property> list) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
-    return _builder.toString();
-  }
-
-  public static String deleteUniqueConstraint(final String string, final Label label, final EList<Property> list) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
-    return _builder.toString();
-  }
-
-  public static String deletePropertyExistenceConstraint(final String string, final Label label, final Property property) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property ");
+    _builder.append("ADD ");
     String _name = property.getName();
     _builder.append(_name);
     _builder.append(" with dataype ");
     String _geoType = GeoTypeMapper.toGeoType(property.getValue());
     _builder.append(_geoType);
-    _builder.append(" and unique values");
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+
+  public static String deleteKeyConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete mandatory ");
+    {
+      boolean _hasElements = false;
+      for(final Property p : list) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _name = p.getName();
+        _builder.append(_name);
+      }
+    }
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.append(" with unique values");
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+
+  public static String deleteUniqueConstraint(final String string, final Label label, final EList<Property> list) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete ");
+    {
+      boolean _hasElements = false;
+      for(final Property p : list) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _name = p.getName();
+        _builder.append(_name);
+      }
+    }
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.append(" with unique values");
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+
+  public static String deletePropertyExistenceConstraint(final String string, final Label label, final Property property) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Delete mandatory property ");
+    String _name = property.getName();
+    _builder.append(_name);
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
     _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
 
   public static String deletePropertyTypeConstraint(final String string, final Label label, final Property property) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)");
-    _builder.newLine();
+    _builder.append("Delete ");
+    String _name = property.getName();
+    _builder.append(_name);
+    _builder.append(" with dataype ");
+    String _geoType = GeoTypeMapper.toGeoType(property.getValue());
+    _builder.append(_geoType);
+    _builder.append(" to ");
+    {
+      if ((label instanceof NodeLabel)) {
+        _builder.append("nodelabel");
+      } else {
+        _builder.append("edgelabel");
+      }
+    }
+    _builder.append(" ");
+    String _name_1 = label.getName();
+    _builder.append(_name_1);
+    _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
 }

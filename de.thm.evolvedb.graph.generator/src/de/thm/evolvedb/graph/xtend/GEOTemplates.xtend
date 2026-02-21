@@ -6,6 +6,7 @@ import java.util.Set
 import de.thm.evolvedb.graph.Label
 import org.eclipse.emf.common.util.EList
 import de.thm.evolvedb.graph.Property
+import de.thm.evolvedb.graph.NodeLabel
 
 /**
  * GeoTemplates
@@ -487,53 +488,52 @@ class GEOTemplates {
 			    to node with label «q(newRootLabel)»
 		'''
 	}
-	
+
 	def static String createKeyConstraint(String string, Label label, EList<Property> list) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			ADD unique and mandatory property «FOR p : list SEPARATOR ', '»«p.name»«ENDFOR» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name» with unique values
 		'''
 	}
-	
+
 	def static String createUniqueConstraint(String string, Label label, EList<Property> list) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			ADD «FOR p : list SEPARATOR ', '»«p.name»«ENDFOR» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name» with unique values
 		'''
 	}
-	
+
 	def static String createPropertyExistenceConstraint(String string, Label label, Property property) {
 		'''
-			mandatory property «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» and unique values
+			ADD mandatory property «property.name» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name»
 		'''
 	}
-	
+
 	def static String createPropertyTypeConstraint(String string, Label label, Property property) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			ADD «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name»
 		'''
 	}
-	
-	
-		def static String deleteKeyConstraint(String string, Label label, EList<Property> list) {
+
+	def static String deleteKeyConstraint(String string, Label label, EList<Property> list) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			Delete mandatory «FOR p : list SEPARATOR ', '»«p.name»«ENDFOR» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name» with unique values
 		'''
 	}
-	
+
 	def static String deleteUniqueConstraint(String string, Label label, EList<Property> list) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			Delete «FOR p : list SEPARATOR ', '»«p.name»«ENDFOR» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name» with unique values
 		'''
 	}
-	
+
 	def static String deletePropertyExistenceConstraint(String string, Label label, Property property) {
 		'''
-			mandatory property «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» and unique values
+			Delete mandatory property «property.name» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name»
 		'''
 	}
-	
+
 	def static String deletePropertyTypeConstraint(String string, Label label, Property property) {
 		'''
-			mandatory property x with dataype y and unique values (wäre dann quasi ein key constraint)
+			Delete «property.name» with dataype «GeoTypeMapper.toGeoType(property.value)» to «IF label instanceof NodeLabel»nodelabel«ELSE»edgelabel«ENDIF» «label.name»
 		'''
 	}
 
