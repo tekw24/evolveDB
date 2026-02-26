@@ -35,9 +35,9 @@ class GEOTemplates {
 	// =====================
 	// ---- 1) Add node with label label_name ----
 	/** GEO: Add node with label <label_name> */
-	def static CharSequence addNodeLabel(String label) {
+	def static CharSequence addNodeLabel(String label, boolean properties) {
 		'''
-			Add nodelabel «q(label)»
+			add nodelabel «q(label)»«IF properties»,«ELSE».«ENDIF»
 		'''
 	}
 
@@ -100,7 +100,7 @@ class GEOTemplates {
 	 */
 	def static CharSequence renameSimpleNodeProperty(String nodeLabel, String fromProp, String toProp) {
 		'''
-			Rename property «q(fromProp)» of node with label «q(nodeLabel)» to property «q(toProp)»
+			rename property «q(fromProp)» of node with nodelabel «q(nodeLabel)» to property «q(toProp)».
 		'''
 	}
 
@@ -111,7 +111,7 @@ class GEOTemplates {
 	 */
 	def static changeType(String property, String oldType, String newType, String labelName) {
 		'''
-			Change datatype of property «property» with «labelName» from «oldType» to «newType»
+			change type of property «property» with «labelName» from «oldType» to «newType»
 		'''
 	}
 
@@ -166,11 +166,12 @@ class GEOTemplates {
 	}
 
 	/** Add property ... on path */
-	def static CharSequence addPropertyToNode(String propertyName, String nodeLabel, String datatype) {
+	def static CharSequence addPropertyToNode(String propertyName, String nodeLabel, String datatype, boolean semicolon) {
 		'''
-			Add property «q(propertyName)» with datatype «datatype» to nodelabel with label «q(nodeLabel)» 
+			add property «q(propertyName)» with datatype «datatype» to nodelabel «q(nodeLabel)»«IF semicolon».«ENDIF»
 		'''
 	}
+	
 
 	/** Delete property ... on path */
 	def static CharSequence deletePropertyFromNodeOnPath(String propertyName, String nodeLabel, String startRelType,
@@ -197,7 +198,7 @@ class GEOTemplates {
 	 */
 	def static CharSequence renameNodeLabel(String oldLabel, String newLabel) {
 		'''
-			Rename label «q(oldLabel)» of node with label «q(oldLabel)» to label «q(newLabel)»
+			rename nodelabel «q(oldLabel)» to «q(newLabel)».
 		'''
 	}
 
@@ -207,7 +208,7 @@ class GEOTemplates {
 	 */
 	def static CharSequence renameRelationshipType(String oldType, String newType) {
 		'''
-			Rename type «q(oldType)» of relationship with type «q(oldType)» to type «q(newType)»
+			rename edgetype «q(oldType)» of relationship with type «q(oldType)» to type «q(newType)».
 		'''
 	}
 
@@ -227,15 +228,21 @@ class GEOTemplates {
 	 * Einfache Variante:
 	 * Add relationship with type <type_name>
 	 */
-	def static CharSequence addRelationshipType(String relType) {
+	def static CharSequence addRelationshipType(String relType, boolean properties) {
 		'''
-			Add relationship with type «q(relType)»
+			add edgelabel with type «q(relType)»«IF properties»,«ELSE».«ENDIF»
 		'''
 	}
 
 	def static CharSequence addEdgeType(String edgeType, List<String> labelNames, String srcName, String tgtName) {
 		'''
-			Add relationship_type «q(edgeType)» with label «FOR s : labelNames SEPARATOR ', '»«s»«ENDFOR» starting from «srcName» ending at «tgtName»
+			add edgetype «q(edgeType)» with edgelabel «FOR s : labelNames SEPARATOR ', '»«s»«ENDFOR» starting from «srcName» ending at «tgtName».
+		'''
+	}
+	
+	def static CharSequence addNodeType(String nodeType, List<String> labelNames) {
+		'''
+			add nodetype «q(nodeType)» with nodelabel «FOR s : labelNames SEPARATOR ', ' »«s»«ENDFOR».
 		'''
 	}
 
@@ -334,12 +341,10 @@ class GEOTemplates {
 	 * Move <featureKind> <featureName> of <fromKind> with label/type <fromId>
 	 *     to <toKind> with label/type <toId>
 	 */
-	def static CharSequence moveFeature(String featureKind, String featureName, String fromKind, String fromId,
-		String toKind, String toId) {
+	def static CharSequence moveProperty(String featureName, String fromLabel, String toLabel) {
 
 		'''
-			Move «featureKind» «q(featureName)» of «fromKind» with «IF fromKind == "node"»label«ELSE»type«ENDIF» «q(fromId)» 
-			    to «toKind» with «IF toKind == "node"»label«ELSE»type«ENDIF» «q(toId)»
+			move property «q(featureName)» from nodelabel «fromLabel» to nodelabel «q(toLabel)».
 		'''
 	}
 

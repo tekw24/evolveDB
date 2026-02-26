@@ -63,7 +63,7 @@ public class MddeCustomEditor extends GenericEditor {
 	 */
 	@Override
 	protected String getEditorTitle() {
-		return "Mdde Custom Editor";
+		return "Mdde Model Editor";
 	}
 
 	/**

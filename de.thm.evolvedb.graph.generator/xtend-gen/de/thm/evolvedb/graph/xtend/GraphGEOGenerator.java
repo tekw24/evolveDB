@@ -65,15 +65,12 @@ public class GraphGEOGenerator {
       this.processed = _arrayList;
     }
     List<GraphResolvableOperator> resolvableOperators = migration.getGraphResolvableSMO();
-    List<GraphPartiallyResolvableOperator> partiallyResolvable = migration.getGraphPartiallyResovableSMO();
-    List<GraphNotAutomaticallyResolvableOperator> notAutomaticallyResolvable = migration.getGraphNotAutimaticallyResolvable();
+    List<GraphPartiallyResolvableOperator> partiallyResolvables = migration.getGraphPartiallyResovableSMO();
+    List<GraphNotAutomaticallyResolvableOperator> notAutomaticallyResolvables = migration.getGraphNotAutimaticallyResolvable();
     for (final GraphResolvableOperator resolvable : resolvableOperators) {
       {
         if ((Objects.equals(resolvable.getProcessStatus(), ProcessStatus.RESOLVED) && (!this.processed.contains(resolvable)))) {
-          GraphResolvableOperatorType _displayName = resolvable.getDisplayName();
-          String _plus = (_displayName + ": ");
-          String _processResolvableOperator = this.processResolvableOperator(resolvable);
-          String c = (_plus + _processResolvableOperator);
+          String c = this.processResolvableOperator(resolvable);
           String _content = content;
           String _xifexpression = null;
           if ((c != null)) {
@@ -87,6 +84,44 @@ public class GraphGEOGenerator {
           content = (_content_1 + _builder_1);
         }
         this.processed.add(resolvable);
+      }
+    }
+    for (final GraphPartiallyResolvableOperator partiallyResolvable : partiallyResolvables) {
+      {
+        if ((Objects.equals(partiallyResolvable.getProcessStatus(), ProcessStatus.RESOLVED) && (!this.processed.contains(partiallyResolvable)))) {
+          String c = this.processPartiallyResolvableOperator(partiallyResolvable);
+          String _content = content;
+          String _xifexpression = null;
+          if ((c != null)) {
+            _xifexpression = c;
+          } else {
+            _xifexpression = "";
+          }
+          content = (_content + _xifexpression);
+          String _content_1 = content;
+          StringConcatenation _builder_1 = new StringConcatenation();
+          content = (_content_1 + _builder_1);
+        }
+        this.processed.add(partiallyResolvable);
+      }
+    }
+    for (final GraphNotAutomaticallyResolvableOperator notAutomaticallyResolvable : notAutomaticallyResolvables) {
+      {
+        if ((Objects.equals(notAutomaticallyResolvable.getProcessStatus(), ProcessStatus.RESOLVED) && (!this.processed.contains(notAutomaticallyResolvables)))) {
+          String c = this.processNotAutomaticallyResolvableOperator(notAutomaticallyResolvable);
+          String _content = content;
+          String _xifexpression = null;
+          if ((c != null)) {
+            _xifexpression = c;
+          } else {
+            _xifexpression = "";
+          }
+          content = (_content + _xifexpression);
+          String _content_1 = content;
+          StringConcatenation _builder_1 = new StringConcatenation();
+          content = (_content_1 + _builder_1);
+        }
+        this.processed.add(notAutomaticallyResolvable);
       }
     }
     return content;
@@ -177,7 +212,7 @@ public class GraphGEOGenerator {
     if (_displayName != null) {
       switch (_displayName) {
         case MOVE_COMBINED:
-          return GraphChangeOperator.moveCombined(operator);
+          return GraphChangeOperator.moveProperty(operator);
         case MOVE_EDGE_TYPE:
           return GraphChangeOperator.moveEdgeType(operator);
         case MOVE_LABEL:

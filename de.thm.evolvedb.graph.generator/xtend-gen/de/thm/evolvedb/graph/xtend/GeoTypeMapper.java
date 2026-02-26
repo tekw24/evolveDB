@@ -87,6 +87,9 @@ public class GeoTypeMapper {
           case "UINT":
             _switchResult = "UINT";
             break;
+          case "INT":
+            _switchResult = "INT";
+            break;
         }
       }
       _xblockexpression = _switchResult;

@@ -5,6 +5,7 @@ import de.thm.evolvedb.graph.EdgeLabel;
 import de.thm.evolvedb.graph.EdgeType;
 import de.thm.evolvedb.graph.KeyConstraint;
 import de.thm.evolvedb.graph.NodeLabel;
+import de.thm.evolvedb.graph.NodeType;
 import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.graph.PropertyExistenceConstraint;
 import de.thm.evolvedb.graph.PropertyTypeConstraint;
@@ -90,15 +91,31 @@ public class GraphCreateOperator {
     String content = _builder.toString();
     if ((nodelabel != null)) {
       String _content = content;
-      CharSequence _addNodeLabel = GEOTemplates.addNodeLabel(nodelabel.getName());
+      String _name = nodelabel.getName();
+      int _size = nodelabel.getProperties().size();
+      boolean _greaterThan = (_size > 0);
+      CharSequence _addNodeLabel = GEOTemplates.addNodeLabel(_name, _greaterThan);
       content = (_content + _addNodeLabel);
-      EList<Property> _properties = nodelabel.getProperties();
-      for (final Property property : _properties) {
-        String _content_1 = content;
-        CharSequence _addPropertyToNode = GEOTemplates.addPropertyToNode(property.getName(), nodelabel.getName(), 
-          GeoTypeMapper.toGeoType(property.getValue()));
-        content = (_content_1 + _addPropertyToNode);
+      String _content_1 = content;
+      StringConcatenation _builder_1 = new StringConcatenation();
+      {
+        EList<Property> _properties = nodelabel.getProperties();
+        boolean _hasElements = false;
+        for(final Property property : _properties) {
+          if (!_hasElements) {
+            _hasElements = true;
+          } else {
+            _builder_1.appendImmediate(",", "");
+          }
+          CharSequence _addPropertyToNode = GEOTemplates.addPropertyToNode(property.getName(), nodelabel.getName(), GeoTypeMapper.toGeoType(property.getValue()), false);
+          _builder_1.append(_addPropertyToNode);
+        }
+        if (_hasElements) {
+          _builder_1.append(".");
+        }
       }
+      _builder_1.newLineIfNotEmpty();
+      content = (_content_1 + _builder_1);
       return content;
     }
     return "";
@@ -143,18 +160,31 @@ public class GraphCreateOperator {
     String content = _builder.toString();
     if ((edgelabel != null)) {
       String _content = content;
-      CharSequence _addRelationshipType = GEOTemplates.addRelationshipType(edgelabel.getName());
+      String _name = edgelabel.getName();
+      int _size = edgelabel.getProperties().size();
+      boolean _greaterThan = (_size > 0);
+      CharSequence _addRelationshipType = GEOTemplates.addRelationshipType(_name, _greaterThan);
       content = (_content + _addRelationshipType);
-      for (final AddObject a_1 : properties) {
-        {
-          EObject _obj_3 = a_1.getObj();
-          Property property = ((Property) _obj_3);
-          String _content_1 = content;
+      String _content_1 = content;
+      StringConcatenation _builder_1 = new StringConcatenation();
+      {
+        EList<Property> _properties = edgelabel.getProperties();
+        boolean _hasElements = false;
+        for(final Property property : _properties) {
+          if (!_hasElements) {
+            _hasElements = true;
+          } else {
+            _builder_1.appendImmediate(",", "");
+          }
           CharSequence _addRelationshipProperty = GEOTemplates.addRelationshipProperty(edgelabel.getName(), property.getName(), 
             GeoTypeMapper.toGeoType(property.getValue()), "");
-          content = (_content_1 + _addRelationshipProperty);
+          _builder_1.append(_addRelationshipProperty);
+        }
+        if (_hasElements) {
+          _builder_1.append(".");
         }
       }
+      content = (_content_1 + _builder_1);
       return content;
     }
     return "";
@@ -206,15 +236,45 @@ public class GraphCreateOperator {
   }
 
   public static String createNodeType(final GraphResolvableOperator operator) {
-    Object _xifexpression = null;
     ProcessStatus _processStatus = operator.getProcessStatus();
     boolean _tripleEquals = (_processStatus == ProcessStatus.RESOLVED);
     if (_tripleEquals) {
-      _xifexpression = null;
+      final Function1<SemanticChangeSet, Boolean> _function = (SemanticChangeSet it) -> {
+        return Boolean.valueOf(it.getEditRName().equals("CREATE_NodeType_IN_PropertyGraph_(items)"));
+      };
+      SemanticChangeSet addEdgeType = IterableExtensions.<SemanticChangeSet>findFirst(operator.getSemanticChangeSets(), _function);
+      final Function1<Change, Boolean> _function_1 = (Change it) -> {
+        return Boolean.valueOf((it instanceof AddObject));
+      };
+      final Function1<Change, AddObject> _function_2 = (Change it) -> {
+        return ((AddObject) it);
+      };
+      List<AddObject> addObjects = IterableExtensions.<AddObject>toList(IterableExtensions.<Change, AddObject>map(IterableExtensions.<Change>filter(addEdgeType.getChanges(), _function_1), _function_2));
+      NodeType nodetype = null;
+      for (final AddObject a : addObjects) {
+        EObject _obj = a.getObj();
+        if ((_obj instanceof NodeType)) {
+          EObject _obj_1 = a.getObj();
+          nodetype = ((NodeType) _obj_1);
+        }
+      }
+      StringConcatenation _builder = new StringConcatenation();
+      String content = _builder.toString();
+      List<String> labelNames = CollectionLiterals.<String>newArrayList();
+      if ((nodetype != null)) {
+        EList<NodeLabel> _label = nodetype.getLabel();
+        for (final NodeLabel edgeLabel : _label) {
+          labelNames.add(edgeLabel.getName());
+        }
+        String _content = content;
+        CharSequence _addNodeType = GEOTemplates.addNodeType(nodetype.getName(), labelNames);
+        content = (_content + _addNodeType);
+        return content;
+      }
     } else {
       return "";
     }
-    return ((String)_xifexpression);
+    return null;
   }
 
   public static String createProperty(final GraphResolvableOperator operator) {

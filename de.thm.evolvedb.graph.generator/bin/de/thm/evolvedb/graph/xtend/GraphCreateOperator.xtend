@@ -14,6 +14,7 @@ import de.thm.evolvedb.graph.UniqueConstraint
 import de.thm.evolvedb.graph.PropertyExistenceConstraint
 import de.thm.evolvedb.graph.PropertyTypeConstraint
 import de.thm.evolvedb.graph.Constraint
+import de.thm.evolvedb.graph.NodeType
 
 class GraphCreateOperator {
 
@@ -76,18 +77,19 @@ class GraphCreateOperator {
 		'''
 
 		if (nodelabel !== null) {
-			content += GEOTemplates.addNodeLabel(nodelabel.name)
+			content += GEOTemplates.addNodeLabel(nodelabel.name,  nodelabel.properties.size > 0 )
 //			for (AddObject a : properties) {
 //				var property = a.obj as Property
 //				content +=
 //					GEOTemplates.addPropertyToNodeOnPath(nodelabel.name, property.name,
 //						GeoTypeMapper.toGeoType(property.value), ''); // TODO
 //			}
-			for (Property property : nodelabel.properties) {
-				content +=
-					GEOTemplates.addPropertyToNode(property.name, nodelabel.name,
-						GeoTypeMapper.toGeoType(property.value)); // TODO
-			}
+
+			content += 
+			'''
+			«FOR property: nodelabel.properties SEPARATOR ',' AFTER '.'»«GEOTemplates.addPropertyToNode(property.name, nodelabel.name, GeoTypeMapper.toGeoType(property.value), false)»«ENDFOR»
+			'''
+			
 			return content;
 
 		}
@@ -126,13 +128,19 @@ class GraphCreateOperator {
 		var content = ''''''
 
 		if (edgelabel !== null) {
-			content += GEOTemplates.addRelationshipType(edgelabel.name)
-			for (AddObject a : properties) {
-				var property = a.obj as Property
-				content +=
-					GEOTemplates.addRelationshipProperty(edgelabel.name, property.name,
-						GeoTypeMapper.toGeoType(property.value), '');
-			}
+			content += GEOTemplates.addRelationshipType(edgelabel.name, edgelabel.properties.size > 0 )
+			
+			
+			content += '''«FOR property:  edgelabel.properties SEPARATOR ',' AFTER '.'»«GEOTemplates.addRelationshipProperty(edgelabel.name, property.name,
+						GeoTypeMapper.toGeoType(property.value), '')»«ENDFOR»'''
+			
+			
+//			for (AddObject a : properties) {
+//				var property = a.obj as Property
+//				content +=
+//					GEOTemplates.addRelationshipProperty(edgelabel.name, property.name,
+//						GeoTypeMapper.toGeoType(property.value), '');
+//			}
 			return content;
 
 		}
@@ -181,6 +189,37 @@ class GraphCreateOperator {
 
 	def static String createNodeType(GraphResolvableOperator operator) {
 		if (operator.processStatus === ProcessStatus.RESOLVED) {
+			
+				var SemanticChangeSet addEdgeType = operator.semanticChangeSets.findFirst [
+			editRName.equals('CREATE_NodeType_IN_PropertyGraph_(items)')
+		]
+
+		var List<AddObject> addObjects = addEdgeType.changes.filter[it instanceof AddObject].map[it as AddObject].toList
+		var NodeType nodetype = null;
+
+		for (AddObject a : addObjects) {
+			if (a.obj instanceof NodeType) {
+				nodetype = a.obj as NodeType
+			}
+		}
+
+		var content = ''''''
+
+		var List<String> labelNames = newArrayList;
+		if (nodetype !== null) {
+			for (NodeLabel edgeLabel : nodetype.label) {
+				labelNames.add(edgeLabel.name)
+			}
+			
+			
+
+			content += GEOTemplates.addNodeType(nodetype.name, labelNames);
+
+			return content;
+
+		}
+			
+			
 		} else
 			return '';
 

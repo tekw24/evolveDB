@@ -848,11 +848,12 @@ public class MigrationModelTransformation {
           final Function1<SemanticChangeSet, Boolean> _function_2 = (SemanticChangeSet it) -> {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof AddReference));
-            })) && ((((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || 
+            })) && (((((it.getName().equals("ADD_EdgeType_(labels)_TGT_EdgeLabel") || 
               it.getName().equals("ADD_NodeType_(incoming)_TGT_EdgeType")) || 
               it.getName().equals("ADD_NodeType_(outgoing)_TGT_EdgeType")) || 
               it.getName().equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType")) || 
-              it.getName().equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))));
+              it.getName().equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType")) || 
+              it.getName().equals("ADD_EdgeLabel_(edges)_TGT_EdgeType"))));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {
@@ -1090,7 +1091,7 @@ public class MigrationModelTransformation {
             return Boolean.valueOf((IterableExtensions.<Change>exists(it.getChanges(), ((Function1<Change, Boolean>) (Change it_1) -> {
               return Boolean.valueOf((it_1 instanceof AddReference));
             })) && 
-              it.getName().equals("ADD_NodeLabel_(nodes)_TGT_NodeType")));
+              it.getName().equals("ADD_NodeType_(label)_TGT_NodeLabel")));
           };
           Iterable<SemanticChangeSet> _filter = IterableExtensions.<SemanticChangeSet>filter(resolvable.getSemanticChangeSets(), _function_2);
           for (final SemanticChangeSet s : _filter) {

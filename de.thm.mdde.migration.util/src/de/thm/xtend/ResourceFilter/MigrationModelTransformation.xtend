@@ -861,7 +861,9 @@ class MigrationModelTransformation {
 							it.name.equals("ADD_NodeType_(incoming)_TGT_EdgeType") ||
 							it.name.equals("ADD_NodeType_(outgoing)_TGT_EdgeType") ||
 							it.name.equals("SET_REFERENCE_EdgeType_(tgt)_TGT_NodeType") ||
-							it.name.equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType"))
+							it.name.equals("SET_REFERENCE_EdgeType_(src)_TGT_NodeType") ||
+							it.name.equals("ADD_EdgeLabel_(edges)_TGT_EdgeType")
+							)
 
 				]) {
 					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
@@ -1032,8 +1034,8 @@ class MigrationModelTransformation {
 
 			for (GraphResolvableOperator resolvable : resolvableOperators) {
 				for (SemanticChangeSet s : resolvable.semanticChangeSets.filter [
-					it.changes.exists[it instanceof AddReference] &&
-						it.name.equals("ADD_NodeLabel_(nodes)_TGT_NodeType")
+					it.changes.exists[it instanceof AddReference] && 
+						 it.name.equals("ADD_NodeType_(label)_TGT_NodeLabel")
 				]) {
 					var AddReference a = s.changes.findFirst[it instanceof AddReference] as AddReference
 					if (a.src instanceof NodeType) {

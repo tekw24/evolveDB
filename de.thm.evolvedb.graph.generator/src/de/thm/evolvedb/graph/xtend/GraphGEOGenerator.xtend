@@ -57,15 +57,16 @@ class GraphGEOGenerator {
 		// Solve resolvables first
 		var List<GraphResolvableOperator> resolvableOperators = migration.graphResolvableSMO
 		// Solve partiallyResolvable second
-		var List<GraphPartiallyResolvableOperator> partiallyResolvable = migration.graphPartiallyResovableSMO
+		var List<GraphPartiallyResolvableOperator> partiallyResolvables = migration.graphPartiallyResovableSMO
 		// Solve NotAutomaticallyResolvable third
-		var List<GraphNotAutomaticallyResolvableOperator> notAutomaticallyResolvable = migration.
+		var List<GraphNotAutomaticallyResolvableOperator> notAutomaticallyResolvables = migration.
 			graphNotAutimaticallyResolvable
 
 		for (GraphResolvableOperator resolvable : resolvableOperators) {
 
 			if (resolvable.processStatus == ProcessStatus.RESOLVED && !processed.contains(resolvable)) {
-				var String c = resolvable.displayName + ": " + processResolvableOperator(resolvable);
+				//var String c = resolvable.displayName + ": " + processResolvableOperator(resolvable);
+				var String c =  processResolvableOperator(resolvable);
 				content += c !== null ? c : "";
 				content += 
 				'''
@@ -73,6 +74,34 @@ class GraphGEOGenerator {
 			}
 
 			processed.add(resolvable);
+		}
+		
+		for (GraphPartiallyResolvableOperator partiallyResolvable : partiallyResolvables) {
+
+			if (partiallyResolvable.processStatus == ProcessStatus.RESOLVED && !processed.contains(partiallyResolvable)) {
+				//var String c = resolvable.displayName + ": " + processResolvableOperator(resolvable);
+				var String c =  processPartiallyResolvableOperator(partiallyResolvable);
+				content += c !== null ? c : "";
+				content += 
+				'''
+				'''
+			}
+
+			processed.add(partiallyResolvable);
+		}
+		
+		for (GraphNotAutomaticallyResolvableOperator notAutomaticallyResolvable : notAutomaticallyResolvables) {
+
+			if (notAutomaticallyResolvable.processStatus == ProcessStatus.RESOLVED && !processed.contains(notAutomaticallyResolvables)) {
+				//var String c = resolvable.displayName + ": " + processResolvableOperator(resolvable);
+				var String c =  processNotAutomaticallyResolvableOperator(notAutomaticallyResolvable);
+				content += c !== null ? c : "";
+				content += 
+				'''
+				'''
+			}
+
+			processed.add(notAutomaticallyResolvable);
 		}
 
 		return content;
@@ -188,7 +217,7 @@ class GraphGEOGenerator {
 	def String processNotAutomaticallyResolvableOperator(GraphNotAutomaticallyResolvableOperator operator) {
 		switch (operator.displayName) {
 			case MOVE_COMBINED: {
-				return GraphChangeOperator.moveCombined(operator);
+				return GraphChangeOperator.moveProperty(operator); //TODO
 				
 			}
 			case MOVE_EDGE_TYPE: {

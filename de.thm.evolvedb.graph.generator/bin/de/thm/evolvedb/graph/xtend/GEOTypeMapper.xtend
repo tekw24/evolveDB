@@ -36,6 +36,7 @@ class GeoTypeMapper {
 			case "DOUBLE": "DOUBLE"
 			case "FLOAT": "FLOAT"
 			case "UINT": "UINT"
+			case "INT": "INT"
 		}
 	}
 

@@ -62,7 +62,7 @@ public class GraphCustomEditor extends GenericEditor {
 	 */
 	@Override
 	protected String getEditorTitle() {
-		return "Graph Custom Editor";
+		return "Graph Model Editor";
 	}
 
 	/**

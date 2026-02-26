@@ -19,6 +19,9 @@ import de.thm.evolvedb.graph.PropertyValueType
 import de.thm.evolvedb.graph.EdgeType
 import de.thm.evolvedb.graph.NodeType
 import org.sidiff.difference.symmetric.AddReference
+import org.sidiff.difference.symmetric.RemoveReference
+import org.sidiff.difference.symmetric.Change
+import java.lang.foreign.AddressLayout
 
 class GraphChangeOperator {
 
@@ -246,30 +249,36 @@ class GraphChangeOperator {
 	def static String moveProperty(GraphNotAutomaticallyResolvableOperator operator) {
 		if (operator.processStatus === ProcessStatus.RESOLVED) {
 			var List<SemanticChangeSet> addProperties = operator.semanticChangeSets.filter [
-				editRName.equals('CREATE_Property_IN_LABEL_(properties)')
+				editRName.equals('MOVE_REF_COMBI_Property_FROM_Label_(properties)_TO_Label_(properties)')
 			].toList
 			var List<AddObject> properties = newArrayList
 			var content = '''''';
 
 			for (SemanticChangeSet scs : addProperties) {
-
-				for (AddObject ad : scs.changes.filter[it instanceof AddObject].map[it as AddObject].toList) {
-
-					if (ad.obj instanceof Property) {
-						properties.add(ad)
-					}
-
+				
+				var AddReference newReference;
+				var RemoveReference removeReference;
+				
+				for(Change change: scs.changes){
+					if(change instanceof AddReference)
+						newReference = change as AddReference;
+					if(change instanceof RemoveReference)
+						removeReference = change as RemoveReference;
 				}
+				
+				if(newReference !== null && removeReference !== null){
+					
+					var NodeLabel oldLabel = removeReference.src as NodeLabel;
+					var NodeLabel newLabel = newReference.src as NodeLabel;
+					
+					var Property property = removeReference.tgt as Property;
+					
+					content+=GEOTemplates.moveProperty(property.name, oldLabel.name, newLabel.name);
+				}
+				
 			}
 
-			for (AddObject a : properties) {
-				var property = a.obj as Property
-
-				// String propertyName, String nodeLabel, String startRelType, String endRelType
-				content +=
-					GEOTemplates.addPropertyToNodeOnPath(property.name, GEOHelper.getPropertyParent(property),
-						GeoTypeMapper.toGeoType(property.value), '');
-			}
+			
 
 			return content;
 		} else

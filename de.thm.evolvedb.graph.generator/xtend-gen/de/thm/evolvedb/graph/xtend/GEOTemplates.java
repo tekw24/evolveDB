@@ -46,11 +46,18 @@ public class GEOTemplates {
   /**
    * GEO: Add node with label <label_name>
    */
-  public static CharSequence addNodeLabel(final String label) {
+  public static CharSequence addNodeLabel(final String label, final boolean properties) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Add nodelabel ");
+    _builder.append("add nodelabel ");
     String _q = GEOTemplates.q(label);
     _builder.append(_q);
+    {
+      if (properties) {
+        _builder.append(",");
+      } else {
+        _builder.append(".");
+      }
+    }
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -146,15 +153,16 @@ public class GEOTemplates {
    */
   public static CharSequence renameSimpleNodeProperty(final String nodeLabel, final String fromProp, final String toProp) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Rename property ");
+    _builder.append("rename property ");
     String _q = GEOTemplates.q(fromProp);
     _builder.append(_q);
-    _builder.append(" of node with label ");
+    _builder.append(" of node with nodelabel ");
     String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
     _builder.append(" to property ");
     String _q_2 = GEOTemplates.q(toProp);
     _builder.append(_q_2);
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -166,7 +174,7 @@ public class GEOTemplates {
    */
   public static CharSequence changeType(final String property, final String oldType, final String newType, final String labelName) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Change datatype of property ");
+    _builder.append("change type of property ");
     _builder.append(property);
     _builder.append(" with ");
     _builder.append(labelName);
@@ -309,9 +317,9 @@ public class GEOTemplates {
   /**
    * Add property ... on path
    */
-  public static CharSequence addPropertyToNode(final String propertyName, final String nodeLabel, final String datatype) {
+  public static CharSequence addPropertyToNode(final String propertyName, final String nodeLabel, final String datatype, final boolean semicolon) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Add property ");
+    _builder.append("add property ");
     String _q = GEOTemplates.q(propertyName);
     _builder.append(_q);
     _builder.append(" with datatype ");
@@ -319,7 +327,11 @@ public class GEOTemplates {
     _builder.append(" to nodelabel with label ");
     String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
-    _builder.append(" ");
+    {
+      if (semicolon) {
+        _builder.append(";");
+      }
+    }
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -381,15 +393,13 @@ public class GEOTemplates {
    */
   public static CharSequence renameNodeLabel(final String oldLabel, final String newLabel) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Rename label ");
+    _builder.append("rename nodelabel ");
     String _q = GEOTemplates.q(oldLabel);
     _builder.append(_q);
-    _builder.append(" of node with label ");
-    String _q_1 = GEOTemplates.q(oldLabel);
+    _builder.append(" to ");
+    String _q_1 = GEOTemplates.q(newLabel);
     _builder.append(_q_1);
-    _builder.append(" to label ");
-    String _q_2 = GEOTemplates.q(newLabel);
-    _builder.append(_q_2);
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -400,7 +410,7 @@ public class GEOTemplates {
    */
   public static CharSequence renameRelationshipType(final String oldType, final String newType) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Rename type ");
+    _builder.append("rename edgetype ");
     String _q = GEOTemplates.q(oldType);
     _builder.append(_q);
     _builder.append(" of relationship with type ");
@@ -409,6 +419,7 @@ public class GEOTemplates {
     _builder.append(" to type ");
     String _q_2 = GEOTemplates.q(newType);
     _builder.append(_q_2);
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -439,21 +450,28 @@ public class GEOTemplates {
    * Einfache Variante:
    * Add relationship with type <type_name>
    */
-  public static CharSequence addRelationshipType(final String relType) {
+  public static CharSequence addRelationshipType(final String relType, final boolean properties) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Add relationship with type ");
+    _builder.append("add edgelabel with type ");
     String _q = GEOTemplates.q(relType);
     _builder.append(_q);
+    {
+      if (properties) {
+        _builder.append(",");
+      } else {
+        _builder.append(".");
+      }
+    }
     _builder.newLineIfNotEmpty();
     return _builder;
   }
 
   public static CharSequence addEdgeType(final String edgeType, final List<String> labelNames, final String srcName, final String tgtName) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Add relationship_type ");
+    _builder.append("add edgetype ");
     String _q = GEOTemplates.q(edgeType);
     _builder.append(_q);
-    _builder.append(" with label ");
+    _builder.append(" with edgelabel ");
     {
       boolean _hasElements = false;
       for(final String s : labelNames) {
@@ -469,6 +487,28 @@ public class GEOTemplates {
     _builder.append(srcName);
     _builder.append(" ending at ");
     _builder.append(tgtName);
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+
+  public static CharSequence addNodeType(final String nodeType, final List<String> labelNames) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("add nodetype ");
+    String _q = GEOTemplates.q(nodeType);
+    _builder.append(_q);
+    _builder.append(" with nodelabel ");
+    {
+      boolean _hasElements = false;
+      for(final String s : labelNames) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        _builder.append(s);
+      }
+    }
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -653,44 +693,17 @@ public class GEOTemplates {
    * Move <featureKind> <featureName> of <fromKind> with label/type <fromId>
    *     to <toKind> with label/type <toId>
    */
-  public static CharSequence moveFeature(final String featureKind, final String featureName, final String fromKind, final String fromId, final String toKind, final String toId) {
+  public static CharSequence moveProperty(final String featureName, final String fromLabel, final String toLabel) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Move ");
-    _builder.append(featureKind);
-    _builder.append(" ");
+    _builder.append("move property ");
     String _q = GEOTemplates.q(featureName);
     _builder.append(_q);
-    _builder.append(" of ");
-    _builder.append(fromKind);
-    _builder.append(" with ");
-    {
-      boolean _equals = Objects.equals(fromKind, "node");
-      if (_equals) {
-        _builder.append("label");
-      } else {
-        _builder.append("type");
-      }
-    }
-    _builder.append(" ");
-    String _q_1 = GEOTemplates.q(fromId);
+    _builder.append(" from nodelabel ");
+    _builder.append(fromLabel);
+    _builder.append(" to nodelabel ");
+    String _q_1 = GEOTemplates.q(toLabel);
     _builder.append(_q_1);
-    _builder.append(" ");
-    _builder.newLineIfNotEmpty();
-    _builder.append("    ");
-    _builder.append("to ");
-    _builder.append(toKind, "    ");
-    _builder.append(" with ");
-    {
-      boolean _equals_1 = Objects.equals(toKind, "node");
-      if (_equals_1) {
-        _builder.append("label");
-      } else {
-        _builder.append("type");
-      }
-    }
-    _builder.append(" ");
-    String _q_2 = GEOTemplates.q(toId);
-    _builder.append(_q_2, "    ");
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
