@@ -93,7 +93,7 @@ public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 		this();
 		this.differenceType = differenceType;
 		controller = new MddeDifferenceBuilderController(inputModels);
-		setWindowTitle("New Symmetric Difference Wizard");
+		setWindowTitle("Model Comparison");
 		setHelpAvailable(false);
 
 	}
@@ -101,7 +101,7 @@ public class GraphDifferenceBuilderWizard extends Wizard implements INewWizard {
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.selection = selection;
-		setWindowTitle("New Symmetric Difference Wizard");
+		setWindowTitle("Model Comparison");
 
 		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
 				.getImageDescriptor(GraphEditorPlugin.INSTANCE.getImage("full/wizban/NewGraph")));

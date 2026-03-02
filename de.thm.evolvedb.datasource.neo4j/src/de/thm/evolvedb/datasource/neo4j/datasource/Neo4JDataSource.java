@@ -63,7 +63,7 @@ public class Neo4JDataSource implements EDBDataSource {
 
 	@Override
 	public String getName() {
-		return "MySQL Neo4J DataSource";
+		return "Neo4J DataSource";
 	}
 
 	@Override

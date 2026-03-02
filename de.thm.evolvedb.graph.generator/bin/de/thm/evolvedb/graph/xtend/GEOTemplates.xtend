@@ -168,7 +168,7 @@ class GEOTemplates {
 	/** Add property ... on path */
 	def static CharSequence addPropertyToNode(String propertyName, String nodeLabel, String datatype, boolean semicolon) {
 		'''
-			add property «q(propertyName)» with datatype «datatype» to nodelabel with label «q(nodeLabel)»«IF semicolon»;«ENDIF»
+			add property «q(propertyName)» with datatype «datatype» to nodelabel «q(nodeLabel)»«IF semicolon».«ENDIF»
 		'''
 	}
 	
@@ -236,7 +236,7 @@ class GEOTemplates {
 
 	def static CharSequence addEdgeType(String edgeType, List<String> labelNames, String srcName, String tgtName) {
 		'''
-			add edgetype «q(edgeType)» with edgelabel «FOR s : labelNames SEPARATOR ', '»«s»«ENDFOR» starting from «srcName» ending at «tgtName»
+			add edgetype «q(edgeType)» with edgelabel «FOR s : labelNames SEPARATOR ', '»«s»«ENDFOR» starting from «srcName» ending at «tgtName».
 		'''
 	}
 	

@@ -324,12 +324,12 @@ public class GEOTemplates {
     _builder.append(_q);
     _builder.append(" with datatype ");
     _builder.append(datatype);
-    _builder.append(" to nodelabel with label ");
+    _builder.append(" to nodelabel ");
     String _q_1 = GEOTemplates.q(nodeLabel);
     _builder.append(_q_1);
     {
       if (semicolon) {
-        _builder.append(";");
+        _builder.append(".");
       }
     }
     _builder.newLineIfNotEmpty();
@@ -487,6 +487,7 @@ public class GEOTemplates {
     _builder.append(srcName);
     _builder.append(" ending at ");
     _builder.append(tgtName);
+    _builder.append(".");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
