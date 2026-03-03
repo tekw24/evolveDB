@@ -20,7 +20,7 @@ The development of EvolveDB was supported by [StudiumPlus](https://www.studiumpl
 
 ## EvolveGDB
 
-EvolveGDB extends EvolveDb towards model-driven schema transformation for graph databases.
+EvolveGDB extends EvolveDB towards model-driven schema transformation for graph databases.
 
 
 ## Related Publications
