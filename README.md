@@ -1,6 +1,6 @@
 # EvolveDB
 EvolveDB is an approach to model-driven schema evolution in relational databases, where the user specifies the evolution steps by freely editing a database model extracted by reverse engineering. EvolveDB analyzes the differences between the status quo and the evolved model structures and generates a data migration script. EvolveDB is currently available as an Eclipse Feature.
-A screencast of the demo is available at https://youtu.be/ieXmrDd2nw4. 
+A screencast of the demo is available at [https://youtu.be/ieXmrDd2nw4](https://www.youtube.com/watch?v=k57NUi3blbg&t=7s). 
 
 We also provide an end-user [end_user_documentation.pdf](https://github.com/tekw24/evolveDB/files/10188435/end_user_documentation.pdf) and a developer [developer_documentation.pdf](https://github.com/tekw24/evolveDB/files/10188441/developer_documentation.pdf) tutorial. The mysql dump files for the end-user tutorial are located in the [MySQL_dump_files.zip](MySQL_dump_files.zip) archive. 
 
