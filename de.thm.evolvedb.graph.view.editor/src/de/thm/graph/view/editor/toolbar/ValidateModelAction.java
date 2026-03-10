@@ -60,11 +60,11 @@ public class ValidateModelAction extends Action {
 	 */
 	@Override
 	public void run() {
-//		if (currentObject != null && currentObject instanceof ResourceSet)
-//			ModelValidation.validateModel((ResourceSet) currentObject, "de.thm.mdde.migration.view.editor");
-//		else {
-//			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error Occured", "The selected element is not a resource!");
-//		}
+		if (currentObject != null && currentObject instanceof ResourceSet)
+			ModelValidation.validateModel((ResourceSet) currentObject, "de.thm.mdde.graph.view.editor");
+		else {
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error Occured", "The selected element is not a resource!");
+		}
 	}
 	
 

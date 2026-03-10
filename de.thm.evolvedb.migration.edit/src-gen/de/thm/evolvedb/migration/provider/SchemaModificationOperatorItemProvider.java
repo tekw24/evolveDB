@@ -277,7 +277,7 @@ public class SchemaModificationOperatorItemProvider extends ItemProviderAdapter 
 			return n.getName();
 		} else if(removeObject.getObj() instanceof PropertyValueType) {
 			PropertyValueType n = (PropertyValueType) removeObject.getObj();
-			return n.getProperty().getName();
+			return n.getProperty() != null ? n.getProperty().getName() : "NoProperty";
 		}else if(removeObject.getObj() instanceof Constraint) {
 			Constraint n = (Constraint) removeObject.getObj();
 			return n.getName();

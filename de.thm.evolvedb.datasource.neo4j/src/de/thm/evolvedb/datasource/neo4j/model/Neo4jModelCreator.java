@@ -477,9 +477,9 @@ public class Neo4jModelCreator {
 
 		Property property = (Property) graphFactory.create(graphPackage.getProperty());
 		property.setName(propertyName.toString());
-		
-		if(types.size() > 1 && types.containsKey("NULL")) {
-			types.remove("NULL"); //TODO Algorithm
+
+		if (types.size() > 1 && types.containsKey("NULL")) {
+			types.remove("NULL"); // TODO Algorithm
 		}
 
 		if (types.size() == 1) {
@@ -494,6 +494,8 @@ public class Neo4jModelCreator {
 
 					ListType listType = graphFactory.createListType();
 					listType.setType(getPropertyValueTypeForDataType(key));
+					setLowerAndUpperBound(listType, stmt, name, property.getName());
+					property.setValue(listType);
 
 				} else {
 
@@ -503,12 +505,20 @@ public class Neo4jModelCreator {
 
 			}
 		} else if (types.size() > 1) {
+			
+
+			String type = null;
+			int maxValue = Integer.MIN_VALUE;
+
+			for (Map.Entry<String, Integer> entry : types.entrySet()) {
+			    if (entry.getValue() > maxValue) {
+			        maxValue = entry.getValue();
+			        type = entry.getKey();
+			    }
+			}
+			property.setValue(getPropertyValueTypeForDataType(type));
 			// TODO
-//			StringType propertyValueType = (StringType) graphFactory.create(graphPackage.());
-//			propertyValueType.setType(StringDataTypes.STRING);
-//
-//			property.setValue(propertyValueType);
-//			label.getProperties().add(property);
+
 		}
 
 		return property;
@@ -557,10 +567,10 @@ public class Neo4jModelCreator {
 				Property property = (Property) graphFactory.create(graphPackage.getProperty());
 				property.setName(propertyName.toString());
 				
-				if(types.size() > 1 && types.containsKey("NULL")) {
-					types.remove("NULL"); //TODO Algorithm
+
+				if (types.size() > 1 && types.containsKey("NULL")) {
+					types.remove("NULL"); // TODO Algorithm
 				}
-					
 
 				if (types.size() == 1) {
 					for (Entry<String, Integer> type : types.entrySet()) {
@@ -574,6 +584,7 @@ public class Neo4jModelCreator {
 
 							ListType listType = graphFactory.createListType();
 							listType.setType(getPropertyValueTypeForDataType(key));
+							setLowerAndUpperBound(listType, stmt, name, property.getName());
 							property.setValue(listType);
 						} else {
 
@@ -583,12 +594,19 @@ public class Neo4jModelCreator {
 
 					}
 				} else if (types.size() > 1) {
+					
+					String type = null;
+					int maxValue = Integer.MIN_VALUE;
+
+					for (Map.Entry<String, Integer> entry : types.entrySet()) {
+					    if (entry.getValue() > maxValue) {
+					        maxValue = entry.getValue();
+					        type = entry.getKey();
+					    }
+					}
+					property.setValue(getPropertyValueTypeForDataType(type));
 					// TODO
-//					StringType propertyValueType = (StringType) graphFactory.create(graphPackage.());
-//					propertyValueType.setType(StringDataTypes.STRING);
-//
-//					property.setValue(propertyValueType);
-//					label.getProperties().add(property);
+
 				}
 				label.getProperties().add(property);
 
@@ -597,6 +615,33 @@ public class Neo4jModelCreator {
 
 		return label;
 	}
+	
+	
+	private void setLowerAndUpperBound(ListType listType, Statement stmt, String labelName, String propertyName) throws SQLException {
+//		MATCH (n:Chunk)
+//		WHERE n.embedding IS NOT NULL
+//		RETURN
+//		  min(size(n.embedding)) AS lowerBound,
+//		  max(size(n.embedding)) AS upperBound
+		
+		
+		
+		String query = "MATCH (n:" + labelName
+				+ ") WHERE n."+propertyName+" IS NOT NULL RETURN min(size(n."+propertyName+")) AS lowerBound, max(size(n."+propertyName+")) AS upperBound";
+
+		ResultSet rs = stmt.executeQuery(query);
+
+		while (rs.next()) {
+			Long lowerBound = rs.getObject("lowerBound", Long.class);
+			Long upperBound = rs.getObject("upperBound", Long.class);
+			
+			listType.setLowerBound(lowerBound.intValue());
+			listType.setUpperBound(upperBound.intValue());
+
+		}
+
+	}
+	
 
 	private PropertyValueType getPropertyValueTypeForDataType(String key) {
 		switch (key) {
@@ -620,7 +665,7 @@ public class Neo4jModelCreator {
 			NumericType propertyValueType = graphFactory.createNumericType();
 			propertyValueType.setFractionalPart(0);
 			propertyValueType.setType(NumericDataTypes.INT);
-			//TODO LONG
+			// TODO LONG
 			return propertyValueType;
 
 		}
