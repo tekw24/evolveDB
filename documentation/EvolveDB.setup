@@ -6,7 +6,7 @@
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore"
     name="evolvedb"
     label="EvolveDB">
   <annotation
@@ -22,8 +22,8 @@
   </annotation>
   <setupTask
       xsi:type="jdt:JRETask"
-      version="JavaSE-21"
-      location="${jre.location-21}"/>
+      version="JavaSE-11"
+      location="${jre.location-11}"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
@@ -34,13 +34,37 @@
       requiredJavaVersion="1.8">
     <setupTask
         xsi:type="setup.p2:P2Task"
-        label="Eclipse Modeling Tools (2025-03)">
+        label="Eclipse Modeling Tools (2022-06)">
       <requirement
           name="epp.package.modeling"
           versionRange="[4.24.0,5.0.0)"
           filter="(|(&amp;(osgi.arch=aarch64)(osgi.os=linux)(osgi.ws=gtk))(&amp;(osgi.arch=aarch64)(osgi.os=macosx)(osgi.ws=cocoa))(&amp;(osgi.arch=x86_64)(osgi.os=linux)(osgi.ws=gtk))(&amp;(osgi.arch=x86_64)(osgi.os=macosx)(osgi.ws=cocoa))(&amp;(osgi.arch=x86_64)(osgi.os=win32)(osgi.ws=win32)))"/>
       <requirement
-          name="org.eclipse.sdk.feature.group"/>
+          name="org.eclipse.platform.feature.group"
+          versionRange="[4.24.0,5.0.0)"/>
+      <requirement
+          name="org.eclipse.rcp.feature.group"
+          versionRange="[4.24.0,5.0.0)"/>
+      <requirement
+          name="org.eclipse.e4.core.tools.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.egit.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.compare.diagram.sirius.source.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.compare.egit.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.compare.ide.ui.source.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.compare.source.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.ecoretools.design.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.parsley.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.parsley.sdk.source.feature.group"/>
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
@@ -48,42 +72,47 @@
       <requirement
           name="org.eclipse.emf.validation.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.emf.compare.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.ecoretools.design.feature.group"/>
+          name="org.eclipse.epp.mpc.feature.group"/>
       <requirement
           name="org.eclipse.gef.sdk.feature.group"/>
       <requirement
           name="org.eclipse.gmf.runtime.sdk.feature.group"/>
       <requirement
+          name="org.eclipse.jdt.feature.group"/>
+      <requirement
+          name="org.eclipse.jgit.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.wikitext.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.pde.feature.group"/>
+      <requirement
+          name="org.eclipse.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.tips.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.tm.terminal.feature.feature.group"/>
+      <requirement
           name="org.eclipse.uml2.sdk.feature.group"/>
       <requirement
           name="org.eclipse.xsd.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.m2m.atl.feature.group"/>
+      <requirement
+          name="org.eclipse.m2m.atl.sdk.feature.group"/>
       <requirement
           name="org.eclipse.wst.xml_ui.feature.feature.group"/>
       <requirement
           name="org.eclipse.wst.xsl.feature.feature.group"/>
       <requirement
-          name="org.eclipse.mylyn.wikitext.feature.feature.group"/>
+          name="org.eclipse.nebula.widgets.grid.feature.feature.group"/>
       <requirement
-          name="org.eclipse.emf.parsley.sdk.feature.group"/>
+          name="org.eclipse.nebula.widgets.grid.css.feature.feature.group"/>
       <requirement
-          name="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
+          name="org.eclipse.emf.henshin.sdk.ocl2ac.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.feature.group"/>
+          name="org.eclipse.emf.henshin.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.m2m.atl.adt.feature.group"/>
-      <requirement
-          name="org.eclipse.m2m.atl.engine.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.henshin.sdk.feature.group"
-          versionRange="[1.8.0.202302121610,1.8.0.202302121610]"/>
-      <requirement
-          name="org.eclipse.emf.henshin.sdk.variability.feature.group"
-          versionRange="[1.8.0.202302121610,1.8.0.202302121610]"/>
-      <requirement
-          name="org.eclipse.emf.henshin.sdk.ocl2ac.feature.group"
-          versionRange="[1.8.0.202302121610,1.8.0.202302121610]"/>
+          name="org.eclipse.emf.henshin.sdk.variability.feature.group"/>
       <requirement
           name="org.sidiff.feature.editscripting.propagation.feature.group"/>
       <requirement
@@ -107,8 +136,6 @@
       <requirement
           name="org.sidiff.feature.matcher.id.xmiid.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.sdk.feature.group"/>
-      <requirement
           name="org.sidiff.feature.integration.preferences.matching.feature.group"/>
       <requirement
           name="org.sidiff.feature.lifting.feature.group"/>
@@ -117,18 +144,26 @@
       <requirement
           name="de.thm.mdde.deployment.feature.feature.group"/>
       <repository
-          url="https://download.eclipse.org/releases/2025-03">
+          url="https://download.eclipse.org/technology/epp/packages/2025-03/"/>
+      <repository
+          url="https://download.eclipse.org/releases/2025-03/">
         <annotation
             source="http://www.eclipse.org/oomph/setup/ReleaseTrain"/>
       </repository>
       <repository
-          url="https://download.eclipse.org/modeling/emft/henshin/updates/1.8.0"/>
+          url="https://download.eclipse.org/modeling/emft/henshin/updates/1.8.0/"/>
+      <repository
+          url="https://download.eclipse.org/modeling/mdt/ocl/updates/releases/6.17.1/"/>
+      <repository
+          url="https://download.eclipse.org/mmt/atl/updates/releases/3.5/"/>
+      <repository
+          url="https://download.eclipse.org/modeling/emf/emf/builds/release/"/>
+      <repository
+          url="https://download.eclipse.org/nebula/updates/release/latest"/>
       <repository
           url="https://tekw24.github.io/p2composite-github-pages-example-updates/"/>
       <repository
-          url="https://download.eclipse.org/ecp/releases/releases_127/1270/"/>
-      <repository
-          url="https://download.eclipse.org/technology/epp/packages/2025-03/"/>
+          url="http://download.eclipse.org/ecp/releases/releases_127/"/>
     </setupTask>
     <description>EvolveDB for 2025-03.</description>
   </version>
