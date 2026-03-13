@@ -34,8 +34,6 @@
         eType="#//Property" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgeType" eSuperTypes="#//GraphItem">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labels" upperBound="-1"
         eType="#//EdgeLabel" eOpposite="#//EdgeLabel/edges"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
@@ -44,15 +42,17 @@
         eOpposite="#//NodeType/outgoing"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tgt" eType="#//NodeType"
         eOpposite="#//NodeType/incoming"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Label" abstract="true" eSuperTypes="#//GraphItem">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//Property" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SuperType" upperBound="-1"
         eType="#//Label"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
         eType="#//Constraint" containment="true" eOpposite="#//Constraint/Label"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgeLabel" eSuperTypes="#//Label">
     <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
