@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
 import de.thm.mdde.connection.driver.ui.DriverDownloadDialog;
 import de.thm.mdde.connection.model.DBPDriverLibrary;
 import de.thm.mdde.datasource.EDBDataSource;
@@ -26,6 +28,7 @@ public class EDBConnectionController {
 	private EDBDataSource dataSource;
 	private EObject eObject;
 	private EDBConnectionWizard edbConnectionWizard;
+	private Map<EObject, AnnotationEntry> pendingAnnotations;
 
 	public EDBConnectionController(EDBConnectionWizard edbConnectionWizard) {
 		this.edbConnectionWizard = edbConnectionWizard;
@@ -116,6 +119,7 @@ public class EDBConnectionController {
 			dataSource.openConnectionUi();
 			if (!dataSource.isCanceled()) {
 				eObject = dataSource.getRootObject();
+				pendingAnnotations =  dataSource.getPendingAnnotations();
 				return true;
 			} else {
 				((WizardDialog) edbConnectionWizard.getContainer()).close();
@@ -138,5 +142,11 @@ public class EDBConnectionController {
 	protected List<String> getFileExtensions(){
 		return dataSource.getFileExtensions();
 	}
+
+	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+		return pendingAnnotations;
+	}
+	
+	
 
 }

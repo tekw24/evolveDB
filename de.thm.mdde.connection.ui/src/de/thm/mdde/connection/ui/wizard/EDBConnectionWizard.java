@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.IOWrappedException;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +31,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -41,6 +44,11 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
+import de.thm.evolvedb.graph.annotation.Annotation;
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
+import de.thm.evolvedb.graph.annotation.AnnotationFactory;
+import de.thm.evolvedb.graph.annotation.AnnotationPackage;
+import de.thm.evolvedb.graph.annotation.AnnotationTarget;
 import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
 
 public class EDBConnectionWizard extends Wizard implements INewWizard {
@@ -86,12 +94,12 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 			// Remember the file.
 			//
 			final IFile modelFile = getFile();
-			
-			if(modelFile == null) {
-				MessageDialog.openError(getShell(), "File location not set", "Please select a location for the new model file.");
+
+			if (modelFile == null) {
+				MessageDialog.openError(getShell(), "File location not set",
+						"Please select a location for the new model file.");
 				return false;
 			}
-				
 
 			// Do the work within an operation.
 
@@ -113,6 +121,8 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 
 						EObject rootObject = controller.geteObject();
 
+						Map<EObject, AnnotationEntry> pendingAnnotations = controller.getPendingAnnotations();
+
 						// Add the initial model object to the contents.
 
 						if (rootObject != null) {
@@ -130,6 +140,54 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 							// DO nothing
 							System.out.println("Exception");
 							e.printStackTrace();
+						}
+						
+						// Create a resource for this file.
+						if (pendingAnnotations != null && pendingAnnotations.size() > 0) {
+							
+						
+
+							URI annotationUri = fileURI.trimFileExtension().appendFileExtension("annotation");
+							Resource annotationResource = null;
+
+							if (resourceSet.getURIConverter().exists(annotationUri, null)) {
+							    annotationResource = resourceSet.getResource(annotationUri, true);
+							}else
+								annotationResource = resourceSet.createResource(annotationUri);
+							
+
+							AnnotationPackage annotationPackage = AnnotationPackage.eINSTANCE;
+							AnnotationFactory annotationFactory = annotationPackage.getAnnotationFactory();
+							
+							Annotation annotation = annotationFactory.createAnnotation();
+							
+							for (Entry<EObject, AnnotationEntry> entry : pendingAnnotations.entrySet()) {
+								
+								AnnotationTarget annotationTarget = annotationFactory.createAnnotationTarget();
+								annotation.getAnnotationTarget().add(annotationTarget);
+								
+								
+							    EObject target = entry.getKey();
+							    AnnotationEntry pendingAnnotation = entry.getValue();
+
+							    String targetURI = EcoreUtil.getURI(target).toString();
+							    annotationTarget.setTargetURI(targetURI);
+							    annotationTarget.getAnnotations().add(pendingAnnotation);
+
+							}
+							
+							annotationResource.getContents().add(annotation);
+							
+
+							try {
+								annotationResource.save(options);
+							} catch (IOWrappedException e) {
+								// DO nothing
+								System.out.println("Exception");
+								e.printStackTrace();
+							}
+							
+
 						}
 
 						// Save a copy to the generatedModel Folder

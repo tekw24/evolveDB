@@ -41,6 +41,24 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PartInitException;
+
+import de.thm.evolvedb.graph.EdgeType;
+import de.thm.evolvedb.graph.Label;
+import de.thm.evolvedb.graph.NodeType;
+import de.thm.evolvedb.graph.annotation.Annotation;
+import de.thm.evolvedb.graph.annotation.AnnotationAdapter;
+import de.thm.evolvedb.graph.annotation.AnnotationTarget;
 import de.thm.graph.view.editor.toolbar.ValidateModelAction;
 
 public class GraphCustomEditor extends GenericEditor {
@@ -95,16 +113,33 @@ public class GraphCustomEditor extends GenericEditor {
 			public Object[] filter(Viewer viewer, Object parent, Object[] elements) {
 				List<Object> objects = new ArrayList<>();
 				objects.addAll(Arrays.asList(elements));
-//				for (Object element : elements) {
-//					if (element instanceof Table) {
-//						Table t = (Table) element;
-//						if (t.getName() != null) {
-//							if (!t.getName().contains(filterText))
-//								objects.remove(element);
-//						}
-//
-//					}
-//				}
+				for (Object element : elements) {
+					if (element instanceof Label) {
+						Label t = (Label) element;
+						if (t.getName() != null) {
+							if (!t.getName().contains(filterText))
+								objects.remove(element);
+						}
+
+					}
+					if (element instanceof NodeType) {
+						NodeType t = (NodeType) element;
+						if (t.getName() != null) {
+							if (!t.getName().contains(filterText))
+								objects.remove(element);
+						}
+
+					}
+					
+					if (element instanceof EdgeType) {
+						EdgeType t = (EdgeType) element;
+						if (t.getName() != null) {
+							if (!t.getName().contains(filterText))
+								objects.remove(element);
+						}
+
+					}
+				}
 
 				return super.filter(viewer, parent, objects.toArray());
 			}
@@ -179,6 +214,53 @@ public class GraphCustomEditor extends GenericEditor {
 		return treeMasterDetail;
 	}
 	
+	
+	@Override
+	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
+	    final ResourceSet resourceSet = super.loadResource(editorInput);
+
+	    if (editorInput instanceof IFileEditorInput fileEditorInput) {
+	        final IFile modelFile = fileEditorInput.getFile();
+	        final IPath annotationPath = modelFile.getFullPath().removeFileExtension().addFileExtension("annotation");
+	        final IFile annotationFile = ResourcesPlugin.getWorkspace().getRoot().getFile(annotationPath);
+
+	        if (annotationFile.exists()) {
+	            final URI annotationUri = URI.createPlatformResourceURI(annotationFile.getFullPath().toString(), true);
+	            final Resource annotationResource = resourceSet.getResource(annotationUri, true);
+
+	            attachAnnotations(resourceSet, annotationResource);
+	        }
+	    }
+
+	    return resourceSet;
+	}
+	
+	private void attachAnnotations(ResourceSet resourceSet, Resource annotationResource) {
+	    if (annotationResource.getContents().isEmpty()) {
+	        return;
+	    }
+
+	    Object root = annotationResource.getContents().get(0);
+	    if (!(root instanceof Annotation annotationModel)) {
+	        return;
+	    }
+
+	    for (AnnotationTarget target : annotationModel.getAnnotationTarget()) {
+	        if (target.getTargetURI() == null || target.getTargetURI().isBlank()) {
+	            continue;
+	        }
+
+	        EObject targetObject = resourceSet.getEObject(URI.createURI(target.getTargetURI()), true);
+	        if (targetObject != null) {
+	            AnnotationAdapter existing =
+	                (AnnotationAdapter) EcoreUtil.getAdapter(targetObject.eAdapters(), AnnotationAdapter.class);
+
+	            if (existing == null) {
+	                targetObject.eAdapters().add(new AnnotationAdapter(target.getAnnotations()));
+	            }
+	        }
+	    }
+	}
 	
 
 }

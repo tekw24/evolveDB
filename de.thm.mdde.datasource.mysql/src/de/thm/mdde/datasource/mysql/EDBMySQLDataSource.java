@@ -26,6 +26,7 @@ import java.sql.Driver;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,6 +34,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
 import de.thm.evolvedb.mdde.presentation.MddeEditorPlugin;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
@@ -136,6 +138,12 @@ public class EDBMySQLDataSource implements EDBDataSource {
 	public List<String> getFileExtensions() {
 		return Collections.unmodifiableList(
 				Arrays.asList(MddeEditorPlugin.INSTANCE.getString("_UI_MddeEditorFilenameExtensions").split("\\s*,\\s*")));
+	}
+
+	@Override
+	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

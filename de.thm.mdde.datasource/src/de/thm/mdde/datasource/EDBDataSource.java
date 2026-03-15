@@ -17,10 +17,11 @@
 package de.thm.mdde.datasource;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
-
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
 
@@ -67,6 +68,11 @@ public interface EDBDataSource {
 	 * @return
 	 */
 	EObject getRootObject();
+	
+	/**
+	 * Returns the pending Annotations
+	 */
+	Map<EObject, AnnotationEntry> getPendingAnnotations();
 	
 	
 	/**

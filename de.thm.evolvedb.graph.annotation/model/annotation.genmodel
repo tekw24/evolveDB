@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/de.thm.evolvedb.graph.annotation/src-gen" creationIcons="false"
+    editDirectory="/de.thm.evolvedb.graph.annotation.edit/src-gen" editorDirectory="/de.thm.evolvedb.graph.annotation.editor/src-gen"
+    modelPluginID="de.thm.evolvedb.graph.annotation" modelName="Annotation" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="21.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>annotation.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Annotation" basePackage="de.thm.evolvedb.graph" disposableProviderFactory="true"
+      ecorePackage="annotation.ecore#/">
+    <genClasses ecoreClass="annotation.ecore#//Annotation">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference annotation.ecore#//Annotation/annotationTarget"/>
+    </genClasses>
+    <genClasses ecoreClass="annotation.ecore#//AnnotationEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotation.ecore#//AnnotationEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotation.ecore#//AnnotationEntry/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotation.ecore#//AnnotationEntry/source"/>
+    </genClasses>
+    <genClasses ecoreClass="annotation.ecore#//AnnotationTarget">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotation.ecore#//AnnotationTarget/targetURI"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference annotation.ecore#//AnnotationTarget/annotations"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

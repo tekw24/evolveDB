@@ -32,6 +32,7 @@ import java.sql.Driver;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 import org.eclipse.emf.ecore.EObject;
@@ -40,6 +41,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 import de.thm.evolvedb.datasource.neo4j.connection.Neo4JDatabaseConnectionController;
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
 import de.thm.evolvedb.graph.presentation.GraphEditorPlugin;
 import de.thm.mdde.connection.model.DBPDriver;
 import de.thm.mdde.connection.model.DBPDriverDependencies;
@@ -185,6 +187,11 @@ public class Neo4JDataSource implements EDBDataSource {
 	public List<String> getFileExtensions() {
 		return Collections.unmodifiableList(
 				Arrays.asList(GraphEditorPlugin.INSTANCE.getString("_UI_GraphEditorFilenameExtensions").split("\\s*,\\s*")));
+	}
+
+	@Override
+	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+		return connectionController.getPendingAnnotations();
 	}
 
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
@@ -20,11 +21,13 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.progress.PendingUpdateAdapter;
 import org.xml.sax.SAXException;
 
 import de.thm.evolvedb.datasource.neo4j.model.Neo4jModelCreator;
 import de.thm.evolvedb.datasource.neo4j.ui.Neo4jDatabaseConnectionWizard;
 import de.thm.evolvedb.datasource.neo4j.ui.Neo4jDatabaseConnectionWizardPage_1;
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
 import de.thm.mdde.language.Language;
 import de.thm.model.ReverseDatabaseModel;
 import de.thm.readConfigurationFile.XMLFileCreator;
@@ -36,13 +39,15 @@ public class Neo4JDatabaseConnectionController {
 	private Driver driver;
 	private Neo4JDatabaseConnector connector;
 	private boolean canceled = false;
-	
 	private Neo4jDatabaseConnectionWizardPage_1 connectionWizardPage_1;
 	
 	private User user;
 	private String host;
 	private String port;
 	private String dbName;
+	private Map<EObject, AnnotationEntry> pendingAnnotations;
+	
+	
 
 	public Neo4JDatabaseConnectionController(Driver driver) {
 
@@ -55,6 +60,8 @@ public class Neo4JDatabaseConnectionController {
 		Neo4jModelCreator modelCreator = new Neo4jModelCreator();
 
 		EObject root = modelCreator.create(con);
+		
+		pendingAnnotations = modelCreator.getPendingAnnotations();
 
 		return root;
 	}
@@ -226,6 +233,10 @@ public class Neo4JDatabaseConnectionController {
 	public void setDbName(String dbName) {
 		this.dbName = dbName;
 		
+	}
+
+	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+		return pendingAnnotations;
 	}
 
 	

@@ -6,14 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -42,6 +45,11 @@ import de.thm.evolvedb.graph.TemporalDataTypes;
 import de.thm.evolvedb.graph.TemporalTypes;
 import de.thm.evolvedb.graph.UnionType;
 import de.thm.evolvedb.graph.UniqueConstraint;
+import de.thm.evolvedb.graph.annotation.Annotation;
+import de.thm.evolvedb.graph.annotation.AnnotationEntry;
+import de.thm.evolvedb.graph.annotation.AnnotationFactory;
+import de.thm.evolvedb.graph.annotation.AnnotationPackage;
+import de.thm.evolvedb.graph.annotation.AnnotationTarget;
 import de.thm.evolvedb.graph.Property;
 import de.thm.evolvedb.graph.PropertyExistenceConstraint;
 
@@ -50,7 +58,16 @@ public class Neo4jModelCreator {
 	protected GraphPackage graphPackage = GraphPackage.eINSTANCE;
 	protected GraphFactory graphFactory = graphPackage.getGraphFactory();
 
+	protected AnnotationPackage annotationPackage = AnnotationPackage.eINSTANCE;
+	protected AnnotationFactory annotationFactory = annotationPackage.getAnnotationFactory();
+	
+	private Map<EObject, AnnotationEntry> pendingAnnotations;
+
+	private Annotation annotation = null;
+
 	public EObject create(Connection con) {
+		
+		createInitialAnnotationModel();
 
 		PropertyGraph graph = (PropertyGraph) createInitialModel();
 		graph.setName("MyGraph");
@@ -505,17 +522,28 @@ public class Neo4jModelCreator {
 
 			}
 		} else if (types.size() > 1) {
-			
 
+			
+			AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
+			
 			String type = null;
 			int maxValue = Integer.MIN_VALUE;
+			
 
 			for (Map.Entry<String, Integer> entry : types.entrySet()) {
-			    if (entry.getValue() > maxValue) {
-			        maxValue = entry.getValue();
-			        type = entry.getKey();
-			    }
+				if (entry.getValue() > maxValue) {
+					maxValue = entry.getValue();
+					type = entry.getKey();
+				}
 			}
+			
+			annotationEntry.setKey("Multiple Datatypes");
+			annotationEntry.setSource(propertyName);
+			annotationEntry.setValue(type);
+			
+			pendingAnnotations.put(property, annotationEntry);
+			
+
 			property.setValue(getPropertyValueTypeForDataType(type));
 			// TODO
 
@@ -566,7 +594,6 @@ public class Neo4jModelCreator {
 
 				Property property = (Property) graphFactory.create(graphPackage.getProperty());
 				property.setName(propertyName.toString());
-				
 
 				if (types.size() > 1 && types.containsKey("NULL")) {
 					types.remove("NULL"); // TODO Algorithm
@@ -594,18 +621,26 @@ public class Neo4jModelCreator {
 
 					}
 				} else if (types.size() > 1) {
-					
+
 					String type = null;
 					int maxValue = Integer.MIN_VALUE;
+					
+					AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
 
 					for (Map.Entry<String, Integer> entry : types.entrySet()) {
-					    if (entry.getValue() > maxValue) {
-					        maxValue = entry.getValue();
-					        type = entry.getKey();
-					    }
+						if (entry.getValue() > maxValue) {
+							maxValue = entry.getValue();
+							type = entry.getKey();
+						}
 					}
 					property.setValue(getPropertyValueTypeForDataType(type));
 					// TODO
+					
+					annotationEntry.setKey("Multiple Datatypes");
+					annotationEntry.setSource(propertyName.toString());
+					annotationEntry.setValue(type);
+					
+					pendingAnnotations.put(property, annotationEntry);
 
 				}
 				label.getProperties().add(property);
@@ -615,33 +650,30 @@ public class Neo4jModelCreator {
 
 		return label;
 	}
-	
-	
-	private void setLowerAndUpperBound(ListType listType, Statement stmt, String labelName, String propertyName) throws SQLException {
+
+	private void setLowerAndUpperBound(ListType listType, Statement stmt, String labelName, String propertyName)
+			throws SQLException {
 //		MATCH (n:Chunk)
 //		WHERE n.embedding IS NOT NULL
 //		RETURN
 //		  min(size(n.embedding)) AS lowerBound,
 //		  max(size(n.embedding)) AS upperBound
-		
-		
-		
-		String query = "MATCH (n:" + labelName
-				+ ") WHERE n."+propertyName+" IS NOT NULL RETURN min(size(n."+propertyName+")) AS lowerBound, max(size(n."+propertyName+")) AS upperBound";
+
+		String query = "MATCH (n:" + labelName + ") WHERE n." + propertyName + " IS NOT NULL RETURN min(size(n."
+				+ propertyName + ")) AS lowerBound, max(size(n." + propertyName + ")) AS upperBound";
 
 		ResultSet rs = stmt.executeQuery(query);
 
 		while (rs.next()) {
 			Long lowerBound = rs.getObject("lowerBound", Long.class);
 			Long upperBound = rs.getObject("upperBound", Long.class);
-			
+
 			listType.setLowerBound(lowerBound.intValue());
 			listType.setUpperBound(upperBound.intValue());
 
 		}
 
 	}
-	
 
 	private PropertyValueType getPropertyValueTypeForDataType(String key) {
 		switch (key) {
@@ -761,7 +793,7 @@ public class Neo4jModelCreator {
 
 						ListType listType = graphFactory.createListType();
 						listType.setType(getPropertyValueTypeForDataType(key));
-						
+
 						property.setValue(listType);
 
 					} else {
@@ -799,6 +831,29 @@ public class Neo4jModelCreator {
 		EClass eClass = graphPackage.getPropertyGraph();
 		EObject rootObject = graphFactory.create(eClass);
 		return rootObject;
+	}
+
+	protected EObject createInitialAnnotationModel() {
+		pendingAnnotations = new TreeMap<EObject, AnnotationEntry>(new Comparator<EObject>() {
+
+			@Override
+			public int compare(EObject o1, EObject o2) {
+				return EcoreUtil.equals(o1, o2) ? 0 : -1;
+			}
+		});
+		
+		EClass eClass = annotationPackage.getAnnotation();
+		EObject rootObject = graphFactory.create(eClass);
+		return rootObject;
+	}
+
+	private Annotation getAnnotationInstance() {
+		if (annotation != null)
+			return annotation;
+		else {
+			annotation = (Annotation) createInitialAnnotationModel();
+			return annotation;
+		}
 	}
 
 	private class LabelCombo {
@@ -944,5 +999,15 @@ public class Neo4jModelCreator {
 		}
 
 	}
+
+	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+		return pendingAnnotations;
+	}
+
+	public void setPendingAnnotations(Map<EObject, AnnotationEntry> pendingAnnotations) {
+		this.pendingAnnotations = pendingAnnotations;
+	}
+	
+	
 
 }
