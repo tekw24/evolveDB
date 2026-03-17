@@ -28,7 +28,7 @@ public class EDBConnectionController {
 	private EDBDataSource dataSource;
 	private EObject eObject;
 	private EDBConnectionWizard edbConnectionWizard;
-	private Map<EObject, AnnotationEntry> pendingAnnotations;
+	private Map<EObject, List<AnnotationEntry>> pendingAnnotations;
 
 	public EDBConnectionController(EDBConnectionWizard edbConnectionWizard) {
 		this.edbConnectionWizard = edbConnectionWizard;
@@ -143,7 +143,7 @@ public class EDBConnectionController {
 		return dataSource.getFileExtensions();
 	}
 
-	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+	public Map<EObject, List<AnnotationEntry>> getPendingAnnotations() {
 		return pendingAnnotations;
 	}
 	

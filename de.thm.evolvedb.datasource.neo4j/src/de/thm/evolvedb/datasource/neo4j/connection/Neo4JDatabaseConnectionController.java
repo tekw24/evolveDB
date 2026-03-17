@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -45,7 +46,7 @@ public class Neo4JDatabaseConnectionController {
 	private String host;
 	private String port;
 	private String dbName;
-	private Map<EObject, AnnotationEntry> pendingAnnotations;
+	private Map<EObject, List<AnnotationEntry>> pendingAnnotations;
 	
 	
 
@@ -235,7 +236,7 @@ public class Neo4JDatabaseConnectionController {
 		
 	}
 
-	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+	public Map<EObject, List<AnnotationEntry>> getPendingAnnotations() {
 		return pendingAnnotations;
 	}
 

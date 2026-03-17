@@ -72,7 +72,7 @@ public interface EDBDataSource {
 	/**
 	 * Returns the pending Annotations
 	 */
-	Map<EObject, AnnotationEntry> getPendingAnnotations();
+	Map<EObject, List<AnnotationEntry>> getPendingAnnotations();
 	
 	
 	/**

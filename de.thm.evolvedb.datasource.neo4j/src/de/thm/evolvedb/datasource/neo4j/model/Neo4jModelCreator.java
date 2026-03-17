@@ -61,7 +61,7 @@ public class Neo4jModelCreator {
 	protected AnnotationPackage annotationPackage = AnnotationPackage.eINSTANCE;
 	protected AnnotationFactory annotationFactory = annotationPackage.getAnnotationFactory();
 	
-	private Map<EObject, AnnotationEntry> pendingAnnotations;
+	private Map<EObject, List<AnnotationEntry>> pendingAnnotations;
 
 	private Annotation annotation = null;
 
@@ -524,10 +524,12 @@ public class Neo4jModelCreator {
 		} else if (types.size() > 1) {
 
 			
-			AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
+			
 			
 			String type = null;
 			int maxValue = Integer.MIN_VALUE;
+			
+			List<AnnotationEntry> annotations = new ArrayList<AnnotationEntry>();
 			
 
 			for (Map.Entry<String, Integer> entry : types.entrySet()) {
@@ -535,14 +537,16 @@ public class Neo4jModelCreator {
 					maxValue = entry.getValue();
 					type = entry.getKey();
 				}
+				AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
+				annotationEntry.setKey("Multiple Datatypes");
+				annotationEntry.setSource(entry.getValue().toString());
+				annotationEntry.setValue(entry.getKey());
+				annotations.add(annotationEntry);
+				
 			}
 			
-			annotationEntry.setKey("Multiple Datatypes");
-			annotationEntry.setSource(propertyName);
-			annotationEntry.setValue(type);
-			
-			pendingAnnotations.put(property, annotationEntry);
-			
+		
+			pendingAnnotations.put(property, annotations);
 
 			property.setValue(getPropertyValueTypeForDataType(type));
 			// TODO
@@ -625,22 +629,28 @@ public class Neo4jModelCreator {
 					String type = null;
 					int maxValue = Integer.MIN_VALUE;
 					
-					AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
+					
+
+					List<AnnotationEntry> annotations = new ArrayList<AnnotationEntry>();
+					
 
 					for (Map.Entry<String, Integer> entry : types.entrySet()) {
 						if (entry.getValue() > maxValue) {
 							maxValue = entry.getValue();
 							type = entry.getKey();
 						}
+						AnnotationEntry annotationEntry = (AnnotationEntry) annotationFactory.create(annotationPackage.getAnnotationEntry());
+						annotationEntry.setKey("Ambiguous type");
+						annotationEntry.setSource(entry.getValue().toString());
+						annotationEntry.setValue(entry.getKey());
+						annotations.add(annotationEntry);
+						
 					}
+					
+				
+					pendingAnnotations.put(property, annotations);
 					property.setValue(getPropertyValueTypeForDataType(type));
-					// TODO
 					
-					annotationEntry.setKey("Multiple Datatypes");
-					annotationEntry.setSource(propertyName.toString());
-					annotationEntry.setValue(type);
-					
-					pendingAnnotations.put(property, annotationEntry);
 
 				}
 				label.getProperties().add(property);
@@ -834,7 +844,7 @@ public class Neo4jModelCreator {
 	}
 
 	protected EObject createInitialAnnotationModel() {
-		pendingAnnotations = new TreeMap<EObject, AnnotationEntry>(new Comparator<EObject>() {
+		pendingAnnotations = new TreeMap<EObject, List<AnnotationEntry>>(new Comparator<EObject>() {
 
 			@Override
 			public int compare(EObject o1, EObject o2) {
@@ -1000,11 +1010,11 @@ public class Neo4jModelCreator {
 
 	}
 
-	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+	public Map<EObject, List<AnnotationEntry>> getPendingAnnotations() {
 		return pendingAnnotations;
 	}
 
-	public void setPendingAnnotations(Map<EObject, AnnotationEntry> pendingAnnotations) {
+	public void setPendingAnnotations(Map<EObject, List<AnnotationEntry>> pendingAnnotations) {
 		this.pendingAnnotations = pendingAnnotations;
 	}
 	

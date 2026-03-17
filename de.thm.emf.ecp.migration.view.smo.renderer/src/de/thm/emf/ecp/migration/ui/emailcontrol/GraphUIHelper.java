@@ -59,6 +59,7 @@ public class GraphUIHelper {
 
 	public static final List<String> GRAPH_RULES = Arrays.asList(
 		// resolvableRulesGraph (bereinigt)
+
 		"ADD_EdgeType_(labels)_TGT_EdgeLabel",
 		"ADD_EdgeLabel_(edges)_TGT_EdgeType",
 		"ADD_KeyConstraint_(properties)_TGT_Property",
@@ -103,6 +104,7 @@ public class GraphUIHelper {
 		"CREATE_PropertyGraph",
 		"CREATE_PropertyTypeConstraint_IN_Label_(constraints)",
 		"CREATE_Property_IN_Label_(properties)",
+		"CREATE_Property_IN_LABEL_(properties)",
 		"CREATE_StringType",
 		"CREATE_TemporalTypes",
 		"CREATE_UnionType",

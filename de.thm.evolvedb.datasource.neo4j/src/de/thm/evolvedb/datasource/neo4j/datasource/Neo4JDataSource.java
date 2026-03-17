@@ -190,7 +190,7 @@ public class Neo4JDataSource implements EDBDataSource {
 	}
 
 	@Override
-	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+	public Map<EObject, List<AnnotationEntry>> getPendingAnnotations() {
 		return connectionController.getPendingAnnotations();
 	}
 

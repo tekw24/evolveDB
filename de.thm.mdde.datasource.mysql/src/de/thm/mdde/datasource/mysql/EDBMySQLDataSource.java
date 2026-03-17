@@ -141,7 +141,7 @@ public class EDBMySQLDataSource implements EDBDataSource {
 	}
 
 	@Override
-	public Map<EObject, AnnotationEntry> getPendingAnnotations() {
+	public Map<EObject, List<AnnotationEntry>> getPendingAnnotations() {
 		// TODO Auto-generated method stub
 		return null;
 	}

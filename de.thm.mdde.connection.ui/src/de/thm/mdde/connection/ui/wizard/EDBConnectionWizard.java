@@ -121,7 +121,7 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 
 						EObject rootObject = controller.geteObject();
 
-						Map<EObject, AnnotationEntry> pendingAnnotations = controller.getPendingAnnotations();
+						Map<EObject, List<AnnotationEntry>> pendingAnnotations = controller.getPendingAnnotations();
 
 						// Add the initial model object to the contents.
 
@@ -141,43 +141,38 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 							System.out.println("Exception");
 							e.printStackTrace();
 						}
-						
+
 						// Create a resource for this file.
 						if (pendingAnnotations != null && pendingAnnotations.size() > 0) {
-							
-						
 
 							URI annotationUri = fileURI.trimFileExtension().appendFileExtension("annotation");
 							Resource annotationResource = null;
 
 							if (resourceSet.getURIConverter().exists(annotationUri, null)) {
-							    annotationResource = resourceSet.getResource(annotationUri, true);
-							}else
+								annotationResource = resourceSet.getResource(annotationUri, true);
+							} else
 								annotationResource = resourceSet.createResource(annotationUri);
-							
 
 							AnnotationPackage annotationPackage = AnnotationPackage.eINSTANCE;
 							AnnotationFactory annotationFactory = annotationPackage.getAnnotationFactory();
-							
+
 							Annotation annotation = annotationFactory.createAnnotation();
-							
-							for (Entry<EObject, AnnotationEntry> entry : pendingAnnotations.entrySet()) {
-								
+
+							for (Entry<EObject, List<AnnotationEntry>> entry : pendingAnnotations.entrySet()) {
+
 								AnnotationTarget annotationTarget = annotationFactory.createAnnotationTarget();
 								annotation.getAnnotationTarget().add(annotationTarget);
-								
-								
-							    EObject target = entry.getKey();
-							    AnnotationEntry pendingAnnotation = entry.getValue();
 
-							    String targetURI = EcoreUtil.getURI(target).toString();
-							    annotationTarget.setTargetURI(targetURI);
-							    annotationTarget.getAnnotations().add(pendingAnnotation);
+								EObject target = entry.getKey();
+								String targetURI = EcoreUtil.getURI(target).toString();
+								annotationTarget.setTargetURI(targetURI);
+								for (AnnotationEntry pendingAnnotation : entry.getValue()) {
+									annotationTarget.getAnnotations().add(pendingAnnotation);
+								}
 
 							}
-							
+
 							annotationResource.getContents().add(annotation);
-							
 
 							try {
 								annotationResource.save(options);
@@ -186,7 +181,6 @@ public class EDBConnectionWizard extends Wizard implements INewWizard {
 								System.out.println("Exception");
 								e.printStackTrace();
 							}
-							
 
 						}
 
