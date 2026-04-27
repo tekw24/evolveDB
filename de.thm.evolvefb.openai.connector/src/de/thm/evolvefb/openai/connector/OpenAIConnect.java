@@ -3,7 +3,11 @@ package de.thm.evolvefb.openai.connector;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.osgi.framework.FrameworkUtil;
 
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
@@ -14,47 +18,52 @@ import com.openai.models.chat.completions.ChatCompletionMessageParam;
 import com.openai.models.chat.completions.ChatCompletionSystemMessageParam;
 import com.openai.models.chat.completions.ChatCompletionUserMessageParam;
 
+import de.thm.evolvedb.openai.preferences.OpenAIPreferencePage;
+
 public class OpenAIConnect {
 
 	private final OpenAIClient client;
 	private final String systemPrompt;
-	
-    public OpenAIConnect() {
-        this.systemPrompt = PromptLoader.loadSystemPrompt();
-        this.client = OpenAIOkHttpClient.fromEnv();
-    }
 
-    public String compareModels(Resource modelA, Resource modelB) {
-        String userPrompt = ModelPromptHelper.buildComparisonPrompt(modelA, modelB);
-        return askOpenAi(systemPrompt, userPrompt);
-    }
-    
-    public String askOpenAi(String systemPrompt, String userPrompt) {
+	public OpenAIConnect() {
+		this.systemPrompt = PromptLoader.loadSystemPrompt();
+		String key = new ScopedPreferenceStore(InstanceScope.INSTANCE,
+				String.valueOf(FrameworkUtil.getBundle(getClass()).getBundleId()))
+				.getString(OpenAIPreferencePage.PREF_API_KEY);
+		
 
-        ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                .model(ChatModel.GPT_5_1)
-                .messages(List.of(
-                        ChatCompletionMessageParam.ofSystem(ChatCompletionSystemMessageParam.builder().content(systemPrompt).build()),
-                        ChatCompletionMessageParam.ofUser(ChatCompletionUserMessageParam.builder().content(userPrompt).build())
-                ))
-                .build();
+		this.client = OpenAIOkHttpClient.builder()
+	            .apiKey(key)
+	            .build();
 
-        ChatCompletion completion = client.chat().completions().create(params);
+	}
 
-        Optional<String> response = completion.choices().get(0).message().content();
-        String res = "";
-        if (response.isPresent()) {
-            res = response.get();
-            System.out.println(res);
-        } else {
-            System.out.println("No Response");
-        }
+	public String compareModels(Resource modelA, Resource modelB) {
+		String userPrompt = ModelPromptHelper.buildComparisonPrompt(modelA, modelB);
+		return askOpenAi(systemPrompt, userPrompt);
+	}
 
-        return res;
-    }
+	public String askOpenAi(String systemPrompt, String userPrompt) {
+
+		ChatCompletionCreateParams params = ChatCompletionCreateParams.builder().model(ChatModel.GPT_5_1)
+				.messages(List.of(
+						ChatCompletionMessageParam
+								.ofSystem(ChatCompletionSystemMessageParam.builder().content(systemPrompt).build()),
+						ChatCompletionMessageParam
+								.ofUser(ChatCompletionUserMessageParam.builder().content(userPrompt).build())))
+				.build();
+
+		ChatCompletion completion = client.chat().completions().create(params);
+
+		Optional<String> response = completion.choices().get(0).message().content();
+		String res = "";
+		if (response.isPresent()) {
+			res = response.get();
+			System.out.println(res);
+		} else {
+			System.out.println("No Response");
+		}
+
+		return res;
+	}
 }
-
-
-
-
-
