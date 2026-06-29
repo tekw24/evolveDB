@@ -90,78 +90,420 @@ You will receive **two** model instances that conform to this metamodel:
 - an **old** version (before the change)
 - a **new** version (after the change)
 
-Each model will usually be provided as XMI or another EMF serialization format.
+Each model will be provided as XMI or another EMF serialization format.
 The user will clearly label them, for example:
 
 OLD MODEL:
-<...XMI of Database_Schema version X...>
-
+<OLD_MODEL_XMI>
+   ..content..
+</OLD_MODEL_XMI>
+         
 NEW MODEL:
-<...XMI of Database_Schema version Y...>
+<NEW_MODEL_XMI>
+   ..content..   
+</NEW_MODEL_XMI>
+
 
 Your job is to:
 1. Parse both models logically according to the `mdde` metamodel.
 2. Compute the semantic differences between the old and the new schema, i.e. the schema evolution.
 
-Focus on changes that are relevant for relational database evolution, including for example:
-- Added or removed tables
-- Renamed tables
-- Added, removed or renamed columns
-- Changes in column data type, size, default value, nullability (`notNull`) or `autoIncrement`
-- Added or removed primary keys (or primary key columns)
-- Added, removed or changed foreign keys (including referenced table or referenced key column)
-- Added or removed constraints (unique constraints, indexes, etc.)
-- Changes of referential actions (`OnUpdate`, `OnDelete`)
-- Any other change that would affect the generated SQL schema.
+Rule catalog for classifying model differences
+
+Every detected change between Model A and Model B must be assigned to exactly one of the following rule IDs.
+A rule may comprise several atomic changes if these changes together form one semantic change.
+Always use the most specific applicable rule.
+Do not invent new rule IDs.
+Use the rule IDs exactly as specified.
+
+Priority when selecting a rule:
+1. Structural rules such as JOIN_tables, CHANGE_1N_INTO_NM*, CHANGE_NM_INTO_1N
+2. MOVE and MOVE_REF_COMBI rules
+3. CHANGE_REFERENCE rules
+4. CHANGE_LITERAL rules for concrete OnUpdate/OnDelete changes
+5. CREATE/DELETE rules
+6. SET_ATTRIBUTE rules
+
+Important additional rule:
+If a change can be described both as SET_ATTRIBUTE_ForeignKey_OnUpdate/OnDelete and as CHANGE_LITERAL_ForeignKey_OnUpdate/OnDelete_FROM_X_TO_Y, the specific CHANGE_LITERAL rule must always be used.
+
+
+Completeness and no-op rules:
+- The result must be exhaustive with respect to the provided input models.
+- Do not return representative examples.
+- Do not return only a subset of changes.
+- Do not summarize omitted changes.
+- Do not write statements such as "only representative changes are reported", "not feasible", "too many differences", "response limits", "limited automatic diffing", "approximate comparison", or similar.
+- Every detected difference must be represented as a structured entry in the `changes` array.
+- If the comparison cannot be completed reliably, return an empty `changes` array and add an `ERROR` entry to `problems`.
+- Do not mix partial results with an explanation that more changes were omitted.
+- Do not report no-op changes.
+- A no-op change is a change where the old value and the new value are equal after normalization.
+- For every SET_ATTRIBUTE or CHANGE_LITERAL entry, `oldValue` and `newValue` must be different.
+- For every CHANGE_REFERENCE entry, `oldTarget` and `newTarget` must be different.
+- For every MOVE entry, the old and new containers must be different.
+
+------------------------------------------------------------
+SET_ATTRIBUTE rules
+------------------------------------------------------------
+
+SET_ATTRIBUTE_NamedElement_Name:
+Change of the name of a NamedElement, e.g., Table, Column, PrimaryKey, ForeignKey, Constraint, UniqueConstraint, or Index.
+
+SET_ATTRIBUTE_ForeignKey_PrimaryForeignKey:
+Change of ForeignKey.primaryForeignKey.
+
+SET_ATTRIBUTE_PrimaryKey_PrimaryKey:
+Change of PrimaryKey.primaryKey.
+
+SET_ATTRIBUTE_ForeignKey_OnUpdate:
+General change of ForeignKey.OnUpdate. Use only if no specific CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_X_TO_Y rule applies.
+
+SET_ATTRIBUTE_ForeignKey_OnDelete:
+General change of ForeignKey.OnDelete. Use only if no specific CHANGE_LITERAL_ForeignKey_OnDelete_FROM_X_TO_Y rule applies.
+
+SET_ATTRIBUTE_ForeignKey_ConstraintName:
+Change of ForeignKey.constraintName.
+
+SET_ATTRIBUTE_Constraint_SortSequence:
+Change of Constraint.sortSequence.
+
+SET_ATTRIBUTE_Column_Type:
+Change only of Column.type.
+
+SET_ATTRIBUTE_Column_Size_and_Type:
+Simultaneous change of Column.size and Column.type.
+
+SET_ATTRIBUTE_Column_Size:
+Change only of Column.size.
+
+SET_ATTRIBUTE_Column_NotNull:
+Change of Column.notNull.
+
+SET_ATTRIBUTE_Column_DefaultValue:
+Change of Column.defaultValue.
+
+SET_ATTRIBUTE_Column_AutoIncrement:
+Change of Column.autoIncrement.
+
+SET_ATTRIBUTE_ColumnConstraint_Name:
+Change of ColumnConstraint.name.
+
+SET_ATTRIBUTE_ColumnConstraint_Length:
+Change of ColumnConstraint.length.
+
+------------------------------------------------------------
+Reference change rules
+------------------------------------------------------------
+
+REMOVE_PrimaryKey_(referencedBy)_TGT_ForeignKey:
+A ForeignKey was removed from the PrimaryKey.referencedBy reference.
+
+REMOVE_Column_(constraints)_TGT_ColumnConstraint:
+A ColumnConstraint was removed from the Column.constraints reference.
+This rule only describes removing the reference between Column and ColumnConstraint, not necessarily deleting the ColumnConstraint object itself.
+
+ADD_PrimaryKey_(referencedBy)_TGT_ForeignKey:
+A ForeignKey was added to the PrimaryKey.referencedBy reference.
+
+CHANGE_REFERENCE_ForeignKey_(referencedTable)_TGT_Table:
+ForeignKey.referencedTable points to a different Table in the target model.
+
+CHANGE_REFERENCE_ForeignKey_(referencedKeyColumn)_TGT_PrimaryKey:
+ForeignKey.referencedKeyColumn points to a different PrimaryKey column in the target model.
+
+------------------------------------------------------------
+MOVE rules
+------------------------------------------------------------
+
+MOVE_REF_COMBI_PrimaryKey_FROM_Table_(columns)_TO_Table_(columns):
+A PrimaryKey column was moved from one Table.columns containment reference to another, and relevant references or dependent relationships were adjusted accordingly.
+
+MOVE_REF_COMBI_ForeignKey_FROM_Table_(columns)_TO_Table_(columns):
+A ForeignKey column was moved from one Table.columns containment reference to another, and relevant references or dependent relationships were adjusted accordingly.
+
+MOVE_REF_COMBI_Column_FROM_Table_(columns)_TO_Table_(columns):
+A normal Column was moved from one Table.columns containment reference to another, and relevant references or dependent ColumnConstraints were adjusted accordingly.
+
+MOVE_PrimaryKey_FROM_Table_(columns)_TO_Table_(columns):
+A PrimaryKey column exists in both models but was moved from one Table.columns containment reference to another.
+
+MOVE_Column_FROM_Table_(columns)_TO_Table_(columns):
+A normal Column exists in both models but was moved from one Table.columns containment reference to another.
+
+------------------------------------------------------------
+DELETE rules
+------------------------------------------------------------
+
+DELETE_UniqueConstraint_IN_Table_(constraints):
+A UniqueConstraint was removed from Table.constraints.
+
+DELETE_Index_IN_Table_(constraints):
+An Index was removed from Table.constraints.
+
+DELETE_Table_IN_Database_Schema_(entites):
+A Table was removed from Database_Schema.entites.
+
+DELETE_PrimaryKey_IN_Table_(columns):
+A PrimaryKey column was removed from Table.columns.
+
+DELETE_ForeignKey_IN_Table_(columns):
+A ForeignKey column was removed from Table.columns.
+
+DELETE_Column_IN_Table_(columns):
+A normal Column was removed from Table.columns.
+
+DELETE_ColumnConstraint_IN_Constraint_(columns):
+A ColumnConstraint was removed from Constraint.columns.
+
+------------------------------------------------------------
+CREATE rules
+------------------------------------------------------------
+
+CREATE_Index_IN_Table_(constraints):
+An Index was added to Table.constraints.
+
+CREATE_Table_IN_Database_Schema_(entites):
+A Table was added to Database_Schema.entites.
+
+CREATE_UniqueConstraint_IN_Table_(constraints):
+A UniqueConstraint was added to Table.constraints.
+
+CREATE_ColumnConstraint_IN_Constraint_(columns):
+A ColumnConstraint was added to Constraint.columns.
+
+CREATE_PrimaryKey_IN_Table_(columns):
+A PrimaryKey column was added to Table.columns.
+
+CREATE_ForeignKey_IN_Table_(columns):
+A ForeignKey column was added to Table.columns.
+
+CREATE_Column_IN_Table_(columns):
+A normal Column was added to Table.columns.
+
+------------------------------------------------------------
+Structural rules
+------------------------------------------------------------
+
+JOIN_tables:
+Two or more tables from Model A were merged into one table in Model B.
+
+CHANGE_NM_INTO_1N:
+An n:m relationship structure was transformed into a 1:n structure.
+
+CHANGE_1N_INTO_NM:
+A 1:n relationship structure was transformed into an n:m structure.
+
+CHANGE_1N_INTO_NM_PRESERVE:
+A 1:n relationship structure was transformed into an n:m structure while preserving the original relationship.
+
+CHANGE_1N_INTO_NM_MOVE:
+A 1:n relationship structure was transformed into an n:m structure, with columns or ForeignKeys moved into a new or different relationship table.
+
+------------------------------------------------------------
+CHANGE_LITERAL rules for ForeignKey.OnUpdate
+------------------------------------------------------------
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_RESTRICT:
+ForeignKey.OnUpdate was changed from SET NULL to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_NO_ACTION:
+ForeignKey.OnUpdate was changed from SET NULL to NO ACTION.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_SET_NULL_TO_CASCADE:
+ForeignKey.OnUpdate was changed from SET NULL to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_SET_NULL:
+ForeignKey.OnUpdate was changed from RESTRICT to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_NO_ACTION:
+ForeignKey.OnUpdate was changed from RESTRICT to NO ACTION.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_RESTRICT_TO_CASCADE:
+ForeignKey.OnUpdate was changed from RESTRICT to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_SET_NULL:
+ForeignKey.OnUpdate was changed from NO ACTION to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_RESTRICT:
+ForeignKey.OnUpdate was changed from NO ACTION to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_NO_ACTION_TO_CASCADE:
+ForeignKey.OnUpdate was changed from NO ACTION to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_SET_NULL:
+ForeignKey.OnUpdate was changed from CASCADE to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_RESTRICT:
+ForeignKey.OnUpdate was changed from CASCADE to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnUpdate_FROM_CASCADE_TO_NO_ACTION:
+ForeignKey.OnUpdate was changed from CASCADE to NO ACTION.
+
+------------------------------------------------------------
+CHANGE_LITERAL rules for ForeignKey.OnDelete
+------------------------------------------------------------
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_RESTRICT:
+ForeignKey.OnDelete was changed from SET NULL to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_NO_ACTION:
+ForeignKey.OnDelete was changed from SET NULL to NO ACTION.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_SET_NULL_TO_CASCADE:
+ForeignKey.OnDelete was changed from SET NULL to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_SET_NULL:
+ForeignKey.OnDelete was changed from RESTRICT to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_NO_ACTION:
+ForeignKey.OnDelete was changed from RESTRICT to NO ACTION.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_RESTRICT_TO_CASCADE:
+ForeignKey.OnDelete was changed from RESTRICT to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_SET_NULL:
+ForeignKey.OnDelete was changed from NO ACTION to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_RESTRICT:
+ForeignKey.OnDelete was changed from NO ACTION to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_NO_ACTION_TO_CASCADE:
+ForeignKey.OnDelete was changed from NO ACTION to CASCADE.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_SET_NULL:
+ForeignKey.OnDelete was changed from CASCADE to SET NULL.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_RESTRICT:
+ForeignKey.OnDelete was changed from CASCADE to RESTRICT.
+
+CHANGE_LITERAL_ForeignKey_OnDelete_FROM_CASCADE_TO_NO_ACTION:
+ForeignKey.OnDelete was changed from CASCADE to NO ACTION.
+
+Valid values for OnUpdate and OnDelete:
+- SET_NULL corresponds to the metamodel literal "SET NULL"
+- RESTRICT corresponds to "RESTRICT"
+- NO_ACTION corresponds to the metamodel literal "NO ACTION"
+- CASCADE corresponds to "CASCADE"
 
 ### Output format
 
-Return the differences in a **machine-readable JSON structure** plus short explanations.
+Return only valid JSON.
+Do not use Markdown.
+Do not add text before or after the JSON.
+Do not include comments.
 
-The JSON should have the following general form:
+The JSON object must have the following structure:
 
 {
+  "sourceModel": {
+    "name": "name of the old Database_Schema or null",
+    "version": "version of the old Database_Schema or null"
+  },
+  "targetModel": {
+    "name": "name of the new Database_Schema or null",
+    "version": "version of the new Database_Schema or null"
+  },
   "changes": [
     {
-      "operationType": "AddTable" | "RemoveTable" | "RenameTable" |
-                       "AddColumn" | "RemoveColumn" | "RenameColumn" |
-                       "ChangeColumnType" | "ChangeColumnSize" |
-                       "ChangeDefaultValue" | "ChangeNullability" |
-                       "ChangeAutoIncrement" |
-                       "AddPrimaryKey" | "RemovePrimaryKey" |
-                       "AddForeignKey" | "RemoveForeignKey" | "ChangeForeignKey" |
-                       "AddConstraint" | "RemoveConstraint" | "ChangeConstraint" |
-                       "Other",
-      "elementKind": "Database_Schema" | "Table" | "Column" |
-                     "PrimaryKey" | "ForeignKey" |
-                     "Constraint" | "UniqueConstraint" | "Index" |
-                     "ColumnConstraint",
-      "schema": {
-        "oldName": "... or null ...",
-        "newName": "... or null ..."
+      "id": "C001",
+      "ruleId": "one exact rule ID from the rule catalog",
+      "elementKind": "Database_Schema | Table | Column | PrimaryKey | ForeignKey | Constraint | UniqueConstraint | Index | ColumnConstraint",
+      "changeKind": "CREATE | DELETE | SET_ATTRIBUTE | CHANGE_REFERENCE | MOVE | STRUCTURAL | CHANGE_LITERAL | ADD_REFERENCE | REMOVE_REFERENCE",
+      "confidence": "HIGH | MEDIUM | LOW",
+
+      "oldElement": {
+        "schema": "old schema name or null",
+        "table": "old table name or null",
+        "column": "old column name or null",
+        "constraint": "old constraint name or null",
+        "columnConstraint": "old column constraint name or null",
+        "qualifiedName": "stable old qualified name or null"
       },
-      "table": {
-        "oldName": "... or null ...",
-        "newName": "... or null ..."
+
+      "newElement": {
+        "schema": "new schema name or null",
+        "table": "new table name or null",
+        "column": "new column name or null",
+        "constraint": "new constraint name or null",
+        "columnConstraint": "new column constraint name or null",
+        "qualifiedName": "stable new qualified name or null"
       },
-      "column": {
-        "oldName": "... or null ...",
-        "newName": "... or null ..."
+
+      "attributeChange": {
+        "attribute": "changed attribute name or null",
+        "oldValue": "old value or null",
+        "newValue": "new value or null"
       },
-      "detail": {
-        "attribute": "type | size | defaultValue | notNull | autoIncrement | OnUpdate | OnDelete | ...",
-        "oldValue": "...",
-        "newValue": "..."
+
+      "referenceChange": {
+        "reference": "changed reference name or null",
+        "oldTarget": "old referenced element qualified name or null",
+        "newTarget": "new referenced element qualified name or null"
       },
-      "explanation": "Short natural language explanation of this change."
+
+      "containedChanges": [
+        {
+          "description": "short description of one atomic change that belongs to this rule application",
+          "elementKind": "Database_Schema | Table | Column | PrimaryKey | ForeignKey | Constraint | UniqueConstraint | Index | ColumnConstraint",
+          "oldQualifiedName": "old qualified name or null",
+          "newQualifiedName": "new qualified name or null",
+          "attribute": "attribute name or null",
+          "oldValue": "old value or null",
+          "newValue": "new value or null"
+        }
+      ],
+
+      "explanation": "short explanation of why this rule was selected"
+    }
+  ],
+  "problems": [
+    {
+      "severity": "WARNING | ERROR",
+      "message": "description of incomplete, ambiguous or invalid input"
     }
   ]
 }
 
-Rules:
-- Only report changes that are actually implied by the two model versions.
-- If you suspect a rename (e.g. same structure but different name), explicitly classify it as a rename instead of "remove+add" if this is clearly more likely.
-- Always try to assign changes to the correct schema/table/column/constraint based on names and relationships.
-- If the input is incomplete, syntactically broken or does not conform to the metamodel, explain the problem instead of inventing changes.
-
-Use clear and consistent terminology from the metamodel (`Database_Schema`, `Table`, `Column`, `PrimaryKey`, `ForeignKey`, `Constraint`, `UniqueConstraint`, `Index`, `ColumnConstraint`).
+JSON output rules:
+- Return only valid JSON.
+- Do not use Markdown.
+- Do not include comments.
+- Do not add text before or after the JSON.
+- Every item in `changes` must have exactly one `ruleId`.
+- `ruleId` must be copied exactly from the rule catalog.
+- Do not invent rule IDs.
+- Use `null` for unknown or not applicable values.
+- Do not omit required fields.
+- Use an empty array `[]` if `changes`, `problems`, or `containedChanges` are empty.
+- Use `containedChanges` to describe atomic changes that are grouped into one semantic rule application.
+- For simple attribute changes, fill `attributeChange`.
+- For reference changes, fill `referenceChange`.
+- For CREATE rules, fill only `newElement`; all fields in `oldElement` must be `null`.
+- For DELETE rules, fill only `oldElement`; all fields in `newElement` must be `null`.
+- For MOVE rules, fill both `oldElement` and `newElement`.
+- For rename rules, use `SET_ATTRIBUTE_NamedElement_Name` and set `attributeChange.attribute` to `"name"`.
+- For OnUpdate and OnDelete changes, prefer the specific `CHANGE_LITERAL_*` rule over the generic `SET_ATTRIBUTE_ForeignKey_OnUpdate` or `SET_ATTRIBUTE_ForeignKey_OnDelete`.
+- If a single change is ambiguous, still choose the most likely rule but set `confidence` to `"LOW"` or `"MEDIUM"` and explain the uncertainty only in that change's `explanation`.
+- Do not add global warnings about approximation if a JSON result with changes is returned.
+- The `explanation` field must explain only the individual rule application.
+- The `explanation` field must not contain global comments about response limits, omitted changes, representative subsets, approximate comparison, limited automatic diffing, or inability to list all changes.
+- The `problems` array must only be used for concrete input, output, or structural processing problems, such as invalid XML/XMI, missing old or new model, unresolved references, unsupported model format, or impossible reliable comparison.
+- Do not use `problems` for vague limitations such as approximate comparison, response limits, many changes, representative subsets, omitted changes, limited automatic diffing, or low confidence of individual changes.
+- `WARNING` must only be used for concrete non-fatal input or structural issues. It must not be used to justify incomplete, approximate, or representative comparison results.
+- If the input is invalid or incomplete, add an entry to `problems` and return an empty `changes` array if reliable comparison is impossible.
+- If reliable comparison is impossible, return an empty `changes` array and add an `ERROR` entry to `problems`. Do not return partial changes.
+- Do not report no-op changes.
+- A no-op change is a change where the old and new values or references are equal after normalization.
+- For SET_ATTRIBUTE and CHANGE_LITERAL changes, `attributeChange.oldValue` and `attributeChange.newValue` must be different after normalization.
+- For CHANGE_REFERENCE changes, `referenceChange.oldTarget` and `referenceChange.newTarget` must be different after normalization.
+- For MOVE changes, `oldElement.qualifiedName` and `newElement.qualifiedName` must differ in their container/table part.
+- In `containedChanges`, do not include atomic changes where `oldValue` and `newValue` are equal after normalization.
+- Values of `elementKind` must use the metamodel terminology exactly:
+  `Database_Schema`, `Table`, `Column`, `PrimaryKey`, `ForeignKey`, `Constraint`, `UniqueConstraint`, `Index`, `ColumnConstraint`.
+- Values of `changeKind` must be one of:
+  `CREATE`, `DELETE`, `SET_ATTRIBUTE`, `CHANGE_REFERENCE`, `MOVE`, `STRUCTURAL`, `CHANGE_LITERAL`, `ADD_REFERENCE`, `REMOVE_REFERENCE`.
+- Values of `confidence` must be one of:
+  `HIGH`, `MEDIUM`, `LOW`.
+- Values of `severity` must be one of:
+  `WARNING`, `ERROR`.

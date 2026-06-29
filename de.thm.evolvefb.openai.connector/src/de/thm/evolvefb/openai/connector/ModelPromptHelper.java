@@ -10,32 +10,31 @@ import org.eclipse.emf.ecore.resource.Resource;
 public class ModelPromptHelper {
 
     private static final String COMPARISON_TEMPLATE = """
-            Vergleiche die folgenden zwei Instanzen des Ecore-Metamodells 'mdde', \
-            die relationale Datenbankschemata beschreiben.
+              
+                Compare the following two mdde model instances according to the system instructions.
 
-            Aufgabe:
-            - Bestimme alle relevanten Unterschiede zwischen Modell A und Modell B.
-            - Berücksichtige u.a.:
-              * hinzugefügte / gelöschte Tabellen
-              * umbenannte Tabellen
-              * hinzugefügte / gelöschte / geänderte Spalten
-              * Änderungen an Datentypen, Not-Null, Default-Werten, Auto-Increment
-              * Änderungen an Primary Keys, Foreign Keys und Constraints
-              * Änderungen an referentiellen Aktionen (OnUpdate, OnDelete)
-            - Beschreibe die Unterschiede möglichst präzise und beziehe dich auf die Namen der Elemente.
+                The old/source model is enclosed between <OLD_MODEL_XMI> and </OLD_MODEL_XMI>.
+                The new/target model is enclosed between <NEW_MODEL_XMI> and </NEW_MODEL_XMI>.
 
-            Gib die Antwort in gut lesbarem Text, gegliedert nach Tabellen.
+                Rules:
+                - Use the system prompt as the authoritative instruction.
+                - Treat OLD_MODEL_XMI as Model A / old version / source model.
+                - Treat NEW_MODEL_XMI as Model B / new version / target model.
+                - Use only rule IDs from the rule catalog in the system prompt.
+                - Return exactly one valid JSON object.
+                - Do not return Markdown.
+                - Do not add text before or after the JSON.
 
-            Modell A (z.B. alte Version):
-            ```xmi
-            %s
-            ```
+                <OLD_MODEL_XMI>
+                %s
+                </OLD_MODEL_XMI>
 
-            Modell B (z.B. neue Version):
-            ```xmi
-            %s
-            ```
-            """;
+                <NEW_MODEL_XMI>
+                %s
+                </NEW_MODEL_XMI>
+                """;
+    
+
 
     public static String buildComparisonPrompt(Resource modelA, Resource modelB) {
         String xmiA = serializeResourceToXmi(modelA);
